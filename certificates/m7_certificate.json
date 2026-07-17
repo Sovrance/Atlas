@@ -1,0 +1,78 @@
+{
+  "certificate_version": "0.3",
+  "certificate_class": "NUMERICAL-DISCOVERY (measurement-interface layer; apparatus/calibration/censoring audits, E3)",
+  "problem": "M7: measurement-interface layer (SPEC \u00a72 layer 3 as executable code)",
+  "timestamp_utc": "2026-07-17T12:27:06Z",
+  "calibration_route": "cal:spectroscopy_route (independent channel; the self-consistent cal:gibbs_route is audited as non-promotable in T2)",
+  "m_layer_stipulations": [
+    "transfer function is the declared affine apparatus map y = gain*x + offset; a degenerate (gain 0) apparatus is rejected, not inverted",
+    "noise family is additive i.i.d. Gaussian with a stated sigma; the certified interval is a normal z-interval (nominal 95%)",
+    "FDT rejection threshold 0.15 carried over verbatim from B9; a self-consistent (data-inferred) calibration route is non-promotable by construction (Voss-Webb ambiguity), aligned with pir/domains/circuit_semantics.CALIBRATION_ROUTES",
+    "APPARATUS_LIMITED is defined relative to the DECLARED resolution/bandwidth window; eps-rank uses eps * lambda_max exactly as s4_ds/kernel.py",
+    "censoring is a hard left-truncation x > threshold with a KNOWN sigma; the correction is the truncated-normal (inverse Mills ratio) MLE. continuous/functional transfers, calibration priors, and recovery over real B4/B10 posteriors are deferred to M7-b"
+  ],
+  "headline": "the measurement interface as code: a declared apparatus recovers a latent without bias (T1), an independent calibration route detects a hidden bath that the self-consistent route is fooled by and cannot promote (T2), a rank verdict that flips inside the detector's resolution window is refused as APPARATUS_LIMITED (T3), declared censoring is corrected (T4), and an ample apparatus is NOT cried apparatus-limited (T5).",
+  "results": {
+    "T1": {
+      "latent": 3.5,
+      "mean_estimate": 3.499910786133827,
+      "bias": -8.921386617322113e-05,
+      "coverage": 0.95,
+      "nominal_coverage": 0.9500042097035593,
+      "mean_interval_width": 0.07849743854593254,
+      "n_trials": 400,
+      "n_samples": 400
+    },
+    "T2": {
+      "spectroscopy_route": "cal:spectroscopy_route",
+      "gibbs_route": "cal:gibbs_route",
+      "spec_residual": 0.594448278708605,
+      "gibbs_residual": 0.012330709907500202,
+      "spec_verdict": "EQUILIBRIUM_REJECTED (hidden bath / undeclared apparatus)",
+      "gibbs_verdict": "EQUILIBRIUM_CONSISTENT",
+      "scale_true": 1.0,
+      "scale_gibbs": 1.4756129776512772,
+      "gibbs_more_forgiving": true,
+      "promotable_route": "cal:spectroscopy_route",
+      "gibbs_promotable": false
+    },
+    "T3": {
+      "verdict": "APPARATUS_LIMITED",
+      "apparatus_limited": true,
+      "cause": "structural verdict changes within the declared resolution/bandwidth",
+      "bounding_threshold": 0.005,
+      "declared_window": [
+        0.0005,
+        0.01
+      ],
+      "resolutions_tested": 4,
+      "verdicts_in_window": {
+        "0.0005": true,
+        "0.001": true,
+        "0.005": false,
+        "0.01": false
+      }
+    },
+    "T4": {
+      "mu_true": 0.0,
+      "threshold": 0.5,
+      "n_observed": 12432,
+      "selection_fraction": 0.3108,
+      "naive_estimate": 1.1392740872654024,
+      "naive_error": 1.1392740872654024,
+      "corrected_estimate": -0.006731821824213724,
+      "corrected_error": 0.006731821824213724
+    },
+    "T5": {
+      "verdict": "PASS",
+      "apparatus_limited": false,
+      "structural_verdict": true,
+      "declared_window": [
+        0.0001,
+        0.001
+      ],
+      "resolutions_tested": 3,
+      "cause": null
+    }
+  }
+}

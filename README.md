@@ -267,6 +267,14 @@ python3 tests/test_m1.py
 python3 tests/test_m2.py
 ```
 
+## M7 — measurement-interface layer (implemented ✅, 5/5)
+
+`measurement_interface/`: SPEC §2 **layer 3** (the declared 𝖬 in `y = 𝖬[𝒰(x)] + ε`) as executable code — the gate the roadmap requires before any new cosmology/biology/BEC claim. Generalizes two one-off results: **B9-T3** (an independent spectroscopy calibration route detects a hidden bath that the self-consistent Gibbs route is fooled by and cannot promote — the Voss–Webb ambiguity, same FDT residual threshold 0.15) and the **S4** ε-rank plateau (a `rank ≥ 3` verdict flipping inside the detector's declared resolution window is refused as SPEC-§4 `APPARATUS_LIMITED`, naming the bounding threshold). Also: unbiased injection–recovery with a certified interval, and declared-truncation censoring correction. Honesty invariant (T5): an ample apparatus is never cried apparatus-limited. Certificate carries first-class `calibration_route` + `m_layer_stipulations`. Scope: [`docs/M7-measurement-interface-scope.md`](docs/M7-measurement-interface-scope.md). Certificate: `certificates/m7_certificate.json`. M7-b (continuous/functional transfers, calibration priors, recovery over real B4/B10 posteriors, PIR analyzer coupling) deferred.
+
+```bash
+python3 tests/test_m7.py
+```
+
 ## Truncation-audit probe + GfE review (implemented ✅, 5/5)
 
 Deep-research sprint on Gravity-from-Entropy (Bianconi, R34–R35) with the truncation critique **converted into an executable gate**: on an exact Gaussian ladder, the truncated "emergent constant" differs from the full Schur elimination by an exact rational shift (**−6/3311** in the demo) unless the boundary coupling vanishes — then robustness is *certified* (Fractions-exact), not assumed; the shift scales quadratically in the neglected coupling (**4.002×** under halving). Three verdicts wired to SPEC §§2/4: TRUNCATION_ROBUST / TRUNCATION_ARTIFACT / **TRUNCATION_UNAUDITED — GfE's current status in our classification**, pending their consistency proof. **Mathematics imported:** GfE's metric-pair invariant spectrum + the Burg/Stein divergence (the GQRE's eigenvalue-log core) now live in M1 as `canonicalize(kind="metric_pair")`, congruence-invariance tested. Matrix mapping: Λ×Pos rival typing (vs ?₇/?₈), G×RG rival for ?₄, ?₃-row theory-side note, B12-c family spec. Note: `docs/notes/gfe-bianconi-review.md`.
