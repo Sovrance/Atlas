@@ -2,7 +2,7 @@
   "certificate_version": "0.3",
   "certificate_class": "NUMERICAL-DISCOVERY (measurement-interface layer; apparatus/calibration/censoring audits, E3)",
   "problem": "M7: measurement-interface layer (SPEC \u00a72 layer 3 as executable code)",
-  "timestamp_utc": "2026-07-17T12:27:06Z",
+  "timestamp_utc": "2026-07-18T09:44:34Z",
   "calibration_route": "cal:spectroscopy_route (independent channel; the self-consistent cal:gibbs_route is audited as non-promotable in T2)",
   "m_layer_stipulations": [
     "transfer function is the declared affine apparatus map y = gain*x + offset; a degenerate (gain 0) apparatus is rejected, not inverted",
@@ -60,8 +60,8 @@
       "selection_fraction": 0.3108,
       "naive_estimate": 1.1392740872654024,
       "naive_error": 1.1392740872654024,
-      "corrected_estimate": -0.006731821824213724,
-      "corrected_error": 0.006731821824213724
+      "corrected_estimate": -0.006731821824212614,
+      "corrected_error": 0.006731821824212614
     },
     "T5": {
       "verdict": "PASS",
