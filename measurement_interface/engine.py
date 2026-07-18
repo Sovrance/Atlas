@@ -200,12 +200,18 @@ def dual_route_recovery(structure: np.ndarray, scale_true: float,
 # --------------------------------------------------------------------------- #
 
 def effective_rank(matrix: np.ndarray, eps: float) -> int:
-    """# eigenvalues above ``eps · λ_max`` — the ε-rank of ``s4_ds/kernel.py``."""
-    w = np.abs(np.linalg.eigvalsh(np.asarray(matrix, float)))
-    wmax = w.max()
-    if wmax == 0.0:
+    """# eigenvalues above ``eps · λ_max`` — the ε-rank of ``s4_ds/kernel.py``.
+
+    Mirrors S4 exactly: the positive spectrum is kept *before* thresholding, so a
+    noisy/indefinite Gram cannot inflate the rank by counting large-magnitude
+    negative eigenvalues as resolved modes (they are apparatus/indefiniteness
+    artifacts, not S4 ε-rank modes).
+    """
+    lam = np.linalg.eigvalsh(np.asarray(matrix, float))
+    lam = lam[lam > 0.0]
+    if lam.size == 0:
         return 0
-    return int(np.sum(w > eps * wmax))
+    return int(np.sum(lam > eps * lam.max()))
 
 
 def apparatus_limited_gate(verdict_fn: Callable[[float], object],
@@ -270,26 +276,49 @@ def _std_normal_cdf(x: float) -> float:
     return 0.5 * (1.0 + math.erf(x / math.sqrt(2.0)))
 
 
+def _std_normal_sf(x: float) -> float:
+    """Upper-tail survival ``1 − Φ(x)`` via ``erfc`` — stable deep in the tail
+    (``erfc`` stays accurate to ~1e-300, where ``1 − Φ`` from ``erf`` underflows
+    to exactly 0)."""
+    return 0.5 * math.erfc(x / math.sqrt(2.0))
+
+
+def _inverse_mills_upper(alpha: float) -> float:
+    """Upper-tail inverse Mills ratio ``φ(α)/(1−Φ(α))``.
+
+    For large ``α`` both ``φ`` and the survival function underflow, so the ratio
+    is taken from its asymptotic series ``α + 1/α − 2/α³`` (→ ``α`` as ``α→∞``),
+    which keeps :func:`truncated_normal_mean_mle` monotone and identifiable far
+    into the heavily-censored regime instead of flattening to the truncation
+    floor.
+    """
+    if alpha > 25.0:
+        return alpha + 1.0 / alpha - 2.0 / (alpha ** 3)
+    q = _std_normal_sf(alpha)
+    if q < 1e-300:
+        return alpha + 1.0 / alpha - 2.0 / (alpha ** 3)
+    return _std_normal_pdf(alpha) / q
+
+
 def truncated_normal_mean_mle(observed_mean: float, threshold: float,
                               sigma: float) -> float:
     """Recover μ of a normal from a *left-truncated* sample mean (x > threshold).
 
     For ``x ~ N(μ, σ²)`` observed only when ``x > t``,
     ``E[x | x > t] = μ + σ·φ(α)/(1−Φ(α))`` with ``α = (t−μ)/σ`` (inverse Mills
-    ratio). This is monotincreasing in μ, so a bisection on μ inverts the
-    declared censoring model exactly. The naive sample mean (ignoring the
-    interface) is biased high; this removes the bias.
+    ratio). This is monotone increasing in μ, so a bisection on μ inverts the
+    declared censoring model. The inverse Mills ratio uses a tail-stable survival
+    function (:func:`_inverse_mills_upper`) so heavily-censored samples stay
+    identifiable instead of collapsing to the truncation floor. The naive sample
+    mean (ignoring the interface) is biased high; this removes the bias.
     """
     def trunc_mean(mu: float) -> float:
         alpha = (threshold - mu) / sigma
-        denom = 1.0 - _std_normal_cdf(alpha)
-        if denom < 1e-12:
-            # mu << threshold: E[x | x>t] -> t (the truncation floor). Returning
-            # the limit (not inf) keeps the bisection monotone and well-posed.
-            return threshold
-        return mu + sigma * _std_normal_pdf(alpha) / denom
+        return mu + sigma * _inverse_mills_upper(alpha)
 
-    lo, hi = threshold - 20.0 * sigma, observed_mean
+    # Wide bracket: trunc_mean → threshold as μ → −∞ and exceeds any observed
+    # mean (> threshold) at μ = observed_mean, so the root is bracketed.
+    lo, hi = threshold - 60.0 * sigma, observed_mean
     for _ in range(200):
         mid = 0.5 * (lo + hi)
         if trunc_mean(mid) < observed_mean:
