@@ -88,9 +88,49 @@ def w4_escaped():
     check("W4 data island escapes </ so it cannot terminate the script early", errs)
 
 
+def _mirror_invalidate(facts, asm):
+    """Pure-Python mirror of the workbench's invalidation algorithm: direct
+    assumption membership + transitive closure over depends_on_facts."""
+    affected = {f["fact_id"] for f in facts if asm in (f.get("assumptions") or [])}
+    changed = True
+    while changed:
+        changed = False
+        for f in facts:
+            if f["fact_id"] in affected:
+                continue
+            if set(f.get("depends_on_facts") or []) & affected:
+                affected.add(f["fact_id"]); changed = True
+    return sorted(affected)
+
+
+def w5_invalidation_fidelity():
+    """Ported from the parallel P9 session: the invalidation the workbench shows
+    must reproduce FactStore.invalidate_assumption exactly — mirror + real store."""
+    from ci.export_pir_view import build_bundle
+    from pir.provenance import FactStore
+    from pir.domains import b9
+    b = build_bundle()
+    demo = b["invalidation_demo"]
+    asm = demo["assumption"]
+    committed = sorted(demo["downgraded_facts"])
+    errs = []
+    mirror = _mirror_invalidate(b["facts"], asm)
+    if not set(committed) <= set(mirror):
+        errs.append(f"page-mirror {mirror} does not cover committed demo {committed}")
+    _, _, b9f = b9.lower(b9.load_certificate())
+    store = FactStore()
+    for f in b9f:
+        store.add_fact(f)
+    real = sorted(store.invalidate_assumption(asm, reason="workbench fidelity drill"))
+    if real != committed:
+        errs.append(f"FactStore {real} != committed demo {committed}")
+    check("W5 invalidation view reproduces FactStore.invalidate_assumption", errs)
+
+
 if __name__ == "__main__":
     print("== PIR workbench (P9) build ==")
     w1_data(); w2_self_contained(); w3_surfaces_and_honesty(); w4_escaped()
+    w5_invalidation_fidelity()
     print("\n== SUMMARY ==")
     if FAILURES:
         print(f"FAIL: {len(FAILURES)} check(s) failed."); sys.exit(1)
