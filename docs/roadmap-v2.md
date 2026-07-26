@@ -72,8 +72,12 @@ P0 claims table (SPEC §6) retrofitted to README — one sprint.
 P1 SPECIFICATION.md (DONE this sprint) + ontology/ schemas.
 P2 B12-RGRC (M4) — DONE core (4/4) + B12-b quantum layer (5/5); GPT state-space families deferred to B12-c.
 P3 M1 canonicalization — DONE (5/5) core (`canon/`); broader gauge
-   families deferred to M1-b. M7 measurement layer still open (before any
-   new cosmology/biology/BEC claims).
+   families deferred to M1-b. **M7 measurement layer — DONE (5/5)**
+   (`measurement_interface/`; SPEC §2 layer 3 executable — apparatus transfer,
+   dual calibration routes, APPARATUS_LIMITED gate, censoring correction;
+   generalizes B9-T3 + the S4 ε-rank plateau). The gate before any new
+   cosmology/biology/BEC claim is now in place; M7-b (continuous transfers,
+   calibration priors, real-posterior recovery, PIR analyzer coupling) deferred.
 P4 M2 generator engine — DONE (5/5) monomial core (`generator/`); B3/B5
    rediscovered from raw tables; wider grammars deferred to M2-b.
 P5 M6 preregistration: prereg-001 DRAFT-FOR-FREEZE filed; ACTIVE at tag `v0.7-frozen`.

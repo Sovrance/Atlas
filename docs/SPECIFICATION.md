@@ -43,6 +43,10 @@ Every artifact must declare which layer it lives in:
    functions, preprocessing provenance, calibration route, noise family,
    selection/censoring. Fields `calibration_route` and
    `m_layer_stipulations` are mandatory in every certificate (≥ v0.3).
+   This layer is executable as **M7** (`measurement_interface/`,
+   `docs/M7-measurement-interface-scope.md`): apparatus transfer + injection
+   recovery, independent-vs-self-consistent calibration routes, the
+   `APPARATUS_LIMITED` gate (§4), and censoring correction.
 
 An encoding success at layer 2 is never, by itself, evidence for layer 1.
 (This codifies the standing no-circularity rule.)
