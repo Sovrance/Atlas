@@ -3,7 +3,9 @@
 - **Status:** Accepted (Stage 1 substrate)
 - **Date:** 2026-07-16
 - **Context:** AGENT_WORK_ORDER_v2 (PIR Foundation, Stage 1), adjudicated from
-  the ChatGPT "Decompilation of Physics" package. See
+  the ChatGPT "Decompilation of Physics" package. Provenance package docs live
+  under `docs/pir-foundation/` (`FINAL_ANALYSIS.md`, `ADJUDICATION.md`,
+  `AGENT_WORK_ORDER_v2.md`, `architecture.yaml`). See
   `docs/pir-specification-v0.1.md` for the normative substrate contract and
   `docs/verifier-ops-v0.1.md` for the frozen verifier-op set.
 - **Scope:** substrate only — schemas, models, provenance, pass registry,
