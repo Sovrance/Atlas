@@ -1,4 +1,4 @@
-# Global-variables
+# Constant-Atlas Physics AI Research
 
 **Observational decompilation of physics.** Treat physical law as an unknown rule system; recover its grammar — types, invariants, operators, composition rules — one certified constraint at a time. Constants are conjectured to be invariants of a positive, compositional operator structure 𝕽, not primitive numbers.
 
