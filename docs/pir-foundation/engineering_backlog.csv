@@ -1,0 +1,16 @@
+Stage,Phase,Workstream,Deliverables,Acceptance,Gate
+S1,P0,ADR and contracts,"ADR-PIR-0001, versioning policy, parser-sandbox rule (threat model downgraded)","Existing tests pass; review complete; rejected alternatives recorded",none
+S1,P1a,PIR v0.1 substrate,"Six JSON schemas with L+E dual coordinates, namespaces, assumption-taint; Pydantic models; canonical hash-stable serialization (Fractions as strings)","Round-trip serialization; invalid casts rejected; six negative tests pass",P0
+S1,P1b,Provenance engine,"PROV-O-core provenance, invalidation traversal, downgrade records","Changing an assumption finds and downgrades all dependents without deletion",P1a
+S1,P1c,Pass registry + honesty layer,"SOUND/HEURISTIC tags, located warnings[], SPEC-vocab verdict lock","HEURISTIC pass cannot assert E0; non-SPEC verdict rejected",P1a
+S1,P1d,Verifier-op reference,"docs/verifier-ops-v0.1.md freezing Schur-pivot/rank/flat-extension/Jacobian/CPTP op set","Every B1-B12 benchmark maps to documented ops",P0
+S1,P1e,CI headless entrypoint,"ci/run_all_certified.py, signed run manifests, pinned seeds","Green on current repo; fails on synthetically corrupted certificate",P1a
+S2,P2,B9 circuit lowering,"Circuit Domain Semantics Module (4 contracts), loader, PIR L0/L1 trace, structural graph export","Existing B9 verdict reproduced from PIR facts; negative controls preserved; no atlas changes",S1
+S2,P3,Analyzer runtime,"Dependency-resolved pass graph + MeasurementProvenance/ObservationalEquivalence/GlobalVariableCandidate analyzers","Deterministic reruns; conflicts retained; analyzer failure cannot corrupt store",P2
+S2,P4,Symbolic constraint bridge,"Constraint emitters per restraint column, SymPy/Z3 adapters, witness + UNSAT-core certificate fields","Reproduce one B1/B2 forcing case and one B3 identifiability case; solver output quarantined by evidence class",P3
+S2,P5a,Candidate lattice + GVAR rules,"Grammar compatibility matrix; YAML rule schema; rules emit candidate facts + test obligations only","Tie emits OBSERVATIONALLY_EQUIVALENT; insufficient interventions emit NONIDENTIFIABLE; positive/negative fixtures",P3
+S2,P5b,Two-hash fingerprints,"Full-hash (similarity-invariant) + specific-hash canonical fingerprints; known-grammar database","B8 blind grammar ID runs as fingerprint lookup; collisions filed as REPRESENTATION_DEPENDENT findings",P3
+S3,P6,Forward recompilation,"Realization + apparatus adapters, patch operations, predicted-record schema, held-out comparison","Alter one B9 latent component yields changed held-out spectroscopy prediction; no held-out reuse; residual provenance complete",S2
+S3,P7,Intervention search (OED),"Admissible-intervention space; disagreement/information-gain/d_identifiable objectives; feasibility filters; HEURISTIC-tagged","Known discriminator recovered on synthetic benchmark; negative control emits NONIDENTIFIABLE; all proposals state assumptions",P6
+S3,P8,BEC domain + cross-domain diff,"BEC Domain Semantics Module + loader; PIR-Diff vs B9 with separate similarity+confidence+correlator","Shared motifs without ontology overclaim; apparatus differences explicit; least-cost discriminator proposed",P6
+DEFERRED,P9,Workbench UI,"(deferred indefinitely - research-first repo; CLI/CI/JSON artifacts suffice)",n/a,n/a

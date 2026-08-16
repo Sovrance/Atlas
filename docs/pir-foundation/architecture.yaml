@@ -1,0 +1,65 @@
+version: 0.2
+system: physics-reverse-engineering-workbench
+supersedes: architecture.yaml v0.1 (ChatGPT package) # adjudicated ACCEPT-MODIFIED
+principles:
+  - preserve_raw_evidence
+  - explicit_measurement_semantics
+  - append_only_facts
+  - ambiguity_is_first_class
+  - no_claim_without_provenance
+  - forward_validation_required
+  - sound_heuristic_separation          # added (Rosy A5 / Ghidra auto-analyzer rule)
+  - verdict_vocabulary_locked_to_spec6  # added (adjudication #24)
+  - L_and_E_axes_orthogonal             # added (adjudication #4)
+layers:
+  - evidence_store
+  - loaders_and_domain_specs
+  - pir
+  - fact_store
+  - analyzer_runtime
+  - candidate_grammar_store
+  - symbolic_constraint_bridge          # promoted to named layer (SAT witness / UNSAT core)
+  - fingerprint_signature_library       # added (two-hash Function ID pattern)
+  - forward_recompiler
+  - intervention_search                 # renamed from experiment_fuzzer (OED reframing)
+  - certification_atlas_bridge
+  - headless_cli_ci                     # workbench UI: DEFERRED
+pir_levels:                             # representation abstraction axis (L)
+  L0: raw_records
+  L1: operational_acts
+  L2: structural_facts
+  L3: candidate_grammars
+evidence_levels: [E0, E1, E2, E3, E4]   # warrant axis (E) — orthogonal to L
+op_families:
+  act_ops: [PREPARE, INTERVENE, EVOLVE, COUPLE, SPLIT, RECOMBINE, TRANSPORT,
+            PHASE_ACCUMULATE, MEASURE, RECORD, CONDITION, TRACE_OUT,
+            COARSE_GRAIN, SYMMETRY_ACT, COMPOSE, PARALLEL]
+  verifier_ops: [SCHUR_PIVOT_EXACT, RANK_TEST, FLAT_EXTENSION,
+                 JACOBIAN_RANK_IDENTIFIABILITY, CPTP_GATE, SYMPLECTIC_GATE]
+namespaces: [raw, apparatus, operational, domain, latent, gauge, invariant,
+             global, effective, analyst]
+pass_tags: [SOUND, HEURISTIC]           # HEURISTIC passes must emit located warnings[]
+priority_analyzers:
+  - MeasurementProvenanceAnalyzer
+  - ObservationalEquivalenceAnalyzer
+  - GlobalVariableCandidateAnalyzer
+verdicts:                               # SPEC §6 vocabulary ONLY (corrected from v0.1)
+  source: docs/SPECIFICATION.md#6
+  note: v0.1 labels moved to candidate_class_tags; never emitted as verdicts
+candidate_class_tags:                   # hypothesis-store taxonomy, not verdicts
+  - GLOBAL_CANDIDATE
+  - TOPOLOGICAL_CANDIDATE
+  - HIDDEN_COMMON_CAUSE_CANDIDATE
+  - REPRESENTATION_ARTIFACT
+  - NOT_DETECTED
+diff_scoring:
+  similarity: float_0_1
+  confidence: float_0_1                 # separate numbers, BinDiff discipline
+  correlator: string                    # identity of matching algorithm required
+validation_gates: [structural, mathematical, retrodictive, held_out, prospective]
+ci:
+  entrypoint: ci/run_all_certified.py
+  policy: fail_on_certificate_degradation
+  reproducibility: [pinned_deps, deterministic_seeds, content_hashes, signed_manifests]
+deferred: [workbench_ui, security_threat_model_full]
+rejected_sources: [OpenTelemetry_S24, Frida_S9]

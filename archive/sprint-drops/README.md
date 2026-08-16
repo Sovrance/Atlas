@@ -15,3 +15,5 @@ Extracted trees (`*-extract/`) are ephemeral and gitignored; use these zips if y
 | `gv-s3em-alpha.zip` | (this sprint) | S3-EM a-row tension (EXP-D) + edit-009 + R31–R33 |
 | `gv-m1-canon.zip` | (this sprint) | M1 canonicalization engine (canon/) + m1_certificate |
 | `gv-m2-generator.zip` | (this sprint) | M2 typed generator (generator/) + m2_certificate |
+| `gv-reverse-engineering-sprint.zip` | (this PR) | PIR foundation adjudication package; unique docs ? `docs/pir-foundation/` (schemas already evolved in `pir/`) |
+| `gv-b13-cdl-v0.1.zip` | superseded by `b13_cdl/` on main | Original B13-CDL delivery drop; live tree has PIR bridge + stable cert names — do not re-extract over `b13_cdl/` |
