@@ -79,9 +79,22 @@ def linear_taper_transform(beta, L):
 
 
 def h_plus(tau, dps: int = 80):
-    """External archimedean multiplier Re psi(1/4+i tau/2)-log(pi)."""
+    """External archimedean multiplier Re psi(1/4+i tau/2)-log(pi).
+
+    Uses the package's default backend (python-flint Arb when available).
+    """
     _, operator, _ = _mods()
     return operator.h_plus(tau, dps)
+
+
+def h_plus_mpmath(tau, dps: int = 80):
+    """External h_plus forced through connes-cvs's mpmath implementation.
+
+    Prefer this for high-dps XC-01 agreement tests: the default ``h_plus``
+    may route through Arb and re-enter mpmath with a conversion floor.
+    """
+    _, operator, _ = _mods()
+    return operator._h_plus_mpmath(tau, dps)
 
 
 def prime_power_data(c: int):

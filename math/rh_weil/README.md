@@ -29,5 +29,13 @@ See `AGENT_INSTRUCTIONS.md` and `notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md
 
 Optional external oracle (not required at runtime): `external/` wraps
 `connes-cvs` for independent cross-checks of shared Weil ingredients. See
-`external/CONNES_CVS_MAPPING.md`. Do not compare Galerkin matrix entries to
-Atlas polynomial Gram blocks by index.
+`external/CONNES_CVS_MAPPING.md` and `external/PROVENANCE.md`. Do not compare
+Galerkin matrix entries to Atlas polynomial Gram blocks by index.
+
+Regenerate the external cross-validation certificate (research env):
+
+```bash
+pip install 'connes-cvs==0.3.1' python-flint mpmath
+python math/rh_weil/scripts/run_connes_cvs_crosschecks.py
+```
+
