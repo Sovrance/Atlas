@@ -67,6 +67,42 @@ class TestFiniteWeilAPI(unittest.TestCase):
             self.assertIn(k, blk)
         self.assertFalse(blk["rh_proof_claim"])
         self.assertEqual(blk["cutoff_T"], 84)
+        self.assertEqual(blk["pole_scale"], "sqrt(3)/2")
+
+
+@unittest.skipUnless(flint_available(), "python-flint not installed")
+class TestEvenPoleOuterProduct(unittest.TestCase):
+    def test_pole_det_zero_and_log3_regression(self):
+        import math
+        from finite_weil import g0_even_block, finite_weil_even_block
+        from interval_backend import require_flint, set_precision_bits
+
+        _, arb, _, _ = require_flint()
+        set_precision_bits(192)
+        L = arb(math.log(3))
+        g00, g0b, gbb = g0_even_block(L, arb)
+        det = g00 * gbb - g0b * g0b
+        self.assertLess(abs(float(det.mid())), 1e-20)
+        blk = finite_weil_even_block(
+            math.log(3), T=84, n_quad=2048, precision_bits=192, rigorous=False
+        )
+        self.assertAlmostEqual(float(blk["G00"].mid()), 0.107356700414591762, places=6)
+        self.assertAlmostEqual(float(blk["E2"].mid()), 3.4640947469748e-6, places=10)
+
+
+@unittest.skipUnless(flint_available(), "python-flint not installed")
+class TestArchimedeanTail(unittest.TestCase):
+    def test_tail_positive(self):
+        import math
+        from finite_weil import archimedean_tail_even
+        from interval_backend import require_flint, set_precision_bits
+
+        _, arb, _, _ = require_flint()
+        set_precision_bits(128)
+        t00, t0b, tbb = archimedean_tail_even(arb(math.log(3)), 84.0, arb)
+        self.assertGreater(float(t00.lower()), 0)
+        self.assertGreater(float(tbb.lower()), 0)
+
 
 
 @unittest.skipUnless(HAS_MPMATH, "mpmath not installed")

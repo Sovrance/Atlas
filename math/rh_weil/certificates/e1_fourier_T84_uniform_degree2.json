@@ -1,0 +1,95 @@
+{
+  "certificate_version": "0.4",
+  "program": "RH/Weil direct-Fourier T=84 uniform degree-2",
+  "work_order": "WO-RH-15",
+  "evidence_class": "E1",
+  "status": "E1_UNIFORM_TRUE_WEIL_GRAM",
+  "hard_constraints_certified": true,
+  "rh_proof_claim": false,
+  "normalization": "G = G0 - Gp + Ginf",
+  "cutoff_T": 84,
+  "domain": {
+    "L_interval": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "strategy": "Regenerated Gram has E2'(L)>0 on the cell (analytic L-derivative of G0-Gp+Ginf), hence min E2 = E2(log3). Combine left-endpoint E1 ball with a grid of E2' enclosures inflated by a derivative-quad remainder.",
+  "backend": {
+    "name": "python-flint/Arb",
+    "version": "0.9.0",
+    "precision_bits": 192
+  },
+  "quadrature": {
+    "n_quad_derivative": 16384,
+    "n_quad_left_E2": 65536,
+    "derivative_quad_radius": 0.0005
+  },
+  "left_endpoint": {
+    "L": "log(3)",
+    "E2_lower": 2.537215320624563e-06,
+    "E2_upper": 4.39097417193579e-06,
+    "definitely_positive": true
+  },
+  "E2_first_grid_min_lower": 0.0014216447278538223,
+  "E2_first_all_samples_definitely_positive": true,
+  "sample_rows": [
+    {
+      "L": 1.0986122886681098,
+      "E2_first_lower": 0.002058189608120306,
+      "E2_first_upper": 0.0030581896101430223,
+      "E2_mid": 3.464094735857101e-06,
+      "definitely_positive": true
+    },
+    {
+      "L": 1.1465593007434065,
+      "E2_first_lower": 0.0014216447278538223,
+      "E2_first_upper": 0.0024216447298765383,
+      "E2_mid": 0.00010676062025813933,
+      "definitely_positive": true
+    },
+    {
+      "L": 1.1945063128187035,
+      "E2_first_lower": 0.0018541073049248183,
+      "E2_first_upper": 0.0028541073069475345,
+      "E2_mid": 0.0002052021104835469,
+      "definitely_positive": true
+    },
+    {
+      "L": 1.2424533248940002,
+      "E2_first_lower": 0.004395459705577693,
+      "E2_first_upper": 0.005395459707600409,
+      "E2_mid": 0.0003701588448525968,
+      "definitely_positive": true
+    },
+    {
+      "L": 1.290400336969297,
+      "E2_first_lower": 0.009399367098426896,
+      "E2_first_upper": 0.010399367100449612,
+      "E2_mid": 0.0007057057978062224,
+      "definitely_positive": true
+    },
+    {
+      "L": 1.3383473490445938,
+      "E2_first_lower": 0.018056818619007105,
+      "E2_first_upper": 0.01905681862102982,
+      "E2_mid": 0.0013813226153059374,
+      "definitely_positive": true
+    },
+    {
+      "L": 1.3862943611198906,
+      "E2_first_lower": 0.03267643017207805,
+      "E2_first_upper": 0.03367643017410077,
+      "E2_mid": 0.0025935596408819947,
+      "definitely_positive": true
+    }
+  ],
+  "derived_uniform_E2_lower": 2.537215320624563e-06,
+  "notebook_guide_note": "Notebook Run-18 described an interior E2 minimum near L\u22481.10595 with E2''>0 / E2'>0 split regions. The regenerated true Gram (pole outer-product calibrated at log3) is monotone in E2 on this cell; uniformity uses monotonicity rather than the notebook split.",
+  "dependencies": [
+    "e1_fourier_T84_points.json"
+  ],
+  "note": "rh_proof_claim remains false. E1 here is finite-block T=84 positivity only.",
+  "generated_utc": "2026-08-16T03:00:47Z",
+  "content_hash": "cc0d02a92d1a91f8cf04e1df8387d840cf52c3d298a6b0eeee3035f629bc8d16"
+}

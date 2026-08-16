@@ -1,9 +1,9 @@
 {
-  "certificate_version": "0.2",
+  "certificate_version": "0.3",
   "program": "RH/Weil scalar cell numerical path",
   "work_order": "WO-RH-09",
-  "evidence_class": "E0_PLUS_SAMPLES",
-  "status": "STRUCTURAL_E0_RETAINED_G00_E1_PENDING_CALIBRATION",
+  "evidence_class": "E1_SAMPLES_PLUS_E0_CURVATURE",
+  "status": "ABSOLUTE_G00_REGENERATED_PENDING_FULL_CELL_COVER",
   "hard_constraints_certified": true,
   "rh_proof_claim": false,
   "normalization": "G = G0 - Gp + Ginf",
@@ -26,34 +26,51 @@
     "evidence_class": "E0",
     "rh_proof_claim": false
   },
-  "curvature_samples": [
+  "samples": [
     {
       "L": 1.0986122896681099,
       "W00_second_lower": 3.3197640499693275,
-      "W00_second_upper": 3.3197640499693275
+      "W00_second_upper": 3.3197640499693275,
+      "G00_lower": 0.12611902925836344,
+      "G00_upper": 0.13834327797066376,
+      "G00_definitely_positive": true
     },
     {
       "L": 1.1059498113,
       "W00_second_lower": 3.335377505438275,
-      "W00_second_upper": 3.335377505438275
+      "W00_second_upper": 3.335377505438275,
+      "G00_lower": 0.1261454985033721,
+      "G00_upper": 0.1383697472156724,
+      "G00_definitely_positive": true
     },
     {
       "L": 1.2,
       "W00_second_lower": 3.5347290746906297,
-      "W00_second_upper": 3.5347290746906297
+      "W00_second_upper": 3.5347290746906297,
+      "G00_lower": 0.15791911623486102,
+      "G00_upper": 0.17014336494716134,
+      "G00_definitely_positive": true
     },
     {
       "L": 1.3862943601198905,
       "W00_second_lower": 3.9333333311577774,
-      "W00_second_upper": 3.9333333311577774
+      "W00_second_upper": 3.9333333311577774,
+      "G00_lower": 0.41847815464393195,
+      "G00_upper": 0.4307024033562323,
+      "G00_definitely_positive": true
     }
   ],
   "min_sample_W00_second_lower": 3.3197640499693275,
+  "min_sample_G00_lower": 0.12611902925836344,
+  "all_sample_G00_definitely_positive": true,
   "backend": {
     "name": "python-flint/Arb",
     "version": "0.9.0",
-    "precision_bits": 256
+    "precision_bits": 192
   },
   "notebook_regression_target_G00": "0.0753795566117244",
-  "note": "W00'' positivity remains E0 algebraic. Full G00(L) E1 lower bound awaits first-principles absolute calibration of the continuous antiderivative (notebook value is regression-only)."
+  "notebook_target_in_regenerated_range": false,
+  "note": "W00''>0 remains E0 algebraic. Absolute G00 uses even pole outer-product + truncated Fourier + archimedean tail majorant. Regenerated scale (~0.12\u20130.13 near the cell minimizer) differs from the notebook 0.075\u2026 figure; notebook value is not a warrant. Promote to full-cell E1 after interval cover of the unique minimizer.",
+  "generated_utc": "2026-08-16T02:55:48Z",
+  "content_hash": "cec25e2af6241bfba032f58df347b60bc77fb3f32008e58fb3265de7a7ab9ba8"
 }

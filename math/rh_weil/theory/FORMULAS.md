@@ -47,7 +47,17 @@ Hb = L^3/2 exp(iz) B(z).
 
 Hb = -2i/t Hq1.
 
-## Degree-2 parity factorization
+## Even pole block
+
+With \(v_\pm=(I_0^\pm,I_b^\pm)\), \(I_0^\pm=\int_0^L e^{\pm x/2}\,dx\),
+\(I_b^\pm=E_b^\pm\), and scale \(s=\sqrt{3}/2\),
+
+\[
+G^0[{1,b}] = s\bigl(v_+v_+^\top + v_-v_-^\top\bigr).
+\]
+
+Rank ≤ 1 (exact det 0). Odd pivot: \(G^0[q_1,q_1]=-8A(L)^2\).
+
 
 Let O1,T=G_T[q1,q1], E2,T=det G_T[{1,b}], D2,T=det G_T[{1,x^2}]. Then
 
