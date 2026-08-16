@@ -5,6 +5,7 @@
 - `math/rh_weil/README.md`
 - `math/rh_weil/AGENT_INSTRUCTIONS.md`
 - `math/rh_weil/INTEGRATION_MANIFEST.md`
+- `math/rh_weil/SHA256SUMS.txt`
 - `math/rh_weil/theory/FORMULAS.md`
 - `math/rh_weil/src/core.py`
 - `math/rh_weil/src/__init__.py`
