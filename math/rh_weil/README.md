@@ -25,6 +25,18 @@ Imported notebook claims are intentionally marked `IMPORTED_PENDING_REGENERATION
 
 Reproduce the fully direct Fourier-side uniform degree-2 certificate at `T=84` by interval coverage of the centered-even determinant, then proceed to the midpoint-odd degree-3 block.
 
+**Executed in-repo so far (see `certificates/work_order_status.json`):**
+- WO-RH-01/03/04 — exact identities, f1 audit, bubble block (E0)
+- WO-RH-02 — scalar cell `[log 3, log 4]` algebraic `W00''>0` (E0)
+- WO-RH-05 — stable `H0`/`Hb` + L-jets; E3 energy-probe scan only (interval E1 **open**)
+- WO-RH-06/07 — regenerated E0 certificates + dedicated runner (does not expand root CI)
+
+Run:
+
+```bash
+python math/rh_weil/scripts/run_rh_weil_suite.py
+```
+
 See `AGENT_INSTRUCTIONS.md` and `notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md`.
 
 Optional external oracle (not required at runtime): `external/` wraps

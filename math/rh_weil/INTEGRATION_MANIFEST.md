@@ -8,29 +8,42 @@
 - `math/rh_weil/SHA256SUMS.txt`
 - `math/rh_weil/theory/FORMULAS.md`
 - `math/rh_weil/src/core.py`
+- `math/rh_weil/src/cells.py`
+- `math/rh_weil/src/scalar.py`
+- `math/rh_weil/src/fourier.py`
+- `math/rh_weil/src/certificate_io.py`
 - `math/rh_weil/src/mpmath_core.py`
 - `math/rh_weil/src/__init__.py`
-- `math/rh_weil/tests/test_exact_identities.py`
-- `math/rh_weil/tests/test_connes_cvs_adapter_contract.py`
-- `math/rh_weil/tests/test_connes_cvs_crosschecks.py`
-- `math/rh_weil/certificates/imported_notebook_state.json`
-- `math/rh_weil/certificates/external/connes_cvs_crossvalidation_v0.1.json`
-- `math/rh_weil/notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md`
-- `math/rh_weil/external/` (Connes–CvS adapter, crosschecks XC-01..06, provenance)
+- `math/rh_weil/tests/` (exact, scalar, Fourier, Connes contract/XC)
+- `math/rh_weil/certificates/` (E0 regenerated + E3 Fourier scan; imported pending unchanged)
+- `math/rh_weil/external/` (optional Connes–CvS oracle)
+- `math/rh_weil/scripts/run_rh_weil_suite.py`
 - `math/rh_weil/scripts/run_connes_cvs_crosschecks.py`
 - `docs/rh-weil-integration-v0.1.md`
 
 ## Existing files intentionally not changed
 
-No existing Atlas certificate, PIR schema, canonical document, CI runner, or benchmark implementation was overwritten. Integration is additive so a remote coding agent can review and promote the module in controlled stages.
+No existing Atlas root certificates, PIR schemas, or `ci/run_all_certified.py` were
+expanded. RH has a dedicated runner only (WO-RH-07).
 
-## Local validation performed during packaging
+## Work-order status
 
-`python math/rh_weil/tests/test_exact_identities.py` -> 5 tests PASS.
-`python math/rh_weil/tests/test_connes_cvs_adapter_contract.py` -> 2 tests PASS (stdlib; optional `connes-cvs` not required).
-`python math/rh_weil/tests/test_connes_cvs_crosschecks.py` -> PASS (skips XC suite if oracle absent; with oracle: XC-01..03 at dps 40 and 80).
-`python math/rh_weil/scripts/run_connes_cvs_crosschecks.py` -> ACCEPTANCE GATE PASSED; external certificate written with `rh_proof_claim: false`.
+| Order | Status |
+|---|---|
+| WO-RH-01 | done (exact identities) |
+| WO-RH-02 | done (E0 scalar cell [log3,log4]) |
+| WO-RH-03 | done (f1 / midpoint-odd) |
+| WO-RH-04 | done (bubble algebraic block) |
+| WO-RH-05 | partial — stable H0/Hb + L-jets + E3 probe scan; **interval E1 coverage still open** |
+| WO-RH-06 | partial — E0 certs regenerated; imported notebook not promoted |
+| WO-RH-07 | done — `scripts/run_rh_weil_suite.py` |
+| WO-RH-08 | blocked until WO-RH-05 E1 closes |
 
-Upstream fast tests (source tip): `pytest tests/test_validation.py tests/test_operator_hardening.py` -> 98 passed.
+## Local validation
 
-Exact/algebraic tests are not interval certificates. External XC results are E3 diagnostics (XC-06 external finite-matrix E1 only).
+```bash
+python math/rh_weil/scripts/run_rh_weil_suite.py
+```
+
+Exact/algebraic tests are stdlib. Fourier forms and Connes XC need `mpmath`
+(and optionally `connes-cvs`). No RH proof claim is emitted.
