@@ -1,0 +1,20 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil exact identities",
+  "work_order": "WO-RH-01/03/04",
+  "evidence_class": "E0",
+  "status": "REGENERATED",
+  "hard_constraints_certified": true,
+  "normalization": "G = G0 - Gp + Ginf",
+  "claim_boundary": "finite_block_only_no_rh_proof",
+  "rh_proof_claim": false,
+  "checks": [
+    "overlap_c / K_ij kernels",
+    "midpoint-odd K_q1q1 + sign threshold",
+    "bubble even block det",
+    "degree-2 parity factorization identities"
+  ],
+  "note": "Algebraic identities only; not an interval or RH certificate.",
+  "generated_utc": "2026-08-16T00:52:06Z",
+  "content_hash": "b680d7652dd75a5ce65cd46641930dd7b62c0e71d4a01a8b02a1d331bfae4183"
+}

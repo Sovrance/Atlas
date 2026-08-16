@@ -1,0 +1,130 @@
+"""Certificate I/O for RH/Weil (WO-RH-06). Stdlib JSON only."""
+from __future__ import annotations
+
+import hashlib
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict
+
+ROOT = Path(__file__).resolve().parents[1]
+CERT_DIR = ROOT / "certificates"
+
+
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def source_hash(paths: list[Path]) -> str:
+    h = hashlib.sha256()
+    for p in sorted(paths, key=lambda x: str(x)):
+        h.update(p.read_bytes())
+        h.update(b"\0")
+    return h.hexdigest()
+
+
+def write_certificate(name: str, body: Dict[str, Any]) -> Path:
+    CERT_DIR.mkdir(parents=True, exist_ok=True)
+    path = CERT_DIR / name
+    if "rh_proof_claim" not in body:
+        body["rh_proof_claim"] = False
+    if "generated_utc" not in body:
+        body["generated_utc"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    # Content hash excludes volatile timestamp.
+    stable = {k: v for k, v in body.items() if k not in {"generated_utc", "content_hash"}}
+    body["content_hash"] = sha256_bytes(
+        json.dumps(stable, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    )
+    path.write_text(json.dumps(body, indent=2) + "\n", encoding="utf-8")
+    return path
+
+
+def build_e0_exact_certificate() -> Dict[str, Any]:
+    import core
+
+    return {
+        "certificate_version": "0.1",
+        "program": "RH/Weil exact identities",
+        "work_order": "WO-RH-01/03/04",
+        "evidence_class": "E0",
+        "status": "REGENERATED",
+        "hard_constraints_certified": True,
+        "normalization": core.NORMALIZATION,
+        "claim_boundary": core.CLAIM_BOUNDARY,
+        "rh_proof_claim": False,
+        "checks": [
+            "overlap_c / K_ij kernels",
+            "midpoint-odd K_q1q1 + sign threshold",
+            "bubble even block det",
+            "degree-2 parity factorization identities",
+        ],
+        "note": "Algebraic identities only; not an interval or RH certificate.",
+    }
+
+
+def build_e0_scalar_cell_certificate(report: Dict[str, Any]) -> Dict[str, Any]:
+    import core
+
+    return {
+        "certificate_version": "0.1",
+        "program": "RH/Weil scalar cell [log3, log4]",
+        "work_order": "WO-RH-02",
+        "evidence_class": "E0",
+        "status": "REGENERATED",
+        "hard_constraints_certified": bool(report.get("w00_second_positive")),
+        "normalization": core.NORMALIZATION,
+        "claim_boundary": core.CLAIM_BOUNDARY,
+        "rh_proof_claim": False,
+        "domain": {"L_interval": ["log(3)", "log(4)"]},
+        "report": report,
+        "note": (
+            "Algebraic positivity of W00'' on the cell and jump bookkeeping. "
+            "Does not promote imported notebook numeric lower bounds."
+        ),
+    }
+
+
+def build_e3_fourier_scan_certificate(scan: Dict[str, Any]) -> Dict[str, Any]:
+    import core
+
+    return {
+        "certificate_version": "0.1",
+        "program": "RH/Weil direct-Fourier T=84 probe scan",
+        "work_order": "WO-RH-05",
+        "evidence_class": "E3",
+        "status": "HEURISTIC_SCAN_PENDING_INTERVAL_COVERAGE",
+        "hard_constraints_certified": False,
+        "normalization": core.NORMALIZATION,
+        "claim_boundary": core.CLAIM_BOUNDARY,
+        "rh_proof_claim": False,
+        "domain": {"fourier_cutoff_T": 84, "L_interval": ["log(3)", "log(4)"]},
+        "targets_pending_E1": [
+            "E2,84'' > 0 on [log(3), 1.20]",
+            "E2,84' > 0 on [1.20, log(4)]",
+            "interval point ball near L=1.1059498113",
+        ],
+        "scan": scan,
+        "note": (
+            "Stable H0/Hb forms and L-jets are implemented. Uniform interval "
+            "coverage of the true Weil E2,84 Gram is NOT closed; this scan is "
+            "heuristic energy-probe only and must not be promoted to E1."
+        ),
+    }
+
+
+def build_work_order_status() -> Dict[str, Any]:
+    return {
+        "certificate_version": "0.1",
+        "program": "RH/Weil work-order status",
+        "rh_proof_claim": False,
+        "orders": {
+            "WO-RH-01": "done",
+            "WO-RH-02": "done_E0_scalar_cell",
+            "WO-RH-03": "done",
+            "WO-RH-04": "done_algebraic",
+            "WO-RH-05": "partial_forms_E3_scan_pending_interval_E1",
+            "WO-RH-06": "done_partial_E0_certs_no_imported_promotion",
+            "WO-RH-07": "done_dedicated_runner",
+            "WO-RH-08": "blocked_until_WO-RH-05_E1",
+        },
+    }

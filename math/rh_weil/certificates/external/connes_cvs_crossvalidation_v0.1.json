@@ -1,0 +1,356 @@
+{
+  "certificate_version": "0.1",
+  "program": "Atlas RH/Weil \u00d7 Connes-CvS cross-validation",
+  "generated_utc": "2026-08-16T00:48:56Z",
+  "rh_proof_claim": false,
+  "evidence_policy": {
+    "XC-01_to_XC-04": "E3 / HEURISTIC diagnostic until Atlas interval wrapping",
+    "XC-06_external": "external E1 restricted to supplied finite matrix",
+    "promotion": "Never promote upstream floats to Atlas E1; never claim RH"
+  },
+  "upstream": {
+    "repository": "https://github.com/akivag613/connes-cvs-",
+    "package": "connes-cvs",
+    "installed_version": "0.3.1",
+    "tested_version": "0.3.1",
+    "tip_sha_at_integration": "8ce0fc791ed9c9ca6f4ba512322720b4be80421b",
+    "canonical_proof_engine": false
+  },
+  "dependencies": {
+    "python": "3.14.4",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "mpmath": "1.4.1",
+    "python_flint": "0.9.0",
+    "flint_dps_default": 15,
+    "connes_cvs": "0.3.1",
+    "connes_cvs_tested_version": "0.3.1",
+    "upstream_repository": "https://github.com/akivag613/connes-cvs-",
+    "upstream_tip_sha_at_integration": "8ce0fc791ed9c9ca6f4ba512322720b4be80421b"
+  },
+  "atlas_source_hash": "70c79a12df58afb37a16423f482c6eb7422d5716caa5cca4c15e9aec603edd88",
+  "acceptance_gate": {
+    "required": [
+      "XC-01",
+      "XC-02",
+      "XC-03"
+    ],
+    "precision_levels": [
+      40,
+      80
+    ],
+    "passed": true
+  },
+  "results": [
+    {
+      "test_id": "XC-01",
+      "status": "pass",
+      "evidence_class": "E3",
+      "precision_dps": 40,
+      "detail": {
+        "worst_abs_error_mpmath_backend": "0.0",
+        "worst_abs_error_default_backend": "1.0243052000831590608e-15",
+        "tolerance_mpmath_backend": "1.0e-30",
+        "tolerance_default_backend_floor": "1.0e-12",
+        "samples": [
+          {
+            "tau": "0.0",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "1.0243052000831590608e-15"
+          },
+          {
+            "tau": "0.1",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "8.1258948224460212946e-16"
+          },
+          {
+            "tau": "1.0",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "3.1521947429083185694e-16"
+          },
+          {
+            "tau": "7.0",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "9.6306926487437800203e-17"
+          },
+          {
+            "tau": "21.218",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "1.3121367088259195326e-16"
+          },
+          {
+            "tau": "84.0",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "1.0182520491960452298e-16"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "XC-02",
+      "status": "pass",
+      "evidence_class": "E3",
+      "precision_dps": 40,
+      "detail": {
+        "worst_abs_error": "2.2970081691636905541e-41",
+        "tolerance": "1.0e-30",
+        "n_samples": 21,
+        "samples_head": [
+          {
+            "L": "log(3)",
+            "t": "0.0",
+            "abs_error": "0.0"
+          },
+          {
+            "L": "log(3)",
+            "t": "9.1023922662683739361e-13",
+            "abs_error": "2.295887403949780289e-41"
+          },
+          {
+            "L": "log(3)",
+            "t": "9.1023922662683739361e-9",
+            "abs_error": "2.2958874039497803049e-41"
+          },
+          {
+            "L": "log(3)",
+            "t": "0.10000000000000000555",
+            "abs_error": "2.295887403949780289e-41"
+          },
+          {
+            "L": "log(3)",
+            "t": "7.0",
+            "abs_error": "1.4349296274686126806e-42"
+          },
+          {
+            "L": "log(3)",
+            "t": "21.217999999999999972",
+            "abs_error": "7.1746481373430634031e-43"
+          },
+          {
+            "L": "log(3)",
+            "t": "84.0",
+            "abs_error": "3.5873240686715317016e-43"
+          },
+          {
+            "L": "1.1059498113",
+            "t": "0.0",
+            "abs_error": "0.0"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "XC-03",
+      "status": "pass",
+      "evidence_class": "E3",
+      "precision_dps": 40,
+      "detail": {
+        "c": 4,
+        "active_cell": "[log(3), log(4)]",
+        "n": [
+          2,
+          3,
+          4
+        ],
+        "worst_log_error": "0.0",
+        "worst_weight_error": "0.0",
+        "tolerance": "1.0e-30"
+      }
+    },
+    {
+      "test_id": "XC-01",
+      "status": "pass",
+      "evidence_class": "E3",
+      "precision_dps": 80,
+      "detail": {
+        "worst_abs_error_mpmath_backend": "0.0",
+        "worst_abs_error_default_backend": "1.0243052000831590608e-15",
+        "tolerance_mpmath_backend": "1.0e-70",
+        "tolerance_default_backend_floor": "1.0e-12",
+        "samples": [
+          {
+            "tau": "0.0",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "1.0243052000831590608e-15"
+          },
+          {
+            "tau": "0.1",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "8.1258948224460212946e-16"
+          },
+          {
+            "tau": "1.0",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "3.1521947429083185694e-16"
+          },
+          {
+            "tau": "7.0",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "9.6306926487437800203e-17"
+          },
+          {
+            "tau": "21.218",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "1.3121367088259195326e-16"
+          },
+          {
+            "tau": "84.0",
+            "abs_error_mpmath_backend": "0.0",
+            "abs_error_default_backend": "1.0182520491960452298e-16"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "XC-02",
+      "status": "pass",
+      "evidence_class": "E3",
+      "precision_dps": 80,
+      "detail": {
+        "worst_abs_error": "4.2168791772922092897e-81",
+        "tolerance": "1.0e-70",
+        "n_samples": 21,
+        "samples_head": [
+          {
+            "L": "log(3)",
+            "t": "0.0",
+            "abs_error": "0.0"
+          },
+          {
+            "L": "log(3)",
+            "t": "9.1023922662683739361e-13",
+            "abs_error": "4.2168791772922092897e-81"
+          },
+          {
+            "L": "log(3)",
+            "t": "9.1023922662683739361e-9",
+            "abs_error": "2.1084395886461046449e-81"
+          },
+          {
+            "L": "log(3)",
+            "t": "0.10000000000000000555",
+            "abs_error": "0.0"
+          },
+          {
+            "L": "log(3)",
+            "t": "7.0",
+            "abs_error": "1.317774742903815403e-82"
+          },
+          {
+            "L": "log(3)",
+            "t": "21.217999999999999972",
+            "abs_error": "1.4733169520826199263e-82"
+          },
+          {
+            "L": "log(3)",
+            "t": "84.0",
+            "abs_error": "3.6832923802065498157e-83"
+          },
+          {
+            "L": "1.1059498113",
+            "t": "0.0",
+            "abs_error": "0.0"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "XC-03",
+      "status": "pass",
+      "evidence_class": "E3",
+      "precision_dps": 80,
+      "detail": {
+        "c": 4,
+        "active_cell": "[log(3), log(4)]",
+        "n": [
+          2,
+          3,
+          4
+        ],
+        "worst_log_error": "0.0",
+        "worst_weight_error": "0.0",
+        "tolerance": "1.0e-70"
+      }
+    },
+    {
+      "test_id": "XC-04",
+      "status": "pass",
+      "evidence_class": "E3",
+      "precision_dps": 40,
+      "detail": {
+        "note": "Isolates archimedean multiplier inside Atlas scalar probe; not an RH claim.",
+        "worst_abs_error": "2.295887403949780289e-41",
+        "tolerance": "1.0e-27",
+        "rows": [
+          {
+            "L": "log(3)",
+            "T": 84,
+            "atlas_hplus_probe": "-1.9703914395380496355",
+            "cvs_hplus_probe": "-1.9703914395380496355",
+            "abs_error": "2.295887403949780289e-41"
+          },
+          {
+            "L": "1.1059498113",
+            "T": 84,
+            "atlas_hplus_probe": "-1.9924859457472729871",
+            "cvs_hplus_probe": "-1.9924859457472729871",
+            "abs_error": "0.0"
+          },
+          {
+            "L": "log(4)",
+            "T": 84,
+            "atlas_hplus_probe": "-2.8861592367237663541",
+            "cvs_hplus_probe": "-2.8861592367237663541",
+            "abs_error": "0.0"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "XC-05",
+      "status": "inconclusive",
+      "evidence_class": "E3",
+      "precision_dps": null,
+      "detail": {
+        "reason": "Projection bridge requires explicit Atlas\u2194CvS basis map; not claimed equal by index.",
+        "next": "WO-CVS-04"
+      }
+    },
+    {
+      "test_id": "XC-06",
+      "status": "pass",
+      "evidence_class": "external_E1_finite_matrix_only",
+      "precision_dps": 40,
+      "detail": {
+        "scope": "finite real-symmetric matrix only; no infinite-operator / RH conclusion",
+        "atlas_residual_norm": "0.0",
+        "external_certificate": {
+          "schema": "connes-cvs.finite-matrix-eigenpair-certificate.v1",
+          "residual_bound": "0",
+          "residual_bound_exact": "0x0*2**0",
+          "residual_bound_dyadic": {
+            "sign": 0,
+            "mantissa_hex": "0",
+            "exponent_base_2": 0
+          },
+          "residual_bound_display_digits": 25,
+          "lambda_center": "0x5*2**0",
+          "lambda_center_decimal_display": "5.0",
+          "lambda_center_dyadic": {
+            "sign": 1,
+            "mantissa_hex": "5",
+            "exponent_base_2": 0
+          },
+          "matrix_dimension": 2,
+          "certificate_dps": 40,
+          "certificate_bits": 160,
+          "input_sha256": "0c759d08acc7b2c03296a8435f35128a9d602bf06b92f37dac627e0d73b8f194",
+          "input_hash_schema": "connes-cvs.mpf-eigenpair.sha256.v1",
+          "python_flint_version": "0.9.0",
+          "finite_matrix_only": true,
+          "rigorous_scope": "exact supplied finite symmetric mpf matrix only",
+          "implication": "For this finite real-symmetric matrix, at least one eigenvalue lies within residual_bound of the exact lambda_center_dyadic value. No infinite-dimensional or truncation-limit claim is implied."
+        }
+      }
+    }
+  ]
+}

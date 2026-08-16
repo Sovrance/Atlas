@@ -1,0 +1,33 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil scalar cell [log3, log4]",
+  "work_order": "WO-RH-02",
+  "evidence_class": "E0",
+  "status": "REGENERATED",
+  "hard_constraints_certified": true,
+  "normalization": "G = G0 - Gp + Ginf",
+  "claim_boundary": "finite_block_only_no_rh_proof",
+  "rh_proof_claim": false,
+  "domain": {
+    "L_interval": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "report": {
+    "cell": [
+      1.0986122886681098,
+      1.3862943611198906
+    ],
+    "w00_second_positive": true,
+    "algebraic_reason": "For r\u2208[3.0000000000000004,4.0], r\u00b3-r-1 \u2265 23.00000000000001 > 0 and \u221ar(r\u00b2-1)>0 \u21d2 W00''(L)=2(r\u00b3-r-1)/(\u221ar(r\u00b2-1)) > 0 algebraically.",
+    "left_jump": -1.268568201195128,
+    "right_jump": -0.6931471805599453,
+    "at_most_one_interior_minimizer": true,
+    "evidence_class": "E0",
+    "rh_proof_claim": false
+  },
+  "note": "Algebraic positivity of W00'' on the cell and jump bookkeeping. Does not promote imported notebook numeric lower bounds.",
+  "generated_utc": "2026-08-16T00:52:06Z",
+  "content_hash": "b4bcac6e506bd97272f31885af28b06c9208d1b3ac587ccfb519cffcd3fe0383"
+}
