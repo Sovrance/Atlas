@@ -1,0 +1,61 @@
+{
+  "certificate_version": "0.3",
+  "program": "RH/Weil compact degree-2 even block",
+  "work_order": "WO-RH-11",
+  "evidence_class": "E3",
+  "status": "POLE_WIRED_PENDING_TIGHT_TAIL_FOR_E1",
+  "hard_constraints_certified": false,
+  "rh_proof_claim": false,
+  "normalization": "G = G0 - Gp + Ginf",
+  "domain": {
+    "L_interval": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "samples": [
+    {
+      "L": 1.0986122886681098,
+      "E2_lower": -1.9987956875259946e-05,
+      "D2_lower": 0.0025165880200164483,
+      "full_det_lower": -3.35263141440301e-07,
+      "pole_det_abs": 7.965459555662261e-59
+    },
+    {
+      "L": 1.1059498113,
+      "E2_lower": 4.110090097668081e-06,
+      "D2_lower": 0.0028795620778913696,
+      "full_det_lower": 7.713829225955413e-08,
+      "pole_det_abs": 7.965459555662261e-59
+    },
+    {
+      "L": 1.2,
+      "E2_lower": 0.0003050100606582414,
+      "D2_lower": 0.00921692218519455,
+      "full_det_lower": 1.2086483984121298e-05,
+      "pole_det_abs": 1.5930919111324523e-58
+    },
+    {
+      "L": 1.3862943611198906,
+      "E2_lower": 0.0032836590707158975,
+      "D2_lower": 0.04164155217562705,
+      "full_det_lower": 0.0001579981910275177,
+      "pole_det_abs": 0.0
+    }
+  ],
+  "min_sample_E2_lower": -1.9987956875259946e-05,
+  "all_samples_definitely_positive": false,
+  "pole_rank1_regression_ok": true,
+  "backend": {
+    "name": "python-flint/Arb",
+    "version": "0.9.0",
+    "precision_bits": 192
+  },
+  "dependencies": [
+    "e0_scalar_cell_log3_log4.json",
+    "WO-RH-10 assembly"
+  ],
+  "note": "Even pole outer-product (\u221a3/2)(v\u208av\u208a\u1d40+v\u208bv\u208b\u1d40) wired. Cutoff-free archimedean uses truncated Fourier + absolute tail majorant; tighten tail / quad before E1 promotion.",
+  "generated_utc": "2026-08-16T02:56:12Z",
+  "content_hash": "d33afa67f2d4a8f83f90d7035e3024dfc80721472ed3f9b3d8d2ee60c800dc21"
+}

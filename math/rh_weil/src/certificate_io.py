@@ -114,17 +114,33 @@ def build_e3_fourier_scan_certificate(scan: Dict[str, Any]) -> Dict[str, Any]:
 
 def build_work_order_status() -> Dict[str, Any]:
     return {
-        "certificate_version": "0.1",
+        "certificate_version": "0.2",
         "program": "RH/Weil work-order status",
         "rh_proof_claim": False,
+        "eng_spec": "ATLAS-RH-ENG-002 / Run 18 parity",
         "orders": {
             "WO-RH-01": "done",
             "WO-RH-02": "done_E0_scalar_cell",
             "WO-RH-03": "done",
             "WO-RH-04": "done_algebraic",
-            "WO-RH-05": "partial_forms_E3_scan_pending_interval_E1",
+            "WO-RH-05": "done_E1_uniform_true_weil_gram",
             "WO-RH-06": "done_partial_E0_certs_no_imported_promotion",
             "WO-RH-07": "done_dedicated_runner",
-            "WO-RH-08": "blocked_until_WO-RH-05_E1",
+            "WO-RH-08": "unblocked_pending_degree3_implementation",
+            "WO-RH-09": "partial_absolute_G00_regenerated_pending_full_cell_cover",
+            "WO-RH-10": "partial_assembly_pending_tail_bound",
+            "WO-RH-11": "partial_pole_wired_pending_tight_tail",
+            "WO-RH-12": "done_true_weil_gram_with_pole_and_quad_bound",
+            "WO-RH-13": "done_E1_T84_points",
+            "WO-RH-14": "done_analytic_jets",
+            "WO-RH-15": "done_E1_uniform_true_weil_gram",
+            "WO-RH-16": "done_pir_export_partial",
         },
+        "notes": [
+            "E3 energy probe quarantined as fourier_energy_probe",
+            "No RH proof claim",
+            "Even pole outer-product (sqrt(3)/2)(v+v+^T+v-v-^T) wired",
+            "Uniform T=84 uses regenerated monotone E2' > 0 (not notebook split)",
+            "E1 filename prefixes may hold non-E1 status until gates close",
+        ],
     }

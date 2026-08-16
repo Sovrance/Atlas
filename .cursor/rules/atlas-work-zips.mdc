@@ -1,0 +1,29 @@
+---
+description: Sprint/work zips are executable work orders, not archive-only drops
+alwaysApply: true
+---
+
+# Atlas work-zip protocol
+
+When the user provides a zip path (Downloads, chat upload, or `archive/sprint-drops/`), treat it as **work to execute**, not as “upload/archive into the repo.”
+
+## Required sequence
+
+1. **Unzip** into a temp extract dir (e.g. `_zip_cmp/`).
+2. **Read** agent instructions / work orders / checklists / manifests first.
+3. **Execute** the work orders against the live tree (implement, test, regenerate certificates).
+4. **Archive** the original zip under `archive/sprint-drops/` only as provenance *after* (or alongside) execution — never as the sole action.
+5. **Clean** temp extracts; do not commit `__pycache__`, loose upload zips at repo root, or duplicate superseded trees.
+
+## Do not
+
+- Only copy the zip into `archive/sprint-drops/` and stop.
+- Blindly overwrite live `pir/`, `b13_cdl/`, certificates, or evolved schemas with older zip contents.
+- Merge duplicate/superseded trees; integrate **non-duplicate** work only.
+- Expand root `ci/run_all_certified.py` unless a work order explicitly requires it after certificates are reproducible.
+
+## Evidence rules (RH/Weil and similar)
+
+- Never emit or imply an RH proof from finite blocks.
+- Keep `rh_proof_claim: false` unless a work order explicitly says otherwise (it should not).
+- Do not promote `IMPORTED_PENDING_REGENERATION` or E3 scans to E1 without regenerated interval evidence.

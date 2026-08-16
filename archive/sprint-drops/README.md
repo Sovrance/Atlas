@@ -19,3 +19,4 @@ Extracted trees (`*-extract/`) are ephemeral and gitignored; use these zips if y
 | `gv-b13-cdl-v0.1.zip` | superseded by `b13_cdl/` on main | Original B13-CDL delivery drop; live tree has PIR bridge + stable cert names — do not re-extract over `b13_cdl/` |
 | `gv-rh-weil-integrated.zip` | (this PR) | RH/Weil positivity scaffold ? `math/rh_weil/` + `docs/rh-weil-integration-v0.1.md` (additive only; rest of zip was line-ending noise vs main) |
 | `gv-rh-connes-cvs-crossvalidation-v0.1.zip` | (this PR) | Optional Connes–CvS external oracle ? `math/rh_weil/external/` + contract tests |
+| `gv-rh-eng-002-math-parity-run18.zip` | (this PR) | ENG-002 Run-18 parity work order ? `math/rh_weil/docs/` + WO-RH-09..16 execution |

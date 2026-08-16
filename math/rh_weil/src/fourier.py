@@ -93,19 +93,13 @@ def Hb_L_jet(t: Any, L: Any, order: int = 1):
     return vals[: order + 1]
 
 
-def fourier_even_gram_entries(L: Any, T: int, dps: int = 40):
-    """Assemble floating G00, G0b, Gbb archimedean-style probes at cutoff T.
-
-    This is a **diagnostic E3 scaffold** using |H|^2-type energy, not the full
-    Weil G^0-G^p+G^∞ matrix. Full interval E2,84 coverage remains WO-RH-05 open
-    work until the complete finite-Fourier Gram is regenerated.
-    """
+def fourier_energy_probe(L: Any, T: int, dps: int = 40):
+    """Quarantined E3 |H|^2 energy probe — NOT the true Weil Gram (ENG-002 §1)."""
     mp = require_mpmath()
     old = mp.mp.dps
     mp.mp.dps = dps
     try:
         L_m = mp.mpf(L)
-        # Trapezoid on a coarse t-grid in [0,T] — heuristic only.
         n = max(32, int(T))
         g00 = mp.mpf(0)
         g0b = mp.mpf(0)
@@ -115,7 +109,6 @@ def fourier_even_gram_entries(L: Any, T: int, dps: int = 40):
             w = mp.mpf("0.5") if i in (0, n) else mp.mpf(1)
             h0 = H0(t, L_m)
             hb = Hb(t, L_m)
-            # Use real parts of conjugated products (energy).
             g00 += w * (mp.re(h0) ** 2 + mp.im(h0) ** 2)
             g0b += w * (mp.re(h0) * mp.re(hb) + mp.im(h0) * mp.im(hb))
             gbb += w * (mp.re(hb) ** 2 + mp.im(hb) ** 2)
@@ -130,18 +123,24 @@ def fourier_even_gram_entries(L: Any, T: int, dps: int = 40):
             "Gbb": gbb,
             "E2_probe": det,
             "evidence_class": "E3",
+            "quarantined": True,
             "note": "Heuristic |H|^2 energy probe — not the certified Weil Gram.",
         }
     finally:
         mp.mp.dps = old
 
 
+def fourier_even_gram_entries(L: Any, T: int, dps: int = 40):
+    """Deprecated alias of :func:`fourier_energy_probe` (kept for callers)."""
+    return fourier_energy_probe(L, T, dps=dps)
+
+
 def scan_E2_probe(L_values, T: int = 84, dps: int = 25):
-    """E3 scan of the even-block probe along L samples."""
+    """E3 scan of the quarantined energy probe along L samples."""
     mp = require_mpmath()
     rows = []
     for L in L_values:
-        ent = fourier_even_gram_entries(L, T, dps=dps)
+        ent = fourier_energy_probe(L, T, dps=dps)
         rows.append(
             {
                 "L": str(L),

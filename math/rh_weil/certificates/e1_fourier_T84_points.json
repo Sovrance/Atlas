@@ -1,0 +1,155 @@
+{
+  "certificate_version": "0.3",
+  "program": "RH/Weil direct-Fourier T=84 point anchors",
+  "work_order": "WO-RH-13",
+  "evidence_class": "E1",
+  "status": "E1_POINTS_REGENERATED",
+  "hard_constraints_certified": true,
+  "rh_proof_claim": false,
+  "normalization": "G = G0 - Gp + Ginf",
+  "cutoff_T": 84,
+  "pole_even": "G0=(sqrt(3)/2)(v+ v+^T + v- v-^T), v\u00b1=(I0\u00b1,Ib\u00b1)",
+  "domain": {
+    "L_anchors": [
+      "log(3)",
+      "1.1059499883568553",
+      "log(4)"
+    ]
+  },
+  "backend": {
+    "name": "python-flint/Arb",
+    "version": "0.9.0",
+    "precision_bits": 192
+  },
+  "quadrature": {
+    "rule": "composite_trapezoid",
+    "n_quad": 65536,
+    "remainder": "|(b-a)h^2/12| max|f''| with enclosed M2 + M3 majorant"
+  },
+  "points": [
+    {
+      "id": "log3",
+      "L": "log(3)",
+      "L_value": 1.0986122886681098,
+      "enclosure": {
+        "G00": {
+          "lower": 0.10718493017961159,
+          "upper": 0.10752847058287593,
+          "mid": 0.10735670038124376,
+          "rad": 0.00017177020163217094
+        },
+        "G0b": {
+          "lower": 0.0004264718723735559,
+          "upper": 0.0004971685454794415,
+          "mid": 0.0004618202089264987,
+          "rad": 3.534833655294278e-05
+        },
+        "Gbb": {
+          "lower": 2.6003898598091385e-05,
+          "upper": 4.2503658705627007e-05,
+          "mid": 3.4253778651859196e-05,
+          "rad": 8.24988005376781e-06
+        },
+        "E2": {
+          "lower": 2.537215320624563e-06,
+          "upper": 4.39097417193579e-06,
+          "mid": 3.4640947462801763e-06,
+          "rad": 9.268794256556134e-07
+        }
+      },
+      "E2_definitely_positive": true,
+      "notebook_regression_contained": {
+        "G00": true,
+        "G0b": true,
+        "Gbb": true,
+        "E2": true
+      },
+      "pole_scale": "sqrt(3)/2",
+      "n_quad": 65536
+    },
+    {
+      "id": "interior",
+      "L": "1.1059499883568553",
+      "L_value": 1.1059499883568553,
+      "enclosure": {
+        "G00": {
+          "lower": 0.10722231678310425,
+          "upper": 0.10756994391349951,
+          "mid": 0.10739613034830188,
+          "rad": 0.00017381356519763358
+        },
+        "G0b": {
+          "lower": 0.0016845346587930578,
+          "upper": 0.0017568291080894084,
+          "mid": 0.001720681883441233,
+          "rad": 3.6147224648175325e-05
+        },
+        "Gbb": {
+          "lower": 0.0002208763366170716,
+          "upper": 0.00023785484197427295,
+          "mid": 0.00022936558929567227,
+          "rad": 8.489252678600678e-06
+        },
+        "E2": {
+          "lower": 2.0593472918656666e-05,
+          "upper": 2.2750988244163786e-05,
+          "mid": 2.1672230581410226e-05,
+          "rad": 1.07875766275356e-06
+        }
+      },
+      "E2_definitely_positive": true,
+      "notebook_regression_contained": {
+        "G00": false,
+        "G0b": false,
+        "Gbb": false,
+        "E2": false
+      },
+      "pole_scale": "sqrt(3)/2",
+      "n_quad": 65536
+    },
+    {
+      "id": "log4",
+      "L": "log(4)",
+      "L_value": 1.3862943611198906,
+      "enclosure": {
+        "G00": {
+          "lower": 0.3992965777600038,
+          "upper": 0.3998239915511367,
+          "mid": 0.39956028465557025,
+          "rad": 0.000263706895566429
+        },
+        "G0b": {
+          "lower": 0.10416501131685948,
+          "upper": 0.10432744560562754,
+          "mid": 0.10424622846124351,
+          "rad": 8.121714438402705e-05
+        },
+        "Gbb": {
+          "lower": 0.0336628778030418,
+          "upper": 0.03371536930362442,
+          "mid": 0.03368912355333311,
+          "rad": 2.6245750291309378e-05
+        },
+        "E2": {
+          "lower": 0.00255724215517502,
+          "upper": 0.0026298771415703345,
+          "mid": 0.0025935596483726772,
+          "rad": 3.6317493197657313e-05
+        }
+      },
+      "E2_definitely_positive": true,
+      "notebook_regression_contained": {
+        "G00": false,
+        "G0b": false,
+        "Gbb": false,
+        "E2": false
+      },
+      "pole_scale": "sqrt(3)/2",
+      "n_quad": 65536
+    }
+  ],
+  "log3_notebook_regression_ok": true,
+  "note": "Regenerated rigorous enclosures from the true Weil Gram. Run-16 notebook numbers are regression-only; log3 matches the calibrated pole+Fourier assembly. Interior/log4 notebook floats may reflect an older probe and need not lie in the regenerated balls.",
+  "generated_utc": "2026-08-16T02:56:00Z",
+  "content_hash": "122bcf5f9df2489357b63a77a2dec3febd83f58ed4368fb51b67124f8454def0"
+}

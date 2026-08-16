@@ -1,0 +1,111 @@
+{
+  "certificate_version": "0.2",
+  "program": "RH/Weil PIR export",
+  "work_order": "WO-RH-16",
+  "rh_proof_claim": false,
+  "n_facts": 4,
+  "facts": [
+    {
+      "fact_id": "fct_sha256_4b19669392ee2c15",
+      "pir_level": "L2",
+      "evidence_level": "E0",
+      "analyzer": {
+        "id": "rh_weil.e0_exact_identities",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "e0_exact_identities.json",
+        "program": "RH/Weil exact identities",
+        "status": "REGENERATED",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E0"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]"
+      ],
+      "warnings": []
+    },
+    {
+      "fact_id": "fct_sha256_8fcb3c7604f85acd",
+      "pir_level": "L2",
+      "evidence_level": "E0",
+      "analyzer": {
+        "id": "rh_weil.e0_scalar_cell_log3_log4",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "e0_scalar_cell_log3_log4.json",
+        "program": "RH/Weil scalar cell [log3, log4]",
+        "status": "REGENERATED",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E0"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]"
+      ],
+      "warnings": []
+    },
+    {
+      "fact_id": "fct_sha256_5580448de6815947",
+      "pir_level": "L2",
+      "evidence_level": "E3",
+      "analyzer": {
+        "id": "rh_weil.e3_fourier_T84_scan",
+        "version": "0.2.0",
+        "tag": "HEURISTIC"
+      },
+      "content": {
+        "certificate_file": "e3_fourier_T84_scan.json",
+        "program": "RH/Weil direct-Fourier T=84 probe scan",
+        "status": "HEURISTIC_SCAN_PENDING_INTERVAL_COVERAGE",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E3"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]"
+      ],
+      "warnings": [
+        {
+          "location": "e3_fourier_T84_scan.json",
+          "message": "E3 energy probe \u2014 not the true Weil Gram"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_0540bad5027d01ff",
+      "pir_level": "L2",
+      "evidence_level": "E3",
+      "analyzer": {
+        "id": "rh_weil.connes_cvs_crossvalidation_v0.1",
+        "version": "0.2.0",
+        "tag": "HEURISTIC"
+      },
+      "content": {
+        "certificate_file": "external/connes_cvs_crossvalidation_v0.1.json",
+        "program": "Atlas RH/Weil \u00d7 Connes-CvS cross-validation",
+        "status": null,
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E3"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]"
+      ],
+      "warnings": [
+        {
+          "location": "external/connes_cvs_crossvalidation_v0.1.json",
+          "message": "external cross-check only"
+        }
+      ]
+    }
+  ]
+}
