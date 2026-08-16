@@ -144,8 +144,22 @@ def ginf_even_block_quad(L, T: int, arb, n: int = 512):
     return g00 * dt / pi, g0b * dt / pi, gbb * dt / pi
 
 
-def finite_weil_even_block(L, T: int = 84, precision_bits: int = 256, n_quad: int = 512) -> Dict[str, Any]:
+def _require_backend(backend: str) -> None:
+    if backend != "flint":
+        raise FlintUnavailable(
+            f"backend={backend!r} unsupported; E-path requires backend='flint'"
+        )
+
+
+def finite_weil_even_block(
+    L,
+    T: int = 84,
+    precision_bits: int = 256,
+    n_quad: int = 512,
+    backend: str = "flint",
+) -> Dict[str, Any]:
     """Structured even-block assembly at cutoff T."""
+    _require_backend(backend)
     _, arb, _, _ = require_flint()
     set_precision_bits(precision_bits)
     L_a = arb(L)
@@ -179,8 +193,15 @@ def finite_weil_even_block(L, T: int = 84, precision_bits: int = 256, n_quad: in
     }
 
 
-def finite_weil_odd_pivot(L, T: int = 84, precision_bits: int = 256, n_quad: int = 512) -> Dict[str, Any]:
+def finite_weil_odd_pivot(
+    L,
+    T: int = 84,
+    precision_bits: int = 256,
+    n_quad: int = 512,
+    backend: str = "flint",
+) -> Dict[str, Any]:
     """O1 at finite T: G0 - Gp + Ginf for q1 (Ginf via Hb relation)."""
+    _require_backend(backend)
     _, arb, _, _ = require_flint()
     set_precision_bits(precision_bits)
     L_a = arb(L)
@@ -212,9 +233,20 @@ def finite_weil_odd_pivot(L, T: int = 84, precision_bits: int = 256, n_quad: int
     }
 
 
-def finite_weil_degree2(L, T: int = 84, precision_bits: int = 256, n_quad: int = 512) -> Dict[str, Any]:
-    even = finite_weil_even_block(L, T=T, precision_bits=precision_bits, n_quad=n_quad)
-    odd = finite_weil_odd_pivot(L, T=T, precision_bits=precision_bits, n_quad=n_quad)
+def finite_weil_degree2(
+    L,
+    T: int = 84,
+    precision_bits: int = 256,
+    n_quad: int = 512,
+    backend: str = "flint",
+) -> Dict[str, Any]:
+    _require_backend(backend)
+    even = finite_weil_even_block(
+        L, T=T, precision_bits=precision_bits, n_quad=n_quad, backend=backend
+    )
+    odd = finite_weil_odd_pivot(
+        L, T=T, precision_bits=precision_bits, n_quad=n_quad, backend=backend
+    )
     _, arb, _, _ = require_flint()
     L_a = arb(L)
     D2 = even["E2"] + (L_a**2) * even["G00"] * odd["O1"]
@@ -231,9 +263,8 @@ def finite_weil_degree2(L, T: int = 84, precision_bits: int = 256, n_quad: int =
 
 
 def finite_weil_entry(i: str, j: str, L, T: int = 84, backend: str = "flint"):
-    if backend != "flint":
-        raise FlintUnavailable("finite_weil_entry E-path requires flint backend")
-    block = finite_weil_degree2(L, T=T)
+    _require_backend(backend)
+    block = finite_weil_degree2(L, T=T, backend=backend)
     key = {
         ("1", "1"): "G00",
         ("1", "b"): "G0b",

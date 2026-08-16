@@ -71,10 +71,10 @@ def Hb_L_jets(t: Any, L: Any, order: int) -> List[Any]:
     else:
         d2 = L_m * mp.exp(1j * t_m * L_m)
     vals.append(d2)
-    # n≥3
+    # n≥3. At t=0: Hb=L^3/6 ⇒ ∂_L^3=1 and ∂_L^n=0 for n≥4.
     for n in range(3, order + 1):
         if t_m == 0:
-            vals.append(mp.mpc(0, 0))
+            vals.append(mp.mpc(1, 0) if n == 3 else mp.mpc(0, 0))
         else:
             it = 1j * t_m
             e = mp.exp(it * L_m)

@@ -114,9 +114,10 @@ def build_e3_fourier_scan_certificate(scan: Dict[str, Any]) -> Dict[str, Any]:
 
 def build_work_order_status() -> Dict[str, Any]:
     return {
-        "certificate_version": "0.1",
+        "certificate_version": "0.2",
         "program": "RH/Weil work-order status",
         "rh_proof_claim": False,
+        "eng_spec": "ATLAS-RH-ENG-002 / Run 18 parity",
         "orders": {
             "WO-RH-01": "done",
             "WO-RH-02": "done_E0_scalar_cell",
@@ -125,6 +126,19 @@ def build_work_order_status() -> Dict[str, Any]:
             "WO-RH-05": "partial_forms_E3_scan_pending_interval_E1",
             "WO-RH-06": "done_partial_E0_certs_no_imported_promotion",
             "WO-RH-07": "done_dedicated_runner",
-            "WO-RH-08": "blocked_until_WO-RH-05_E1",
+            "WO-RH-08": "blocked_until_WO-RH-15_E1",
+            "WO-RH-09": "partial_structural_E0_G00_E1_pending_calibration",
+            "WO-RH-10": "partial_assembly_pending_tail_bound",
+            "WO-RH-11": "partial_assembly_pending_pole_form",
+            "WO-RH-12": "partial_true_weil_gram_api_pending_quad_bound",
+            "WO-RH-13": "pending",
+            "WO-RH-14": "done_analytic_jets",
+            "WO-RH-15": "pending",
+            "WO-RH-16": "done_pir_export_partial",
         },
+        "notes": [
+            "E3 energy probe quarantined as fourier_energy_probe",
+            "No RH proof claim",
+            "E1 filename prefixes may hold non-E1 status until gates close",
+        ],
     }
