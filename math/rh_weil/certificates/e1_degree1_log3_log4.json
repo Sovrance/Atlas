@@ -1,0 +1,46 @@
+{
+  "certificate_version": "0.2",
+  "program": "RH/Weil degree-1 odd pivot",
+  "work_order": "WO-RH-10",
+  "evidence_class": "E3",
+  "status": "ASSEMBLY_REGENERATED_PENDING_TAIL_AND_COVER",
+  "hard_constraints_certified": false,
+  "rh_proof_claim": false,
+  "normalization": "G = G0 - Gp + Ginf",
+  "domain": {
+    "L_interval": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "samples": [
+    {
+      "L": 1.0986122886681098,
+      "O1_lower": 0.016773257190574545,
+      "O1_upper": 0.016773257190574545
+    },
+    {
+      "L": 1.1059498113,
+      "O1_lower": 0.018768029517823644,
+      "O1_upper": 0.018768029517823644
+    },
+    {
+      "L": 1.2,
+      "O1_lower": 0.039626509244075514,
+      "O1_upper": 0.039626509244075514
+    },
+    {
+      "L": 1.3862943611198906,
+      "O1_lower": 0.048116502855169156,
+      "O1_upper": 0.048116502855169156
+    }
+  ],
+  "min_sample_lower": 0.016773257190574545,
+  "all_samples_definitely_positive": true,
+  "backend": {
+    "name": "python-flint/Arb",
+    "version": "0.9.0",
+    "precision_bits": 256
+  },
+  "note": "Pole + prime + truncated archimedean assembly implemented. E1 blocked on archimedean tail bound and full interval cover."
+}

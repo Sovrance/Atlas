@@ -1,0 +1,54 @@
+{
+  "certificate_version": "0.2",
+  "program": "RH/Weil compact degree-2 even block",
+  "work_order": "WO-RH-11",
+  "evidence_class": "E3",
+  "status": "ASSEMBLY_REGENERATED_PENDING_POLE_AND_TAIL",
+  "hard_constraints_certified": false,
+  "rh_proof_claim": false,
+  "normalization": "G = G0 - Gp + Ginf",
+  "domain": {
+    "L_interval": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "samples": [
+    {
+      "L": 1.0986122886681098,
+      "E2_lower": -0.01620481855324683,
+      "D2_lower": -0.07680237307808661,
+      "full_det_lower": -0.00027180758932020315
+    },
+    {
+      "L": 1.1059498113,
+      "E2_lower": -0.015879348445702237,
+      "D2_lower": -0.08568425065741991,
+      "full_det_lower": -0.0002980240803527465
+    },
+    {
+      "L": 1.2,
+      "E2_lower": -0.015443094257570438,
+      "D2_lower": -0.22443479438649394,
+      "full_det_lower": -0.0006119559173547444
+    },
+    {
+      "L": 1.3862943611198906,
+      "E2_lower": -0.05251029483226613,
+      "D2_lower": -0.5109866687295131,
+      "full_det_lower": -0.0025266117512225076
+    }
+  ],
+  "min_sample_E2_lower": -0.05251029483226613,
+  "all_samples_definitely_positive": false,
+  "backend": {
+    "name": "python-flint/Arb",
+    "version": "0.9.0",
+    "precision_bits": 256
+  },
+  "dependencies": [
+    "e0_scalar_cell_log3_log4.json",
+    "WO-RH-10 assembly"
+  ],
+  "note": "Prime kernels + truncated archimedean even block implemented. Explicit cutoff-free pole outer-product still required for E1."
+}

@@ -1,0 +1,59 @@
+{
+  "certificate_version": "0.2",
+  "program": "RH/Weil scalar cell numerical path",
+  "work_order": "WO-RH-09",
+  "evidence_class": "E0_PLUS_SAMPLES",
+  "status": "STRUCTURAL_E0_RETAINED_G00_E1_PENDING_CALIBRATION",
+  "hard_constraints_certified": true,
+  "rh_proof_claim": false,
+  "normalization": "G = G0 - Gp + Ginf",
+  "domain": {
+    "L_interval": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "structural_report": {
+    "cell": [
+      1.0986122886681098,
+      1.3862943611198906
+    ],
+    "w00_second_positive": true,
+    "algebraic_reason": "For r\u2208[3.0000000000000004,4.0], r\u00b3-r-1 \u2265 23.00000000000001 > 0 and \u221ar(r\u00b2-1)>0 \u21d2 W00''(L)=2(r\u00b3-r-1)/(\u221ar(r\u00b2-1)) > 0 algebraically.",
+    "left_jump": -1.268568201195128,
+    "right_jump": -0.6931471805599453,
+    "at_most_one_interior_minimizer": true,
+    "evidence_class": "E0",
+    "rh_proof_claim": false
+  },
+  "curvature_samples": [
+    {
+      "L": 1.0986122896681099,
+      "W00_second_lower": 3.3197640499693275,
+      "W00_second_upper": 3.3197640499693275
+    },
+    {
+      "L": 1.1059498113,
+      "W00_second_lower": 3.335377505438275,
+      "W00_second_upper": 3.335377505438275
+    },
+    {
+      "L": 1.2,
+      "W00_second_lower": 3.5347290746906297,
+      "W00_second_upper": 3.5347290746906297
+    },
+    {
+      "L": 1.3862943601198905,
+      "W00_second_lower": 3.9333333311577774,
+      "W00_second_upper": 3.9333333311577774
+    }
+  ],
+  "min_sample_W00_second_lower": 3.3197640499693275,
+  "backend": {
+    "name": "python-flint/Arb",
+    "version": "0.9.0",
+    "precision_bits": 256
+  },
+  "notebook_regression_target_G00": "0.0753795566117244",
+  "note": "W00'' positivity remains E0 algebraic. Full G00(L) E1 lower bound awaits first-principles absolute calibration of the continuous antiderivative (notebook value is regression-only)."
+}
