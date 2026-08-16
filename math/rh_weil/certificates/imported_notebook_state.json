@@ -1,0 +1,18 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH Research Notebook V2 / localized Weil finite polynomial blocks",
+  "status": "IMPORTED_PENDING_REGENERATION",
+  "hard_constraints_certified": false,
+  "score": "infinity (imported claims are not Atlas-regenerated certificates)",
+  "claim_boundary": "No RH proof claim. Finite-dimensional, bounded-support block statements only.",
+  "normalization": "G = G^0 - G^p + G^infinity",
+  "domain": {"L_interval": ["log(3)", "log(4)"], "fourier_cutoff_T": 84},
+  "imported_notebook_milestones": {
+    "cutoff_free_scalar": "reported positive",
+    "cutoff_free_degree_1": "reported positive",
+    "cutoff_free_degree_2": "reported positive",
+    "hybrid_T84_degree_2": "reported uniformly positive",
+    "direct_fourier_T84": "reported rigorous point anchors; uniform L coverage still pending in latest notebook state"
+  },
+  "promotion_rule": "Replace this import record with regenerated E0/E1 Atlas certificates only after work orders WO-RH-01 through WO-RH-06 pass."
+}
