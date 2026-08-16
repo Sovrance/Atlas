@@ -72,3 +72,9 @@ A coding agent is finished only when:
 - no imported claim is silently promoted;
 - README claim boundary remains intact;
 - `git diff` contains no unrelated changes.
+
+## External cross-validation extension — Connes-CvS
+
+After WO-RH-05 is stable, execute the optional external work order at
+`external/AGENT_WORK_ORDER_CONNES_CVS.md`.  This does not replace any Atlas-native
+certificate and is not a required runtime dependency.

@@ -13,6 +13,8 @@
 - `math/rh_weil/certificates/imported_notebook_state.json`
 - `math/rh_weil/notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md`
 - `docs/rh-weil-integration-v0.1.md`
+- `math/rh_weil/external/` (optional Connes–CvS cross-validation adapter + work order/mapping)
+- `math/rh_weil/tests/test_connes_cvs_adapter_contract.py`
 
 ## Existing files intentionally not changed
 
@@ -21,5 +23,6 @@ No existing Atlas certificate, PIR schema, canonical document, CI runner, or ben
 ## Local validation performed during packaging
 
 `python math/rh_weil/tests/test_exact_identities.py` -> 5 tests PASS.
+`python math/rh_weil/tests/test_connes_cvs_adapter_contract.py` -> 2 tests PASS (stdlib; optional `connes-cvs` not required).
 
-These tests validate algebraic implementation consistency only. They are not interval certificates.
+These tests validate algebraic implementation consistency and adapter contract only. They are not interval certificates.

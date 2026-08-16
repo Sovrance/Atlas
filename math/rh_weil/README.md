@@ -26,3 +26,8 @@ Imported notebook claims are intentionally marked `IMPORTED_PENDING_REGENERATION
 Reproduce the fully direct Fourier-side uniform degree-2 certificate at `T=84` by interval coverage of the centered-even determinant, then proceed to the midpoint-odd degree-3 block.
 
 See `AGENT_INSTRUCTIONS.md` and `notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md`.
+
+Optional external oracle (not required at runtime): `external/` wraps
+`connes-cvs` for independent cross-checks of shared Weil ingredients. See
+`external/CONNES_CVS_MAPPING.md`. Do not compare Galerkin matrix entries to
+Atlas polynomial Gram blocks by index.
