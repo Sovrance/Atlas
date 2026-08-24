@@ -123,19 +123,38 @@ class DegreeThreeE1(unittest.TestCase):
         self.assertIn("no eigenvalue solver", self.cert["method"])
         self.assertIn("no termwise PSD domination", self.cert["method"])
 
-    def test_psd_licensing_matches_the_signature(self):
-        """§11: only a genuinely PSD result may satisfy a PSD consumer."""
+    def test_the_nested_inertia_object_never_satisfies_a_psd_requirement(self):
+        """§11, stated precisely: the rule binds the *inertia* certificate.
+
+        The nested stratification is an inertia artifact and must refuse a PSD
+        consumer whatever its signature says -- that is the whole point of the
+        rule, and it has to hold here where the signature is in fact (2,0,0).
+        """
+        nested = self.cert["inertia_stratification"]
+        self.assertIn(nested["content_kind"], (KIND_INERTIA, KIND_STRATIFICATION))
+        self.assertFalse(satisfies_psd_requirement(nested))
+        self.assertIs(nested["psd_claim"], False)
+
+    def test_psd_licensing_of_the_outer_artifact_matches_what_it_proved(self):
+        """An Outcome-A artifact is a positivity certificate and may say so."""
         i = self.cert["inertia"]
-        flat = dict(self.cert, n_positive=i["n_positive"],
-                    n_negative=i["n_negative"], n_zero=i["n_zero"])
-        allowed = satisfies_psd_requirement(flat)
-        if self.cert["content_kind"] == KIND_STRATIFICATION:
-            self.assertFalse(allowed,
-                             "a stratification never satisfies a PSD requirement")
-        elif i["n_negative"] == 0 and i["n_zero"] == 0:
-            self.assertTrue(allowed)
+        allowed = satisfies_psd_requirement(self.cert)
+        if self.cert["outcome"] == "A_POSITIVE_DEFINITE":
+            self.assertEqual(i["n_negative"], 0)
+            self.assertTrue(allowed,
+                            "a certified positive definite block must satisfy a "
+                            "PSD requirement")
+            self.assertIs(self.cert["psd_claim"], True)
+            self.assertNotIn(self.cert["content_kind"],
+                             (KIND_INERTIA, KIND_STRATIFICATION))
         else:
             self.assertFalse(allowed)
+            self.assertIs(self.cert["psd_claim"], False)
+
+    def test_the_top_level_signature_matches_the_nested_one(self):
+        i = self.cert["inertia"]
+        for key in ("n_positive", "n_negative", "n_zero"):
+            self.assertEqual(self.cert[key], i[key], key)
 
     def test_it_makes_no_rh_claim_and_stays_in_scope(self):
         self.assertIs(self.cert["rh_proof_claim"], False)

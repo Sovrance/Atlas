@@ -160,9 +160,95 @@ shrinking ~45000× from `T = 84` to `T = 4000`; slow-decaying `(q1,q1)` differs 
 the expected tail. Same pattern ENG-005 documented, so §16's disagreement stop
 condition does not fire.
 
+### The result (§9, Outcome A)
+
+The block is **positive definite on the whole closed cell**:
+
+```
+Inertia(G_odd,3)(L) = (2, 0, 0)   for every L in [log 3, log 4]
+```
+
+by interval LDL congruence with adaptive subdivision — one stratum, no
+transition regions, 11024 boxes at maximum subdivision depth 1. §9's two named
+quantities, certified by exhaustive cover:
+
+| quantity | certified uniform lower bound | cover |
+|---|---|---|
+| `O1 = G[q1,q1]` | `1.5331267702267608e-02` | 8192 boxes, depth 0 |
+| `det(G_odd,3)` | `1.073120529992708e-06` | 32768 boxes, depth 0 |
+
+The determinant bound is deliberately sized. A cover accepts a box the moment
+its lower end clears the target, so a cover sized only to decide positivity
+reports whatever the worst box happened to give — at 8192 boxes that was
+`9.6e-11`, four orders below the grid minimum of `1.407e-6`. True, but a weak
+certificate for the quantity it bounds, which is the point ENG-005 made about
+`E2`. Halving the box radius halves the enclosure width, so the reported bound
+uses a finer cover and lands within a factor of 1.3 of the truth.
+
+**This is not the outcome the work order was built for.** §0 says the goal is
+"not prove degree 3 positive" and §17 counts an inertia stratification as
+success. The block turned out definite anyway. The stratification machinery is
+still what proved it, and would have delivered Outcome B unchanged had any part
+of the cell been indefinite.
+
+### Positivity is a different content kind from inertia (§11)
+
+§11 requires that an inertia certificate never satisfy a consumer demanding PSD.
+That rule binds the *inertia* artifact, and it does: the nested stratification
+here has signature `(2,0,0)` and still refuses, because "I know the signature"
+must not be silently read as "it is positive".
+
+The outer artifact is a different claim — the block is positive definite, with
+certified positive lower bounds on `O1` and `det` — so it carries a positivity
+content kind and answers a PSD consumer honestly. Both are checked: the same
+signature is accepted on the positivity certificate and refused on the inertia
+object nested inside it.
+
 ---
 
-## 6. Limitations (stated, not hidden)
+## 6. What each channel was worth (§10)
+
+Five questions, answered from the emitted certificates rather than from prose,
+so the report cannot drift from the artifacts it describes.
+
+**Did positivity alone characterize the block?** Yes — but only because it is
+2×2, where `(trace > 0, det > 0)` *is* the signature. There is no gap between
+"positive definite" and "inertia known" at this size. That is a fact about the
+dimension, not about the method.
+
+**What did inertia add?** Beyond positivity, nothing here. What it delivered was
+the route: it proved the signature constant over the closed cell rather than at
+sample points, and it is what would have produced a usable result had the block
+been indefinite. A channel that adds nothing when the easy answer holds is
+behaving correctly; it earns its place on the blocks where the easy answer does
+not.
+
+**Did the moments recover the inertia?** Yes, exactly, and again because `n = 2`.
+The Wolkowicz–Styan inequalities become equalities there, so `m₁` and `m₂` invert
+to the spectrum outright and the signature is a consequence of two moments rather
+than a separate observation. `m₃` and `m₄` were not needed. This is the sharpest
+the moment channel can ever be and it does not survive to larger blocks.
+
+**Were the moments insufficient?** Also yes, by the general truncated-moment
+route — and the two answers are not in conflict, because they are different
+questions. Asking whether the moments *force* a non-negative spectrum via the
+localizing matrix returns `INSUFFICIENT_INFORMATION`, correctly: only the
+refuting direction is available from four moments. The `n = 2` inversion answers
+an easier question and is what settled the inertia.
+
+**Did rank–trace give a nontrivial bound?** Yes but weak: `rank ≥ 1` against a
+true rank of 2. The right-hand side is positive, so it is not the vacuous
+`rank ≥ 0`, but it is off by a factor of two — and structurally, not through
+tuning. The inequality is tight at projections, where every eigenvalue is 0 or 1;
+this block's eigenvalues run from `3.3e-05` to `4.2e-02`, four orders below 1, so
+each contributes about `2λ` to the right-hand side instead of the 1 it would
+contribute at a projection. A Weil Gram block is not the kind of operator this
+inequality is sharp for. Recorded as a null-ish result per §10 rather than tuned
+until it looked better.
+
+---
+
+## 7. Limitations (stated, not hidden)
 
 * One cell, `[log 3, log 4]`, and one 2×2 block. Nothing here says anything about
   other cells, higher degree, or RH.

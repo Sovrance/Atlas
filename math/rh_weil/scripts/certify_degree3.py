@@ -53,6 +53,10 @@ POSITIVITY_FILE = "e1_degree3_odd_positivity_log3_log4.json"
 INERTIA_FILE = "e1_degree3_odd_inertia_log3_log4.json"
 MOMENTS_FILE = "e1_degree3_odd_moments_log3_log4.json"
 
+#: Content kind for an Outcome-A artifact. Deliberately *not* one of §11's four
+#: inertia/moment kinds: this one does claim positivity, and is allowed to.
+POSITIVITY_KIND = "WEIL_DEGREE3_POSITIVITY_CERTIFICATE"
+
 DEPENDENCIES = (
     "src/pole.py",
     "src/core.py",
@@ -187,6 +191,18 @@ def build_e1(scan_body: dict, *, quick: bool) -> tuple:
     outcome = ("A_POSITIVE_DEFINITE" if positive_definite
                else "B_INERTIA_STRATIFICATION" if strat.status.startswith("PASS")
                else "C_INCONCLUSIVE")
+    # What kind of artifact this is depends on what was established, and the
+    # distinction is not cosmetic. §11 says an *inertia* certificate must never
+    # satisfy a consumer requiring PSD -- the point being that "I know the
+    # signature" should not be silently read as "it is positive". That rule
+    # binds the inertia object, which is nested below and still refuses.
+    #
+    # Outcome A is a different claim: the block is positive definite everywhere
+    # on the cell, with certified positive lower bounds on O1 and det. That is a
+    # positivity certificate that happens to have been proved by an inertia
+    # computation, so it carries a positivity content kind and answers a PSD
+    # consumer honestly. Outcome B stays an inertia stratification and does not.
+    kind = (POSITIVITY_KIND if positive_definite else strat_cert["content_kind"])
     body.update({
         "certified_cell": [repr(cell[0]), repr(cell[1])],
         "evidence_class": "E1",
@@ -195,7 +211,13 @@ def build_e1(scan_body: dict, *, quick: bool) -> tuple:
         "hard_constraints_certified": bool(ok),
         "promotion_state": promotion.PROMOTED_STATE if ok else "REFUSED",
         "outcome": outcome,
-        "content_kind": strat_cert["content_kind"],
+        "content_kind": kind,
+        "psd_claim": bool(positive_definite and ok),
+        # Top level so the PSD predicate can read the signature directly; also
+        # repeated under "inertia" for readers who want it named.
+        "n_positive": constant[0] if constant else None,
+        "n_negative": constant[1] if constant else None,
+        "n_zero": constant[2] if constant else None,
         "inertia": {"n_positive": constant[0] if constant else None,
                     "n_negative": constant[1] if constant else None,
                     "n_zero": constant[2] if constant else None,

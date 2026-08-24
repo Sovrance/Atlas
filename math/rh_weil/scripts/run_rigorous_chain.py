@@ -45,6 +45,11 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 CERT_DIR = ROOT / "certificates"
 sys.path.insert(0, str(SRC))
+# ENG-006 packages (inertia/, moments/, ranktrace/) live beside src/, not
+# inside it, so the program root has to be importable too -- the stages that
+# ask the inertia module about PSD licensing run in *this* process, not a
+# subprocess, and would otherwise fail on "No module named inertia".
+sys.path.insert(0, str(ROOT))
 
 #: (certificate, human label) for every rigorous artifact the chain produces.
 RIGOROUS_CERTS = [
@@ -79,7 +84,10 @@ def degree3_e1_certificate():
 
 def _env() -> dict:
     e = dict(os.environ)
-    e["PYTHONPATH"] = str(SRC) + ((":" + e["PYTHONPATH"]) if e.get("PYTHONPATH") else "")
+    parts = [str(SRC), str(ROOT)]
+    if e.get("PYTHONPATH"):
+        parts.append(e["PYTHONPATH"])
+    e["PYTHONPATH"] = ":".join(parts)
     return e
 
 
@@ -247,9 +255,19 @@ def stage_degree3() -> int:
     if refusal or cert.get("quick_mode"):
         print(f"  FAIL: {refusal or 'quick mode'}", file=sys.stderr)
         return 1
-    # §11: an inertia certificate may satisfy a PSD consumer only when it
-    # actually proved PSD. Report the answer rather than leaving it implied.
-    print(f"  satisfies a PSD requirement: {satisfies_psd_requirement(cert)}")
+    # §11: an inertia certificate may never satisfy a PSD consumer, and the
+    # nested inertia object here does not. The outer artifact is a positivity
+    # certificate when the block was proved definite, and that one may. Report
+    # both so the distinction is visible rather than implied.
+    outer = satisfies_psd_requirement(cert)
+    inner = satisfies_psd_requirement(cert.get("inertia_stratification", {}))
+    print(f"  content kind: {cert.get('content_kind')}")
+    print(f"  satisfies a PSD requirement: {outer} "
+          f"(nested inertia object: {inner}, which §11 requires to stay False)")
+    if inner:
+        print("  FAIL: an inertia certificate satisfied a PSD requirement",
+              file=sys.stderr)
+        return 1
     if cert.get("outcome") == "C_INCONCLUSIVE":
         print("  FAIL: degree-3 certification is inconclusive", file=sys.stderr)
         return 1
