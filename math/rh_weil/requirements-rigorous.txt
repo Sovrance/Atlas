@@ -1,0 +1,21 @@
+# Rigorous RH/Weil dependency set (ATLAS-RH-ENG-004 §6).
+#
+# These are REQUIRED for anything that emits an E0 symbolic derivation or an E1
+# interval certificate. They are not optional extras: a missing one must FAIL the
+# job, never degrade an artifact to weaker evidence.
+#
+#   pip install -r math/rh_weil/requirements-rigorous.txt
+#
+# Ranges are reproducible: pinned minor floors where an API we rely on landed,
+# capped below the next major so a breaking release cannot silently change a
+# certified number.
+
+# Interval/ball arithmetic (Arb). Supplies flint.arb / flint.acb and the rigorous
+# adaptive integrator acb.integral used by the scalar E1 canary.
+python-flint>=0.6.0,<1.0
+
+# Symbolic derivation behind the normalization adjudication (WO-RH-17).
+sympy>=1.12,<2.0
+
+# High-precision floats for the E2/E3 diagnostic providers. Never certifies E1.
+mpmath>=1.3.0,<2.0
