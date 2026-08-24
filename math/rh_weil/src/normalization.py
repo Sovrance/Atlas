@@ -24,6 +24,8 @@ from __future__ import annotations
 from math import cosh, exp, factorial, log, sqrt
 from typing import Any, Callable, Dict, Sequence, Tuple
 
+import pole
+
 NORMALIZATION_VERSION = "v0.1"
 
 # --------------------------------------------------------------------------- #
@@ -54,94 +56,27 @@ RH_PROOF_CLAIM = False
 BASIS_NAMES: Tuple[str, ...] = ("one", "q1", "b")
 
 
-def basis_coeffs(name: str, L: Any) -> Tuple[Any, ...]:
-    """Monomial coefficients (c0, c1, ...) of a basis element on [0, L]."""
-    if name == "one":
-        return (1,)
-    if name == "q1":
-        return (-L / 2, 1)
-    if name == "b":  # x(L-x) = L*x - x^2
-        return (0 * L, L, -1)
-    raise KeyError(f"unknown basis element {name!r}")
-
-
-def basis_parity(name: str) -> str:
-    """Parity about the cell midpoint x = L/2 (drives the E^- relation)."""
-    return {"one": "even", "b": "even", "q1": "odd"}[name]
+# ENG-004 §1: basis + parity are owned by ``pole.py``.
+basis_coeffs = pole.basis_coeffs
+basis_parity = pole.basis_parity
 
 
 # --------------------------------------------------------------------------- #
 # 2. E^± integrals — exact closed form for any polynomial basis element        #
 # --------------------------------------------------------------------------- #
-def monomial_exp_integral(n: int, a: Any, L: Any) -> Any:
-    """Exact ``int_0^L x^n e^{a x} dx`` for any (possibly complex) exponent ``a``.
-
-    Closed form ``int x^n e^{ax} = e^{ax} sum_k (-1)^k n!/(n-k)! x^{n-k}/a^{k+1}``
-    evaluated at the endpoints. Works for float / mpmath / flint-arb carriers, and
-    for complex ``a`` (used by the Fourier-side ``H_i(t;L)``). The removable
-    ``a -> 0`` case integrates the monomial directly.
-    """
-    if a == 0:
-        return (L ** (n + 1)) / (n + 1)
-    # Stability: the endpoint closed form carries terms ~ 1/a^{k+1}, so for small
-    # |a*L| it cancels catastrophically (the result is only O(L^{n+1})). Use the
-    # everywhere-convergent series there instead:
-    #     int_0^L x^n e^{ax} dx = L^{n+1} * sum_m (aL)^m / (m! (n+m+1)).
-    z = a * L
-    if _abs_like(z) <= 1.0:
-        term = 0 * z + 1.0
-        total = term / (n + 1)
-        for m in range(1, 64):
-            term = term * z / m
-            delta = term / (n + m + 1)
-            total = total + delta
-            if _abs_like(delta) <= 1e-24 * max(_abs_like(total), 1e-300):
-                break
-        return (L ** (n + 1)) * total
-    total_L = 0 * z
-    for k in range(n + 1):
-        coeff = ((-1) ** k) * factorial(n) / factorial(n - k)
-        total_L = total_L + coeff * (L ** (n - k)) / (a ** (k + 1))
-    at_L = _exp_like(z) * total_L
-    at_0 = ((-1) ** n) * factorial(n) / (a ** (n + 1))
-    return at_L - at_0
-
-
-def _abs_like(z: Any) -> float:
-    """|z| as a float for float / complex / mpmath / arb carriers."""
-    try:
-        return float(abs(z))
-    except TypeError:  # pragma: no cover - arb balls
-        return float(abs(z).mid())
-
-
-def _exp_like(z: Any) -> Any:
-    """exp(z) for float / complex / mpmath / flint-arb style carriers."""
-    if hasattr(z, "exp"):
-        return z.exp()
-    if isinstance(z, complex):
-        import cmath
-
-        return cmath.exp(z)
-    return exp(z)
-
-
-def poly_exp_integral(coeffs: Sequence[Any], a: Any, L: Any) -> Any:
-    """``int_0^L p(x) e^{a x} dx`` for the polynomial with the given coefficients."""
-    total = 0 * (L * a) if a != 0 else 0 * L
-    for n, c in enumerate(coeffs):
-        if c == 0:
-            continue
-        total = total + c * monomial_exp_integral(n, a, L)
-    return total
+# ENG-004 §1: the quadrature primitives live in ``pole.py``; re-exported here so
+# existing importers keep working without a second implementation.
+monomial_exp_integral = pole.monomial_exp_integral
+poly_exp_integral = pole.poly_exp_integral
 
 
 def E_pm(name: str, L: Any, sign: int) -> Any:
     """``E^±_i = int_0^L h_i(x) e^{±x/2} dx`` in closed form."""
-    if sign not in (1, -1):
-        raise ValueError("sign must be +1 or -1")
-    half = (0 * L + 1) / 2 if hasattr(L, "mid") else 0.5
-    return poly_exp_integral(basis_coeffs(name, L), sign * half, L)
+    if sign == 1:
+        return pole.laplace_plus(name, L)
+    if sign == -1:
+        return pole.laplace_minus(name, L)
+    raise ValueError("sign must be +1 or -1")
 
 
 def H_transform(name: str, t: Any, L: Any) -> Any:
@@ -150,50 +85,24 @@ def H_transform(name: str, t: Any, L: Any) -> Any:
 
 
 # --------------------------------------------------------------------------- #
-# 3. Candidate A — the ADOPTED pole block (derived from the explicit formula)  #
+# 3. Candidate A — the ADOPTED pole block (delegated to the canonical module)  #
 # --------------------------------------------------------------------------- #
+# ENG-004 §1: ``src/pole.py`` is the single implementation of the pole formula.
+# This name is kept because the adjudication artifacts and cross-check reference
+# it, but it must never grow a second copy of the formula.
 def pole_entry(i: str, j: str, L: Any) -> Any:
     """``G0_ij = E_i^+ E_j^- + E_i^- E_j^+`` (Candidate A, adopted)."""
-    Eip, Eim = E_pm(i, L, 1), E_pm(i, L, -1)
-    Ejp, Ejm = E_pm(j, L, 1), E_pm(j, L, -1)
-    return Eip * Ejm + Eim * Ejp
+    return pole.pole_gram_entry(i, j, L)
 
 
 # --------------------------------------------------------------------------- #
-# 4. Candidate B — the REJECTED legacy even block, kept for audit only         #
+# 4. Candidate B is NOT here                                                   #
 # --------------------------------------------------------------------------- #
-LEGACY_POLE_SCALE = "sqrt(3)/2"
+# The rejected ``(sqrt(3)/2)`` block lives in ``src/rejected_pole.py``, which is
+# archival and forbidden to production (tests/test_production_imports.py). Do not
+# re-import it here: this module is production.
+LEGACY_POLE_MODULE = "rejected_pole"
 LEGACY_STATUS = "REJECTED_FITTED_CALIBRATION"
-
-
-def legacy_pole_entry(i: str, j: str, L: Any) -> Any:
-    """``(sqrt(3)/2)(v+v+^T + v-v-^T)`` entry — REJECTED; audit use only."""
-    s = sqrt(3) / 2 if isinstance(L, float) else _sqrt3_over_2(L)
-    Eip, Eim = E_pm(i, L, 1), E_pm(i, L, -1)
-    Ejp, Ejm = E_pm(j, L, 1), E_pm(j, L, -1)
-    return s * (Eip * Ejp + Eim * Ejm)
-
-
-def _sqrt3_over_2(carrier: Any) -> Any:
-    three = 0 * carrier + 3
-    return (three.sqrt() / 2) if hasattr(three, "sqrt") else (sqrt(3) / 2)
-
-
-def legacy_over_adopted_ratio(L: Any) -> Any:
-    """Even-sector ratio ``B/A = (sqrt(3)/2) cosh(L/2)``.
-
-    Derivation: on the even sector ``h(L-x) = h(x)`` gives ``E^- = e^{-L/2}E^+``,
-    hence ``A = 2 e^{-L/2} v+ v+^T`` and ``B = (sqrt(3)/2)(1 + e^{-L}) v+ v+^T``.
-    The quotient is ``(sqrt(3)/4)(e^{L/2} + e^{-L/2}) = (sqrt(3)/2)cosh(L/2)``,
-    which equals 1 exactly at ``L = log 3`` and nowhere else.
-    """
-    if isinstance(L, float):
-        return (sqrt(3) / 2) * cosh(L / 2)
-    half = L / 2
-    ch = half.cosh() if hasattr(half, "cosh") else cosh(float(half))
-    return _sqrt3_over_2(L) * ch
-
-
 CALIBRATION_FIXED_POINT = "L = log 3"
 
 
@@ -335,6 +244,17 @@ QUARANTINE_REASON = (
     "carry that factor. Regenerate under the frozen normalization (WO-RH-19/20) "
     "before any promotion."
 )
+
+
+#: Released from the WO-RH-17 quarantine by a later work order, after a rigorous
+#: regeneration under the active normalization. A released file stays in
+#: ``QUARANTINED_CERTIFICATES``: the legacy certifier that produced the disputed
+#: version still exists, so an *unauthorised* write must still fail closed. Only a
+#: body that carries ``quarantine_released`` and passes the promotion predicate is
+#: left alone (see ``scripts/quarantine_normalization.py``).
+RELEASED_CERTIFICATES: Dict[str, str] = {
+    "e1_scalar_log3_log4.json": "ATLAS-RH-ENG-004 §4 scalar canary",
+}
 
 
 def is_quarantined_certificate(name: str) -> bool:

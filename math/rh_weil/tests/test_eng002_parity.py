@@ -67,7 +67,11 @@ class TestFiniteWeilAPI(unittest.TestCase):
             self.assertIn(k, blk)
         self.assertFalse(blk["rh_proof_claim"])
         self.assertEqual(blk["cutoff_T"], 84)
-        self.assertEqual(blk["pole_scale"], "sqrt(3)/2")
+        # ENG-004 §1: the block no longer advertises the rejected sqrt(3)/2
+        # calibration; it names the adopted candidate and its formula.
+        self.assertEqual(blk["pole_candidate"], "A")
+        self.assertIn("E_i^+ E_j^-", blk["pole_formula"])
+        self.assertNotIn("pole_scale", blk)
 
 
 @unittest.skipUnless(flint_available(), "python-flint not installed")

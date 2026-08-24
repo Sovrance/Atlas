@@ -22,6 +22,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(ROOT, "src"))
 
 import normalization as N  # noqa: E402
+import rejected_pole as RP  # noqa: E402  (archival; this file audits it)
 
 CERT_DIR = os.path.join(ROOT, "certificates")
 L_POINTS = [math.log(3.0), 1.1059498113, 1.20, math.log(4.0)]
@@ -81,19 +82,19 @@ class PoleDerivationTests(unittest.TestCase):
 class LegacyRejectionTests(unittest.TestCase):
     def test_quotient_is_sqrt3_over_2_cosh(self):
         for L in L_POINTS:
-            ratio = N.legacy_pole_entry("one", "one", L) / N.pole_entry("one", "one", L)
-            self.assertLess(abs(ratio - N.legacy_over_adopted_ratio(L)), 1e-12, L)
+            ratio = RP.legacy_pole_entry("one", "one", L) / N.pole_entry("one", "one", L)
+            self.assertLess(abs(ratio - RP.legacy_over_adopted_ratio(L)), 1e-12, L)
 
     def test_agreement_only_at_log3(self):
-        self.assertLess(abs(N.legacy_over_adopted_ratio(LOG3) - 1.0), 1e-14)
+        self.assertLess(abs(RP.legacy_over_adopted_ratio(LOG3) - 1.0), 1e-14)
         for L in (1.1059498113, 1.20, math.log(4.0)):
-            self.assertGreater(abs(N.legacy_over_adopted_ratio(L) - 1.0), 1e-4, L)
+            self.assertGreater(abs(RP.legacy_over_adopted_ratio(L) - 1.0), 1e-4, L)
 
     def test_discrepancy_is_L_dependent_so_not_a_basis_change(self):
         """A change of basis is a constant congruence; it cannot produce a factor
         that varies with L. The quotient does vary, so B is not a renormalised A."""
-        r1 = N.legacy_over_adopted_ratio(1.20)
-        r2 = N.legacy_over_adopted_ratio(math.log(4.0))
+        r1 = RP.legacy_over_adopted_ratio(1.20)
+        r2 = RP.legacy_over_adopted_ratio(math.log(4.0))
         self.assertGreater(abs(r1 - r2), 1e-3)
 
     def test_adopted_path_carries_no_fitted_constant(self):
@@ -104,22 +105,45 @@ class LegacyRejectionTests(unittest.TestCase):
         self.assertLess(abs(N.pole_entry("one", "b", L) - direct), 1e-15 * max(1.0, abs(direct)))
 
     def test_legacy_model_reproduces_the_shipped_block(self):
-        """The audit model must be faithful to the code it rejects."""
+        """Production ships Candidate A; the archival model still models B.
+
+        Before ENG-004 this test pinned ``finite_weil.g0_even_block`` against the
+        rejected block, because that is what production computed. ENG-004 moved
+        production onto Candidate A, so the check splits in two: production must
+        now equal A, and the archival module must still reproduce the historical
+        B it exists to audit.
+        """
         try:
             from interval_backend import require_flint
 
             _flint, arb, _acb, _ctx = require_flint()
             import finite_weil as FW
+            import pole
         except Exception:  # pragma: no cover
             self.skipTest("python-flint unavailable")
         for L in (LOG3, 1.20, math.log(4.0)):
             g00, g0b, gbb = FW.g0_even_block(arb(L), arb)
-            for shipped, mine in (
-                (g00, N.legacy_pole_entry("one", "one", L)),
-                (g0b, N.legacy_pole_entry("one", "b", L)),
-                (gbb, N.legacy_pole_entry("b", "b", L)),
+            for shipped, adopted in (
+                (g00, pole.pole_gram_entry("one", "one", L)),
+                (g0b, pole.pole_gram_entry("one", "b", L)),
+                (gbb, pole.pole_gram_entry("b", "b", L)),
             ):
-                self.assertLess(abs(float(shipped.mid()) - mine), 1e-9 * max(1.0, abs(mine)), L)
+                self.assertLess(abs(float(shipped.mid()) - adopted),
+                                1e-9 * max(1.0, abs(adopted)), L)
+
+    def test_archival_model_still_reproduces_the_rejected_block(self):
+        """``(sqrt(3)/2)(E_i^+E_j^+ + E_i^-E_j^-)`` — the historical expression."""
+        import pole
+
+        root3_over_2 = math.sqrt(3.0) / 2.0
+        for L in (LOG3, 1.20, math.log(4.0), 3.5):
+            for i, j in (("one", "one"), ("one", "b"), ("b", "b")):
+                want = root3_over_2 * (
+                    pole.laplace_plus(i, L) * pole.laplace_plus(j, L)
+                    + pole.laplace_minus(i, L) * pole.laplace_minus(j, L)
+                )
+                self.assertAlmostEqual(RP.legacy_pole_entry(i, j, L), want,
+                                       delta=1e-12 * max(1.0, abs(want)), msg=(i, j, L))
 
 
 class QuarantineTests(unittest.TestCase):
@@ -130,15 +154,22 @@ class QuarantineTests(unittest.TestCase):
             return json.load(fh)
 
     def test_affected_certificates_are_quarantined(self):
+        """Every disputed certificate stays quarantined unless a work order
+        explicitly released it after a rigorous regeneration (ENG-004 §4)."""
         for name in self.AFFECTED:
             cert = self._load(name)
+            self.assertFalse(cert.get("rh_proof_claim", False), name)
+            if name in N.RELEASED_CERTIFICATES:
+                self.assertIn("quarantine_released", cert, name)
+                continue
             self.assertEqual(cert.get("promotion_state"), "QUARANTINED_NORMALIZATION_ADJUDICATION", name)
             self.assertFalse(cert.get("hard_constraints_certified"), name)
-            self.assertFalse(cert.get("rh_proof_claim", False), name)
 
     def test_quarantine_preserves_history(self):
         """Nothing is deleted and the claimed evidence class is not rewritten."""
         for name in self.AFFECTED:
+            if name in N.RELEASED_CERTIFICATES:
+                continue  # released after a rigorous regeneration (ENG-004 §4)
             cert = self._load(name)
             q = cert.get("quarantine", {})
             self.assertIn("prior_state", q, name)
@@ -150,6 +181,9 @@ class QuarantineTests(unittest.TestCase):
 
         refused = {r["certificate_file"] for r in pir_bridge.refused_promotions()}
         for name in self.AFFECTED:
+            if name in N.RELEASED_CERTIFICATES:
+                self.assertNotIn(name, refused, name)
+                continue
             self.assertIn(name, refused, name)
 
     def test_registry_matches_the_certificates_on_disk(self):
@@ -221,10 +255,14 @@ class QuarantineTests(unittest.TestCase):
         self.assertIn("REJECTED", finite_weil.__doc__)
 
     def test_work_order_status_flags_quarantine(self):
+        """Still-disputed orders stay flagged; WO-RH-09 was recovered by ENG-004."""
         st = self._load("work_order_status.json")
+        recovered = {"WO-RH-09"}
         for wo in ["WO-RH-05"] + [f"WO-RH-{n:02d}" for n in range(9, 16)]:
-            if wo in st["orders"]:
-                self.assertEqual(st["orders"][wo], "quarantined_pending_WO-RH-17", wo)
+            if wo not in st["orders"] or wo in recovered:
+                continue
+            self.assertEqual(st["orders"][wo], "quarantined_pending_WO-RH-17", wo)
+        self.assertIn("recovered", st["orders"].get("WO-RH-09", ""))
 
 
 class AdjudicationCertificateTests(unittest.TestCase):
