@@ -1,0 +1,1047 @@
+{
+  "certificate_version": "1.0",
+  "program": "RH/Weil odd degree-3 block \u2014 Candidate A",
+  "work_order": "ATLAS-RH-ENG-006 \u00a710",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "rh_proof_claim": false,
+  "pole_candidate": "A",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "domain": {
+    "L_interval": [
+      "log(3)",
+      "log(4)"
+    ],
+    "L_left": "1.0986122886681098",
+    "L_right": "1.3862943611198906",
+    "closed": true
+  },
+  "dependencies": {
+    "source_hashes": {
+      "inertia/certificate.py": "fda2de551292c47f087ecce1c1e4a3266652808940330b51100ac13133db7f98",
+      "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
+      "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
+      "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
+      "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
+      "ranktrace/theorem.py": "3079af3fd356a2ee4cc3f25e97eeca143e79271c66ed8d7f7adda89e52d59fac",
+      "scripts/certify_degree3.py": "9219497720af1c34a8e506ae838b619e617270236e02ecf961d6b64b466a1932",
+      "src/archimedean_realspace.py": "6d7170233bdda52006c2753f4063b39e91360c4c526a2a0f6e4bd468992cbdf7",
+      "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
+      "src/degree3.py": "54b316a68786136155cae7c9ee1b9810749793fcdf1855317c79accd30af310d",
+      "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "b33886a1ac351198a3cce1e91a461bc89bdaf9c97eaa421a6be751bd2840fa2f",
+      "src/weil_entries.py": "1ed480a115c62f5da8f42f427d0492b30a6c24f171856c5021534de9891b15db"
+    }
+  },
+  "precision_bits": 160,
+  "mpmath_used": false,
+  "quick_mode": true,
+  "evidence_class": "E1",
+  "rigorous": true,
+  "status": "QUICK_SMOKE_TEST_NOT_PROMOTABLE",
+  "hard_constraints_certified": false,
+  "promotion_state": "REFUSED",
+  "content_kind": "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+  "dimension": 2,
+  "inertia_dependency": "WEIL_INERTIA_STRATIFICATION",
+  "points": [
+    {
+      "label": "log3",
+      "L": "1.0986122886681098",
+      "moment_analysis": {
+        "content_kind": "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+        "dimension": 2,
+        "moments": {
+          "m1": {
+            "lo": "0.01551144269906257",
+            "hi": "0.015511442699062605",
+            "width": "3.469446951953614e-17"
+          },
+          "m2": {
+            "lo": "0.0002377426378331678",
+            "hi": "0.00023774263783316884",
+            "width": "1.0299920638612292e-18"
+          },
+          "m3": {
+            "lo": "3.6655327481387877e-06",
+            "hi": "3.665532748138812e-06",
+            "width": "2.414043899674756e-20"
+          },
+          "m4": {
+            "lo": "5.651746570144459e-08",
+            "hi": "5.651746570144508e-08",
+            "width": "4.896909226313924e-22"
+          }
+        },
+        "moment_method": "traces of matrix powers in interval arithmetic; no eigenvalue solver is involved at any point",
+        "sanity_violations": [],
+        "b1_hankel_view": {
+          "available": false,
+          "reason": "B1 is exact-rational; these moments are enclosures"
+        },
+        "b1_queries": [
+          {
+            "query": "moments_force_psd",
+            "status": "INSUFFICIENT_INFORMATION",
+            "answer": null,
+            "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+            "localizing_matrix_status": {
+              "engine": "inertia.ldl.interval_inertia",
+              "status": "PASS",
+              "is_psd": true,
+              "definitely_not_psd": false,
+              "inertia": [
+                2,
+                0,
+                0
+              ],
+              "blocker": null
+            }
+          },
+          {
+            "query": "minimum_negative_eigenvalue_count",
+            "status": "INSUFFICIENT_INFORMATION",
+            "minimum": 0,
+            "reason": "no localizing obstruction found; 0 negatives stays feasible",
+            "localizing_matrix_status": {
+              "engine": "inertia.ldl.interval_inertia",
+              "status": "PASS",
+              "is_psd": true,
+              "definitely_not_psd": false,
+              "inertia": [
+                2,
+                0,
+                0
+              ],
+              "blocker": null
+            }
+          },
+          {
+            "query": "minimum_positive_eigenvalue_count",
+            "status": "CONCLUSIVE",
+            "minimum": 1,
+            "conclusion": "at least one eigenvalue is positive",
+            "localizing_matrix_status": {
+              "engine": "inertia.ldl.interval_inertia",
+              "status": "PASS",
+              "is_psd": false,
+              "definitely_not_psd": true,
+              "inertia": [
+                0,
+                2,
+                0
+              ],
+              "blocker": null
+            }
+          },
+          {
+            "query": "smallest_eigenvalue_bounds",
+            "status": "CONCLUSIVE",
+            "lambda_min": {
+              "lo": "9.28168567812262e-05",
+              "hi": "9.281685678129442e-05"
+            },
+            "lambda_max": {
+              "lo": "0.015418625842281293",
+              "hi": "0.015418625842281361"
+            },
+            "tight": true,
+            "method": "wolkowicz_styan_from_m1_m2",
+            "note": "at n = 2 the inequalities are equalities, so m1 and m2 determine the spectrum exactly"
+          },
+          {
+            "query": "inertia_determined_by_moments",
+            "n": 2,
+            "status": "CONCLUSIVE",
+            "determined": true,
+            "spectrum": {
+              "status": "CONCLUSIVE",
+              "lambda_1": [
+                "9.28168567812262e-05",
+                "9.281685678129442e-05"
+              ],
+              "lambda_2": [
+                "0.015418625842281293",
+                "0.015418625842281361"
+              ],
+              "determined": true,
+              "note": "m1 and m2 determine a 2x2 spectrum outright"
+            },
+            "implied_inertia": [
+              2,
+              0,
+              0
+            ],
+            "reason": null,
+            "conclusion": "m1 and m2 invert to the spectrum of a 2x2 matrix, so the inertia is a consequence of the moments, not an extra observation",
+            "matches_observed": true
+          }
+        ],
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "note": "INSUFFICIENT_INFORMATION is a certified outcome (\u00a76): it records that these moments do not decide the question, which is different from the question being undecided."
+      },
+      "rank_trace": {
+        "content_kind": "WEIL_RANK_TRACE_CERTIFICATE",
+        "status": "PASS",
+        "theorem_id": "rank_trace_hs_v1",
+        "statement": "rank(P) >= 2 tr(P) + 4 tr(Q) - 4 b - ||P + Q||_HS^2",
+        "hypotheses": {
+          "P_positive_semidefinite": {
+            "statement": "P is positive semidefinite",
+            "verified": true,
+            "evidence": {
+              "from": "ATLAS-RH-ENG-006 \u00a79",
+              "inertia": [
+                2,
+                0,
+                0
+              ],
+              "certificate": "this run's E1 inertia result"
+            }
+          },
+          "Q_hermitian": {
+            "statement": "Q is Hermitian",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "trivially Hermitian": true
+            }
+          },
+          "Q_positive_index_at_most_b": {
+            "statement": "Q has at most b positive directions",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "positive_index": 0,
+              "b": 0
+            }
+          },
+          "shared_normalization": {
+            "statement": "all terms use the theorem's normalization",
+            "verified": true,
+            "evidence": {
+              "requirement": "spectrum of P contained in [0, 1]",
+              "lambda_min_lower": "9.28168567812262e-05",
+              "lambda_max_upper": "0.015418625842281361",
+              "why": "the inequality is not scale free -- rank is scale invariant while tr(P) is degree 1 and the HS term degree 2 -- so it holds under a normalization, and equality at a projection identifies that normalization as spectrum in [0, 1]"
+            }
+          }
+        },
+        "inputs": {
+          "trace_P": {
+            "lo": "0.01551144269906257",
+            "hi": "0.01551144269906257"
+          },
+          "trace_Q": {
+            "lo": "0.0",
+            "hi": "0.0"
+          },
+          "hs_sq_P_plus_Q": {
+            "lo": "0.00023774263783316884",
+            "hi": "0.00023774263783316884"
+          },
+          "positive_index_Q_bound": 0,
+          "normalization": "trace_normalized_finite_dimensional"
+        },
+        "result": {
+          "rhs_enclosure": {
+            "lo": "0.030785142760291973",
+            "hi": "0.030785142760291973"
+          },
+          "certified_rank_lower_bound": 1,
+          "trivial": false,
+          "interpretation": "rank(P) >= 1 on these inputs"
+        },
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false
+      }
+    },
+    {
+      "label": "det_min_1.2377",
+      "L": "1.2376586236864704",
+      "moment_analysis": {
+        "content_kind": "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+        "dimension": 2,
+        "moments": {
+          "m1": {
+            "lo": "0.04216849721371013",
+            "hi": "0.042168497213710195",
+            "width": "6.245004513516506e-17"
+          },
+          "m2": {
+            "lo": "0.001775367336198523",
+            "hi": "0.0017753673361985275",
+            "width": "4.553649124439119e-18"
+          },
+          "m3": {
+            "lo": "7.480522418269891e-05",
+            "hi": "7.48052241826992e-05",
+            "width": "2.981555974335137e-19"
+          },
+          "m4": {
+            "lo": "3.1519252168318273e-06",
+            "hi": "3.1519252168318438e-06",
+            "width": "1.6517142471458857e-20"
+          }
+        },
+        "moment_method": "traces of matrix powers in interval arithmetic; no eigenvalue solver is involved at any point",
+        "sanity_violations": [],
+        "b1_hankel_view": {
+          "available": false,
+          "reason": "B1 is exact-rational; these moments are enclosures"
+        },
+        "b1_queries": [
+          {
+            "query": "moments_force_psd",
+            "status": "INSUFFICIENT_INFORMATION",
+            "answer": null,
+            "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+            "localizing_matrix_status": {
+              "engine": "inertia.ldl.interval_inertia",
+              "status": "PASS",
+              "is_psd": true,
+              "definitely_not_psd": false,
+              "inertia": [
+                2,
+                0,
+                0
+              ],
+              "blocker": null
+            }
+          },
+          {
+            "query": "minimum_negative_eigenvalue_count",
+            "status": "INSUFFICIENT_INFORMATION",
+            "minimum": 0,
+            "reason": "no localizing obstruction found; 0 negatives stays feasible",
+            "localizing_matrix_status": {
+              "engine": "inertia.ldl.interval_inertia",
+              "status": "PASS",
+              "is_psd": true,
+              "definitely_not_psd": false,
+              "inertia": [
+                2,
+                0,
+                0
+              ],
+              "blocker": null
+            }
+          },
+          {
+            "query": "minimum_positive_eigenvalue_count",
+            "status": "CONCLUSIVE",
+            "minimum": 1,
+            "conclusion": "at least one eigenvalue is positive",
+            "localizing_matrix_status": {
+              "engine": "inertia.ldl.interval_inertia",
+              "status": "PASS",
+              "is_psd": false,
+              "definitely_not_psd": true,
+              "inertia": [
+                0,
+                2,
+                0
+              ],
+              "blocker": null
+            }
+          },
+          {
+            "query": "smallest_eigenvalue_bounds",
+            "status": "CONCLUSIVE",
+            "lambda_min": {
+              "lo": "3.340233446986596e-05",
+              "hi": "3.340233446997979e-05"
+            },
+            "lambda_max": {
+              "lo": "0.042135094879240186",
+              "hi": "0.0421350948792403"
+            },
+            "tight": true,
+            "method": "wolkowicz_styan_from_m1_m2",
+            "note": "at n = 2 the inequalities are equalities, so m1 and m2 determine the spectrum exactly"
+          },
+          {
+            "query": "inertia_determined_by_moments",
+            "n": 2,
+            "status": "CONCLUSIVE",
+            "determined": true,
+            "spectrum": {
+              "status": "CONCLUSIVE",
+              "lambda_1": [
+                "3.340233446986596e-05",
+                "3.340233446997979e-05"
+              ],
+              "lambda_2": [
+                "0.042135094879240186",
+                "0.0421350948792403"
+              ],
+              "determined": true,
+              "note": "m1 and m2 determine a 2x2 spectrum outright"
+            },
+            "implied_inertia": [
+              2,
+              0,
+              0
+            ],
+            "reason": null,
+            "conclusion": "m1 and m2 invert to the spectrum of a 2x2 matrix, so the inertia is a consequence of the moments, not an extra observation",
+            "matches_observed": true
+          }
+        ],
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "note": "INSUFFICIENT_INFORMATION is a certified outcome (\u00a76): it records that these moments do not decide the question, which is different from the question being undecided."
+      },
+      "rank_trace": {
+        "content_kind": "WEIL_RANK_TRACE_CERTIFICATE",
+        "status": "PASS",
+        "theorem_id": "rank_trace_hs_v1",
+        "statement": "rank(P) >= 2 tr(P) + 4 tr(Q) - 4 b - ||P + Q||_HS^2",
+        "hypotheses": {
+          "P_positive_semidefinite": {
+            "statement": "P is positive semidefinite",
+            "verified": true,
+            "evidence": {
+              "from": "ATLAS-RH-ENG-006 \u00a79",
+              "inertia": [
+                2,
+                0,
+                0
+              ],
+              "certificate": "this run's E1 inertia result"
+            }
+          },
+          "Q_hermitian": {
+            "statement": "Q is Hermitian",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "trivially Hermitian": true
+            }
+          },
+          "Q_positive_index_at_most_b": {
+            "statement": "Q has at most b positive directions",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "positive_index": 0,
+              "b": 0
+            }
+          },
+          "shared_normalization": {
+            "statement": "all terms use the theorem's normalization",
+            "verified": true,
+            "evidence": {
+              "requirement": "spectrum of P contained in [0, 1]",
+              "lambda_min_lower": "3.340233446986596e-05",
+              "lambda_max_upper": "0.0421350948792403",
+              "why": "the inequality is not scale free -- rank is scale invariant while tr(P) is degree 1 and the HS term degree 2 -- so it holds under a normalization, and equality at a projection identifies that normalization as spectrum in [0, 1]"
+            }
+          }
+        },
+        "inputs": {
+          "trace_P": {
+            "lo": "0.04216849721371013",
+            "hi": "0.04216849721371013"
+          },
+          "trace_Q": {
+            "lo": "0.0",
+            "hi": "0.0"
+          },
+          "hs_sq_P_plus_Q": {
+            "lo": "0.0017753673361985275",
+            "hi": "0.0017753673361985275"
+          },
+          "positive_index_Q_bound": 0,
+          "normalization": "trace_normalized_finite_dimensional"
+        },
+        "result": {
+          "rhs_enclosure": {
+            "lo": "0.08256162709122174",
+            "hi": "0.08256162709122174"
+          },
+          "certified_rank_lower_bound": 1,
+          "trivial": false,
+          "interpretation": "rank(P) >= 1 on these inputs"
+        },
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false
+      }
+    },
+    {
+      "label": "log4",
+      "L": "1.3862943611198906",
+      "moment_analysis": {
+        "content_kind": "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+        "dimension": 2,
+        "moments": {
+          "m1": {
+            "lo": "0.04176408308662612",
+            "hi": "0.04176408308662617",
+            "width": "4.85722573273506e-17"
+          },
+          "m2": {
+            "lo": "0.0017342998260814477",
+            "hi": "0.0017342998260814516",
+            "width": "3.903127820947816e-18"
+          },
+          "m3": {
+            "lo": "7.222389939058556e-05",
+            "hi": "7.22238993905858e-05",
+            "width": "2.439454888092385e-19"
+          },
+          "m4": {
+            "lo": "3.0077464967741793e-06",
+            "hi": "3.0077464967741925e-06",
+            "width": "1.3129010682441655e-20"
+          }
+        },
+        "moment_method": "traces of matrix powers in interval arithmetic; no eigenvalue solver is involved at any point",
+        "sanity_violations": [],
+        "b1_hankel_view": {
+          "available": false,
+          "reason": "B1 is exact-rational; these moments are enclosures"
+        },
+        "b1_queries": [
+          {
+            "query": "moments_force_psd",
+            "status": "INSUFFICIENT_INFORMATION",
+            "answer": null,
+            "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+            "localizing_matrix_status": {
+              "engine": "inertia.ldl.interval_inertia",
+              "status": "PASS",
+              "is_psd": true,
+              "definitely_not_psd": false,
+              "inertia": [
+                2,
+                0,
+                0
+              ],
+              "blocker": null
+            }
+          },
+          {
+            "query": "minimum_negative_eigenvalue_count",
+            "status": "INSUFFICIENT_INFORMATION",
+            "minimum": 0,
+            "reason": "no localizing obstruction found; 0 negatives stays feasible",
+            "localizing_matrix_status": {
+              "engine": "inertia.ldl.interval_inertia",
+              "status": "PASS",
+              "is_psd": true,
+              "definitely_not_psd": false,
+              "inertia": [
+                2,
+                0,
+                0
+              ],
+              "blocker": null
+            }
+          },
+          {
+            "query": "minimum_positive_eigenvalue_count",
+            "status": "CONCLUSIVE",
+            "minimum": 1,
+            "conclusion": "at least one eigenvalue is positive",
+            "localizing_matrix_status": {
+              "engine": "inertia.ldl.interval_inertia",
+              "status": "PASS",
+              "is_psd": false,
+              "definitely_not_psd": true,
+              "inertia": [
+                0,
+                2,
+                0
+              ],
+              "blocker": null
+            }
+          },
+          {
+            "query": "smallest_eigenvalue_bounds",
+            "status": "CONCLUSIVE",
+            "lambda_min": {
+              "lo": "0.00011932847338712992",
+              "hi": "0.00011932847338722496"
+            },
+            "lambda_max": {
+              "lo": "0.041644754613238924",
+              "hi": "0.04164475461323902"
+            },
+            "tight": true,
+            "method": "wolkowicz_styan_from_m1_m2",
+            "note": "at n = 2 the inequalities are equalities, so m1 and m2 determine the spectrum exactly"
+          },
+          {
+            "query": "inertia_determined_by_moments",
+            "n": 2,
+            "status": "CONCLUSIVE",
+            "determined": true,
+            "spectrum": {
+              "status": "CONCLUSIVE",
+              "lambda_1": [
+                "0.00011932847338712992",
+                "0.00011932847338722496"
+              ],
+              "lambda_2": [
+                "0.041644754613238924",
+                "0.04164475461323902"
+              ],
+              "determined": true,
+              "note": "m1 and m2 determine a 2x2 spectrum outright"
+            },
+            "implied_inertia": [
+              2,
+              0,
+              0
+            ],
+            "reason": null,
+            "conclusion": "m1 and m2 invert to the spectrum of a 2x2 matrix, so the inertia is a consequence of the moments, not an extra observation",
+            "matches_observed": true
+          }
+        ],
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "note": "INSUFFICIENT_INFORMATION is a certified outcome (\u00a76): it records that these moments do not decide the question, which is different from the question being undecided."
+      },
+      "rank_trace": {
+        "content_kind": "WEIL_RANK_TRACE_CERTIFICATE",
+        "status": "PASS",
+        "theorem_id": "rank_trace_hs_v1",
+        "statement": "rank(P) >= 2 tr(P) + 4 tr(Q) - 4 b - ||P + Q||_HS^2",
+        "hypotheses": {
+          "P_positive_semidefinite": {
+            "statement": "P is positive semidefinite",
+            "verified": true,
+            "evidence": {
+              "from": "ATLAS-RH-ENG-006 \u00a79",
+              "inertia": [
+                2,
+                0,
+                0
+              ],
+              "certificate": "this run's E1 inertia result"
+            }
+          },
+          "Q_hermitian": {
+            "statement": "Q is Hermitian",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "trivially Hermitian": true
+            }
+          },
+          "Q_positive_index_at_most_b": {
+            "statement": "Q has at most b positive directions",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "positive_index": 0,
+              "b": 0
+            }
+          },
+          "shared_normalization": {
+            "statement": "all terms use the theorem's normalization",
+            "verified": true,
+            "evidence": {
+              "requirement": "spectrum of P contained in [0, 1]",
+              "lambda_min_lower": "0.00011932847338712992",
+              "lambda_max_upper": "0.04164475461323902",
+              "why": "the inequality is not scale free -- rank is scale invariant while tr(P) is degree 1 and the HS term degree 2 -- so it holds under a normalization, and equality at a projection identifies that normalization as spectrum in [0, 1]"
+            }
+          }
+        },
+        "inputs": {
+          "trace_P": {
+            "lo": "0.04176408308662612",
+            "hi": "0.04176408308662612"
+          },
+          "trace_Q": {
+            "lo": "0.0",
+            "hi": "0.0"
+          },
+          "hs_sq_P_plus_Q": {
+            "lo": "0.0017342998260814516",
+            "hi": "0.0017342998260814516"
+          },
+          "positive_index_Q_bound": 0,
+          "normalization": "trace_normalized_finite_dimensional"
+        },
+        "result": {
+          "rhs_enclosure": {
+            "lo": "0.0817938663471708",
+            "hi": "0.0817938663471708"
+          },
+          "certified_rank_lower_bound": 1,
+          "trivial": false,
+          "interpretation": "rank(P) >= 1 on these inputs"
+        },
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false
+      }
+    }
+  ],
+  "moments": {
+    "log3": {
+      "m1": {
+        "lo": "0.01551144269906257",
+        "hi": "0.015511442699062605",
+        "width": "3.469446951953614e-17"
+      },
+      "m2": {
+        "lo": "0.0002377426378331678",
+        "hi": "0.00023774263783316884",
+        "width": "1.0299920638612292e-18"
+      },
+      "m3": {
+        "lo": "3.6655327481387877e-06",
+        "hi": "3.665532748138812e-06",
+        "width": "2.414043899674756e-20"
+      },
+      "m4": {
+        "lo": "5.651746570144459e-08",
+        "hi": "5.651746570144508e-08",
+        "width": "4.896909226313924e-22"
+      }
+    },
+    "det_min_1.2377": {
+      "m1": {
+        "lo": "0.04216849721371013",
+        "hi": "0.042168497213710195",
+        "width": "6.245004513516506e-17"
+      },
+      "m2": {
+        "lo": "0.001775367336198523",
+        "hi": "0.0017753673361985275",
+        "width": "4.553649124439119e-18"
+      },
+      "m3": {
+        "lo": "7.480522418269891e-05",
+        "hi": "7.48052241826992e-05",
+        "width": "2.981555974335137e-19"
+      },
+      "m4": {
+        "lo": "3.1519252168318273e-06",
+        "hi": "3.1519252168318438e-06",
+        "width": "1.6517142471458857e-20"
+      }
+    },
+    "log4": {
+      "m1": {
+        "lo": "0.04176408308662612",
+        "hi": "0.04176408308662617",
+        "width": "4.85722573273506e-17"
+      },
+      "m2": {
+        "lo": "0.0017342998260814477",
+        "hi": "0.0017342998260814516",
+        "width": "3.903127820947816e-18"
+      },
+      "m3": {
+        "lo": "7.222389939058556e-05",
+        "hi": "7.22238993905858e-05",
+        "width": "2.439454888092385e-19"
+      },
+      "m4": {
+        "lo": "3.0077464967741793e-06",
+        "hi": "3.0077464967741925e-06",
+        "width": "1.3129010682441655e-20"
+      }
+    }
+  },
+  "b1_queries": [
+    {
+      "query": "moments_force_psd",
+      "status": "INSUFFICIENT_INFORMATION",
+      "answer": null,
+      "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+      "localizing_matrix_status": {
+        "engine": "inertia.ldl.interval_inertia",
+        "status": "PASS",
+        "is_psd": true,
+        "definitely_not_psd": false,
+        "inertia": [
+          2,
+          0,
+          0
+        ],
+        "blocker": null
+      }
+    },
+    {
+      "query": "minimum_negative_eigenvalue_count",
+      "status": "INSUFFICIENT_INFORMATION",
+      "minimum": 0,
+      "reason": "no localizing obstruction found; 0 negatives stays feasible",
+      "localizing_matrix_status": {
+        "engine": "inertia.ldl.interval_inertia",
+        "status": "PASS",
+        "is_psd": true,
+        "definitely_not_psd": false,
+        "inertia": [
+          2,
+          0,
+          0
+        ],
+        "blocker": null
+      }
+    },
+    {
+      "query": "minimum_positive_eigenvalue_count",
+      "status": "CONCLUSIVE",
+      "minimum": 1,
+      "conclusion": "at least one eigenvalue is positive",
+      "localizing_matrix_status": {
+        "engine": "inertia.ldl.interval_inertia",
+        "status": "PASS",
+        "is_psd": false,
+        "definitely_not_psd": true,
+        "inertia": [
+          0,
+          2,
+          0
+        ],
+        "blocker": null
+      }
+    },
+    {
+      "query": "smallest_eigenvalue_bounds",
+      "status": "CONCLUSIVE",
+      "lambda_min": {
+        "lo": "9.28168567812262e-05",
+        "hi": "9.281685678129442e-05"
+      },
+      "lambda_max": {
+        "lo": "0.015418625842281293",
+        "hi": "0.015418625842281361"
+      },
+      "tight": true,
+      "method": "wolkowicz_styan_from_m1_m2",
+      "note": "at n = 2 the inequalities are equalities, so m1 and m2 determine the spectrum exactly"
+    },
+    {
+      "query": "inertia_determined_by_moments",
+      "n": 2,
+      "status": "CONCLUSIVE",
+      "determined": true,
+      "spectrum": {
+        "status": "CONCLUSIVE",
+        "lambda_1": [
+          "9.28168567812262e-05",
+          "9.281685678129442e-05"
+        ],
+        "lambda_2": [
+          "0.015418625842281293",
+          "0.015418625842281361"
+        ],
+        "determined": true,
+        "note": "m1 and m2 determine a 2x2 spectrum outright"
+      },
+      "implied_inertia": [
+        2,
+        0,
+        0
+      ],
+      "reason": null,
+      "conclusion": "m1 and m2 invert to the spectrum of a 2x2 matrix, so the inertia is a consequence of the moments, not an extra observation",
+      "matches_observed": true
+    },
+    {
+      "query": "moments_force_psd",
+      "status": "INSUFFICIENT_INFORMATION",
+      "answer": null,
+      "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+      "localizing_matrix_status": {
+        "engine": "inertia.ldl.interval_inertia",
+        "status": "PASS",
+        "is_psd": true,
+        "definitely_not_psd": false,
+        "inertia": [
+          2,
+          0,
+          0
+        ],
+        "blocker": null
+      }
+    },
+    {
+      "query": "minimum_negative_eigenvalue_count",
+      "status": "INSUFFICIENT_INFORMATION",
+      "minimum": 0,
+      "reason": "no localizing obstruction found; 0 negatives stays feasible",
+      "localizing_matrix_status": {
+        "engine": "inertia.ldl.interval_inertia",
+        "status": "PASS",
+        "is_psd": true,
+        "definitely_not_psd": false,
+        "inertia": [
+          2,
+          0,
+          0
+        ],
+        "blocker": null
+      }
+    },
+    {
+      "query": "minimum_positive_eigenvalue_count",
+      "status": "CONCLUSIVE",
+      "minimum": 1,
+      "conclusion": "at least one eigenvalue is positive",
+      "localizing_matrix_status": {
+        "engine": "inertia.ldl.interval_inertia",
+        "status": "PASS",
+        "is_psd": false,
+        "definitely_not_psd": true,
+        "inertia": [
+          0,
+          2,
+          0
+        ],
+        "blocker": null
+      }
+    },
+    {
+      "query": "smallest_eigenvalue_bounds",
+      "status": "CONCLUSIVE",
+      "lambda_min": {
+        "lo": "3.340233446986596e-05",
+        "hi": "3.340233446997979e-05"
+      },
+      "lambda_max": {
+        "lo": "0.042135094879240186",
+        "hi": "0.0421350948792403"
+      },
+      "tight": true,
+      "method": "wolkowicz_styan_from_m1_m2",
+      "note": "at n = 2 the inequalities are equalities, so m1 and m2 determine the spectrum exactly"
+    },
+    {
+      "query": "inertia_determined_by_moments",
+      "n": 2,
+      "status": "CONCLUSIVE",
+      "determined": true,
+      "spectrum": {
+        "status": "CONCLUSIVE",
+        "lambda_1": [
+          "3.340233446986596e-05",
+          "3.340233446997979e-05"
+        ],
+        "lambda_2": [
+          "0.042135094879240186",
+          "0.0421350948792403"
+        ],
+        "determined": true,
+        "note": "m1 and m2 determine a 2x2 spectrum outright"
+      },
+      "implied_inertia": [
+        2,
+        0,
+        0
+      ],
+      "reason": null,
+      "conclusion": "m1 and m2 invert to the spectrum of a 2x2 matrix, so the inertia is a consequence of the moments, not an extra observation",
+      "matches_observed": true
+    },
+    {
+      "query": "moments_force_psd",
+      "status": "INSUFFICIENT_INFORMATION",
+      "answer": null,
+      "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+      "localizing_matrix_status": {
+        "engine": "inertia.ldl.interval_inertia",
+        "status": "PASS",
+        "is_psd": true,
+        "definitely_not_psd": false,
+        "inertia": [
+          2,
+          0,
+          0
+        ],
+        "blocker": null
+      }
+    },
+    {
+      "query": "minimum_negative_eigenvalue_count",
+      "status": "INSUFFICIENT_INFORMATION",
+      "minimum": 0,
+      "reason": "no localizing obstruction found; 0 negatives stays feasible",
+      "localizing_matrix_status": {
+        "engine": "inertia.ldl.interval_inertia",
+        "status": "PASS",
+        "is_psd": true,
+        "definitely_not_psd": false,
+        "inertia": [
+          2,
+          0,
+          0
+        ],
+        "blocker": null
+      }
+    },
+    {
+      "query": "minimum_positive_eigenvalue_count",
+      "status": "CONCLUSIVE",
+      "minimum": 1,
+      "conclusion": "at least one eigenvalue is positive",
+      "localizing_matrix_status": {
+        "engine": "inertia.ldl.interval_inertia",
+        "status": "PASS",
+        "is_psd": false,
+        "definitely_not_psd": true,
+        "inertia": [
+          0,
+          2,
+          0
+        ],
+        "blocker": null
+      }
+    },
+    {
+      "query": "smallest_eigenvalue_bounds",
+      "status": "CONCLUSIVE",
+      "lambda_min": {
+        "lo": "0.00011932847338712992",
+        "hi": "0.00011932847338722496"
+      },
+      "lambda_max": {
+        "lo": "0.041644754613238924",
+        "hi": "0.04164475461323902"
+      },
+      "tight": true,
+      "method": "wolkowicz_styan_from_m1_m2",
+      "note": "at n = 2 the inequalities are equalities, so m1 and m2 determine the spectrum exactly"
+    },
+    {
+      "query": "inertia_determined_by_moments",
+      "n": 2,
+      "status": "CONCLUSIVE",
+      "determined": true,
+      "spectrum": {
+        "status": "CONCLUSIVE",
+        "lambda_1": [
+          "0.00011932847338712992",
+          "0.00011932847338722496"
+        ],
+        "lambda_2": [
+          "0.041644754613238924",
+          "0.04164475461323902"
+        ],
+        "determined": true,
+        "note": "m1 and m2 determine a 2x2 spectrum outright"
+      },
+      "implied_inertia": [
+        2,
+        0,
+        0
+      ],
+      "reason": null,
+      "conclusion": "m1 and m2 invert to the spectrum of a 2x2 matrix, so the inertia is a consequence of the moments, not an extra observation",
+      "matches_observed": true
+    }
+  ],
+  "note": "Moments are enclosures of traces of matrix powers. INSUFFICIENT_INFORMATION answers are certified results (\u00a76), not failures to compute.",
+  "generated_utc": "2026-08-24T21:27:37Z",
+  "content_hash": "67e43f8ca5b8d09f5dea95b3821c41171b1486f5654297d6070a97681616a62f"
+}

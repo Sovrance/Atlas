@@ -134,6 +134,15 @@ def kernel_coeffs_in_u(i: str, j: str, L, acb) -> List[Any]:
         # = (L^3 - 2L^2 a - 2L a^2 - L^2 a + 2L a^2 + 2a^3)/6
         # = (L^3 - 3L^2 a + 0*a^2 + 2a^3)/6
         return [Lc**3 / 6, -Lc**2 / 2, acb(0), acb(1) / 3]
+    # ENG-006 §7 odd degree-3 pairs. Expansions checked against SymPy in
+    # tests/test_degree3_exact.py rather than trusted from the algebra here.
+    if {i, j} == {"q1", "b3"}:
+        # K_q1b3 = (L-a)^2 (L^3 + 2L^2 a - 12L a^2 - 6a^3)/60
+        return [Lc**5 / 60, acb(0), -Lc**3 / 4, Lc**2 / 3, acb(0), acb(-1) / 10]
+    if (i, j) == ("b3", "b3"):
+        # K_b3b3 = (L-a)^3 (L^4 + 3L^3 a - 15L^2 a^2 - 18L a^3 - 6a^4)/420
+        return [Lc**7 / 420, acb(0), -Lc**5 / 20, Lc**4 / 12, acb(0),
+                -Lc**2 / 20, acb(0), acb(1) / 70]
     raise KeyError(f"no kernel expansion for {(i, j)!r}")
 
 
@@ -263,6 +272,11 @@ def kernel_coeffs_dL_in_u(i: str, j: str, L, acb) -> List[Any]:
         return [Lc**4 / 3, acb(0), -Lc**2, acb(2) * Lc / 3, acb(0), acb(0)]
     if (i, j) == ("q1", "q1"):
         return [Lc**2 / 2, -Lc, acb(0), acb(0)]
+    if {i, j} == {"q1", "b3"}:
+        return [Lc**4 / 12, acb(0), -Lc**2 * 3 / 4, Lc * 2 / 3, acb(0), acb(0)]
+    if (i, j) == ("b3", "b3"):
+        return [Lc**6 / 60, acb(0), -Lc**4 / 4, Lc**3 / 3, acb(0),
+                -Lc / 10, acb(0), acb(0)]
     raise KeyError(f"no dL kernel expansion for {(i, j)!r}")
 
 

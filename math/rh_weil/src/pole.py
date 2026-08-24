@@ -37,10 +37,11 @@ POLE_CANDIDATE = "A"
 POLE_STATUS = "ADOPTED_WO_RH_17"
 
 # Basis elements on [0, L], as monomial coefficient tuples (c0, c1, ...).
-BASIS_NAMES: Tuple[str, ...] = ("one", "q1", "b")
+BASIS_NAMES: Tuple[str, ...] = ("one", "q1", "b", "b3")
 
 #: Parity about the cell midpoint x = L/2. Drives ``E^- = ± e^{-L/2} E^+``.
-BASIS_PARITY: Dict[str, str] = {"one": "even", "q1": "odd", "b": "even"}
+BASIS_PARITY: Dict[str, str] = {"one": "even", "q1": "odd", "b": "even",
+                                "b3": "odd"}
 
 # Below this |a*L| the endpoint closed form cancels and the series branch (with a
 # rigorously bounded remainder) is used instead.
@@ -68,6 +69,10 @@ def basis_coeffs(name: str, L: Any) -> Tuple[Any, ...]:
         return (-L / 2, 1)
     if name == "b":  # x(L - x) = L*x - x^2
         return (0 * L, L, -1)
+    if name == "b3":
+        # ENG-006 §7: b3(x) = x(L-x)(x-L/2) = -x^3 + (3L/2)x^2 - (L^2/2)x.
+        # Odd about x = L/2, like q1, so it joins the odd block.
+        return (0 * L, -L * L / 2, 3 * L / 2, 0 * L - 1)
     raise KeyError(f"unknown basis element {name!r}")
 
 
@@ -291,6 +296,8 @@ def basis_at_right_endpoint(name: str, L: Any) -> Any:
         return L / 2
     if name == "b":
         return 0 * L
+    if name == "b3":  # b3(L; L) = L(L-L)(L-L/2) = 0
+        return 0 * L
     raise KeyError(f"unknown basis element {name!r}")
 
 
@@ -302,6 +309,8 @@ def basis_coeffs_dL(name: str, L: Any) -> Tuple[Any, ...]:
         return (0 * L - 0.5 if not hasattr(L, "mid") else -(0 * L + 1) / 2,)
     if name == "b":  # d/dL [L x - x^2] = x
         return (0 * L, 0 * L + 1)
+    if name == "b3":  # d/dL [-x^3 + (3L/2)x^2 - (L^2/2)x] = (3/2)x^2 - L x
+        return (0 * L, -L, (0 * L + 3) / 2, 0 * L)
     raise KeyError(f"unknown basis element {name!r}")
 
 
@@ -353,6 +362,18 @@ def pole_gram_entry_dL(
 # Cross-checked against the closed forms: E_b^+ = 4[(L-4)e^{L/2}+L+4] differentiates
 # twice to L e^{L/2}, matching.
 def _laplace_d2L(name: str, L: Any, sign: int) -> Any:
+    """``d^2/dL^2 E_name^sign``.
+
+    With ``F(L) = int_0^L h(x; L) e^{s x/2} dx`` and ``H(L) = h(L; L)``::
+
+        F'' = H'(L) e^{sL/2} + (s/2) H(L) e^{sL/2}
+              + h_L(L; L) e^{sL/2} + int_0^L h_LL(x; L) e^{sx/2} dx
+
+    ``one``, ``q1`` and ``b`` are all *linear* in ``L``, so their ``h_LL``
+    vanishes and the integral term with it -- which is why those three reduce to
+    pure boundary terms. ``b3`` is quadratic in ``L`` (``-(L^2/2) x`` appears in
+    it), so ``h_LL = -x`` survives and the integral has to be carried.
+    """
     e = _exp(_half(L) * sign * L)
     if name == "one":
         return sign * e / 2
@@ -360,6 +381,10 @@ def _laplace_d2L(name: str, L: Any, sign: int) -> Any:
         return sign * L * e / 4
     if name == "b":
         return L * e
+    if name == "b3":
+        # H = H' = 0; h_L(L; L) = (3/2)L^2 - L^2 = L^2/2; h_LL = -x.
+        half = _half(L) * sign
+        return L * L * e / 2 - poly_exp_integral((0 * L, 0 * L + 1), half, L)
     raise KeyError(f"unknown basis element {name!r}")
 
 
