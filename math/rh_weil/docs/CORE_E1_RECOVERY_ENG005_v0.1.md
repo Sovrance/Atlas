@@ -180,10 +180,55 @@ scan is preserved under `certificates/history/` as rejected-normalization
 provenance. The fresh scan reports stationary points and curvature changes of
 `E2` as *apparent* grid features — E3 evidence, never a warrant.
 
-The uniform bound itself is established by exhaustive interval cover, which
-assumes **no** topology at all. The certificate records both the scan's
-classification and the fact that the cover needed none of it. If the two ever
-disagreed, the cover is the warrant.
+Two independent warrants are then produced, and the certificates carry both.
+
+**Warrant 1 — exhaustive cover.** A branch-and-bound over a box partition of the
+closed cell that assumes **no** topology at all: every box has to clear the
+target on its own. This is the fallback and the tie-breaker. If it ever
+disagreed with the scan, it wins.
+
+**Warrant 2 — interior minimum.** The exhaustive cover proves a bound but says
+nothing about *where* the minimum is, and it pays for that: it has to resolve a
+very flat minimum with boxes narrow enough to separate `E2 ~ 3.4e-6` from zero
+everywhere at once. The interior-minimum argument locates the minimiser instead:
+
+1. **Isolate.** Certified bisection on `sign(E2')` to a bracket `[a, b]` with
+   `E2'(a) < 0 < E2'(b)`, both signs from rigorous Arb enclosures. Point
+   enclosures of `E2'` come back with width ~3e-13, so the bracket closes to
+   ~5e-10 and `L*` is pinned to nine digits.
+2. **Uniqueness and minimality.** `E2'' > 0` on a window `W` around `[a, b]`, so
+   `E2'` is strictly increasing there: `L*` is the *only* critical point in `W`
+   and it is a strict local minimum.
+3. **Basin bound.** `E2 >= m` on `W` by interval cover. `W` is short, so this is
+   nearly a point evaluation and `m` is within a hair of the true minimum.
+4. **No lower values elsewhere.** `E2' < 0` on `[log 3, W_lo]` and `E2' > 0` on
+   `[W_hi, W_hi + 0.03]`, so `E2` falls strictly onto `W` from the left endpoint
+   and rises strictly off it, and no critical point exists in between.
+
+The headline bound is `min(m, cover bound outside the governed interval)`,
+floored at the plain whole-cell cover bound so §8's second warrant can only
+sharpen the number, never weaken it.
+
+**Why the derivative argument stops at 0.03 rather than reaching `log 4`.** The
+`E2''` enclosure on a box of radius `r` carries a dependency blow-up of ~`300 r`
+on top of the true `|E2''| ~ 1.4e-3` — and unlike `E2'`, it cannot be centred,
+because centring needs an exact third jet and `pole.pole_gram_entry_d2L` is the
+last closed form available (a finite-difference third jet is exactly what §9
+forbids in an E1 path). So the centred `E2'` form separates from zero only while
+`300 r^2 < |E2'|`; out where `|E2'| ~ 4e-5` that forces `r < 1.2e-4`, about 1200
+boxes to reach `log 4` — more than covering `E2` directly costs, and each box
+dearer. The honest split is: derivative signs near the minimiser, where they are
+cheap and where the direct cover is weakest, and the direct cover further out,
+where `E2` has climbed well clear of `m`. The certificate names the interval each
+warrant governs, and they abut exactly.
+
+**Centring the derivative was not optional.** Evaluated raw on an `L`-box of
+radius `r`, `E2'` comes back with halfwidth ~`25 r` — at `r = 1e-4` that is
+`1.1e-3`, two orders above the `|E2'| <= 1e-5` the sign conditions have to
+resolve. No sign could be certified anywhere near `L*`. The same mean-value form
+the entries already use — exact point value at the midpoint plus `r` times an
+enclosure of the exact second jet — replaces `25 r` with `r(|E2''| + O(r))`, or
+`3e-6` instead of `1.1e-3` at that radius.
 
 ---
 
@@ -201,6 +246,19 @@ disagreed, the cover is the warrant.
   They say nothing about the untruncated matrix.
 * The scan is a grid. Features between grid points are not excluded by it — which
   is precisely why the uniform certificate does not rest on it.
+* The interior-minimum argument governs `[log 3, W_hi + 0.03]`, not the whole
+  cell. Beyond that band the only warrant is the exhaustive cover. The two
+  intervals abut exactly and are both recorded, but the sharper `E2 >= m`
+  statement is a statement about the band, and the headline bound is the weaker
+  of the two where they meet.
+* `E2''` is certified raw, not centred, because centring it needs an exact third
+  jet the pole primitive does not provide. That is why the curvature window is
+  1e-4 wide rather than something more comfortable: it is the widest interval on
+  which the raw `E2''` enclosure still separates from zero at reasonable cost.
+* Uniqueness of the critical point is proved on the curvature window and, off it,
+  only out to the ends of the sign-certified regions. Nothing here excludes a
+  critical point beyond the band — only values below the bound, which the
+  exhaustive cover excludes directly.
 * Integrator settings (140-bit precision, `rel_tol` 1e-25) were chosen for speed;
   they leave the enclosures ~1e-26, far tighter than the ~1e-10 the claims need,
   but they are a deliberate accuracy/time trade and are recorded per certificate.

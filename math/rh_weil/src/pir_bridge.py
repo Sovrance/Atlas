@@ -74,6 +74,9 @@ def certs_to_facts() -> List[Any]:
          "compact degree-2 even determinant E2, cutoff-free, uniform on [log3, log4]"),
         ("e1_fourier_T84_points.json", "E1", "SOUND",
          "direct-Fourier T=84 entries at selected L — point-scoped, not a cell claim"),
+        ("e1_fourier_T84_interior_minimum.json", "E1", "SOUND",
+         "direct-Fourier T=84 interior minimum: minimiser enclosure, curvature and "
+         "derivative-sign inequalities on the governed interval"),
         ("e1_fourier_T84_uniform_degree2.json", "E1", "SOUND",
          "direct-Fourier T=84 uniform degree-2 lower bound on [log3, log4]"),
         ("e3_fourier_T84_scan.json", "E3", "HEURISTIC",

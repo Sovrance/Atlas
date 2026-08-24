@@ -301,10 +301,94 @@ class T84Certificates(unittest.TestCase):
         cov = cert["interval_coverage"]
         self.assertIn("no convexity or monotonicity assumed", cov["topology_proved"])
 
+    def test_uniform_bound_provenance_is_never_weaker_than_the_plain_cover(self):
+        """The headline bound may be sharpened by §8, never weakened by it."""
+        cert = _load("e1_fourier_T84_uniform_degree2.json")
+        prov = cert["bound_provenance"]
+        headline = float(cert["certified_lower_bound"])
+        self.assertGreaterEqual(headline,
+                                float(prov["exhaustive_cover_whole_cell"]))
+        self.assertGreater(float(prov["exhaustive_cover_whole_cell"]), 0.0)
+
     def test_uniform_certificate_records_its_panel_schedule(self):
         cert = _load("e1_fourier_T84_uniform_degree2.json")
         self.assertEqual([tuple(p) for p in cert["quadrature"]["panel_schedule"]],
                          list(RI.PANELS_T84))
+
+
+class T84InteriorMinimum(unittest.TestCase):
+    """§8: the five things the certificate has to name, and their consistency."""
+
+    def setUp(self):
+        self.cert = _load("e1_fourier_T84_interior_minimum.json")
+        if self.cert is None:
+            self.skipTest("interior-minimum certificate not generated")
+        self.d = self.cert["interior_minimum"]
+
+    def test_promoted_with_a_certified_sign_change(self):
+        self.assertEqual(self.cert["status"], "PASS")
+        self.assertEqual(self.cert["promotion_state"], promotion.PROMOTED_STATE)
+        self.assertIsNone(promotion.promotion_refusal(self.cert))
+        self.assertTrue(self.d["stationary_point"]["sign_change_certified"])
+
+    def test_stationary_point_enclosure_brackets_a_real_sign_change(self):
+        sp = self.d["stationary_point"]
+        lo, hi = (float(x) for x in sp["rigorous_interval"])
+        self.assertLess(lo, hi)
+        # E2' < 0 at the left end and > 0 at the right end, from the enclosures
+        # themselves rather than from a midpoint reading.
+        self.assertLess(float(sp["E2_d1_at_left_end"][1]), 0.0)
+        self.assertGreater(float(sp["E2_d1_at_right_end"][0]), 0.0)
+        approx = float(sp["approximate_location"])
+        self.assertGreaterEqual(approx, lo)
+        self.assertLessEqual(approx, hi)
+
+    def test_stationary_point_lies_inside_the_cell(self):
+        lo, hi = (float(x) for x in self.d["stationary_point"]["rigorous_interval"])
+        self.assertGreater(lo, math.log(3.0))
+        self.assertLess(hi, math.log(4.0))
+
+    def test_curvature_window_contains_the_stationary_point(self):
+        a, b = (float(x) for x in self.d["stationary_point"]["rigorous_interval"])
+        w_lo, w_hi = (float(x) for x in self.d["curvature"]["window"])
+        self.assertLessEqual(w_lo, a)
+        self.assertGreaterEqual(w_hi, b)
+        self.assertGreater(float(self.d["curvature"]["E2_d2_certified_lower_bound"]),
+                           0.0)
+
+    def test_sign_regions_tile_the_governed_interval_with_the_window(self):
+        """Left cover, window, right band must abut exactly — no gap, no overlap."""
+        w_lo, w_hi = (float(x) for x in self.d["curvature"]["window"])
+        left = self.d["no_lower_values_elsewhere"]["left"]["interval"]
+        right = self.d["no_lower_values_elsewhere"]["right_band"]["interval"]
+        self.assertEqual(float(left[0]), math.log(3.0))
+        self.assertEqual(float(left[1]), w_lo)
+        self.assertEqual(float(right[0]), w_hi)
+        self.assertEqual(float(right[1]), float(self.d["governed_interval"][1]))
+        self.assertEqual(float(self.d["governed_interval"][0]), math.log(3.0))
+
+    def test_derivative_signs_are_certified_strictly(self):
+        for side in ("left", "right_band"):
+            margin = self.d["no_lower_values_elsewhere"][side].get("certified_margin")
+            self.assertIsNotNone(margin, side)
+            self.assertGreater(float(margin), 0.0, side)
+
+    def test_basin_bound_is_positive_and_consistent_with_the_points(self):
+        m = float(self.d["basin_bound"]["certified_lower_bound"])
+        self.assertGreater(m, 0.0)
+        pts = _load("e1_fourier_T84_points.json")
+        for row in pts["points"]:
+            # Every rigorous point value must sit at or above the window bound.
+            self.assertGreaterEqual(float(row["E2"][0]), m * 0.999, row["label"])
+
+    def test_the_band_stops_short_of_log4_and_says_who_covers_the_rest(self):
+        beyond = self.d["no_lower_values_elsewhere"]["beyond_the_band"]
+        self.assertEqual(float(beyond["interval"][1]), math.log(4.0))
+        self.assertIn("exhaustive interval cover", beyond["governed_by"])
+
+    def test_starting_bracket_is_labelled_as_e3_not_a_warrant(self):
+        self.assertIn("E3", self.cert["topology_source"])
+        self.assertIn("certified", self.cert["topology_source"])
 
 
 # --------------------------------------------------------------------------- #
@@ -313,6 +397,7 @@ class T84Certificates(unittest.TestCase):
 class StandingRules(unittest.TestCase):
     RECOVERED = ("e1_scalar_log3_log4.json", "e1_degree1_log3_log4.json",
                  "e1_degree2_compact_log3_log4.json", "e1_fourier_T84_points.json",
+                 "e1_fourier_T84_interior_minimum.json",
                  "e1_fourier_T84_uniform_degree2.json")
 
     def test_no_certificate_claims_rh(self):

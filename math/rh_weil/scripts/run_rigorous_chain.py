@@ -8,6 +8,7 @@
       -> compact degree2
       -> Candidate-A T=84 E3 scan
       -> T=84 point E1
+      -> T=84 interior minimum (locate the minimiser)
       -> T=84 uniform E1
       -> PIR
       -> clean-tree / hash validation
@@ -46,6 +47,7 @@ RIGOROUS_CERTS = [
     ("e1_degree1_log3_log4.json", "degree1"),
     ("e1_degree2_compact_log3_log4.json", "compact degree2"),
     ("e1_fourier_T84_points.json", "T84 points"),
+    ("e1_fourier_T84_interior_minimum.json", "T84 interior minimum"),
     ("e1_fourier_T84_uniform_degree2.json", "T84 uniform degree2"),
 ]
 

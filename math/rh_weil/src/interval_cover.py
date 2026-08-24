@@ -42,6 +42,11 @@ class CoverResult:
     max_width: float
     initial_boxes: int
     cell: Tuple[float, float]
+    #: Best lower bound over every box not wholly contained in ``exclude``, so it
+    #: bounds the quantity on ``cell \ exclude``. ``inf`` when no exclusion was
+    #: requested, or when every box lies inside it.
+    lower_bound_outside: float = math.inf
+    exclude: Optional[Tuple[float, float]] = None
     extra: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -59,6 +64,9 @@ class CoverResult:
             "max_box_enclosure_width": repr(self.max_width),
             "initial_boxes": self.initial_boxes,
             "method": "adaptive_interval_branch_and_bound",
+            **({"exclude": [repr(self.exclude[0]), repr(self.exclude[1])],
+                "certified_lower_bound_outside_exclude":
+                    repr(self.lower_bound_outside)} if self.exclude else {}),
             "topology_proved": (
                 "uniform lower bound over an exhaustive box cover of the closed "
                 "cell; no convexity or monotonicity assumed"
@@ -76,11 +84,19 @@ def adaptive_cover(
     target: float = 0.0,
     initial_boxes: int = 24,
     max_depth: int = 22,
+    exclude: Optional[Tuple[float, float]] = None,
 ) -> CoverResult:
     """Certify ``evaluate > target`` uniformly on ``cell``.
 
     ``evaluate(lo, hi)`` returns a rigorous ``(lower, upper)`` enclosure of the
     quantity over ``[lo, hi]``.
+
+    ``exclude`` additionally reports the best bound over every box *not* wholly
+    contained in that sub-interval — so the reported number bounds the quantity
+    on all of ``cell`` minus ``exclude``, edge-straddling boxes included. Every box is still examined and still has to clear
+    the target — the exclusion changes what is *reported*, never what is proved.
+    It exists so a region governed by a separate, sharper argument can be taken
+    out of the headline number without weakening the cover.
     """
     a, b = cell
     stack: List[Tuple[float, float, int]] = [
@@ -92,6 +108,7 @@ def adaptive_cover(
     best_lower = math.inf
     best_box = (a, b)
     best_enclosure = (0.0, 0.0)
+    best_outside = math.inf
     widest = 0.0
 
     while stack:
@@ -105,6 +122,12 @@ def adaptive_cover(
             accepted += 1
             if vlo < best_lower:
                 best_lower, best_box, best_enclosure = vlo, (lo, hi), (vlo, vhi)
+            # A box counts toward the outside bound unless it lies *wholly*
+            # inside the excluded interval. A box straddling the edge contains
+            # territory the other warrant does not govern, so its bound has to
+            # be honoured here -- dropping it would leave that sliver unbounded.
+            if exclude is not None and not (exclude[0] <= lo and hi <= exclude[1]):
+                best_outside = min(best_outside, vlo)
             continue
         if depth >= max_depth:
             raise NotSeparated(
@@ -128,4 +151,6 @@ def adaptive_cover(
         max_width=widest,
         initial_boxes=initial_boxes,
         cell=(a, b),
+        lower_bound_outside=best_outside,
+        exclude=exclude,
     )

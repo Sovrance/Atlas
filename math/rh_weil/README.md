@@ -128,6 +128,23 @@ Uniform bounds come from one shared adaptive interval cover
 precommitting to convexity or monotonicity, so each certificate records the
 topology it actually established.
 
+At `T = 84` a second, independent warrant sits alongside that cover: instead of
+merely bounding `E2`, it **locates the minimiser**. Certified bisection on
+`sign(E2')` pins `L*` to a nine-digit interval; `E2'' > 0` on a window around it
+makes `L*` the unique critical point there and a strict minimum; an interval
+cover of that short window bounds `E2` almost as tightly as a point evaluation;
+and certified derivative signs (`E2' < 0` to the left, `E2' > 0` through a band
+to the right) show nothing outside the window can be lower. The headline bound is
+the sharper of the two warrants, floored at what the plain cover alone proves, so
+the second warrant can only improve the number.
+
+The derivative argument governs a band, not the whole cell: the `E2''` enclosure
+on a box of radius `r` carries a ~`300 r` dependency blow-up that cannot be
+centred away (that would need an exact third jet, and a finite-difference one is
+forbidden in an E1 path), so past the band it is cheaper and no less rigorous to
+bound `E2` directly. Each certificate names the interval its warrant governs, and
+the intervals abut exactly.
+
 ```bash
 python3 scripts/run_rigorous_chain.py      # the whole chain, in canonical order
 ```

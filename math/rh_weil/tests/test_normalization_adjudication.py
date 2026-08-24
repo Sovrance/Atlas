@@ -254,15 +254,36 @@ class QuarantineTests(unittest.TestCase):
         self.assertEqual(finite_weil.POLE_EVEN_SCALE_STATUS, "REJECTED_WO_RH_17")
         self.assertIn("REJECTED", finite_weil.__doc__)
 
-    def test_work_order_status_flags_quarantine(self):
-        """Still-disputed orders stay flagged; WO-RH-09 was recovered by ENG-004."""
+    #: Every order the WO-RH-17 adjudication quarantined.
+    QUARANTINED_BY_WO_RH_17 = ["WO-RH-05"] + [f"WO-RH-{n:02d}" for n in range(9, 16)]
+
+    def test_quarantined_orders_are_either_still_flagged_or_explicitly_recovered(self):
+        """An order may leave quarantine only by saying so, never by going blank.
+
+        WO-RH-09 was recovered by ENG-004 and the rest by ENG-005. The guard that
+        matters is not that they stay quarantined — they are meant to be recovered
+        — but that no order can quietly lose the marker: the status has to name
+        the work order that did the recovering.
+        """
         st = self._load("work_order_status.json")
-        recovered = {"WO-RH-09"}
-        for wo in ["WO-RH-05"] + [f"WO-RH-{n:02d}" for n in range(9, 16)]:
-            if wo not in st["orders"] or wo in recovered:
+        for wo in self.QUARANTINED_BY_WO_RH_17:
+            if wo not in st["orders"]:
                 continue
-            self.assertEqual(st["orders"][wo], "quarantined_pending_WO-RH-17", wo)
-        self.assertIn("recovered", st["orders"].get("WO-RH-09", ""))
+            state = st["orders"][wo]
+            if state == "quarantined_pending_WO-RH-17":
+                continue
+            self.assertTrue(state.startswith("recovered_"),
+                            f"{wo} left quarantine without saying so: {state!r}")
+            self.assertRegex(state, r"^recovered_(ENG-00[45])_",
+                             f"{wo} does not name the recovering work order")
+
+    def test_pre_quarantine_claims_are_retained_verbatim(self):
+        """WO-RH-17 forbids deleting the contrary evidence a recovery supersedes."""
+        st = self._load("work_order_status.json")
+        for wo, state in st["orders"].items():
+            if str(state).startswith("recovered_"):
+                self.assertIn(wo, st["pre_quarantine_orders"],
+                              f"{wo} was recovered but its pre-quarantine claim is gone")
 
 
 class AdjudicationCertificateTests(unittest.TestCase):
