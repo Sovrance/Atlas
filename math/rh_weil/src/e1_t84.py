@@ -142,17 +142,38 @@ def _entry_evaluator(quantity: str, arb, acb, prime_powers, *, T: float,
     return evaluate
 
 
+#: Working precision and integrator tolerance for the uniform cover.
+#:
+#: A box's enclosure width is set by the interval-L dependency, not by the
+#: quadrature: at halfwidth 4e-4 the width is 4.175e-6 at rel_tol 1e-25 and
+#: 4.174e-6 at rel_tol 1e-10 -- indistinguishable -- while the cost falls 6x
+#: (29.5s to 4.9s per box). Spending 140 bits and 1e-25 here buys accuracy
+#: nothing consumes; the residual quadrature contribution is ~1e-21 against a
+#: 4e-6 width.
+UNIFORM_PRECISION_BITS = 110
+UNIFORM_INTEGRAL_OPTIONS = {"rel_tol": 1e-11}
+
+#: E2_84 bottoms out at ~3.46e-6 at the left endpoint (fresh scan), and the box
+#: width grows like ~48 r^2, so separation there needs r <~ 1.8e-4. Starting the
+#: cover near that spacing means most boxes clear at depth 0 instead of being
+#: split four or five times from a coarse start -- the same total work, minus the
+#: discarded parents.
+UNIFORM_INITIAL_BOXES = 448
+
+
 def certify_uniform(
     quantity: str = "E2",
     *,
     T: float = t84.T84,
-    precision_bits: int = DEFAULT_PRECISION_BITS,
-    initial_boxes: int = 16,
-    max_depth: int = 16,
+    precision_bits: int = UNIFORM_PRECISION_BITS,
+    initial_boxes: int = UNIFORM_INITIAL_BOXES,
+    max_depth: int = 8,
     target: float = 0.0,
     options=None,
 ) -> IC.CoverResult:
     """Uniform positive lower bound for a T=84 quantity over the closed cell."""
+    if options is None:
+        options = UNIFORM_INTEGRAL_OPTIONS
     _, arb, acb, _ = require_flint()
     set_precision_bits(precision_bits)
     primes = WE.prime_powers_below(sum(CELL) / 2)
