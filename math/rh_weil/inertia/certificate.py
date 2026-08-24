@@ -22,20 +22,41 @@ KIND_INERTIA = "WEIL_INERTIA_CERTIFICATE"
 KIND_STRATIFICATION = "WEIL_INERTIA_STRATIFICATION"
 
 
+#: Content kinds that are *inertia* artifacts. §11 is categorical about these:
+#: they may never satisfy a consumer requiring PSD, whatever their signature.
+INERTIA_KINDS = (KIND_INERTIA, KIND_STRATIFICATION)
+
+
 def satisfies_psd_requirement(cert: Dict[str, Any]) -> bool:
-    """True only if this certificate proves positive semidefiniteness.
+    """True only if this certificate *claims* PSD and its signature backs it.
 
     §11: "An inertia certificate must never satisfy a consumer that explicitly
-    requires PSD." An inertia result is PSD evidence exactly when it passed,
-    counted zero negative directions, and knows its zero multiplicity -- an
-    unresolved ``n_zero`` leaves open a negative direction hiding inside the
-    part that did not resolve. A stratification never qualifies on its own,
-    even if every stratum happens to be PSD, because the transition regions
-    between strata are by construction unresolved.
+    requires PSD." That is categorical and it binds on the content kind, not on
+    how favourable the signature happens to be -- an inertia artifact with
+    signature ``(n, 0, 0)`` is refused exactly like an indefinite one. The point
+    of the rule is that "I know the signature" must not be silently read as "it
+    is positive"; a consumer wanting positivity should be handed something that
+    claims positivity.
+
+    So two independent conditions have to hold. The certificate must not be an
+    inertia kind, and it must *say* it is positive via ``psd_claim`` -- an
+    explicit declaration by the producer rather than an inference drawn here
+    from fields the producer never meant that way. The signature is then checked
+    against that claim: zero negative directions, with the zero multiplicity
+    known, since an unresolved ``n_zero`` leaves open a negative direction
+    hiding in the part that did not resolve.
+
+    An earlier version refused only stratifications and inferred the rest from
+    the signature. That let a passing ``WEIL_INERTIA_CERTIFICATE`` with
+    ``(2, 0, 0)`` satisfy a PSD consumer while its own body said
+    ``psd_claim: false`` -- the predicate contradicting the certificate it was
+    reading.
     """
     if cert.get("rh_proof_claim") is not False:
         return False
-    if cert.get("content_kind") == KIND_STRATIFICATION:
+    if cert.get("content_kind") in INERTIA_KINDS:
+        return False
+    if cert.get("psd_claim") is not True:
         return False
     if cert.get("status") != "PASS":
         return False

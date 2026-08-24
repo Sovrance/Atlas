@@ -26,7 +26,18 @@ from ranktrace.theorem import (  # noqa: E402
     THEOREM_ID,
     hypotheses_from_matrices,
     rank_trace_lower_bound,
+    symmetry_status,
 )
+
+
+def _flint():
+    try:
+        from flint import arb, ctx
+
+        ctx.prec = 120
+        return arb
+    except ImportError:  # pragma: no cover
+        return None
 
 ALL_VERIFIED = {name: {"verified": True, "evidence": {"by": "test"}}
                 for name, _ in HYPOTHESES}
@@ -191,6 +202,113 @@ class HypothesesCheckedAgainstRealMatrices(unittest.TestCase):
         Q = [[F(1), F(2)], [F(3), F(1)]]
         hyp = hypotheses_from_matrices(C.diagonal([1, 1]), Q, exact=True)
         self.assertFalse(hyp["Q_hermitian"]["verified"])
+
+
+class HypothesesMustBeCheckedNotAssumed(unittest.TestCase):
+    """Regressions for three findings, all the same bug: verified without checking.
+
+    Each was reported against this module by an automated reviewer on PR #10 and
+    reproduced before being fixed. They are grouped because the failure mode is
+    identical in all three -- a hypothesis recorded as satisfied on the strength
+    of something other than the condition it names, which is exactly what this
+    module exists to prevent.
+    """
+
+    def _terms(self, P, Q):
+        n = len(P)
+        tr = lambda M: sum(M[i][i] for i in range(n))
+        S = [[P[i][j] + Q[i][j] for j in range(n)] for i in range(n)]
+        hs = sum(S[i][j] * S[i][j] for i in range(n) for j in range(n))
+        return tr(P), tr(Q), hs
+
+    def test_a_positive_index_exceeding_b_is_refused(self):
+        """P=diag(1,0,0), Q=diag(0,2,2), b=1 used to certify rank(P) >= 5.
+
+        The matrix is 3x3 with rank 1, so the bound was not merely weak, it was
+        impossible. H3 names a bound, so it has to be checked against the bound.
+        """
+        P, Q = C.diagonal([1, 0, 0]), C.diagonal([0, 2, 2])
+        tp, tq, hs = self._terms(P, Q)
+        hyp = hypotheses_from_matrices(P, Q, b=1)
+        self.assertEqual(hyp["_positive_index_Q"], 2)
+        self.assertFalse(hyp["Q_positive_index_at_most_b"]["verified"])
+        cert = rank_trace_lower_bound(trace_P=tp, trace_Q=tq, hs_sq_P_plus_Q=hs,
+                                      positive_index_Q_bound=1, hypotheses=hyp)
+        self.assertEqual(cert.status, "INCONCLUSIVE")
+        self.assertIn("Q_positive_index_at_most_b", cert.blocker)
+
+    def test_the_correct_bound_still_passes(self):
+        """The guard must refuse the violation without refusing everything."""
+        P, Q = C.diagonal([1, 0, 0]), C.diagonal([0, 2, 2])
+        tp, tq, hs = self._terms(P, Q)
+        hyp = hypotheses_from_matrices(P, Q, b=2)
+        self.assertTrue(hyp["Q_positive_index_at_most_b"]["verified"])
+        cert = rank_trace_lower_bound(trace_P=tp, trace_Q=tq, hs_sq_P_plus_Q=hs,
+                                      positive_index_Q_bound=2, hypotheses=hyp)
+        self.assertEqual(cert.status, "PASS")
+        self.assertLessEqual(cert.result["certified_rank_lower_bound"], len(P))
+
+    def test_the_evaluator_rechecks_b_against_the_record(self):
+        """A record verified for one bound must not license a smaller one."""
+        P, Q = C.diagonal([1, 0, 0]), C.diagonal([0, 2, 2])
+        tp, tq, hs = self._terms(P, Q)
+        hyp = hypotheses_from_matrices(P, Q, b=2)      # honestly verified for b=2
+        cert = rank_trace_lower_bound(trace_P=tp, trace_Q=tq, hs_sq_P_plus_Q=hs,
+                                      positive_index_Q_bound=1, hypotheses=hyp)
+        self.assertEqual(cert.status, "INCONCLUSIVE")
+        self.assertIn("exceeds the supplied bound", cert.blocker)
+
+    def test_the_bound_never_exceeds_the_dimension_on_verified_inputs(self):
+        """A rank bound above the matrix size would be impossible, not weak."""
+        for signs_p, signs_q in (([1, 0, 0], [0, 2, 2]), ([1, 1], [1, -1]),
+                                 ([2, 1, 1], [0, 0, 0]), ([1, 1, 1], [1, 1, 1])):
+            P, Q = C.diagonal(signs_p), C.diagonal(signs_q)
+            tp, tq, hs = self._terms(P, Q)
+            n = len(P)
+            for b in range(n + 1):
+                hyp = hypotheses_from_matrices(P, Q, b=b)
+                cert = rank_trace_lower_bound(
+                    trace_P=tp, trace_Q=tq, hs_sq_P_plus_Q=hs,
+                    positive_index_Q_bound=b, hypotheses=hyp)
+                if cert.status != "PASS":
+                    continue
+                with self.subTest(P=tuple(signs_p), Q=tuple(signs_q), b=b):
+                    self.assertLessEqual(
+                        cert.result["certified_rank_lower_bound"], n,
+                        "a rank bound above the dimension is impossible")
+
+    @unittest.skipIf(_flint() is None, "python-flint not installed")
+    def test_a_non_symmetric_interval_matrix_is_not_assumed_hermitian(self):
+        """The inertia engine mirrors, so an unchecked carrier hides asymmetry."""
+        arb = _flint()
+        I = [[arb(1), arb(0)], [arb(0), arb(1)]]
+        bad = [[arb(1), arb(5)], [arb(-9), arb(1)]]
+        hyp = hypotheses_from_matrices(I, bad, b=1, exact=False)
+        self.assertFalse(hyp["Q_hermitian"]["verified"])
+        self.assertIn("not the same value", hyp["Q_hermitian"]["evidence"]["detail"])
+
+    @unittest.skipIf(_flint() is None, "python-flint not installed")
+    def test_a_symmetric_interval_matrix_still_verifies(self):
+        arb = _flint()
+        I = [[arb(1), arb(0)], [arb(0), arb(1)]]
+        good = [[arb(1), arb(5)], [arb(5), arb(1)]]
+        hyp = hypotheses_from_matrices(I, good, b=1, exact=False)
+        self.assertTrue(hyp["Q_hermitian"]["verified"])
+
+    @unittest.skipIf(_flint() is None, "python-flint not installed")
+    def test_a_non_symmetric_p_does_not_certify_positivity(self):
+        """P's inertia is only about P when P is symmetric."""
+        arb = _flint()
+        skew = [[arb(1), arb(5)], [arb(-9), arb(1)]]
+        hyp = hypotheses_from_matrices(skew, [[arb(0), arb(0)], [arb(0), arb(0)]],
+                                       b=0, exact=False)
+        self.assertFalse(hyp["P_positive_semidefinite"]["verified"])
+        self.assertFalse(hyp["P_positive_semidefinite"]["evidence"]["symmetric"])
+
+    def test_symmetry_status_agrees_on_both_arithmetics(self):
+        self.assertTrue(symmetry_status(C.diagonal([1, -1]))[0])
+        self.assertTrue(symmetry_status([[F(1), F(2)], [F(2), F(3)]])[0])
+        self.assertFalse(symmetry_status([[F(1), F(2)], [F(3), F(1)]])[0])
 
 
 if __name__ == "__main__":

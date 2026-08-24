@@ -256,11 +256,54 @@ class CertificateSemantics(unittest.TestCase):
             with self.subTest(A=str(A)):
                 self.assertEqual(validate_against_schema(self._cert(A), schema), [])
 
-    def test_a_psd_block_satisfies_a_psd_requirement(self):
-        self.assertTrue(satisfies_psd_requirement(self._cert([[2, 0], [0, 3]])))
+    def test_an_inertia_certificate_never_satisfies_a_psd_requirement(self):
+        """§11 is categorical and binds on the content kind, not the signature.
+
+        Reported on PR #10: a passing WEIL_INERTIA_CERTIFICATE with (2,0,0) used
+        to satisfy a PSD consumer while its own body said psd_claim: false -- the
+        predicate contradicting the certificate it was reading. A definite
+        inertia artifact must be refused exactly like an indefinite one; the
+        consumer should be handed something that claims positivity.
+        """
+        definite = self._cert([[2, 0], [0, 3]])
+        self.assertEqual(definite["n_negative"], 0)
+        self.assertIs(definite["psd_claim"], False)
+        self.assertFalse(satisfies_psd_requirement(definite))
 
     def test_an_indefinite_block_never_satisfies_a_psd_requirement(self):
         self.assertFalse(satisfies_psd_requirement(self._cert([[1, 0], [0, -1]])))
+
+    def test_a_positivity_certificate_may_satisfy_a_psd_requirement(self):
+        """The other half of the rule: a positivity claim is allowed to answer."""
+        positivity = {
+            "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+            "status": "PASS", "evidence_class": "E1", "psd_claim": True,
+            "n_positive": 2, "n_negative": 0, "n_zero": 0, "rh_proof_claim": False,
+        }
+        self.assertTrue(satisfies_psd_requirement(positivity))
+
+    def test_a_positivity_claim_still_needs_a_signature_that_backs_it(self):
+        for bad in ({"n_negative": 1, "n_zero": 0},
+                    {"n_negative": 0, "n_zero": None},
+                    {"n_negative": None, "n_zero": 0}):
+            body = {
+                "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+                "status": "PASS", "evidence_class": "E1", "psd_claim": True,
+                "n_positive": 1, "rh_proof_claim": False, **bad,
+            }
+            with self.subTest(**bad):
+                self.assertFalse(satisfies_psd_requirement(body))
+
+    def test_psd_licensing_requires_an_explicit_claim(self):
+        """Positivity is declared by the producer, never inferred here."""
+        body = {
+            "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+            "status": "PASS", "evidence_class": "E1",
+            "n_positive": 2, "n_negative": 0, "n_zero": 0, "rh_proof_claim": False,
+        }
+        self.assertFalse(satisfies_psd_requirement(body), "no psd_claim field")
+        self.assertFalse(satisfies_psd_requirement(dict(body, psd_claim=False)))
+        self.assertTrue(satisfies_psd_requirement(dict(body, psd_claim=True)))
 
     def test_an_inconclusive_result_never_satisfies_a_psd_requirement(self):
         arb = _flint()
@@ -275,8 +318,13 @@ class CertificateSemantics(unittest.TestCase):
 
     def test_an_e3_diagnostic_never_satisfies_a_psd_requirement(self):
         """§14.4: a floating scan cannot promote an E1 claim."""
-        cert = self._cert([[2, 0], [0, 3]], evidence_class="E3")
-        self.assertFalse(satisfies_psd_requirement(cert))
+        body = {
+            "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+            "status": "PASS", "evidence_class": "E3", "psd_claim": True,
+            "n_positive": 2, "n_negative": 0, "n_zero": 0, "rh_proof_claim": False,
+        }
+        self.assertFalse(satisfies_psd_requirement(body))
+        self.assertTrue(satisfies_psd_requirement(dict(body, evidence_class="E1")))
 
     def test_a_stratification_never_satisfies_a_psd_requirement(self):
         arb = _flint()

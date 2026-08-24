@@ -104,21 +104,34 @@ def check_pir_kinds() -> int:
         print(f"  FAIL: content kinds are {pir_bridge.CONTENT_KINDS}", file=sys.stderr)
         return 1
     # §11: an inertia certificate must never satisfy a PSD-requiring consumer.
-    indefinite = {"content_kind": "WEIL_INERTIA_CERTIFICATE", "status": "PASS",
-                  "evidence_class": "E1", "n_negative": 1, "n_zero": 0,
-                  "rh_proof_claim": False}
-    strat_psd = {"content_kind": "WEIL_INERTIA_STRATIFICATION", "status": "PASS",
-                 "evidence_class": "E1", "n_negative": 0, "n_zero": 0,
-                 "rh_proof_claim": False}
-    if satisfies_psd_requirement(indefinite):
-        print("  FAIL: an indefinite inertia certificate satisfied a PSD consumer",
-              file=sys.stderr)
-        return 1
-    if satisfies_psd_requirement(strat_psd):
-        print("  FAIL: a stratification satisfied a PSD consumer", file=sys.stderr)
-        return 1
-    print(f"  ok: {len(expected)} content kinds; PSD gate refuses inertia and "
-          "stratification certificates")
+    # The *definite* case is the one that matters and the one this gate missed
+    # first time round: a favourable signature must not buy an exemption.
+    base = {"status": "PASS", "evidence_class": "E1", "rh_proof_claim": False}
+    cases = [
+        ("indefinite inertia certificate",
+         {**base, "content_kind": "WEIL_INERTIA_CERTIFICATE",
+          "n_negative": 1, "n_zero": 0}, False),
+        ("definite inertia certificate",
+         {**base, "content_kind": "WEIL_INERTIA_CERTIFICATE",
+          "n_negative": 0, "n_zero": 0, "psd_claim": True}, False),
+        ("definite stratification",
+         {**base, "content_kind": "WEIL_INERTIA_STRATIFICATION",
+          "n_negative": 0, "n_zero": 0, "psd_claim": True}, False),
+        ("positivity certificate",
+         {**base, "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+          "n_negative": 0, "n_zero": 0, "psd_claim": True}, True),
+        ("positivity certificate without an explicit claim",
+         {**base, "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+          "n_negative": 0, "n_zero": 0}, False),
+    ]
+    for label, body, want in cases:
+        got = satisfies_psd_requirement(body)
+        if got != want:
+            print(f"  FAIL: {label} -> satisfies_psd={got}, expected {want}",
+                  file=sys.stderr)
+            return 1
+    print(f"  ok: {len(expected)} content kinds; PSD gate checked on "
+          f"{len(cases)} cases including a definite inertia certificate")
     return 0
 
 

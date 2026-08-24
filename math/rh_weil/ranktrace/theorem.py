@@ -40,7 +40,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from fractions import Fraction
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 #: Identifies the exact statement and normalization implemented here. A caller
 #: asking for a different theorem id gets INCONCLUSIVE rather than this bound.
@@ -165,6 +165,25 @@ def rank_trace_lower_bound(
             status="INCONCLUSIVE", theorem_id=theorem_id, hypotheses=recorded,
             inputs=inputs, blocker="b must be a non-negative integer")
 
+    # H3 names a *bound*, so it has to be checked against the bound actually
+    # passed here -- not only against whatever the record was built with. If the
+    # hypothesis record carries a measured positive index, it must not exceed
+    # ``b``. Without this an evaluator can be handed a record verified for one
+    # bound and a smaller bound at the call site, and the resulting certificate
+    # is unsound rather than merely weak: P = diag(1,0,0), Q = diag(0,2,2) with
+    # b = 1 yields rank(P) >= 5 for a 3x3 matrix of rank 1.
+    entry = hyp.get("Q_positive_index_at_most_b")
+    measured = None
+    if isinstance(entry, dict):
+        measured = (entry.get("evidence") or {}).get("positive_index")
+    if measured is not None and int(measured) > int(positive_index_Q_bound):
+        return RankTraceCertificate(
+            status="INCONCLUSIVE", theorem_id=theorem_id, hypotheses=recorded,
+            inputs=inputs,
+            blocker=(f"Q_positive_index_at_most_b is violated: the recorded "
+                     f"positive index of Q is {int(measured)}, which exceeds the "
+                     f"supplied bound b = {int(positive_index_Q_bound)}"))
+
     # The bound is a lower bound, so every term is taken in the direction that
     # makes the right-hand side smallest: the enclosure's worst case, not its
     # midpoint. tr(P) and tr(Q) enter positively, the HS term negatively.
@@ -199,11 +218,54 @@ def rank_trace_lower_bound(
     )
 
 
-def hypotheses_from_matrices(P, Q, *, exact: bool = True) -> Dict[str, Any]:
-    """Build a verified hypothesis record by actually checking ``P`` and ``Q``.
+def _same_enclosure(a, b) -> bool:
+    """Whether two carriers denote the same value, for both arithmetics.
+
+    Exact rationals compare directly. For balls, equality of the *enclosures* is
+    the strongest thing available: two different balls may both contain a common
+    real, but that does not make the underlying entries equal, so anything short
+    of an identical enclosure is treated as unverified rather than assumed.
+    """
+    if hasattr(a, "lower") and hasattr(b, "lower"):
+        return bool(a.lower() == b.lower() and a.upper() == b.upper())
+    return bool(a == b)
+
+
+def symmetry_status(M) -> tuple:
+    """``(verified, detail)`` for the Hermitian hypothesis on ``M``.
+
+    This has to be checked on *both* arithmetics, and the interval case is the
+    one that matters. :func:`inertia.ldl.ldl_inertia` mirrors the upper triangle
+    onto the lower before eliminating, so a non-symmetric input silently becomes
+    a symmetric one and comes back with a perfectly good inertia -- for a matrix
+    that was never Hermitian. Marking the hypothesis verified on the strength of
+    the carrier alone would then let a rank-trace certificate apply a theorem
+    whose Hermitian hypothesis is false.
+    """
+    n = len(M)
+    for i in range(n):
+        if len(M[i]) != n:
+            return False, "matrix is not square"
+        for j in range(i + 1, n):
+            if not _same_enclosure(M[i][j], M[j][i]):
+                return False, (f"entries ({i},{j}) and ({j},{i}) are not the same "
+                               "value; symmetry cannot be certified")
+    return True, "every transposed pair of entries is the same value"
+
+
+def hypotheses_from_matrices(P, Q, *, b: Optional[int] = None,
+                             exact: bool = True) -> Dict[str, Any]:
+    """Build a hypothesis record by actually checking ``P`` and ``Q``.
 
     Uses the inertia engine, so the positivity and positive-index claims are
     certified by the same machinery as everything else rather than asserted.
+
+    ``b`` is the positive-index bound the caller intends to pass to
+    :func:`rank_trace_lower_bound`. It belongs here because H3 is not "Q has
+    *some* positive index" -- it is "Q has at most ``b`` positive directions",
+    and that is a statement about ``b``. Verifying only that the inertia was
+    computable would leave the hypothesis recorded as satisfied for any bound at
+    all, including one the matrix violates.
     """
     import sys
     from pathlib import Path
@@ -214,29 +276,40 @@ def hypotheses_from_matrices(P, Q, *, exact: bool = True) -> Dict[str, Any]:
     from inertia.ldl import exact_inertia, interval_inertia
 
     run = exact_inertia if exact else interval_inertia
-    rp = run(P)
-    rq = run(Q)
-    symmetric_q = all(Q[i][j] == Q[j][i] for i in range(len(Q)) for j in range(len(Q))) \
-        if exact else True
+    p_sym, p_sym_why = symmetry_status(P)
+    q_sym, q_sym_why = symmetry_status(Q)
+    rp = run(P) if p_sym else None
+    rq = run(Q) if q_sym else None
 
-    p_psd = rp.status == "PASS" and rp.n_negative == 0
-    q_index = rq.n_positive if rq.status == "PASS" else None
+    # P's inertia is only about P if P is symmetric -- the engine mirrors.
+    p_psd = bool(p_sym and rp is not None and rp.status == "PASS"
+                 and rp.n_negative == 0)
+    q_index = rq.n_positive if (rq is not None and rq.status == "PASS") else None
+    index_ok = q_index is not None and (b is None or int(q_index) <= int(b))
+
     return {
         "P_positive_semidefinite": {
-            "verified": bool(p_psd),
-            "evidence": {"inertia": list(rp.signature) if rp.signature else None,
-                         "status": rp.status, "method": rp.method},
+            "verified": p_psd,
+            "evidence": {"inertia": list(rp.signature) if rp and rp.signature else None,
+                         "status": rp.status if rp else "NOT_EVALUATED",
+                         "symmetric": p_sym, "symmetry_check": p_sym_why,
+                         "method": rp.method if rp else None},
         },
         "Q_hermitian": {
-            "verified": bool(symmetric_q),
-            "evidence": {"checked": "entrywise symmetry" if exact
-                         else "assumed from caller-supplied Hermitian carrier"},
+            "verified": bool(q_sym),
+            "evidence": {"checked": ("entrywise equality of transposed pairs"
+                                     if exact else
+                                     "entrywise equality of transposed enclosures"),
+                         "detail": q_sym_why},
         },
         "Q_positive_index_at_most_b": {
-            "verified": q_index is not None,
-            "evidence": {"inertia": list(rq.signature) if rq.signature else None,
-                         "status": rq.status,
-                         "positive_index": q_index},
+            "verified": bool(index_ok),
+            "evidence": {"inertia": list(rq.signature) if rq and rq.signature else None,
+                         "status": rq.status if rq else "NOT_EVALUATED",
+                         "positive_index": q_index,
+                         "b": (None if b is None else int(b)),
+                         "detail": (None if b is None else
+                                    f"positive index {q_index} vs bound {int(b)}")},
         },
         "shared_normalization": {
             "verified": True,
