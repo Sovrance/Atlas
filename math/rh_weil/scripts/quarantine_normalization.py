@@ -34,25 +34,15 @@ import normalization as N  # noqa: E402
 from certificate_io import write_certificate  # noqa: E402
 
 CERT_DIR = ROOT / "certificates"
-QUARANTINE_STATE = "QUARANTINED_NORMALIZATION_ADJUDICATION"
 
-AFFECTED = [
-    "e1_scalar_log3_log4.json",
-    "e1_degree1_log3_log4.json",
-    "e1_degree2_compact_log3_log4.json",
-    "e1_fourier_T84_points.json",
-    "e1_fourier_T84_uniform_degree2.json",
-]
+# Single source of truth lives in src/normalization.py so that the certificate
+# writer can enforce the same list at the point of write.
+QUARANTINE_STATE = N.QUARANTINE_STATE
+AFFECTED = list(N.QUARANTINED_CERTIFICATES)
 
 AFFECTED_ORDERS = ["WO-RH-05"] + [f"WO-RH-{n:02d}" for n in range(9, 16)]
 
-REASON = (
-    "Depends on the even pole block under adjudication (WO-RH-17). The repository "
-    "block (sqrt(3)/2)(v+v+^T+v-v-^T) equals the explicit-formula pole times "
-    "(sqrt(3)/2)cosh(L/2), which is 1 only at L = log 3; values at any other L "
-    "carry that factor. Regenerate under the frozen normalization (WO-RH-19/20) "
-    "before any promotion."
-)
+REASON = N.QUARANTINE_REASON
 
 
 def quarantine_certificate(path: Path, release: bool = False) -> str:
@@ -65,28 +55,14 @@ def quarantine_certificate(path: Path, release: bool = False) -> str:
         body["promotion_state"] = "RELEASED_PENDING_REGENERATION"
         for k, v in prior.items():
             body[k] = v
-        write_certificate(path.name, body)
+        write_certificate(path.name, body, allow_quarantine_change=True)
         return "released"
 
     if body.get("promotion_state") == QUARANTINE_STATE:
         return "already-quarantined"
 
-    prior_state = {
-        "hard_constraints_certified": body.get("hard_constraints_certified"),
-        "status": body.get("status"),
-    }
-    body["quarantine"] = {
-        "reason": REASON,
-        "work_order": "WO-RH-17",
-        "adjudication_certificate": "normalization_adjudication.json",
-        "active_normalization_id": N.normalization_id(),
-        "prior_state": prior_state,
-        "pre_quarantine_content_hash": body.get("content_hash"),
-        "evidence_class_preserved": body.get("evidence_class"),
-        "note": "not relabelled E3 on purpose; the historical claim is preserved as evidence",
-        "numerically_unaffected_at": "L = log 3 (the calibration fixed point) — still "
-                                     "not promotable until regenerated",
-    }
+    # prior_state (the claim being suspended) is captured by quarantine_block.
+    body["quarantine"] = N.quarantine_block(body)
     body["promotion_state"] = QUARANTINE_STATE
     body["hard_constraints_certified"] = False
     body["rh_proof_claim"] = False

@@ -123,13 +123,7 @@ class LegacyRejectionTests(unittest.TestCase):
 
 
 class QuarantineTests(unittest.TestCase):
-    AFFECTED = [
-        "e1_scalar_log3_log4.json",
-        "e1_degree1_log3_log4.json",
-        "e1_degree2_compact_log3_log4.json",
-        "e1_fourier_T84_points.json",
-        "e1_fourier_T84_uniform_degree2.json",
-    ]
+    AFFECTED = list(N.QUARANTINED_CERTIFICATES)
 
     def _load(self, name):
         with open(os.path.join(CERT_DIR, name), encoding="utf-8") as fh:
@@ -157,6 +151,74 @@ class QuarantineTests(unittest.TestCase):
         refused = {r["certificate_file"] for r in pir_bridge.refused_promotions()}
         for name in self.AFFECTED:
             self.assertIn(name, refused, name)
+
+    def test_registry_matches_the_certificates_on_disk(self):
+        """The registry is the single source of truth; guard against it drifting."""
+        self.assertEqual(len(N.QUARANTINED_CERTIFICATES), 5)
+        for name in N.QUARANTINED_CERTIFICATES:
+            self.assertTrue(os.path.exists(os.path.join(CERT_DIR, name)), name)
+
+    def test_writer_reasserts_quarantine_on_regeneration(self):
+        """A re-run of a certify script must not be able to lift the quarantine.
+
+        The certify_*.py entrypoints predate the adjudication and rebuild these
+        bodies from the REJECTED even pole block with hard_constraints_certified
+        set from their own gates. Writing such a body must come back quarantined.
+        """
+        import certificate_io
+
+        for name in N.QUARANTINED_CERTIFICATES:
+            body = {
+                "certificate_version": "0.1",
+                "evidence_class": "E1_SAMPLES_PLUS_E0_CURVATURE",
+                "status": "REGENERATED_BY_LEGACY_SCRIPT",
+                "hard_constraints_certified": True,   # what the old script would claim
+            }
+            certificate_io._enforce_quarantine(name, body)
+            self.assertEqual(body["promotion_state"], N.QUARANTINE_STATE, name)
+            self.assertFalse(body["hard_constraints_certified"], name)
+            self.assertFalse(body["rh_proof_claim"], name)
+            # the contrary claim is preserved, not deleted
+            self.assertTrue(body["quarantine"]["prior_state"]["hard_constraints_certified"], name)
+            self.assertEqual(body["evidence_class"], "E1_SAMPLES_PLUS_E0_CURVATURE", name)
+
+    def test_writer_leaves_unaffected_certificates_alone(self):
+        import certificate_io
+
+        body = {"status": "REGENERATED", "hard_constraints_certified": True}
+        certificate_io._enforce_quarantine("e0_exact_identities.json", body)
+        self.assertNotIn("promotion_state", body)
+        self.assertTrue(body["hard_constraints_certified"])
+
+    def test_quarantine_is_idempotent_and_keeps_original_prior_state(self):
+        """Re-writing an already-quarantined body must not overwrite prior_state."""
+        import certificate_io
+
+        name = N.QUARANTINED_CERTIFICATES[0]
+        body = {"status": "ORIGINAL", "hard_constraints_certified": True}
+        certificate_io._enforce_quarantine(name, body)
+        first_prior = dict(body["quarantine"]["prior_state"])
+        body["hard_constraints_certified"] = False  # now reflects the quarantine
+        certificate_io._enforce_quarantine(name, body)
+        self.assertEqual(body["quarantine"]["prior_state"], first_prior)
+
+    def test_certify_scripts_write_through_the_guarded_writer(self):
+        """No certify entrypoint may bypass certificate_io.write_certificate."""
+        scripts = os.path.join(os.path.dirname(CERT_DIR), "scripts")
+        for fn in sorted(os.listdir(scripts)):
+            if not fn.startswith("certify_"):
+                continue
+            with open(os.path.join(scripts, fn), encoding="utf-8") as fh:
+                src = fh.read()
+            self.assertIn("write_certificate", src, fn)
+            self.assertNotIn("out.write_text(", src, fn)
+
+    def test_rejected_pole_scale_is_marked_in_finite_weil(self):
+        """The module still shipping candidate B must say so."""
+        import finite_weil
+
+        self.assertEqual(finite_weil.POLE_EVEN_SCALE_STATUS, "REJECTED_WO_RH_17")
+        self.assertIn("REJECTED", finite_weil.__doc__)
 
     def test_work_order_status_flags_quarantine(self):
         st = self._load("work_order_status.json")

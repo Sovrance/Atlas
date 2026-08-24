@@ -184,6 +184,45 @@ The PIR bridge now refuses to promote any quarantined or stale-normalization
 certificate (`pir_bridge.promotion_refusal`), and every emitted fact carries
 `asm:normalization_id:<active id>`.
 
+### 4.1 The quarantine has to survive a re-run
+
+Marking the five files once is not enough. The `scripts/certify_*.py`
+entrypoints predate this adjudication: they rebuild those same bodies from the
+**rejected** even pole block in `src/finite_weil.py` and set
+`hard_constraints_certified` from their own gates. Re-running one therefore
+overwrote the marker and restored a promotable-looking certificate — the same
+failure mode already noted for the hardcoded `work_order_status.json` builder,
+left open for the certificates themselves. Observed directly:
+
+```
+$ python3 scripts/certify_scalar_e1.py
+$ jq '.promotion_state, .hard_constraints_certified' certificates/e1_scalar_log3_log4.json
+null
+true
+```
+
+The quarantine is therefore enforced at the single point of write rather than by
+one stamping pass:
+
+* `src/normalization.py` owns the registry (`QUARANTINED_CERTIFICATES`,
+  `QUARANTINE_STATE`, `QUARANTINE_REASON`, `quarantine_block`) — one source of
+  truth, previously duplicated in the script and again in the tests.
+* `certificate_io.write_certificate` re-asserts the marker for any registered
+  file, recording whatever claim the writer supplied as `quarantine.prior_state`
+  so the contrary evidence is preserved rather than discarded.
+* The three certify scripts that wrote raw JSON (`certify_scalar_e1.py`,
+  `certify_degree1_e1.py`, `certify_degree2_compact_e1.py`) now write through
+  that function, so no entrypoint bypasses the guard.
+* Only `scripts/quarantine_normalization.py --release` may lift a marker, via an
+  explicit `allow_quarantine_change=True`. Releasing is legitimate only after the
+  WO-RH-19/20 regeneration.
+* `finite_weil.POLE_EVEN_SCALE_STATUS == "REJECTED_WO_RH_17"` marks the module
+  that still assembles Candidate B, so it cannot be read as current. Replacing
+  that assembly remains WO-RH-19/20 and is **not** done here.
+
+Regression tests cover all of it (`QuarantineTests`); they fail against the
+pre-fix tree.
+
 ---
 
 ## 5. Reproduction

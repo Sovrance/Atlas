@@ -23,9 +23,38 @@ def source_hash(paths: list[Path]) -> str:
     return h.hexdigest()
 
 
-def write_certificate(name: str, body: Dict[str, Any]) -> Path:
+def _enforce_quarantine(name: str, body: Dict[str, Any]) -> None:
+    """Re-assert the WO-RH-17 quarantine on any affected certificate being written.
+
+    The quarantine marks certificates whose numbers came from the REJECTED even
+    pole block. Those files are still produced by the original ``certify_*.py``
+    scripts, which know nothing about the adjudication -- so without this guard a
+    single re-run would silently restore ``hard_constraints_certified: true`` and
+    drop the marker. This is the same failure mode already closed for
+    ``work_order_status.json``; the fix belongs at the one write choke point.
+
+    Only ``quarantine_normalization.py --release`` may lift the marker, and it
+    does so by passing ``allow_quarantine_change=True``.
+    """
+    import normalization as N
+
+    if not N.is_quarantined_certificate(name):
+        return
+    if body.get("promotion_state") == N.QUARANTINE_STATE and "quarantine" in body:
+        return  # already carries the marker; leave the recorded prior state alone
+    body["quarantine"] = N.quarantine_block(body)
+    body["promotion_state"] = N.QUARANTINE_STATE
+    body["hard_constraints_certified"] = False
+    body["rh_proof_claim"] = False
+
+
+def write_certificate(
+    name: str, body: Dict[str, Any], *, allow_quarantine_change: bool = False
+) -> Path:
     CERT_DIR.mkdir(parents=True, exist_ok=True)
     path = CERT_DIR / name
+    if not allow_quarantine_change:
+        _enforce_quarantine(name, body)
     if "rh_proof_claim" not in body:
         body["rh_proof_claim"] = False
     if "generated_utc" not in body:

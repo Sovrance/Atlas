@@ -3,9 +3,18 @@
 Assembly: G = G0 - Gp + Ginf_T
 Ginf_T[i,j] = (1/π) ∫_0^T h_+(t) Re(conj(H_i(t;L)) H_j(t;L)) dt
 
-Even pole block (ENG-002 / Run-16 calibration):
-  G0 = (√3/2) (v₊ v₊ᵀ + v₋ v₋ᵀ),
-  v± = (I₀±, I_b±) with I_b± = E_b± (exact identity).
+Even pole block (ENG-002 / Run-16 calibration) -- **REJECTED by WO-RH-17**:
+  G0 = (sqrt(3)/2) (v+ v+^T + v- v-^T),
+  v+- = (I0+-, I_b+-) with I_b+- = E_b+- (exact identity).
+
+This module still assembles that block, so every number it produces is
+quarantined. The adjudication (WO-RH-17, docs/NORMALIZATION_ADJUDICATION_v0.1.md)
+found this block equals the explicit-formula pole times (sqrt(3)/2)cosh(L/2) --
+a factor that is 1 only at L = log 3, so it is a calibration fitted at one test
+point, not a normalization. The frozen definition lives in ``src/normalization.py``;
+replacing the assembly here is WO-RH-19/20 and is deliberately NOT done in this
+change. Until then ``POLE_EVEN_SCALE_STATUS`` marks the defect and certificates
+built from this module are held by the quarantine guard in ``certificate_io``.
 """
 from __future__ import annotations
 
@@ -18,6 +27,10 @@ from interval_backend import FlintUnavailable, require_flint, set_precision_bits
 
 NORMALIZATION = core.NORMALIZATION
 POLE_EVEN_SCALE = "sqrt(3)/2"
+# WO-RH-17 verdict on the constant above. Machine-readable so a caller can
+# assert it rather than rely on reading the docstring.
+POLE_EVEN_SCALE_STATUS = "REJECTED_WO_RH_17"
+POLE_EVEN_SCALE_SUPERSEDED_BY = "normalization.pole_entry (Candidate A)"
 
 
 def _A_B(z, arb):

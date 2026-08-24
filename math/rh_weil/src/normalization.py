@@ -308,3 +308,54 @@ def normalization_id() -> str:
 
     blob = json.dumps(normalization_content(), sort_keys=True, separators=(",", ":"))
     return "norm_sha256_" + hashlib.sha256(blob.encode("utf-8")).hexdigest()[:32]
+
+
+# --------------------------------------------------------------------------- #
+# 6. Quarantine registry (WO-RH-17 §3.4) — single source of truth              #
+# --------------------------------------------------------------------------- #
+# Certificates whose numbers were produced under the REJECTED even pole block.
+# Kept here rather than in ``scripts/quarantine_normalization.py`` so that the
+# certificate writer can enforce the quarantine at the point of write: a certify
+# script that regenerates one of these files must not be able to silently drop
+# the marker (the same hazard already fixed for ``work_order_status.json``).
+QUARANTINE_STATE = "QUARANTINED_NORMALIZATION_ADJUDICATION"
+
+QUARANTINED_CERTIFICATES: Tuple[str, ...] = (
+    "e1_scalar_log3_log4.json",
+    "e1_degree1_log3_log4.json",
+    "e1_degree2_compact_log3_log4.json",
+    "e1_fourier_T84_points.json",
+    "e1_fourier_T84_uniform_degree2.json",
+)
+
+QUARANTINE_REASON = (
+    "Depends on the even pole block under adjudication (WO-RH-17). The repository "
+    "block (sqrt(3)/2)(v+v+^T+v-v-^T) equals the explicit-formula pole times "
+    "(sqrt(3)/2)cosh(L/2), which is 1 only at L = log 3; values at any other L "
+    "carry that factor. Regenerate under the frozen normalization (WO-RH-19/20) "
+    "before any promotion."
+)
+
+
+def is_quarantined_certificate(name: str) -> bool:
+    """True if ``name`` must carry the WO-RH-17 quarantine marker when written."""
+    return name in QUARANTINED_CERTIFICATES
+
+
+def quarantine_block(body: Dict[str, Any]) -> Dict[str, Any]:
+    """Build the ``quarantine`` sub-object, preserving ``body``'s claim as prior state."""
+    return {
+        "reason": QUARANTINE_REASON,
+        "work_order": "WO-RH-17",
+        "adjudication_certificate": "normalization_adjudication.json",
+        "active_normalization_id": normalization_id(),
+        "prior_state": {
+            "hard_constraints_certified": body.get("hard_constraints_certified"),
+            "status": body.get("status"),
+        },
+        "pre_quarantine_content_hash": body.get("content_hash"),
+        "evidence_class_preserved": body.get("evidence_class"),
+        "note": "not relabelled E3 on purpose; the historical claim is preserved as evidence",
+        "numerically_unaffected_at": "L = log 3 (the calibration fixed point) — still "
+                                     "not promotable until regenerated",
+    }
