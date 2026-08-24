@@ -1,0 +1,276 @@
+{
+  "certificate_version": "1.0",
+  "program": "RH/Weil T=84 degree-2 interior minimum \u2014 Candidate A",
+  "work_order": "ATLAS-RH-ENG-005 \u00a78",
+  "evidence_class": "E1",
+  "rigorous": true,
+  "status": "PASS",
+  "hard_constraints_certified": true,
+  "promotion_state": "PROMOTED",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "rh_proof_claim": false,
+  "pole_candidate": "A",
+  "claim": "E2_84 has a unique critical point L* in [log 3, log 4], it is a strict minimum, and E2_84 >= the window bound everywhere on the closed cell.",
+  "topology_source": "starting bracket taken from the fresh Candidate-A scan (E3); every sign and every bound below is certified",
+  "interior_minimum": {
+    "strategy": "interior_minimum",
+    "quantity": "E2_84",
+    "cell": [
+      "1.0986122886681098",
+      "1.3862943611198906"
+    ],
+    "T": 84.0,
+    "stationary_point": {
+      "statement": "E2'(a) < 0 < E2'(b) with both signs certified, so E2' has a zero L* in [a, b] by continuity",
+      "approximate_location": "1.1059498111650625",
+      "rigorous_interval": [
+        "1.1059498108971377",
+        "1.1059498114329873"
+      ],
+      "interval_width": "5.358495869245417e-10",
+      "sign_change_certified": true,
+      "E2_d1_at_left_end": [
+        "-7.117519911064466e-13",
+        "-4.499039734895273e-13"
+      ],
+      "E2_d1_at_right_end": [
+        "5.732226310831418e-14",
+        "3.191702815722664e-13"
+      ],
+      "bisection": {
+        "method": "certified bisection on sign(E2') with exact order-1 jets",
+        "bracket": [
+          "1.1059498108971377",
+          "1.1059498114329873"
+        ],
+        "width": "5.358495869245417e-10",
+        "midpoint": "1.1059498111650625",
+        "E2_d1_at_left_end": [
+          "-7.117519911064466e-13",
+          "-4.499039734895273e-13"
+        ],
+        "E2_d1_at_right_end": [
+          "5.732226310831418e-14",
+          "3.191702815722664e-13"
+        ],
+        "sign_change_certified": true,
+        "bisection_steps": 25,
+        "stopped_early": null
+      }
+    },
+    "curvature": {
+      "statement": "E2'' > 0 on the window, so E2' is strictly increasing there: L* is the unique critical point in the window and is a strict local minimum",
+      "window": [
+        "1.1058498108971377",
+        "1.1060498114329873"
+      ],
+      "window_halfwidth": "0.0001",
+      "E2_d2_certified_lower_bound": "0.0011970651493288088",
+      "cover": {
+        "quantity": "E2_d2",
+        "certified_lower_bound": "0.0011970651493288088",
+        "target": "0.0",
+        "cell": [
+          "1.1058498108971377",
+          "1.1060498114329873"
+        ],
+        "boxes_examined": 64,
+        "boxes_accepted": 64,
+        "max_subdivision_depth": 0,
+        "binding_box": [
+          "1.1058498108971377",
+          "1.1058529359055105"
+        ],
+        "binding_box_enclosure": [
+          "0.0011970651493288088",
+          "0.001669876941280053"
+        ],
+        "max_box_enclosure_width": "0.0004729194756691868",
+        "initial_boxes": 64,
+        "method": "adaptive_interval_branch_and_bound",
+        "topology_proved": "uniform lower bound over an exhaustive box cover of the closed cell; no convexity or monotonicity assumed"
+      }
+    },
+    "basin_bound": {
+      "statement": "E2 >= certified_lower_bound on the whole curvature window",
+      "window": [
+        "1.1058498108971377",
+        "1.1060498114329873"
+      ],
+      "certified_lower_bound": "3.4251152511218656e-06",
+      "cover": {
+        "quantity": "E2_window",
+        "certified_lower_bound": "3.4251152511218656e-06",
+        "target": "0.0",
+        "cell": [
+          "1.1058498108971377",
+          "1.1060498114329873"
+        ],
+        "boxes_examined": 8,
+        "boxes_accepted": 8,
+        "max_subdivision_depth": 0,
+        "binding_box": [
+          "1.1059248110980813",
+          "1.1059498111650625"
+        ],
+        "binding_box_enclosure": [
+          "3.4251152511218656e-06",
+          "3.428345478745445e-06"
+        ],
+        "max_box_enclosure_width": "3.2333118821226137e-09",
+        "initial_boxes": 8,
+        "method": "adaptive_interval_branch_and_bound",
+        "topology_proved": "uniform lower bound over an exhaustive box cover of the closed cell; no convexity or monotonicity assumed"
+      }
+    },
+    "no_lower_values_elsewhere": {
+      "left": {
+        "interval": [
+          "1.0986122886681098",
+          "1.1058498108971377"
+        ],
+        "statement": "E2' < 0, so E2 is strictly decreasing onto the window",
+        "certified_margin": "1.765708734627551e-08",
+        "cover": {
+          "quantity": "-E2_d1",
+          "certified_lower_bound": "1.765708734627551e-08",
+          "target": "0.0",
+          "cell": [
+            "1.0986122886681098",
+            "1.1058498108971377"
+          ],
+          "boxes_examined": 58,
+          "boxes_accepted": 41,
+          "max_subdivision_depth": 3,
+          "binding_box": [
+            "1.105699029184033",
+            "1.1057744200405852"
+          ],
+          "binding_box_enclosure": [
+            "1.765708734627551e-08",
+            "5.931871012150612e-07"
+          ],
+          "max_box_enclosure_width": "9.836415870267956e-06",
+          "initial_boxes": 24,
+          "method": "adaptive_interval_branch_and_bound",
+          "topology_proved": "uniform lower bound over an exhaustive box cover of the closed cell; no convexity or monotonicity assumed"
+        }
+      },
+      "right_band": {
+        "interval": [
+          "1.1060498114329873",
+          "1.1360498114329873"
+        ],
+        "statement": "E2' > 0, so E2 is strictly increasing off the window",
+        "certified_margin": "3.92988131631062e-09",
+        "cover": {
+          "quantity": "+E2_d1",
+          "certified_lower_bound": "3.92988131631062e-09",
+          "target": "0.0",
+          "cell": [
+            "1.1060498114329873",
+            "1.1360498114329873"
+          ],
+          "boxes_examined": 130,
+          "boxes_accepted": 113,
+          "max_subdivision_depth": 3,
+          "binding_box": [
+            "1.1061279364329875",
+            "1.1062060614329874"
+          ],
+          "binding_box_enclosure": [
+            "3.92988131631062e-09",
+            "6.203492573035312e-07"
+          ],
+          "max_box_enclosure_width": "1.2034358576329396e-05",
+          "initial_boxes": 96,
+          "method": "adaptive_interval_branch_and_bound",
+          "topology_proved": "uniform lower bound over an exhaustive box cover of the closed cell; no convexity or monotonicity assumed"
+        }
+      },
+      "consequence": "E2 has no critical point in [log 3, band_hi] other than L*, decreases strictly onto the window from log 3 and increases strictly off it out to band_hi, so its minimum over [log 3, band_hi] is attained inside the window",
+      "beyond_the_band": {
+        "interval": [
+          "1.1360498114329873",
+          "1.3862943611198906"
+        ],
+        "governed_by": "the exhaustive interval cover of E2 itself, not by a derivative sign \u2014 see the uniform certificate. The band ends where the direct cover clears the window bound with room to spare, so nothing is left unbounded."
+      }
+    },
+    "governed_interval": [
+      "1.0986122886681098",
+      "1.1360498114329873"
+    ],
+    "conclusion": {
+      "statement": "on [log 3, band_hi] the minimum of E2_84 is attained at L* in the isolated interval and is at least the window bound; beyond band_hi the exhaustive cover applies",
+      "lower_bound_on_governed_interval": "3.4251152511218656e-06",
+      "minimiser_enclosure": [
+        "1.1059498108971377",
+        "1.1059498114329873"
+      ]
+    },
+    "precision_bits": 110,
+    "jets": "exact support-length jets (ENG-005 \u00a79); no finite differences",
+    "mpmath_used": false
+  },
+  "quadrature": {
+    "panel_schedule": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        2.0
+      ],
+      [
+        2.0,
+        4.0
+      ],
+      [
+        4.0,
+        8.0
+      ],
+      [
+        8.0,
+        16.0
+      ],
+      [
+        16.0,
+        32.0
+      ],
+      [
+        32.0,
+        64.0
+      ],
+      [
+        64.0,
+        84.0
+      ]
+    ],
+    "method": "arb_acb_integral_panelled"
+  },
+  "dependencies": {
+    "source_hashes": {
+      "scripts/certify_t84_e1.py": "2dcba79986456a74e6054ab28850a66d8cc30a0e3369aad1f583482130674c8e",
+      "src/e1_t84.py": "16a966a36d9da1fc1a07753525ac55bd63058d429bd48628dd4c35e36cea61b3",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "03f5d4ac77cc4173a1544dd19e63c3bf03aa61da2513638aa860b90d410ce951",
+      "src/pole.py": "69ebe3e80b4600a780b657b2568090fe778ee683fc4ace5df41d514b514cb640",
+      "src/rigorous_integration.py": "17c49303df67f590d3543699cfa7735ba100ccdb3fdcce7fb32d41955a175ae2",
+      "src/t84.py": "7940e80bf737069f6c53bfcd6f3b48e837c2cfd45fcda2496aaa6117ac2df68f",
+      "src/weil_entries.py": "67fd54c3f0956fde310de321ecbc9d0c0b86fcd7323e86c204c0881963216e5f"
+    }
+  },
+  "precision_bits": 110,
+  "mpmath_used": false,
+  "quick_mode": false,
+  "quarantine_released": {
+    "by": "ATLAS-RH-ENG-005 \u00a78",
+    "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
+    "authorised_because": "rigorous Candidate-A T=84 regeneration passed"
+  },
+  "generated_utc": "2026-08-24T17:01:24Z",
+  "content_hash": "b18bc2f4f8629b121958a503a50694ef77279d6cc9fa851fbfb826469553065b"
+}
