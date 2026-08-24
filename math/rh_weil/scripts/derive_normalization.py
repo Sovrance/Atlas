@@ -29,14 +29,36 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 import normalization as N  # noqa: E402
+import rejected_pole as RP  # noqa: E402  (archival; audit surface only)
 from certificate_io import source_hash, write_certificate  # noqa: E402
 
+# ENG-004 §6: SymPy is a REQUIRED rigorous dependency, not an optional extra.
+# Before ENG-004 a missing SymPy silently degraded this job: it rewrote the
+# adjudication artifact with a "verified numerically only" note, dropping the
+# symbolic derivation and dirtying the tree with weaker evidence. That is exactly
+# the failure the runbook forbids, so the job now refuses to run instead.
 try:
     import sympy as sp
 
     SYMPY = True
-except Exception:  # pragma: no cover
+    SYMPY_VERSION = sp.__version__
+except ImportError:  # pragma: no cover - exercised by the CI gate
     SYMPY = False
+    SYMPY_VERSION = None
+
+
+class RigorousDependencyMissing(RuntimeError):
+    """A dependency the rigorous derivation cannot honestly proceed without."""
+
+
+def require_sympy() -> None:
+    if not SYMPY:
+        raise RigorousDependencyMissing(
+            "sympy is required for the normalization derivation (ENG-004 §6). "
+            "Install the rigorous dependency set: "
+            "pip install -r math/rh_weil/requirements-rigorous.txt . "
+            "Refusing to rewrite normalization_adjudication.json with weaker evidence."
+        )
 
 L_POINTS = [
     ("log3", math.log(3.0)),
@@ -47,10 +69,8 @@ L_POINTS = [
 
 
 def symbolic_derivation() -> dict:
-    """Steps 3-7 of the runbook, symbolically where possible."""
-    if not SYMPY:
-        return {"symbolic_engine": "none",
-                "note": "sympy unavailable; identities verified numerically only"}
+    """Steps 3-7 of the runbook, symbolically. Requires SymPy (ENG-004 §6)."""
+    require_sympy()
 
     x, t = sp.symbols("x t", real=True)
     L = sp.Symbol("L", positive=True)
@@ -168,9 +188,9 @@ def numeric_checks() -> list:
             abs(N.pole_entry(i, "q1", L)) < 1e-12 for i in ("one", "b")
         )
         # (c) legacy quotient
-        ratio = N.legacy_pole_entry("one", "one", L) / N.pole_entry("one", "one", L)
+        ratio = RP.legacy_pole_entry("one", "one", L) / N.pole_entry("one", "one", L)
         row["checks"]["legacy_over_adopted_ratio"] = ratio
-        row["checks"]["matches_sqrt3_over_2_cosh"] = abs(ratio - N.legacy_over_adopted_ratio(L)) < 1e-12
+        row["checks"]["matches_sqrt3_over_2_cosh"] = abs(ratio - RP.legacy_over_adopted_ratio(L)) < 1e-12
         row["checks"]["legacy_relative_error"] = ratio - 1.0
         out.append(row)
     return out
@@ -227,7 +247,7 @@ def build() -> dict:
                     "runbook forbids",
                 ],
                 "calibration_fixed_point": N.CALIBRATION_FIXED_POINT,
-                "retained_for_audit_as": "normalization.legacy_pole_entry",
+                "retained_for_audit_as": "rejected_pole.legacy_pole_entry (archival; production may not import it)",
             },
         },
         "structural_findings": [
@@ -244,7 +264,7 @@ def build() -> dict:
             {"role": "primary explicit formula", "ref": "Weil explicit formula, pole term "
              "Fhat(i/2)+Fhat(-i/2) for F = h_i * tilde h_j"},
             {"role": "repository implementation under audit",
-             "ref": "math/rh_weil/src/finite_weil.py::g0_even_block (POLE_EVEN_SCALE='sqrt(3)/2')"},
+             "ref": "math/rh_weil/src/rejected_pole.py::legacy_pole_entry (removed from production by ENG-004 §1)"},
             {"role": "regression evidence only",
              "ref": "math/rh_weil/certificates/*.json (never normative for a normalization dispute)"},
         ],
@@ -255,6 +275,13 @@ def build() -> dict:
 
 
 def main() -> int:
+    # Fail *before* touching the artifact, so a missing dependency can never
+    # leave the tree dirty with a degraded certificate.
+    try:
+        require_sympy()
+    except RigorousDependencyMissing as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 2
     body = build()
     path = write_certificate("normalization_adjudication.json", body)
     print(f"wrote {path}")
@@ -266,7 +293,7 @@ def main() -> int:
     for row in body["crosschecks"]:
         print(f"  L={row['L_label']:>14}: legacy/adopted={row['checks']['legacy_over_adopted_ratio']:.12f} "
               f"pole routes agree={row['checks']['pole_routes_agree']}")
-    ok = all(st.get("verified") for st in sym.get("steps", [])) if SYMPY else True
+    ok = all(st.get("verified") for st in sym.get("steps", []))
     ok = ok and all(r["checks"]["pole_routes_agree"] is True for r in body["crosschecks"])
     return 0 if ok else 1
 

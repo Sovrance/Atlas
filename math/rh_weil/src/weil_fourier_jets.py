@@ -8,35 +8,25 @@ from __future__ import annotations
 
 from typing import Any, Dict, Tuple
 
+import pole
 from archimedean import h_plus
-from finite_weil import (
-    g0_even_block,
-    gp_even_block,
-    pole_even_I0,
-    pole_even_helpers,
-)
+from finite_weil import g0_even_block, gp_even_block
 from interval_backend import require_flint, set_precision_bits
 
 
 def _dL_g0_even(L, arb) -> Tuple[Any, Any, Any]:
-    """∂_L of even pole Gram (√3/2)(v₊v₊ᵀ+v₋v₋ᵀ)."""
-    scale = arb(3).sqrt() / 2
-    i0p, i0m = pole_even_I0(L, arb)
-    ibp, ibm = pole_even_helpers(L, arb)
-    # ∂_L I0+ = e^{L/2}, ∂_L I0- = e^{-L/2}
-    d0p = (L / 2).exp()
-    d0m = (-L / 2).exp()
-    # Eb+ = 4[(L-4)e^{L/2}+L+4]
-    # ∂_L Eb+ = 4[e^{L/2} + (L-4)e^{L/2}/2 + 1] = 4[e^{L/2}(1+(L-4)/2)+1]
-    dbp = 4 * ((L / 2).exp() * (1 + (L - 4) / 2) + 1)
-    # Eb- = 4[(L-4)+(L+4)e^{-L/2}]
-    # ∂_L Eb- = 4[1 + e^{-L/2} - (L+4)e^{-L/2}/2] = 4[1 + e^{-L/2}(1-(L+4)/2)]
-    dbm = 4 * (1 + (-L / 2).exp() * (1 - (L + 4) / 2))
-    # ∂(v vᵀ) = v' vᵀ + v (v')ᵀ
-    g00 = scale * (2 * i0p * d0p + 2 * i0m * d0m)
-    g0b = scale * (d0p * ibp + i0p * dbp + d0m * ibm + i0m * dbm)
-    gbb = scale * (2 * ibp * dbp + 2 * ibm * dbm)
-    return g00, g0b, gbb
+    """``∂_L`` of the even pole Gram under **Candidate A**.
+
+    This routine used to differentiate the rejected ``(sqrt(3)/2)(v+v+^T +
+    v-v-^T)`` block -- a second, independent copy of the calibration WO-RH-17
+    threw out. ENG-004 §1 collapses both onto ``pole.pole_gram_entry_dL``, and
+    ``tests/test_production_imports.py`` now fails if the scale reappears here.
+    """
+    return (
+        pole.pole_gram_entry_dL("one", "one", L),
+        pole.pole_gram_entry_dL("one", "b", L),
+        pole.pole_gram_entry_dL("b", "b", L),
+    )
 
 
 def _dL_gp_even(L, arb) -> Tuple[Any, Any, Any]:

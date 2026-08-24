@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""WO-RH-18 — four-way normalization cross-check.
+"""WO-RH-18 / ENG-004 §7 — three-way *internal* normalization cross-check.
 
 Compares the ``pole``, ``prime``, ``archimedean`` and ``total`` components across
-four independent providers at the mandated points
+three independent internal providers at the mandated points
 
     L in {log 3, 1.1059498113, 1.20, log 4},  basis {1, q1 = x-L/2, b = x(L-x)},
 
@@ -29,6 +29,7 @@ sys.path.insert(0, str(ROOT / "src"))
 import cross_validation as CV  # noqa: E402
 import normalization as N  # noqa: E402
 import providers as P  # noqa: E402
+import rejected_pole as RP  # noqa: E402  (archival; audit surface only)
 from certificate_io import write_certificate  # noqa: E402
 
 L_POINTS = [
@@ -103,7 +104,7 @@ def run(T: float = 84.0, arch_full: bool = False, with_arch: bool = True) -> dic
     for lname, L in L_POINTS:
         for i, j in (("one", "one"), ("one", "b"), ("b", "b")):
             adopted = N.pole_entry(i, j, L)
-            legacy = N.legacy_pole_entry(i, j, L)
+            legacy = RP.legacy_pole_entry(i, j, L)
             ratio = legacy / adopted if adopted != 0 else None
             legacy_audit.append(
                 {
@@ -113,7 +114,7 @@ def run(T: float = 84.0, arch_full: bool = False, with_arch: bool = True) -> dic
                     "adopted_candidate_A": adopted,
                     "legacy_candidate_B": legacy,
                     "ratio_B_over_A": ratio,
-                    "predicted_ratio_sqrt3_over_2_cosh_L_over_2": N.legacy_over_adopted_ratio(L),
+                    "predicted_ratio_sqrt3_over_2_cosh_L_over_2": RP.legacy_over_adopted_ratio(L),
                     "relative_discrepancy": (ratio - 1.0) if ratio is not None else None,
                 }
             )
@@ -123,6 +124,7 @@ def run(T: float = 84.0, arch_full: bool = False, with_arch: bool = True) -> dic
     return {
         "certificate_version": "0.1",
         "program": "RH/Weil normalization cross-check",
+        "crosscheck_name": "three_way_internal_crosscheck",
         "work_order": "WO-RH-18",
         "evidence_class": "E2_numeric_crosscheck",
         "status": "AGREE" if len(agreeing) == len(compared) and compared else "DISAGREE",
@@ -130,10 +132,21 @@ def run(T: float = 84.0, arch_full: bool = False, with_arch: bool = True) -> dic
         "rh_proof_claim": False,
         "normalization_id": N.normalization_id(),
         "normalization": N.normalization_content(),
+        # ENG-004 §7: the certifying comparison is three-way and internal --
+        # explicit formula, compact real space, direct Fourier. The external
+        # Connes/CvS provider supplies no comparable value (its projection and
+        # truncation error are not quantified), so it is reported
+        # NOT_COMPARABLE rather than counted as a fourth way.
+        "crosscheck_name": "three_way_internal_crosscheck",
+        "certifying_providers": [p.name for p in provs
+                                 if not bool(getattr(p, "external", False))],
         "providers": [
             {"name": p.name, "description": p.description,
              "external": bool(getattr(p, "external", False)),
-             "available": bool(getattr(p, "available", lambda: True)())}
+             "available": bool(getattr(p, "available", lambda: True)()),
+             "comparability": ("NOT_COMPARABLE"
+                               if bool(getattr(p, "external", False)) else "COMPARABLE"),
+             "certifying": not bool(getattr(p, "external", False))}
             for p in provs
         ],
         "settings": {"T": T, "arch_full": arch_full, "with_arch": with_arch,
@@ -149,6 +162,8 @@ def run(T: float = 84.0, arch_full: bool = False, with_arch: bool = True) -> dic
         },
         "results": rows,
         "legacy_pole_audit": legacy_audit,
+        "legacy_pole_audit_note": "Candidate B is archival (src/rejected_pole.py); "
+                                  "production imports it nowhere",
         "disagreements": disagreements,
     }
 

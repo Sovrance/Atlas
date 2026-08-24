@@ -3,34 +3,33 @@
 Assembly: G = G0 - Gp + Ginf_T
 Ginf_T[i,j] = (1/π) ∫_0^T h_+(t) Re(conj(H_i(t;L)) H_j(t;L)) dt
 
-Even pole block (ENG-002 / Run-16 calibration) -- **REJECTED by WO-RH-17**:
-  G0 = (sqrt(3)/2) (v+ v+^T + v- v-^T),
-  v+- = (I0+-, I_b+-) with I_b+- = E_b+- (exact identity).
+Even pole block (ENG-004 §1): the ADOPTED Candidate A, delegated to
+``pole.pole_gram_matrix``:
 
-This module still assembles that block, so every number it produces is
-quarantined. The adjudication (WO-RH-17, docs/NORMALIZATION_ADJUDICATION_v0.1.md)
-found this block equals the explicit-formula pole times (sqrt(3)/2)cosh(L/2) --
-a factor that is 1 only at L = log 3, so it is a calibration fitted at one test
-point, not a normalization. The frozen definition lives in ``src/normalization.py``;
-replacing the assembly here is WO-RH-19/20 and is deliberately NOT done in this
-change. Until then ``POLE_EVEN_SCALE_STATUS`` marks the defect and certificates
-built from this module are held by the quarantine guard in ``certificate_io``.
+  G0_ij = E_i^+ E_j^- + E_i^- E_j^+,  E_i^± = int_0^L h_i(x) e^{±x/2} dx.
+
+The former ``(sqrt(3)/2)(v+v+^T + v-v-^T)`` calibration was REJECTED by
+WO-RH-17 and has been removed from this module; it survives only in the
+archival ``rejected_pole`` module, which production may not import.
 """
 from __future__ import annotations
 
 from typing import Any, Dict, Tuple
 
 import core
+import pole
 from archimedean import h_plus, h_plus_derivatives
 from interval_backend import FlintUnavailable, require_flint, set_precision_bits
 
 
 NORMALIZATION = core.NORMALIZATION
-POLE_EVEN_SCALE = "sqrt(3)/2"
-# WO-RH-17 verdict on the constant above. Machine-readable so a caller can
-# assert it rather than rely on reading the docstring.
-POLE_EVEN_SCALE_STATUS = "REJECTED_WO_RH_17"
-POLE_EVEN_SCALE_SUPERSEDED_BY = "normalization.pole_entry (Candidate A)"
+# ENG-004 §1: production carries the adopted candidate only. The rejected
+# ``sqrt(3)/2`` scale is not defined here -- it lives in ``rejected_pole``.
+POLE_CANDIDATE = pole.POLE_CANDIDATE          # "A"
+POLE_STATUS = pole.POLE_STATUS                # "ADOPTED_WO_RH_17"
+POLE_FORMULA = pole.POLE_FORMULA
+POLE_EVEN_SCALE_STATUS = "REJECTED_WO_RH_17"  # verdict on the removed constant
+POLE_EVEN_SCALE_SUPERSEDED_BY = "pole.pole_gram_entry (Candidate A)"
 
 
 def _A_B(z, arb):
@@ -140,14 +139,15 @@ def pole_even_I0(L, arb):
 
 
 def g0_even_block(L, arb):
-    """Even pole Gram: (√3/2)(v₊v₊ᵀ + v₋v₋ᵀ) with v±=(I0±, Ib±)."""
-    scale = arb(3).sqrt() / 2
-    i0p, i0m = pole_even_I0(L, arb)
-    ibp, ibm = pole_even_helpers(L, arb)
-    g00 = scale * (i0p**2 + i0m**2)
-    g0b = scale * (i0p * ibp + i0m * ibm)
-    gbb = scale * (ibp**2 + ibm**2)
-    return g00, g0b, gbb
+    """Even pole Gram under Candidate A: ``G0_ij = E_i^+E_j^- + E_i^-E_j^+``.
+
+    Delegates to ``pole.pole_gram_matrix`` so there is exactly one pole formula
+    in the tree (ENG-004 §1). ``pole_even_I0``/``pole_even_helpers`` remain as
+    the named ``E^±`` closed forms and are pinned against it by
+    ``tests/test_pole_primitive.py``.
+    """
+    g = pole.pole_gram_matrix(("one", "b"), L)
+    return g[0][0], g[0][1], g[1][1]
 
 
 def _product_t_derivatives(t, L, arb, acb):
@@ -382,7 +382,8 @@ def finite_weil_even_block(
         "G0_0b": g00b,
         "G0_bb": g0bb,
         "pole_det": pole_det,
-        "pole_scale": POLE_EVEN_SCALE,
+        "pole_candidate": POLE_CANDIDATE,
+        "pole_formula": POLE_FORMULA,
         "normalization": NORMALIZATION,
         "cutoff_T": T,
         "n_quad": n_quad,

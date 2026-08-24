@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
-"""Dedicated RH/Weil runner (WO-RH-07).
+"""Dedicated RH/Weil runner (WO-RH-07) — the **fast** path.
 
-Does NOT expand ci/run_all_certified.py. Regenerates E0 certificates and an
-E3 Fourier probe scan. Never promotes imported notebook claims.
+Does NOT expand ci/run_all_certified.py. Runs the unit tests and regenerates the
+cheap E0/E3 artifacts. Never promotes imported notebook claims.
+
+ENG-004 §10: passing this suite does **not** mean the rigorous certificates are
+current. It does not re-derive the scalar E1 canary (minutes of Arb quadrature)
+and it does not check the promotion policy end to end. Use
+``scripts/run_rigorous_scalar.py`` for that, and read its exit code -- not this
+one -- before believing an E1 claim is fresh.
 """
 from __future__ import annotations
 
@@ -88,7 +94,11 @@ def main() -> int:
         TESTS / "test_fourier_forms.py",
         TESTS / "test_connes_cvs_adapter_contract.py",
         TESTS / "test_connes_cvs_crosschecks.py",
+        TESTS / "test_eng002_parity.py",
         TESTS / "test_normalization_adjudication.py",
+        TESTS / "test_pole_primitive.py",
+        TESTS / "test_production_imports.py",
+        TESTS / "test_promotion_and_canary.py",
     ]
     failed = 0
     for tf in test_files:
@@ -105,6 +115,8 @@ def main() -> int:
     except Exception as exc:
         print(f"certificate regeneration failed: {exc}", file=sys.stderr)
         failed += 1
+    print("NOTE (ENG-004 §10): this fast suite does not re-derive the rigorous "
+          "scalar E1 canary; run scripts/run_rigorous_scalar.py for that.")
     return 1 if failed else 0
 
 

@@ -11,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[3]  # repo root
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+import promotion
+
 CERT_DIR = Path(__file__).resolve().parents[1] / "certificates"
 
 try:
@@ -34,50 +36,21 @@ def _load(name: str) -> Dict[str, Any] | None:
     return json.loads(p.read_text(encoding="utf-8"))
 
 
-QUARANTINE_PREFIX = "QUARANTINED"
-
-
-def promotion_refusal(cert: Dict[str, Any]) -> str | None:
-    """WO-RH-17 promotion guard: why this certificate may NOT be promoted.
-
-    Returns a reason string, or ``None`` when promotion is permitted. A
-    certificate under normalization quarantine is never promoted, whatever its
-    historical evidence label says.
-    """
-    state = str(cert.get("promotion_state", "") or "")
-    if state.startswith(QUARANTINE_PREFIX):
-        return f"promotion_state={state}"
-    declared = str(cert.get("evidence_class", "") or "")
-    if declared.startswith("E1") and not cert.get("hard_constraints_certified", False):
-        return "declares E1 but hard_constraints_certified is false"
-    norm_id = cert.get("active_normalization_id") or cert.get("normalization_id")
-    if norm_id is not None and _active_normalization_id() and norm_id != _active_normalization_id():
-        return f"stale normalization_id={norm_id}"
-    return None
+# ENG-004 §3: the promotion rules live in one place. ``pir_bridge`` asks that
+# module rather than carrying its own copy, so PIR can never promote something
+# the runner or the release path would refuse.
+QUARANTINE_PREFIX = promotion.QUARANTINE_PREFIX
+promotion_refusal = promotion.promotion_refusal
 
 
 def _active_normalization_id() -> str | None:
-    try:
-        import normalization as _N
-
-        return _N.normalization_id()
-    except Exception:
-        return None
+    """Active id, read from the adjudication artifact (never from a filename)."""
+    return promotion.active_normalization_id()
 
 
 def refused_promotions() -> List[Dict[str, Any]]:
-    """Every certificate the guard currently refuses to promote."""
-    out = []
-    for p in sorted(CERT_DIR.glob("*.json")):
-        try:
-            cert = json.loads(p.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        reason = promotion_refusal(cert)
-        if reason:
-            out.append({"certificate_file": p.name, "reason": reason,
-                        "evidence_class_declared": cert.get("evidence_class")})
-    return out
+    """Every certificate the central predicate currently refuses to promote."""
+    return promotion.refused_promotions(CERT_DIR)
 
 
 def certs_to_facts() -> List[Any]:
@@ -89,7 +62,9 @@ def certs_to_facts() -> List[Any]:
         ("e0_scalar_cell_log3_log4.json", "E0", "SOUND", None),
         ("normalization_adjudication.json", "E0", "SOUND", None),
         ("normalization_crosscheck.json", "E2", "HEURISTIC",
-         "numeric four-way cross-check; only interval_certified rows may support E1"),
+         "three-way internal cross-check; only interval_certified rows may support E1"),
+        ("e1_scalar_log3_log4.json", "E1", "SOUND",
+         "scalar canary: rigorous Arb lower bound on the recovered Candidate-A cell entry"),
         ("e3_fourier_T84_scan.json", "E3", "HEURISTIC", "E3 energy probe — not the true Weil Gram"),
         ("external/connes_cvs_crossvalidation_v0.1.json", "E3", "HEURISTIC", "external cross-check only"),
     ]

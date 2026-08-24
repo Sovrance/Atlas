@@ -4,7 +4,7 @@
   "work_order": "WO-RH-16",
   "rh_proof_claim": false,
   "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
-  "n_facts": 6,
+  "n_facts": 7,
   "refused_promotions": [
     {
       "certificate_file": "e1_degree1_log3_log4.json",
@@ -25,11 +25,6 @@
       "certificate_file": "e1_fourier_T84_uniform_degree2.json",
       "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
       "evidence_class_declared": "E1"
-    },
-    {
-      "certificate_file": "e1_scalar_log3_log4.json",
-      "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
-      "evidence_class_declared": "E1_SAMPLES_PLUS_E0_CURVATURE"
     }
   ],
   "facts": [
@@ -130,7 +125,36 @@
       "warnings": [
         {
           "location": "normalization_crosscheck.json",
-          "message": "numeric four-way cross-check; only interval_certified rows may support E1"
+          "message": "three-way internal cross-check; only interval_certified rows may support E1"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_424ff459c5120783",
+      "pir_level": "L2",
+      "evidence_level": "E1",
+      "analyzer": {
+        "id": "rh_weil.e1_scalar_log3_log4",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "e1_scalar_log3_log4.json",
+        "program": "RH/Weil scalar cell \u2014 Candidate-A E1 canary",
+        "status": "PASS",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E1"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e1_scalar_log3_log4.json",
+          "message": "scalar canary: rigorous Arb lower bound on the recovered Candidate-A cell entry"
         }
       ]
     },

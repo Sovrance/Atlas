@@ -155,7 +155,7 @@ def build_work_order_status() -> Dict[str, Any]:
         "certificate_version": "0.2",
         "program": "RH/Weil work-order status",
         "rh_proof_claim": False,
-        "eng_spec": "ATLAS-RH-ENG-003 / WO-RH-17 normalization adjudication",
+        "eng_spec": "ATLAS-RH-ENG-004 Candidate-A convergence + scalar E1 canary",
         "orders": {
             "WO-RH-01": "done",
             "WO-RH-02": "done_E0_scalar_cell",
@@ -165,7 +165,7 @@ def build_work_order_status() -> Dict[str, Any]:
             "WO-RH-06": "done_partial_E0_certs_no_imported_promotion",
             "WO-RH-07": "done_dedicated_runner",
             "WO-RH-08": "unblocked_pending_degree3_implementation",
-            "WO-RH-09": "quarantined_pending_WO-RH-17",
+            "WO-RH-09": "recovered_ENG-004_scalar_canary_PROMOTED",
             "WO-RH-10": "quarantined_pending_WO-RH-17",
             "WO-RH-11": "quarantined_pending_WO-RH-17",
             "WO-RH-12": "quarantined_pending_WO-RH-17",
@@ -174,7 +174,9 @@ def build_work_order_status() -> Dict[str, Any]:
             "WO-RH-15": "quarantined_pending_WO-RH-17",
             "WO-RH-16": "done_pir_export_partial",
             "WO-RH-17": "done_normalization_adjudicated",
-            "WO-RH-18": "done_four_way_crosscheck",
+            "WO-RH-18": "done_three_way_internal_crosscheck",
+            "ENG-004-P1": "done_candidate_a_centralised_scalar_canary_promoted",
+            "ENG-004-P2": "pending_ENG-005_degree1_degree2_T84_recovery",
         },
         # Historical values retained verbatim: WO-RH-17 forbids deleting contrary
         # evidence. These are what the tree claimed before the adjudication.
@@ -195,7 +197,14 @@ def build_work_order_status() -> Dict[str, Any]:
             "Even pole outer-product (sqrt(3)/2) REJECTED by WO-RH-17: it equals the "
             "explicit-formula pole times (sqrt(3)/2)cosh(L/2), a calibration fitted at L=log3",
             "Adopted pole: G0_ij = E_i^+E_j^- + E_i^-E_j^+ (see docs/NORMALIZATION_ADJUDICATION_v0.1.md)",
-            "WO-RH-05/09..15 quarantined pending regeneration under WO-RH-19/20",
+            "WO-RH-05/10..15 remain quarantined pending ENG-005 regeneration",
+            "WO-RH-09 (scalar cell) RECOVERED by ENG-004: regenerated under Candidate A "
+            "with a uniform rigorous Arb lower bound and explicitly released",
+            "ENG-004: src/pole.py is the single pole implementation; the rejected "
+            "(sqrt(3)/2) block is archival in src/rejected_pole.py and production may not import it",
+            "ENG-004: G00'' = 4cosh(L/2) - e^{L/2}/sinh(L) equals the E0 curvature "
+            "2(r^3-r-1)/(sqrt(r)(r^2-1)); Candidate B cannot reproduce it",
+            "Cross-check is three-way INTERNAL; Connes/CvS reports NOT_COMPARABLE and never certifies",
             "Uniform T=84 uses regenerated monotone E2' > 0 (not notebook split)",
             "E1 filename prefixes may hold non-E1 status until gates close",
         ],
