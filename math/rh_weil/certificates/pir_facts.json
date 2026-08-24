@@ -340,7 +340,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_9461f6e3b26d76f9",
+      "fact_id": "fct_sha256_8fd23199a49496f9",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -356,13 +356,8 @@
         "claim_scope": "finite_dimensional_weil_compression",
         "rh_proof_claim": false,
         "evidence_class_declared": "E1",
-        "content_kind": "WEIL_INERTIA_STRATIFICATION",
-        "satisfies_psd_requirement": false,
-        "inertia": {
-          "n_positive": null,
-          "n_negative": null,
-          "n_zero": null
-        }
+        "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+        "satisfies_psd_requirement": true
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",

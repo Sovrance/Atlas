@@ -1,0 +1,114 @@
+{
+  "certificate_version": "1.0",
+  "program": "RH/Weil ENG-006 information comparison",
+  "work_order": "ATLAS-RH-ENG-006 \u00a710 / WO-RH-36",
+  "content_kind": "WEIL_INFORMATION_COMPARISON_REPORT",
+  "evidence_class": "E3",
+  "status": "REPORTED",
+  "hard_constraints_certified": false,
+  "promotion_state": "REPORT_NOT_PROMOTABLE",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "rh_proof_claim": false,
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "subject": {
+    "block": "odd degree-3 Weil block on [log 3, log 4]",
+    "dimension": 2,
+    "certified_inertia": [
+      2,
+      0,
+      0
+    ],
+    "outcome": "A_POSITIVE_DEFINITE",
+    "e1_certificate": "e1_degree3_odd_positivity_log3_log4.json",
+    "moment_certificate": "e1_degree3_odd_moments_log3_log4.json",
+    "scan_certificate": "e3_degree3_odd_scan_log3_log4.json"
+  },
+  "headline": "The odd degree-3 block is positive definite, so the case ENG-006 was built for -- extracting information from an indefinite block -- did not arise here. What the run does establish is that the machinery works and what each channel is worth: inertia and positivity coincide at 2x2, the moments recover the signature exactly at 2x2 and would not above it, and the rank-trace bound is real but weak on an operator this far from a projection.",
+  "answers": [
+    {
+      "question": "Did positivity alone fully characterize the block?",
+      "answer": "yes, but only because the block is 2x2",
+      "detail": "For a symmetric 2x2 the pair (trace > 0, det > 0) *is* the full signature (2,0,0): there is no room between 'positive definite' and 'inertia known'. So on this block positivity and inertia carry identical information. That is a fact about the dimension, not about the method -- at 3x3 and above a positivity test and an inertia test stop being the same question.",
+      "evidence": {
+        "certified_inertia": [
+          2,
+          0,
+          0
+        ],
+        "uniform_bounds": {
+          "O1": "0.015331267702267608",
+          "det_odd3": "1.073120529992708e-06"
+        }
+      }
+    },
+    {
+      "question": "What additional information did inertia provide?",
+      "answer": "beyond positivity, nothing here -- the block turned out definite; the value delivered was the route, not the number",
+      "detail": "The inertia engine is what proved the signature constant over the whole closed cell rather than at sample points, and it is what would have produced a usable stratification had any part of the cell been indefinite. On this block it returned one stratum and no transition regions, so there was no extra structure to report. A channel that adds nothing when the easy answer holds is behaving correctly; it earns its place on the blocks where the easy answer does not.",
+      "evidence": {
+        "strata": 1,
+        "transition_regions": 0,
+        "constant_inertia": true,
+        "boxes_examined": 11024
+      }
+    },
+    {
+      "question": "Did low-order moments recover the inertia?",
+      "answer": "yes, exactly, and again because the block is 2x2",
+      "detail": "At n = 2 the Wolkowicz-Styan inequalities are equalities, so m1 and m2 invert to the spectrum outright: lambda = (m1 +- sqrt(2 m2 - m1^2))/2. The signature is then a consequence of two moments rather than a separate observation, and it agrees with the certified inertia. m3 and m4 were not needed. This is the sharpest the moment channel can ever be, and it does not survive to larger blocks.",
+      "evidence": {
+        "implied_inertia": [
+          2,
+          0,
+          0
+        ],
+        "matches_certified_inertia": true,
+        "status": "CONCLUSIVE",
+        "lambda_min": {
+          "lo": "3.340233446986596e-05",
+          "hi": "3.340233446997979e-05"
+        },
+        "lambda_max": {
+          "lo": "0.042135094879240186",
+          "hi": "0.0421350948792403"
+        },
+        "tight": true
+      }
+    },
+    {
+      "question": "Were the moments insufficient?",
+      "answer": "yes, by the general truncated-moment route -- and that is not a contradiction with the previous answer",
+      "detail": "Two different questions get two different answers. Asking 'do these moments force the spectrum to be non-negative' via the localizing matrix returns INSUFFICIENT_INFORMATION, correctly: PSD-ness of a truncated localizing matrix is necessary but not sufficient for support in [0, inf), and establishing sufficiency needs a flat extension that four moments do not supply. Only the *refuting* direction is conclusive there. The n = 2 spectrum inversion answers a different and easier question, and it is what settled the inertia. Reporting the localizing route as insufficient while the inversion succeeds is the honest description of both.",
+      "evidence": {
+        "moments_force_psd": "INSUFFICIENT_INFORMATION",
+        "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+        "minimum_negative_eigenvalue_count": "INSUFFICIENT_INFORMATION",
+        "minimum_positive_eigenvalue_count": "CONCLUSIVE"
+      }
+    },
+    {
+      "question": "Did rank-trace yield a nontrivial finite-dimensional lower bound?",
+      "answer": "yes but weak: rank >= 1 against a true rank of 2",
+      "detail": "The bound is nontrivial -- the right-hand side is positive, so it is not the vacuous 'rank >= 0' -- but it is off by a factor of two on a rank-2 block, and the reason is structural rather than a tuning failure. The inequality is tight at projections, where every eigenvalue is 0 or 1. This block's eigenvalues run from ~3.3e-05 to ~4.2e-02, four orders of magnitude below 1, so each contributes lambda(2 - lambda) ~ 2*lambda to the right-hand side instead of the 1 it would contribute at a projection. A Weil Gram block is simply not the kind of operator this inequality is sharp for. Recorded as a null-ish result per \u00a710 rather than tuned until it looks better.",
+      "evidence": {
+        "status": "PASS",
+        "rhs_enclosure": {
+          "lo": "0.08256162709122174",
+          "hi": "0.08256162709122174"
+        },
+        "certified_rank_lower_bound": 1,
+        "trivial": false,
+        "true_rank_from_certified_inertia": 2,
+        "lambda_max_upper": "0.0421350948792403",
+        "theorem_id": "rank_trace_hs_v1"
+      }
+    }
+  ],
+  "caveats": [
+    "One cell and one 2x2 block. Three of the five answers above turn on the dimension being 2 and do not generalize.",
+    "A null or weak result is preserved here rather than tuned away (\u00a710).",
+    "E3: this is an interpretation of certified artifacts, not itself a certified claim. The numbers it quotes are certified; the comparisons it draws are commentary."
+  ],
+  "generated_utc": "2026-08-24T23:19:51Z",
+  "content_hash": "52da8bafa8e825c5cbe097fe534ad6f9f223f7b515009a39460770902ce7105d"
+}

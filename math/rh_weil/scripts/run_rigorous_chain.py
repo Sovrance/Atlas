@@ -187,6 +187,14 @@ def _headline(cert: dict) -> str:
     if bound:
         gov = interior.get("governed_interval", ["?", "?"])
         return f"{bound} on [{gov[0]}, {gov[1]}]"
+    bounds = cert.get("uniform_bounds")
+    if bounds:
+        return ", ".join(f"{k} >= {v['certified_lower_bound']}"
+                         for k, v in sorted(bounds.items()))
+    if cert.get("content_kind") == "WEIL_SPECTRAL_MOMENT_CERTIFICATE":
+        pts = cert.get("points", [])
+        return (f"m1..m4 at {len(pts)} points, dimension {cert.get('dimension')}"
+                if pts else "spectral moments")
     if cert.get("point_scoped"):
         return "point-scoped"
     return "no bound field"

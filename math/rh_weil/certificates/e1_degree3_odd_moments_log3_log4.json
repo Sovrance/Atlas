@@ -23,7 +23,7 @@
       "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
       "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
       "ranktrace/theorem.py": "3079af3fd356a2ee4cc3f25e97eeca143e79271c66ed8d7f7adda89e52d59fac",
-      "scripts/certify_degree3.py": "7b0a3f2d73fbbe7d11e3f7f26a454003d8d389349e1aa9450ae0fd0beeacc770",
+      "scripts/certify_degree3.py": "cb0538391c4d937f7e4345fbf5a6d42165de22fce40b6bd287b4c9f2b2a3a47e",
       "src/archimedean_realspace.py": "6d7170233bdda52006c2753f4063b39e91360c4c526a2a0f6e4bd468992cbdf7",
       "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
       "src/degree3.py": "54b316a68786136155cae7c9ee1b9810749793fcdf1855317c79accd30af310d",
@@ -44,7 +44,7 @@
   "promotion_state": "PROMOTED",
   "content_kind": "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
   "dimension": 2,
-  "inertia_dependency": "WEIL_INERTIA_STRATIFICATION",
+  "inertia_dependency": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
   "points": [
     {
       "label": "log3",
@@ -1042,6 +1042,6 @@
     }
   ],
   "note": "Moments are enclosures of traces of matrix powers. INSUFFICIENT_INFORMATION answers are certified results (\u00a76), not failures to compute.",
-  "generated_utc": "2026-08-24T22:55:58Z",
-  "content_hash": "a13c846f320a835e6a4580c4898ed5f6e43c0a59be791582e04199fefb0bc330"
+  "generated_utc": "2026-08-24T23:11:41Z",
+  "content_hash": "eb4fb2f6ef9779ac7b1cebbfb83eecc83184e2eb18a40658388f95818e1378c5"
 }

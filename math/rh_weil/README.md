@@ -163,11 +163,64 @@ pip install -r requirements-rigorous.txt
 rigorous certificates are current — it does not re-derive the scalar canary. Read
 `scripts/run_rigorous_scalar.py`'s exit code before believing an E1 claim is fresh.
 
+## Inertia, rank-trace and spectral moments (ATLAS-RH-ENG-006)
+
+Through ENG-005 every block was asked one question — is it positive? That is a
+single bit, and when the answer is no the run ends with nothing. ENG-006 adds
+three channels so an indefinite block still yields a rigorous result:
+
+* **inertia** (`inertia/`) — the full signature `(n₊, n₋, n₀)` by interval
+  Hermitian LDL congruence, checked against an independent oracle that reads the
+  inertia off the characteristic polynomial by Descartes' rule of signs (exact,
+  because a symmetric matrix is real-rooted);
+* **rank–trace** (`ranktrace/`) — `rank(P) ≥ 2 tr(P) + 4 tr(Q) − 4b − ‖P+Q‖²_HS`
+  with its four hypotheses enforced, not assumed;
+* **spectral moments** (`moments/`) — `m₁..m₄` as traces of matrix powers, fed to
+  the existing Atlas B1 truncated-moment solver rather than a second one.
+
+Three things these refuse to do. An interval result never claims an exact zero,
+so singular inputs come back `INCONCLUSIVE` rather than `n₀ = 1`. A rank–trace
+call with any unverified hypothesis produces no number at all. And "the moments
+force PSD" comes back `INSUFFICIENT_INFORMATION` even for a positive definite
+matrix, because PSD-ness of a truncated localizing matrix is necessary and not
+sufficient — only the refuting direction is available from four moments.
+
+**The odd degree-3 block** `[[G_q1q1, G_q1b3], [G_q1b3, G_b3b3]]` is the first
+live workload, and it came out **positive definite**: inertia `(2,0,0)` uniformly
+on `[log 3, log 4]`, one stratum and no transition regions, with
+`O1 ≥ 1.5331e-02` and `det ≥ 1.0731e-06`. The work order did not require this —
+an inertia stratification would have counted as success — and the same machinery
+would have produced one had any part of the cell been indefinite.
+
+Its two kernels are re-derived from the basis with SymPy on every run:
+
+`K_q1b3 = (L−a)²(L³ + 2L²a − 12La² − 6a³)/60` and
+`K_b3b3 = (L−a)³(L⁴ + 3L³a − 15L²a² − 18La³ − 6a⁴)/420`.
+
+Every active prime-shift block on the cell is indefinite — determinant negative,
+inertia `(1,1,0)` — which is kept as a regression test. It is why the assembled
+entry has to be bounded as a whole and why termwise PSD domination is unavailable.
+
+Positivity and inertia are distinct content kinds. An inertia certificate never
+satisfies a consumer requiring PSD, even when its signature is `(2,0,0)`; the
+degree-3 artifact answers such a consumer as a *positivity* certificate carrying
+certified bounds, with the inertia object nested inside it still refusing.
+
+```bash
+python3 scripts/certify_degree3.py            # scan, E1 result, moments
+python3 scripts/ci_inertia.py --gate fast     # exact gates, no python-flint needed
+python3 scripts/ci_inertia.py --gate rigorous # interval gates, python-flint required
+python3 scripts/report_information_comparison.py
+```
+
 ## Current priority
 
-Regenerate the E1 chain under the frozen normalization (WO-RH-19), then the direct
-Fourier-side uniform degree-2 certificate at `T=84` (WO-RH-20), then the
-midpoint-odd degree-3 block (WO-RH-27, gated on P0/P1).
+ENG-005 recovered the E1 chain and ENG-006 delivered the inertia/rank-trace/moment
+channels and the degree-3 pilot. Next is ENG-007: formalize the stabilized theorem
+boundary in Lean — Sylvester inertia under congruence, the 2x2/3x3 criteria, the
+rank-trace theorem, certificate semantics, and selected degree-3 exact identities.
+Only after that should the program widen to additional prime-power cells or higher
+polynomial degree at scale.
 
 **Executed in-repo so far (see `certificates/work_order_status.json`):**
 - WO-RH-01/03/04 — exact identities, f1 audit, bubble block (E0)
