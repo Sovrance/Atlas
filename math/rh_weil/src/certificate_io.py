@@ -23,9 +23,38 @@ def source_hash(paths: list[Path]) -> str:
     return h.hexdigest()
 
 
-def write_certificate(name: str, body: Dict[str, Any]) -> Path:
+def _enforce_quarantine(name: str, body: Dict[str, Any]) -> None:
+    """Re-assert the WO-RH-17 quarantine on any affected certificate being written.
+
+    The quarantine marks certificates whose numbers came from the REJECTED even
+    pole block. Those files are still produced by the original ``certify_*.py``
+    scripts, which know nothing about the adjudication -- so without this guard a
+    single re-run would silently restore ``hard_constraints_certified: true`` and
+    drop the marker. This is the same failure mode already closed for
+    ``work_order_status.json``; the fix belongs at the one write choke point.
+
+    Only ``quarantine_normalization.py --release`` may lift the marker, and it
+    does so by passing ``allow_quarantine_change=True``.
+    """
+    import normalization as N
+
+    if not N.is_quarantined_certificate(name):
+        return
+    if body.get("promotion_state") == N.QUARANTINE_STATE and "quarantine" in body:
+        return  # already carries the marker; leave the recorded prior state alone
+    body["quarantine"] = N.quarantine_block(body)
+    body["promotion_state"] = N.QUARANTINE_STATE
+    body["hard_constraints_certified"] = False
+    body["rh_proof_claim"] = False
+
+
+def write_certificate(
+    name: str, body: Dict[str, Any], *, allow_quarantine_change: bool = False
+) -> Path:
     CERT_DIR.mkdir(parents=True, exist_ok=True)
     path = CERT_DIR / name
+    if not allow_quarantine_change:
+        _enforce_quarantine(name, body)
     if "rh_proof_claim" not in body:
         body["rh_proof_claim"] = False
     if "generated_utc" not in body:
@@ -112,21 +141,45 @@ def build_e3_fourier_scan_certificate(scan: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def _active_normalization_id():
+    try:
+        import normalization
+
+        return normalization.normalization_id()
+    except Exception:  # pragma: no cover
+        return None
+
+
 def build_work_order_status() -> Dict[str, Any]:
     return {
         "certificate_version": "0.2",
         "program": "RH/Weil work-order status",
         "rh_proof_claim": False,
-        "eng_spec": "ATLAS-RH-ENG-002 / Run 18 parity",
+        "eng_spec": "ATLAS-RH-ENG-003 / WO-RH-17 normalization adjudication",
         "orders": {
             "WO-RH-01": "done",
             "WO-RH-02": "done_E0_scalar_cell",
             "WO-RH-03": "done",
             "WO-RH-04": "done_algebraic",
-            "WO-RH-05": "done_E1_uniform_true_weil_gram",
+            "WO-RH-05": "quarantined_pending_WO-RH-17",
             "WO-RH-06": "done_partial_E0_certs_no_imported_promotion",
             "WO-RH-07": "done_dedicated_runner",
             "WO-RH-08": "unblocked_pending_degree3_implementation",
+            "WO-RH-09": "quarantined_pending_WO-RH-17",
+            "WO-RH-10": "quarantined_pending_WO-RH-17",
+            "WO-RH-11": "quarantined_pending_WO-RH-17",
+            "WO-RH-12": "quarantined_pending_WO-RH-17",
+            "WO-RH-13": "quarantined_pending_WO-RH-17",
+            "WO-RH-14": "quarantined_pending_WO-RH-17",
+            "WO-RH-15": "quarantined_pending_WO-RH-17",
+            "WO-RH-16": "done_pir_export_partial",
+            "WO-RH-17": "done_normalization_adjudicated",
+            "WO-RH-18": "done_four_way_crosscheck",
+        },
+        # Historical values retained verbatim: WO-RH-17 forbids deleting contrary
+        # evidence. These are what the tree claimed before the adjudication.
+        "pre_quarantine_orders": {
+            "WO-RH-05": "done_E1_uniform_true_weil_gram",
             "WO-RH-09": "partial_absolute_G00_regenerated_pending_full_cell_cover",
             "WO-RH-10": "partial_assembly_pending_tail_bound",
             "WO-RH-11": "partial_pole_wired_pending_tight_tail",
@@ -134,12 +187,15 @@ def build_work_order_status() -> Dict[str, Any]:
             "WO-RH-13": "done_E1_T84_points",
             "WO-RH-14": "done_analytic_jets",
             "WO-RH-15": "done_E1_uniform_true_weil_gram",
-            "WO-RH-16": "done_pir_export_partial",
         },
+        "active_normalization_id": _active_normalization_id(),
         "notes": [
             "E3 energy probe quarantined as fourier_energy_probe",
             "No RH proof claim",
-            "Even pole outer-product (sqrt(3)/2)(v+v+^T+v-v-^T) wired",
+            "Even pole outer-product (sqrt(3)/2) REJECTED by WO-RH-17: it equals the "
+            "explicit-formula pole times (sqrt(3)/2)cosh(L/2), a calibration fitted at L=log3",
+            "Adopted pole: G0_ij = E_i^+E_j^- + E_i^-E_j^+ (see docs/NORMALIZATION_ADJUDICATION_v0.1.md)",
+            "WO-RH-05/09..15 quarantined pending regeneration under WO-RH-19/20",
             "Uniform T=84 uses regenerated monotone E2' > 0 (not notebook split)",
             "E1 filename prefixes may hold non-E1 status until gates close",
         ],

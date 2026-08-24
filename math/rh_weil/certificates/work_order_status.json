@@ -2,32 +2,48 @@
   "certificate_version": "0.2",
   "program": "RH/Weil work-order status",
   "rh_proof_claim": false,
-  "eng_spec": "ATLAS-RH-ENG-002 / Run 18 parity",
+  "eng_spec": "ATLAS-RH-ENG-003 / WO-RH-17 normalization adjudication",
   "orders": {
     "WO-RH-01": "done",
     "WO-RH-02": "done_E0_scalar_cell",
     "WO-RH-03": "done",
     "WO-RH-04": "done_algebraic",
-    "WO-RH-05": "done_E1_uniform_true_weil_gram",
+    "WO-RH-05": "quarantined_pending_WO-RH-17",
     "WO-RH-06": "done_partial_E0_certs_no_imported_promotion",
     "WO-RH-07": "done_dedicated_runner",
     "WO-RH-08": "unblocked_pending_degree3_implementation",
+    "WO-RH-09": "quarantined_pending_WO-RH-17",
+    "WO-RH-10": "quarantined_pending_WO-RH-17",
+    "WO-RH-11": "quarantined_pending_WO-RH-17",
+    "WO-RH-12": "quarantined_pending_WO-RH-17",
+    "WO-RH-13": "quarantined_pending_WO-RH-17",
+    "WO-RH-14": "quarantined_pending_WO-RH-17",
+    "WO-RH-15": "quarantined_pending_WO-RH-17",
+    "WO-RH-16": "done_pir_export_partial",
+    "WO-RH-17": "done_normalization_adjudicated",
+    "WO-RH-18": "done_four_way_crosscheck"
+  },
+  "pre_quarantine_orders": {
+    "WO-RH-05": "done_E1_uniform_true_weil_gram",
     "WO-RH-09": "partial_absolute_G00_regenerated_pending_full_cell_cover",
     "WO-RH-10": "partial_assembly_pending_tail_bound",
     "WO-RH-11": "partial_pole_wired_pending_tight_tail",
     "WO-RH-12": "done_true_weil_gram_with_pole_and_quad_bound",
     "WO-RH-13": "done_E1_T84_points",
     "WO-RH-14": "done_analytic_jets",
-    "WO-RH-15": "done_E1_uniform_true_weil_gram",
-    "WO-RH-16": "done_pir_export_partial"
+    "WO-RH-15": "done_E1_uniform_true_weil_gram"
   },
+  "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
   "notes": [
     "E3 energy probe quarantined as fourier_energy_probe",
     "No RH proof claim",
-    "Even pole outer-product (sqrt(3)/2)(v+v+^T+v-v-^T) wired",
+    "Even pole outer-product (sqrt(3)/2) REJECTED by WO-RH-17: it equals the explicit-formula pole times (sqrt(3)/2)cosh(L/2), a calibration fitted at L=log3",
+    "Adopted pole: G0_ij = E_i^+E_j^- + E_i^-E_j^+ (see docs/NORMALIZATION_ADJUDICATION_v0.1.md)",
+    "WO-RH-05/09..15 quarantined pending regeneration under WO-RH-19/20",
     "Uniform T=84 uses regenerated monotone E2' > 0 (not notebook split)",
-    "E1 filename prefixes may hold non-E1 status until gates close"
+    "E1 filename prefixes may hold non-E1 status until gates close",
+    "Even pole outer-product (sqrt(3)/2) REJECTED by WO-RH-17: it is the explicit-formula pole times (sqrt(3)/2)cosh(L/2), a calibration fitted at L=log3"
   ],
-  "generated_utc": "2026-08-16T03:01:05Z",
-  "content_hash": "54bf2de523d86742ec6b2186f8f02e97b749af1dfe78ff40f05dbf5ef696c200"
+  "generated_utc": "2026-08-24T01:33:50Z",
+  "content_hash": "6e2c88faff6a3349d0142771b75ce13ee8ca0692e29fcc50d09afb5e1f3e53e3"
 }

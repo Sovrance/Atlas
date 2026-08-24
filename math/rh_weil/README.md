@@ -21,9 +21,38 @@ Current certified/research cell: `L in [log(3), log(4)]`.
 
 Imported notebook claims are intentionally marked `IMPORTED_PENDING_REGENERATION` until an Atlas agent reproduces them from the code in this repository. Do not promote them merely because they appeared in the prior notebook transcript.
 
+## Normalization is frozen (WO-RH-17, P0)
+
+The pole block is **adjudicated**. The adopted form is derived from the explicit
+formula,
+
+`G0_ij = Fhat_ij(i/2) + Fhat_ij(-i/2) = E_i^+ E_j^- + E_i^- E_j^+`,  `E_i^± = ∫_0^L h_i(x) e^{±x/2} dx`,
+
+and the legacy even block `(√3/2)(v₊v₊ᵀ+v₋v₋ᵀ)` is **rejected**: it equals the
+adopted pole times `(√3/2)cosh(L/2)`, a factor that is 1 only at `L = log 3` — a
+calibration fitted at one test point (+8.25 % at `L = log 4`). The odd pivot
+`−8A²` was already correct and is unchanged.
+
+See [`docs/NORMALIZATION_ADJUDICATION_v0.1.md`](docs/NORMALIZATION_ADJUDICATION_v0.1.md),
+`certificates/normalization_adjudication.json` and
+`certificates/normalization_crosscheck.json` (four independent providers).
+
+Certificates that depended on the rejected block are
+`QUARANTINED_NORMALIZATION_ADJUDICATION` — preserved, not deleted, not relabelled —
+and the PIR bridge refuses to promote them. They must be **regenerated** under the
+frozen normalization (WO-RH-19/20), never reinterpreted.
+
+```bash
+python3 scripts/derive_normalization.py           # derivation + adjudication certificate
+python3 scripts/run_normalization_crosscheck.py   # four-way cross-check (--no-arch to skip the slow route)
+python3 scripts/quarantine_normalization.py       # idempotent quarantine
+```
+
 ## Current priority
 
-Reproduce the fully direct Fourier-side uniform degree-2 certificate at `T=84` by interval coverage of the centered-even determinant, then proceed to the midpoint-odd degree-3 block.
+Regenerate the E1 chain under the frozen normalization (WO-RH-19), then the direct
+Fourier-side uniform degree-2 certificate at `T=84` (WO-RH-20), then the
+midpoint-odd degree-3 block (WO-RH-27, gated on P0/P1).
 
 **Executed in-repo so far (see `certificates/work_order_status.json`):**
 - WO-RH-01/03/04 — exact identities, f1 audit, bubble block (E0)

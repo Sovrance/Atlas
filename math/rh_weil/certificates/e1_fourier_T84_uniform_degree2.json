@@ -4,7 +4,7 @@
   "work_order": "WO-RH-15",
   "evidence_class": "E1",
   "status": "E1_UNIFORM_TRUE_WEIL_GRAM",
-  "hard_constraints_certified": true,
+  "hard_constraints_certified": false,
   "rh_proof_claim": false,
   "normalization": "G = G0 - Gp + Ginf",
   "cutoff_T": 84,
@@ -91,5 +91,20 @@
   ],
   "note": "rh_proof_claim remains false. E1 here is finite-block T=84 positivity only.",
   "generated_utc": "2026-08-16T03:00:47Z",
-  "content_hash": "cc0d02a92d1a91f8cf04e1df8387d840cf52c3d298a6b0eeee3035f629bc8d16"
+  "content_hash": "eefad58b3c365a2a647747fb79ac7329d6beec6039029f4792f8c519517ecbf2",
+  "quarantine": {
+    "reason": "Depends on the even pole block under adjudication (WO-RH-17). The repository block (sqrt(3)/2)(v+v+^T+v-v-^T) equals the explicit-formula pole times (sqrt(3)/2)cosh(L/2), which is 1 only at L = log 3; values at any other L carry that factor. Regenerate under the frozen normalization (WO-RH-19/20) before any promotion.",
+    "work_order": "WO-RH-17",
+    "adjudication_certificate": "normalization_adjudication.json",
+    "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+    "prior_state": {
+      "hard_constraints_certified": true,
+      "status": "E1_UNIFORM_TRUE_WEIL_GRAM"
+    },
+    "pre_quarantine_content_hash": "cc0d02a92d1a91f8cf04e1df8387d840cf52c3d298a6b0eeee3035f629bc8d16",
+    "evidence_class_preserved": "E1",
+    "note": "not relabelled E3 on purpose; the historical claim is preserved as evidence",
+    "numerically_unaffected_at": "L = log 3 (the calibration fixed point) \u2014 still not promotable until regenerated"
+  },
+  "promotion_state": "QUARANTINED_NORMALIZATION_ADJUDICATION"
 }

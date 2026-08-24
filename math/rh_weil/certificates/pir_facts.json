@@ -3,10 +3,38 @@
   "program": "RH/Weil PIR export",
   "work_order": "WO-RH-16",
   "rh_proof_claim": false,
-  "n_facts": 4,
+  "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "n_facts": 6,
+  "refused_promotions": [
+    {
+      "certificate_file": "e1_degree1_log3_log4.json",
+      "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
+      "evidence_class_declared": "E3"
+    },
+    {
+      "certificate_file": "e1_degree2_compact_log3_log4.json",
+      "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
+      "evidence_class_declared": "E3"
+    },
+    {
+      "certificate_file": "e1_fourier_T84_points.json",
+      "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
+      "evidence_class_declared": "E1"
+    },
+    {
+      "certificate_file": "e1_fourier_T84_uniform_degree2.json",
+      "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
+      "evidence_class_declared": "E1"
+    },
+    {
+      "certificate_file": "e1_scalar_log3_log4.json",
+      "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
+      "evidence_class_declared": "E1_SAMPLES_PLUS_E0_CURVATURE"
+    }
+  ],
   "facts": [
     {
-      "fact_id": "fct_sha256_4b19669392ee2c15",
+      "fact_id": "fct_sha256_90a0f2b0d641bb74",
       "pir_level": "L2",
       "evidence_level": "E0",
       "analyzer": {
@@ -24,12 +52,13 @@
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",
-        "asm:domain:L_in_[log3,log4]"
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
       ],
       "warnings": []
     },
     {
-      "fact_id": "fct_sha256_8fcb3c7604f85acd",
+      "fact_id": "fct_sha256_4eb71900226c07e1",
       "pir_level": "L2",
       "evidence_level": "E0",
       "analyzer": {
@@ -47,12 +76,66 @@
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",
-        "asm:domain:L_in_[log3,log4]"
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
       ],
       "warnings": []
     },
     {
-      "fact_id": "fct_sha256_5580448de6815947",
+      "fact_id": "fct_sha256_763c0fcdc26d18bd",
+      "pir_level": "L2",
+      "evidence_level": "E0",
+      "analyzer": {
+        "id": "rh_weil.normalization_adjudication",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "normalization_adjudication.json",
+        "program": "RH/Weil normalization adjudication",
+        "status": "ADJUDICATED",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E0"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": []
+    },
+    {
+      "fact_id": "fct_sha256_86e7e644146c0bed",
+      "pir_level": "L2",
+      "evidence_level": "E2",
+      "analyzer": {
+        "id": "rh_weil.normalization_crosscheck",
+        "version": "0.2.0",
+        "tag": "HEURISTIC"
+      },
+      "content": {
+        "certificate_file": "normalization_crosscheck.json",
+        "program": "RH/Weil normalization cross-check",
+        "status": "AGREE",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E2_numeric_crosscheck"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "normalization_crosscheck.json",
+          "message": "numeric four-way cross-check; only interval_certified rows may support E1"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_15a850434b9a9676",
       "pir_level": "L2",
       "evidence_level": "E3",
       "analyzer": {
@@ -70,7 +153,8 @@
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",
-        "asm:domain:L_in_[log3,log4]"
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
       ],
       "warnings": [
         {
@@ -80,7 +164,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_0540bad5027d01ff",
+      "fact_id": "fct_sha256_4ba06d233e37f79f",
       "pir_level": "L2",
       "evidence_level": "E3",
       "analyzer": {
@@ -98,7 +182,8 @@
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",
-        "asm:domain:L_in_[log3,log4]"
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
       ],
       "warnings": [
         {
