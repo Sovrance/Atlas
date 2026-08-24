@@ -71,12 +71,23 @@ def basis_parity(name: str) -> str:
 # Carrier helpers                                                              #
 # --------------------------------------------------------------------------- #
 def _mag(z: Any) -> float:
-    """|z| as a float, for branch selection only (never for a returned value)."""
-    try:
-        return abs(float(abs(z)))
-    except (TypeError, ValueError):  # pragma: no cover - exotic carriers
-        m = abs(z)
-        return abs(float(m.mid())) + abs(float(m.rad())) if hasattr(m, "mid") else float(m)
+    """An **upper bound** on |z| as a float.
+
+    This must over-estimate, never under-estimate: it both selects the branch in
+    ``monomial_exp_integral`` and scales that branch's remainder ball. On a ball
+    carrier ``float(abs(z))`` returns the *midpoint* of ``|z|``, which for a wide
+    ball is far below its supremum -- e.g. 0.5 for a ball spanning ``[0, 1.5]``.
+    Using that to size a ``|z|^24`` remainder would understate it by orders of
+    magnitude. Harmless for the pole itself, where ``a = ±1/2`` and ``z = ±L/2``
+    is never near 0, but the archimedean transforms evaluate this with ``a = it``
+    on balls that straddle the origin.
+    """
+    m = abs(z)
+    if hasattr(m, "upper"):  # flint arb (acb.__abs__ also returns arb)
+        return float(m.upper())
+    if hasattr(m, "mid"):  # pragma: no cover - ball carrier without .upper()
+        return abs(float(m.mid())) + abs(float(m.rad()))
+    return abs(float(m))
 
 
 def _exp(z: Any) -> Any:
@@ -92,7 +103,19 @@ def _exp(z: Any) -> Any:
 
 
 def _ball(carrier: Any, radius: float) -> Any:
-    """A symmetric ``[-radius, radius]`` ball on ``carrier``'s type, or 0.0."""
+    """A symmetric ball of the given radius on ``carrier``'s type.
+
+    The two-argument constructors differ and getting them confused is silent:
+    ``arb(mid, rad)`` builds a ball, but ``acb(re, im)`` builds a *rectangular*
+    complex number, so ``acb(0, r)`` is ``r*i`` -- a purely imaginary offset that
+    does not enclose a real remainder at all. A complex remainder therefore needs
+    ``acb(arb(0, r), arb(0, r))``, a box containing the disc of radius ``r``.
+    """
+    if hasattr(carrier, "real") and hasattr(carrier, "imag") and hasattr(carrier, "mid"):
+        # flint acb: build the ball on each component.
+        from flint import arb as _arb
+
+        return type(carrier)(_arb(0, radius), _arb(0, radius))
     if hasattr(carrier, "mid"):  # flint arb
         return type(carrier)(0, radius)
     return 0 * carrier  # exact carriers: the series is truncated exactly below

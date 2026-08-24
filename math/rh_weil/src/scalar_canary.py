@@ -64,6 +64,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import pole
 from interval_backend import backend_info, require_flint, set_precision_bits
+from rigorous_integration import panel_schedule, rigorous_panel_integral
 
 CELL_LABEL = ("log(3)", "log(4)")
 CLAIM_SCOPE = "finite_dimensional_weil_compression"
@@ -149,20 +150,20 @@ def prime_term(L, arb, prime_powers: Optional[Sequence[Tuple[int, int]]] = None)
     return total
 
 
-#: Panel edges for the archimedean quadrature. ``acb.integral`` over the whole
-#: range at once exhausts its evaluation budget and returns a non-finite ball;
-#: integrating decade panels converges every time and yields per-panel
-#: subdivision statistics for the certificate.
-def integration_panels(T: int) -> List[Tuple[float, float]]:
-    edges = [0.0, 10.0, 100.0, 1_000.0, 10_000.0, 100_000.0, float(T)]
-    return [(lo, hi) for lo, hi in zip(edges, edges[1:]) if hi > lo]
-
-
-def arch_term_truncated(L, T, arb, acb, *, options: Optional[Dict[str, Any]] = None):
+def arch_term_truncated(L, T, arb, acb, *, options: Optional[Dict[str, Any]] = None,
+                        panels=None):
     """``(1/pi) int_0^T h_+(t)(2-2cos(Lt))/t^2 dt`` as a rigorous Arb enclosure.
 
-    Returns ``(value, panel_rows)``; ``panel_rows`` records each panel's radius so
-    the certificate can show where the enclosure width comes from.
+    Delegates to the canonical panel integrator (ENG-005 §2). This module used to
+    carry its own decade-edge schedule, which had a coverage bug: for any ``T``
+    that did not exceed its last hard-coded edge it integrated *past* ``T`` --
+    e.g. ``T = 20000`` was integrated over ``[0, 100000]``. The shipped canary
+    used ``T = 200000``, where the schedule happened to be exact, so the ENG-004
+    certificate was unaffected; but nothing had checked that. The canonical
+    integrator validates that the schedule covers ``[0, T]`` exactly and refuses
+    otherwise.
+
+    Returns ``(value, quadrature_record)``.
     """
     log_pi = arb.pi().log()
     L_a = arb(L) if not hasattr(L, "mid") else L
@@ -171,15 +172,9 @@ def arch_term_truncated(L, T, arb, acb, *, options: Optional[Dict[str, Any]] = N
     def integrand(z, _analytic):
         return _h_plus_analytic(z, arb, acb, log_pi) * (L_c**2) * _phi(L_c * z, acb)
 
-    total = acb(0)
-    rows = []
-    for lo, hi in integration_panels(T):
-        piece = acb.integral(integrand, lo, hi, **(options or {}))
-        if not piece.is_finite():
-            raise ValueError(f"archimedean quadrature failed to converge on [{lo},{hi}]")
-        total += piece
-        rows.append({"lo": lo, "hi": hi, "radius": float(piece.real.rad())})
-    return total.real / arb.pi(), rows
+    total, record = rigorous_panel_integral(integrand, T, acb, panels=panels,
+                                            options=options)
+    return total.real / arb.pi(), record
 
 
 # --------------------------------------------------------------------------- #
@@ -190,6 +185,13 @@ def h_plus_at(t, arb, acb):
     return acb(arb("0.25"), arb(t) / 2).digamma().real - arb.pi().log()
 
 
+#: The bound ``t h_+'(t) <= 1`` looks natural and is **false**. Kept as a named
+#: constant so the regression test can assert it is rejected rather than quietly
+#: re-adopted (ENG-005 §3).
+INVALID_TAIL_ASSUMPTION = "t * h_+'(t) <= 1 for t >= 2"
+INVALID_NEAR_T = 2.0
+
+
 def lemma_A_constant(T: float) -> float:
     """``kappa(T)`` with ``t h_+'(t) <= kappa(T)`` for all ``t >= T`` (Lemma A').
 
@@ -198,33 +200,48 @@ def lemma_A_constant(T: float) -> float:
     ``f(a) = a/(a^2+c^2)^2`` is unimodal with peak ``f(c/sqrt 3) = 9/(16 sqrt3 c^3)``,
     so sampling at spacing 1 gives
 
-        sum_{n>=0} f(a_n) <= int_0^inf f + max f = 1/(2c^2) + 9/(16 sqrt3 c^3).
+        sum_{n>=0} f(a_n) <= int_0^inf f + max f = 1/(2c^2) + 9/(16 sqrt3 c^3),
 
-    Hence ``t h_+'(t) <= (t^2/2)(2/t^2 + 2.59808/t^3) = 1 + 1.29904/t``. The bound
-    tends to 1 from above, which is why a *cover* of ``polygamma`` balls cannot
-    establish ``t h_+' <= 1``: that sharper statement is not what the tail needs.
+    hence ``t h_+'(t) <= (t^2/2)(2/t^2 + 2.59808/t^3) = 1 + 1.29904/t``, and on
+    ``[T, inf)`` that is at most ``1 + 1.3/T``.
+
+    The domain matters. The bound tends to 1 **from above**, and the tempting
+    ``t h_+' <= 1`` is false near the low end: numerically ``t h_+'(2) = 1.0601``.
+    ENG-005 §3 requires the constant be carried with a derivation covering the
+    exact tail domain, which is why ``kappa`` depends on ``T`` rather than being
+    replaced by 1. :func:`invalid_assumption_is_rejected` regression-guards it.
     """
+    if T <= 0:
+        raise ValueError(f"tail domain must start at T > 0, got {T!r}")
     return 1.0 + 1.3 / float(T)
 
 
-def lemma_A_numeric_check(arb, ts=(2.0, 10.0, 1e3, 1e5, 2e5), terms: int = 4000):
-    """Corroborate Lemma A' by summing the positive series directly."""
-    rows = []
-    for t in ts:
-        t_a = arb(t)
-        c = t_a / 2
-        total = arb(0)
-        for n in range(terms):
-            a = arb(n) + arb("0.25")
-            total += a / ((a * a + c * c) ** 2)
-        # Truncation tail of a positive decreasing-in-n series: <= int_{N}^inf.
-        aN = arb(terms) + arb("0.25")
-        total += arb(0, float((1 / (2 * (aN * aN + c * c))).upper()))
-        t_hp = (t_a * t_a / 2) * total
-        rows.append({"t": t, "t_h_plus_prime_upper": float(t_hp.upper()),
-                     "kappa_bound": lemma_A_constant(t),
-                     "holds": float(t_hp.upper()) <= lemma_A_constant(t)})
-    return all(r["holds"] for r in rows), rows
+def invalid_assumption_is_rejected(arb, at: float = INVALID_NEAR_T,
+                                   terms: int = 20000) -> Dict[str, Any]:
+    """Demonstrate that ``t h_+'(t) <= 1`` fails near ``t = 2`` (ENG-005 §3).
+
+    Computes ``t h_+'(t)`` from the positive series with a rigorous truncation
+    ball, and reports that it exceeds 1 while remaining under ``kappa(t)``.
+    """
+    t_a = arb(repr(at))
+    c = t_a / 2
+    total = arb(0)
+    for n in range(terms):
+        a = arb(n) + arb("0.25")
+        total += a / ((a * a + c * c) ** 2)
+    aN = arb(terms) + arb("0.25")
+    total += arb(0, float((1 / (2 * (aN * aN + c * c))).upper()))
+    value = (t_a * t_a / 2) * total
+    lo, hi = float(value.lower()), float(value.upper())
+    return {
+        "assumption": INVALID_TAIL_ASSUMPTION,
+        "t": at,
+        "t_h_plus_prime_enclosure": [repr(lo), repr(hi)],
+        "exceeds_one": lo > 1.0,
+        "kappa_at_t": lemma_A_constant(at),
+        "within_kappa": hi <= lemma_A_constant(at),
+        "verdict": "REJECTED" if lo > 1.0 else "NOT_REJECTED",
+    }
 
 
 def tail_bound(T, arb, acb):
@@ -371,8 +388,8 @@ def certify_scalar_canary(
     panel_radius_max = 0.0
     for L in pts:
         L_a = arb(L)
-        arch, rows = arch_term_truncated(L_a, T, arb, acb, options=integral_options)
-        panel_radius_max = max([panel_radius_max] + [r["radius"] for r in rows])
+        arch, qrecord = arch_term_truncated(L_a, T, arb, acb, options=integral_options)
+        panel_radius_max = max(panel_radius_max, qrecord["max_panel_radius"])
         g = pole_term(L_a) - prime_term(L_a, arb, primes) + arch
         # The discarded tail is non-negative, so ``g`` already lower-bounds G00.
         gridpoints.append(
@@ -436,7 +453,8 @@ def certify_scalar_canary(
         stats={
             "grid_points": len(gridpoints),
             "tangent_certificates": len(tangent_bounds),
-            "quadrature_panels_per_point": len(integration_panels(T)),
+            "quadrature": qrecord,
+            "quadrature_panels_per_point": qrecord["n_panels"],
             "quadrature_panel_radius_max": panel_radius_max,
             "prime_powers_in_cell": [q for q, _ in primes],
             "observed_min_lower_on_grid": observed_min,
