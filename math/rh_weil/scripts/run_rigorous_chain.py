@@ -360,6 +360,12 @@ def main() -> int:
     if _run("ENG-005 recovery tests",
             [sys.executable, str(ROOT / "tests" / "test_eng005_recovery.py")]):
         return 1
+    if _run("ENG-006 degree-3 certificate semantics",
+            [sys.executable, str(ROOT / "tests" / "test_degree3_certificates.py")]):
+        return 1
+    if _run("ENG-006 information comparison report (§10)",
+            [sys.executable, str(ROOT / "scripts" / "report_information_comparison.py")]):
+        return 1
 
     print("\nrigorous chain: OK")
     return 0
