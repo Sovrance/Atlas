@@ -42,9 +42,21 @@ BASIS_NAMES: Tuple[str, ...] = ("one", "q1", "b")
 #: Parity about the cell midpoint x = L/2. Drives ``E^- = ± e^{-L/2} E^+``.
 BASIS_PARITY: Dict[str, str] = {"one": "even", "q1": "odd", "b": "even"}
 
-# Below this |a*L| the endpoint closed form cancels catastrophically and the
-# series branch (with a rigorously bounded remainder) is used instead.
-_SERIES_CUTOFF = 1.0 / 1024.0
+# Below this |a*L| the endpoint closed form cancels and the series branch (with a
+# rigorously bounded remainder) is used instead.
+#
+# This was 1/1024, which is far too conservative once ``a`` is complex. The
+# endpoint form carries terms ~1/a^{k+1}: for the bubble basis (n = 2) that is
+# 1/(iz)^3, which at |z| ~ 1e-3 is ~1e9 while the answer is O(L^3). With an exact
+# L the cancellation is harmless at working precision, but on an L-**ball** each
+# term's width is amplified by that same 1e9 factor and the enclosure explodes --
+# measured widths of 4e3 for a Gbb entry whose true value is 3.5e-4.
+#
+# The series has no cancellation at all and its remainder bound
+# |z|^M e^{|z|}/(M!(n+M+1)) is valid for |z| <= 1 (M = 24 gives ~6e-27 there), so
+# the cutoff belongs at 1, not 1/1024. Above it the endpoint form's worst term is
+# 1/|a|^{n+1} <= 1, which is benign.
+_SERIES_CUTOFF = 1.0
 _SERIES_TERMS = 24
 
 
@@ -71,12 +83,23 @@ def basis_parity(name: str) -> str:
 # Carrier helpers                                                              #
 # --------------------------------------------------------------------------- #
 def _mag(z: Any) -> float:
-    """|z| as a float, for branch selection only (never for a returned value)."""
-    try:
-        return abs(float(abs(z)))
-    except (TypeError, ValueError):  # pragma: no cover - exotic carriers
-        m = abs(z)
-        return abs(float(m.mid())) + abs(float(m.rad())) if hasattr(m, "mid") else float(m)
+    """An **upper bound** on |z| as a float.
+
+    This must over-estimate, never under-estimate: it both selects the branch in
+    ``monomial_exp_integral`` and scales that branch's remainder ball. On a ball
+    carrier ``float(abs(z))`` returns the *midpoint* of ``|z|``, which for a wide
+    ball is far below its supremum -- e.g. 0.5 for a ball spanning ``[0, 1.5]``.
+    Using that to size a ``|z|^24`` remainder would understate it by orders of
+    magnitude. Harmless for the pole itself, where ``a = ±1/2`` and ``z = ±L/2``
+    is never near 0, but the archimedean transforms evaluate this with ``a = it``
+    on balls that straddle the origin.
+    """
+    m = abs(z)
+    if hasattr(m, "upper"):  # flint arb (acb.__abs__ also returns arb)
+        return float(m.upper())
+    if hasattr(m, "mid"):  # pragma: no cover - ball carrier without .upper()
+        return abs(float(m.mid())) + abs(float(m.rad()))
+    return abs(float(m))
 
 
 def _exp(z: Any) -> Any:
@@ -92,7 +115,19 @@ def _exp(z: Any) -> Any:
 
 
 def _ball(carrier: Any, radius: float) -> Any:
-    """A symmetric ``[-radius, radius]`` ball on ``carrier``'s type, or 0.0."""
+    """A symmetric ball of the given radius on ``carrier``'s type.
+
+    The two-argument constructors differ and getting them confused is silent:
+    ``arb(mid, rad)`` builds a ball, but ``acb(re, im)`` builds a *rectangular*
+    complex number, so ``acb(0, r)`` is ``r*i`` -- a purely imaginary offset that
+    does not enclose a real remainder at all. A complex remainder therefore needs
+    ``acb(arb(0, r), arb(0, r))``, a box containing the disc of radius ``r``.
+    """
+    if hasattr(carrier, "real") and hasattr(carrier, "imag") and hasattr(carrier, "mid"):
+        # flint acb: build the ball on each component.
+        from flint import arb as _arb
+
+        return type(carrier)(_arb(0, radius), _arb(0, radius))
     if hasattr(carrier, "mid"):  # flint arb
         return type(carrier)(0, radius)
     return 0 * carrier  # exact carriers: the series is truncated exactly below
@@ -298,3 +333,58 @@ def pole_gram_entry_dL(
     dip, dim = _laplace_dL(basis_i, L, 1), _laplace_dL(basis_i, L, -1)
     djp, djm = _laplace_dL(basis_j, L, 1), _laplace_dL(basis_j, L, -1)
     return dip * ejm + eip * djm + dim * ejp + eim * djp
+
+
+# --------------------------------------------------------------------------- #
+# Second L-derivative of the pole block                                        #
+# --------------------------------------------------------------------------- #
+# Differentiating E^±(L) = int_0^L h_i(x;L) e^{±x/2} dx twice. Every basis
+# element is *linear* in L, so d^2_L h_i = 0 and the second integral drops:
+#
+#   d^2_L E^± = (d/dL)[h_i(L;L)] e^{±L/2} + h_i(L;L)(±1/2)e^{±L/2}
+#               + (d_L h_i)(L;L) e^{±L/2},
+#
+# with (d/dL)[h_i(L;L)] = (d_x h_i + d_L h_i)(L;L). Per element:
+#
+#   one : h=1,      h(L;L)=1,   d/dL[h(L;L)]=0,   d_L h(L;L)=0    -> ±(1/2)e^{±L/2}
+#   q1  : h=x-L/2,  h(L;L)=L/2, d/dL[h(L;L)]=1/2, d_L h(L;L)=-1/2 -> ±(L/4)e^{±L/2}
+#   b   : h=x(L-x), h(L;L)=0,   d/dL[h(L;L)]=0,   d_L h(L;L)=L    -> L e^{±L/2}
+#
+# Cross-checked against the closed forms: E_b^+ = 4[(L-4)e^{L/2}+L+4] differentiates
+# twice to L e^{L/2}, matching.
+def _laplace_d2L(name: str, L: Any, sign: int) -> Any:
+    e = _exp(_half(L) * sign * L)
+    if name == "one":
+        return sign * e / 2
+    if name == "q1":
+        return sign * L * e / 4
+    if name == "b":
+        return L * e
+    raise KeyError(f"unknown basis element {name!r}")
+
+
+def laplace_plus_d2L(basis: str, L: Any, backend: str | None = None) -> Any:
+    """``d^2/dL^2 E_basis^+``."""
+    _require_interval(L, backend)
+    return _laplace_d2L(basis, L, 1)
+
+
+def laplace_minus_d2L(basis: str, L: Any, backend: str | None = None) -> Any:
+    """``d^2/dL^2 E_basis^-``."""
+    _require_interval(L, backend)
+    return _laplace_d2L(basis, L, -1)
+
+
+def pole_gram_entry_d2L(
+    basis_i: str, basis_j: str, L: Any, backend: str | None = None
+) -> Any:
+    """``d^2/dL^2 (E_i^+ E_j^- + E_i^- E_j^+)`` -- Candidate A, twice differentiated."""
+    _require_interval(L, backend)
+    ip, im = laplace_plus(basis_i, L), laplace_minus(basis_i, L)
+    jp, jm = laplace_plus(basis_j, L), laplace_minus(basis_j, L)
+    dip, dim = _laplace_dL(basis_i, L, 1), _laplace_dL(basis_i, L, -1)
+    djp, djm = _laplace_dL(basis_j, L, 1), _laplace_dL(basis_j, L, -1)
+    d2ip, d2im = _laplace_d2L(basis_i, L, 1), _laplace_d2L(basis_i, L, -1)
+    d2jp, d2jm = _laplace_d2L(basis_j, L, 1), _laplace_d2L(basis_j, L, -1)
+    return (d2ip * jm + 2 * dip * djm + ip * d2jm
+            + d2im * jp + 2 * dim * djp + im * d2jp)

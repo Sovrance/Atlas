@@ -88,6 +88,67 @@ python3 scripts/quarantine_normalization.py       # idempotent quarantine
 python3 scripts/run_rigorous_scalar.py            # the rigorous scalar path, in order
 ```
 
+## Core E1 recovery (ATLAS-RH-ENG-005)
+
+ENG-004 recovered the scalar cell. ENG-005 recovers the rest of the Candidate-A
+chain and rebuilds the T=84 topology from scratch.
+
+**Degree-1 and compact degree-2** are cutoff-free — no frequency truncation to
+bound away — because the archimedean term now has an exact real-space form:
+
+`Ginf_ij(L) = (K(0)/2)h₊(0) + ∫₀^L [K(0)−K(u)]·w(u)du + K(0)·S(L)`
+
+with `w(u) = e^{−u/2}/(1−e^{−2u})` and `S(L) = Σₙ e^{−(2n+1/2)L}/(2n+1/2)`, using
+the same `K_ij` as the prime block. This matters because the frequency-space
+definition is an oscillatory half-line integral: fine at a point, useless on an
+`L`-interval, which is why ENG-004 had to reach for convexity. The real-space form
+has no oscillation, so ordinary interval subdivision works — and it is ~1000×
+faster. The two routes agree exactly on the fast-decaying entries and differ on
+the slow-decaying ones by precisely the expected truncation tail, so each
+cross-checks the other.
+
+The naive interchange gives `−∫₀^L K(u)w(u)du`, which diverges; the constant part
+of `h₊` contributes a delta at the origin that the naive swap drops. Keeping it
+produces the `K(0)−K(u)` numerator, which vanishes linearly and cancels the `1/u`.
+
+**T=84** is a different object, not an approximation of these: its archimedean
+term stops at `T = 84` by definition, so the frequency route *is* the definition
+there. Its topology was rescanned fresh under Candidate A — the rejected
+Candidate-B monotonicity topology is not reused, and the superseded scan is kept
+under `certificates/history/` as provenance.
+
+All `L`-derivatives are **exact support-length jets**, never finite differences:
+`d_L^n H₀ = (it)^{n−1}e^{itL}`, `d_L Hb = ∫₀^L x e^{itx}dx`, `d_L² Hb = L e^{itL}`,
+with binomial convolution for the Gram entries. Finite differences appear only as
+a *check* on those jets — and earned their place: they caught a `d²/dL²(L³/6)`
+coefficient written as `L/2` instead of `L`, which threw `d²O1` off by 0.70.
+
+Uniform bounds come from one shared adaptive interval cover
+(`src/interval_cover.py`), which assumes no topology at all — §8 forbids
+precommitting to convexity or monotonicity, so each certificate records the
+topology it actually established.
+
+At `T = 84` a second, independent warrant sits alongside that cover: instead of
+merely bounding `E2`, it **locates the minimiser**. Certified bisection on
+`sign(E2')` pins `L*` to a nine-digit interval; `E2'' > 0` on a window around it
+makes `L*` the unique critical point there and a strict minimum; an interval
+cover of that short window bounds `E2` almost as tightly as a point evaluation;
+and certified derivative signs (`E2' < 0` to the left, `E2' > 0` through a band
+to the right) show nothing outside the window can be lower. The headline bound is
+the sharper of the two warrants, floored at what the plain cover alone proves, so
+the second warrant can only improve the number.
+
+The derivative argument governs a band, not the whole cell: the `E2''` enclosure
+on a box of radius `r` carries a ~`300 r` dependency blow-up that cannot be
+centred away (that would need an exact third jet, and a finite-difference one is
+forbidden in an E1 path), so past the band it is cheaper and no less rigorous to
+bound `E2` directly. Each certificate names the interval its warrant governs, and
+the intervals abut exactly.
+
+```bash
+python3 scripts/run_rigorous_chain.py      # the whole chain, in canonical order
+```
+
 ### Rigorous dependencies
 
 SymPy and python-flint are **required** for the rigorous/research path, not

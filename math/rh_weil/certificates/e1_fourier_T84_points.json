@@ -1,170 +1,160 @@
 {
-  "certificate_version": "0.3",
-  "program": "RH/Weil direct-Fourier T=84 point anchors",
-  "work_order": "WO-RH-13",
+  "certificate_version": "1.0",
+  "program": "RH/Weil direct-Fourier T=84 point entries \u2014 Candidate A",
+  "work_order": "ATLAS-RH-ENG-005 \u00a77",
   "evidence_class": "E1",
-  "status": "E1_POINTS_REGENERATED",
-  "hard_constraints_certified": false,
+  "rigorous": true,
+  "status": "PASS",
+  "hard_constraints_certified": true,
+  "promotion_state": "PROMOTED",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "claim_scope": "finite_dimensional_weil_compression",
   "rh_proof_claim": false,
-  "normalization": "G = G0 - Gp + Ginf",
-  "cutoff_T": 84,
-  "pole_even": "G0=(sqrt(3)/2)(v+ v+^T + v- v-^T), v\u00b1=(I0\u00b1,Ib\u00b1)",
-  "domain": {
-    "L_anchors": [
-      "log(3)",
-      "1.1059499883568553",
-      "log(4)"
-    ]
-  },
-  "backend": {
-    "name": "python-flint/Arb",
-    "version": "0.9.0",
-    "precision_bits": 192
-  },
-  "quadrature": {
-    "rule": "composite_trapezoid",
-    "n_quad": 65536,
-    "remainder": "|(b-a)h^2/12| max|f''| with enclosed M2 + M3 majorant"
-  },
+  "T": 84.0,
+  "pole_candidate": "A",
+  "point_scoped": true,
+  "claim": "At each listed L, the true finite Weil T=84 matrix has E2 > 0 and O1 > 0, certified by Arb interval balls.",
+  "points_selected_from": "the fresh Candidate-A topology scan (\u00a77)",
   "points": [
     {
-      "id": "log3",
-      "L": "log(3)",
-      "L_value": 1.0986122886681098,
-      "enclosure": {
-        "G00": {
-          "lower": 0.10718493017961159,
-          "upper": 0.10752847058287593,
-          "mid": 0.10735670038124376,
-          "rad": 0.00017177020163217094
-        },
-        "G0b": {
-          "lower": 0.0004264718723735559,
-          "upper": 0.0004971685454794415,
-          "mid": 0.0004618202089264987,
-          "rad": 3.534833655294278e-05
-        },
-        "Gbb": {
-          "lower": 2.6003898598091385e-05,
-          "upper": 4.2503658705627007e-05,
-          "mid": 3.4253778651859196e-05,
-          "rad": 8.24988005376781e-06
-        },
-        "E2": {
-          "lower": 2.537215320624563e-06,
-          "upper": 4.39097417193579e-06,
-          "mid": 3.4640947462801763e-06,
-          "rad": 9.268794256556134e-07
-        }
-      },
+      "label": "log3",
+      "L": "1.0986122886681098",
+      "G00": [
+        "0.10735670041459176",
+        "0.10735670041459176"
+      ],
+      "G0b": [
+        "0.0004618202087718097",
+        "0.0004618202087718097"
+      ],
+      "Gbb": [
+        "3.425377864635852e-05",
+        "3.425377864635852e-05"
+      ],
+      "O1": [
+        "0.0071407298683740916",
+        "0.0071407298683740916"
+      ],
+      "E2": [
+        "3.4640947469748144e-06",
+        "3.4640947469748144e-06"
+      ],
+      "E2_d1": "-9.998360935714394e-06",
       "E2_definitely_positive": true,
-      "notebook_regression_contained": {
-        "G00": true,
-        "G0b": true,
-        "Gbb": true,
-        "E2": true
-      },
-      "pole_scale": "sqrt(3)/2",
-      "n_quad": 65536
+      "O1_definitely_positive": true
     },
     {
-      "id": "interior",
-      "L": "1.1059499883568553",
-      "L_value": 1.1059499883568553,
-      "enclosure": {
-        "G00": {
-          "lower": 0.10722231678310425,
-          "upper": 0.10756994391349951,
-          "mid": 0.10739613034830188,
-          "rad": 0.00017381356519763358
-        },
-        "G0b": {
-          "lower": 0.0016845346587930578,
-          "upper": 0.0017568291080894084,
-          "mid": 0.001720681883441233,
-          "rad": 3.6147224648175325e-05
-        },
-        "Gbb": {
-          "lower": 0.0002208763366170716,
-          "upper": 0.00023785484197427295,
-          "mid": 0.00022936558929567227,
-          "rad": 8.489252678600678e-06
-        },
-        "E2": {
-          "lower": 2.0593472918656666e-05,
-          "upper": 2.2750988244163786e-05,
-          "mid": 2.1672230581410226e-05,
-          "rad": 1.07875766275356e-06
-        }
-      },
+      "label": "1.20",
+      "L": "1.2",
+      "G00": [
+        "0.05985364082351737",
+        "0.05985364082351737"
+      ],
+      "G0b": [
+        "0.0021073333152519212",
+        "0.0021073333152519212"
+      ],
+      "Gbb": [
+        "0.0002385856702298873",
+        "0.0002385856702298873"
+      ],
+      "O1": [
+        "0.02734172193606442",
+        "0.02734172193606442"
+      ],
+      "E2": [
+        "9.839367310007183e-06",
+        "9.839367310007183e-06"
+      ],
+      "E2_d1": "0.00011156247118512686",
       "E2_definitely_positive": true,
-      "notebook_regression_contained": {
-        "G00": false,
-        "G0b": false,
-        "Gbb": false,
-        "E2": false
-      },
-      "pole_scale": "sqrt(3)/2",
-      "n_quad": 65536
+      "O1_definitely_positive": true
     },
     {
-      "id": "log4",
-      "L": "log(4)",
-      "L_value": 1.3862943611198906,
-      "enclosure": {
-        "G00": {
-          "lower": 0.3992965777600038,
-          "upper": 0.3998239915511367,
-          "mid": 0.39956028465557025,
-          "rad": 0.000263706895566429
-        },
-        "G0b": {
-          "lower": 0.10416501131685948,
-          "upper": 0.10432744560562754,
-          "mid": 0.10424622846124351,
-          "rad": 8.121714438402705e-05
-        },
-        "Gbb": {
-          "lower": 0.0336628778030418,
-          "upper": 0.03371536930362442,
-          "mid": 0.03368912355333311,
-          "rad": 2.6245750291309378e-05
-        },
-        "E2": {
-          "lower": 0.00255724215517502,
-          "upper": 0.0026298771415703345,
-          "mid": 0.0025935596483726772,
-          "rad": 3.6317493197657313e-05
-        }
-      },
+      "label": "log4",
+      "L": "1.3862943611198906",
+      "G00": [
+        "0.06943326574384158",
+        "0.06943326574384158"
+      ],
+      "G0b": [
+        "-0.0006569688728559265",
+        "-0.0006569688728559265"
+      ],
+      "Gbb": [
+        "0.00035443666009611825",
+        "0.00035443666009611825"
+      ],
+      "O1": [
+        "0.028525046322788895",
+        "0.028525046322788895"
+      ],
+      "E2": [
+        "2.4178086709911842e-05",
+        "2.4178086709911842e-05"
+      ],
+      "E2_d1": "9.373486419721195e-05",
       "E2_definitely_positive": true,
-      "notebook_regression_contained": {
-        "G00": false,
-        "G0b": false,
-        "Gbb": false,
-        "E2": false
-      },
-      "pole_scale": "sqrt(3)/2",
-      "n_quad": 65536
+      "O1_definitely_positive": true
     }
   ],
-  "log3_notebook_regression_ok": true,
-  "note": "Regenerated rigorous enclosures from the true Weil Gram. Run-16 notebook numbers are regression-only; log3 matches the calibrated pole+Fourier assembly. Interior/log4 notebook floats may reflect an older probe and need not lie in the regenerated balls.",
-  "generated_utc": "2026-08-16T02:56:00Z",
-  "content_hash": "f266678f9ba4edd98a8f78937bf65986d99bb649dc42a990e4e01de640ceaa48",
-  "quarantine": {
-    "reason": "Depends on the even pole block under adjudication (WO-RH-17). The repository block (sqrt(3)/2)(v+v+^T+v-v-^T) equals the explicit-formula pole times (sqrt(3)/2)cosh(L/2), which is 1 only at L = log 3; values at any other L carry that factor. Regenerate under the frozen normalization (WO-RH-19/20) before any promotion.",
-    "work_order": "WO-RH-17",
-    "adjudication_certificate": "normalization_adjudication.json",
-    "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
-    "prior_state": {
-      "hard_constraints_certified": true,
-      "status": "E1_POINTS_REGENERATED"
-    },
-    "pre_quarantine_content_hash": "122bcf5f9df2489357b63a77a2dec3febd83f58ed4368fb51b67124f8454def0",
-    "evidence_class_preserved": "E1",
-    "note": "not relabelled E3 on purpose; the historical claim is preserved as evidence",
-    "numerically_unaffected_at": "L = log 3 (the calibration fixed point) \u2014 still not promotable until regenerated"
+  "quadrature": {
+    "panel_schedule": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        2.0
+      ],
+      [
+        2.0,
+        4.0
+      ],
+      [
+        4.0,
+        8.0
+      ],
+      [
+        8.0,
+        16.0
+      ],
+      [
+        16.0,
+        32.0
+      ],
+      [
+        32.0,
+        64.0
+      ],
+      [
+        64.0,
+        84.0
+      ]
+    ],
+    "method": "arb_acb_integral_panelled"
   },
-  "promotion_state": "QUARANTINED_NORMALIZATION_ADJUDICATION"
+  "dependencies": {
+    "source_hashes": {
+      "scripts/certify_t84_e1.py": "91167ad7d85008e10e40179e5c053c0e3b0cde9d7348efd44e5a754186410b88",
+      "src/e1_t84.py": "16a966a36d9da1fc1a07753525ac55bd63058d429bd48628dd4c35e36cea61b3",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "69ebe3e80b4600a780b657b2568090fe778ee683fc4ace5df41d514b514cb640",
+      "src/rigorous_integration.py": "17c49303df67f590d3543699cfa7735ba100ccdb3fdcce7fb32d41955a175ae2",
+      "src/t84.py": "7940e80bf737069f6c53bfcd6f3b48e837c2cfd45fcda2496aaa6117ac2df68f",
+      "src/weil_entries.py": "67fd54c3f0956fde310de321ecbc9d0c0b86fcd7323e86c204c0881963216e5f"
+    }
+  },
+  "precision_bits": 140,
+  "mpmath_used": false,
+  "quick_mode": false,
+  "quarantine_released": {
+    "by": "ATLAS-RH-ENG-005 \u00a77",
+    "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
+    "authorised_because": "rigorous Candidate-A T=84 regeneration passed"
+  },
+  "generated_utc": "2026-08-24T17:46:58Z",
+  "content_hash": "09bc5dabf976d1896e7ba80c2b26012f79ac5c1d9b52592204b8572ab5cf58de"
 }

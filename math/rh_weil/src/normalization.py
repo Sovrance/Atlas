@@ -254,6 +254,10 @@ QUARANTINE_REASON = (
 #: left alone (see ``scripts/quarantine_normalization.py``).
 RELEASED_CERTIFICATES: Dict[str, str] = {
     "e1_scalar_log3_log4.json": "ATLAS-RH-ENG-004 §4 scalar canary",
+    "e1_degree1_log3_log4.json": "ATLAS-RH-ENG-005 §4 degree-1 recovery",
+    "e1_degree2_compact_log3_log4.json": "ATLAS-RH-ENG-005 §5 compact degree-2 recovery",
+    "e1_fourier_T84_points.json": "ATLAS-RH-ENG-005 §7 T=84 point E1",
+    "e1_fourier_T84_uniform_degree2.json": "ATLAS-RH-ENG-005 §10 T=84 uniform E1",
 }
 
 

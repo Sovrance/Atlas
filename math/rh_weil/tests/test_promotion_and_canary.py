@@ -32,8 +32,15 @@ import promotion  # noqa: E402
 CERT_DIR = ROOT / "certificates"
 SCALAR = "e1_scalar_log3_log4.json"
 
-#: Disputed E1 artifacts that ENG-004 keeps quarantined (everything but SCALAR).
-STILL_QUARANTINED = tuple(c for c in N.QUARANTINED_CERTIFICATES if c != SCALAR)
+#: Every artifact the WO-RH-17 quarantine registry covers. A name stays here for
+#: good: ENG-004 released SCALAR and ENG-005 released the rest, but the legacy
+#: certifiers that produced the disputed versions still exist, so an unauthorised
+#: write to any of these must still fail closed at the write boundary.
+REGISTERED = tuple(N.QUARANTINED_CERTIFICATES)
+
+#: Registered but not yet released by any work order. Empty after ENG-005 — the
+#: tests below are written so that emptying it weakens nothing.
+NOT_YET_RELEASED = tuple(c for c in REGISTERED if c not in N.RELEASED_CERTIFICATES)
 
 
 def _load(name: str) -> dict:
@@ -138,7 +145,7 @@ class PromotionPredicate(unittest.TestCase):
 # --------------------------------------------------------------------------- #
 class QuarantinePersistence(unittest.TestCase):
     def test_repeated_writes_preserve_the_original_prior_state(self):
-        name = STILL_QUARANTINED[0]
+        name = REGISTERED[0]
         body = {"status": "ORIGINAL", "hard_constraints_certified": True}
         certificate_io._enforce_quarantine(name, body)
         first = copy.deepcopy(body["quarantine"]["prior_state"])
@@ -149,8 +156,13 @@ class QuarantinePersistence(unittest.TestCase):
         self.assertTrue(first["hard_constraints_certified"])
 
     def test_legacy_certifier_reruns_cannot_erase_quarantine(self):
-        """The pre-ENG-003 certify_*.py bodies claim E1; the writer overrides."""
-        for name in STILL_QUARANTINED:
+        """The pre-ENG-003 certify_*.py bodies claim E1; the writer overrides.
+
+        Runs over every registered name, released ones included: a release is
+        permission for one authorised regeneration, not standing immunity for
+        whatever writes that file next.
+        """
+        for name in REGISTERED:
             body = {"evidence_class": "E1", "status": "REGENERATED_BY_LEGACY_SCRIPT",
                     "hard_constraints_certified": True}
             certificate_io._enforce_quarantine(name, body)
@@ -158,12 +170,33 @@ class QuarantinePersistence(unittest.TestCase):
             self.assertFalse(body["hard_constraints_certified"], name)
             self.assertTrue(body["quarantine"]["prior_state"]["hard_constraints_certified"])
 
-    def test_downstream_e1_remains_quarantined_on_disk(self):
-        for name in STILL_QUARANTINED:
+    def test_registered_certificates_are_quarantined_or_explicitly_released(self):
+        """No registered artifact may reach PROMOTED without saying how.
+
+        ENG-005 released the downstream E1 set, so asserting they stay
+        quarantined would now assert the opposite of the work order. The guard
+        that survives is the one that mattered all along: a registered file is
+        either still carrying the marker, or it carries an explicit
+        ``quarantine_released`` block naming the work order that released it and
+        passes the promotion predicate on its own merits. Silently PROMOTED with
+        neither is the failure this catches.
+        """
+        for name in REGISTERED:
+            cert = _load(name)
+            if cert.get("promotion_state") == N.QUARANTINE_STATE:
+                self.assertFalse(cert.get("hard_constraints_certified"), name)
+                self.assertIsNotNone(promotion.promotion_refusal(cert), name)
+                continue
+            self.assertIn(name, N.RELEASED_CERTIFICATES,
+                          f"{name} left quarantine but no work order claims it")
+            self.assertIn("quarantine_released", cert,
+                          f"{name} is not quarantined and carries no release block")
+            self.assertIsNone(promotion.promotion_refusal(cert), name)
+
+    def test_certificates_not_yet_released_still_carry_the_marker(self):
+        for name in NOT_YET_RELEASED:
             cert = _load(name)
             self.assertEqual(cert.get("promotion_state"), N.QUARANTINE_STATE, name)
-            self.assertFalse(cert.get("hard_constraints_certified"), name)
-            self.assertIsNotNone(promotion.promotion_refusal(cert), name)
 
     def test_released_scalar_still_fails_closed_on_an_unauthorised_write(self):
         """Release is not permanent immunity.
@@ -186,12 +219,14 @@ class QuarantinePersistence(unittest.TestCase):
 
     def test_a_released_body_survives_the_quarantine_pass(self):
         """...but the authorised release is not undone on every runner pass."""
-        released = _load(SCALAR)
-        self.assertIn("quarantine_released", released)
-        self.assertIsNone(promotion.promotion_refusal(released))
-        self.assertIn(SCALAR, N.RELEASED_CERTIFICATES)
-        self.assertIn(SCALAR, N.QUARANTINED_CERTIFICATES,
-                      "must stay registered so unauthorised writes still fail closed")
+        for name, by in N.RELEASED_CERTIFICATES.items():
+            released = _load(name)
+            self.assertIn("quarantine_released", released, name)
+            self.assertIsNone(promotion.promotion_refusal(released), name)
+            self.assertIn(name, N.QUARANTINED_CERTIFICATES,
+                          "must stay registered so unauthorised writes still fail closed")
+            self.assertTrue(by.startswith("ATLAS-RH-ENG-"),
+                            f"{name}: release must name the work order, got {by!r}")
 
     def test_release_requires_the_explicit_flag(self):
         """Only ``allow_quarantine_change=True`` may lift a marker."""

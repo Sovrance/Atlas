@@ -61,8 +61,15 @@ def regenerate_certificates() -> None:
         "rows": fourier.scan_E2_probe(Ls, T=84, dps=25),
         "forms_implemented": ["H0", "Hb", "H0_L_jet", "Hb_L_jet"],
     }
+    # ENG-005 §6 owns ``e3_fourier_T84_scan.json``: that file is the fresh
+    # Candidate-A topology scan, built from exact jets under the adopted pole and
+    # read by the T=84 certifier to choose its starting bracket. This probe is the
+    # legacy mpmath one -- lower evidence, different shape, and Candidate-A only by
+    # accident of the L values it happens to sample. Writing it to that name would
+    # silently replace the scan the E1 stages depend on with weaker content, on
+    # every fast-path run. It gets its own name.
     certificate_io.write_certificate(
-        "e3_fourier_T84_scan.json",
+        "e3_fourier_T84_probe_mpmath.json",
         certificate_io.build_e3_fourier_scan_certificate(scan),
     )
     certificate_io.write_certificate(
@@ -99,6 +106,7 @@ def main() -> int:
         TESTS / "test_pole_primitive.py",
         TESTS / "test_production_imports.py",
         TESTS / "test_promotion_and_canary.py",
+        TESTS / "test_eng005_recovery.py",
     ]
     failed = 0
     for tf in test_files:
@@ -115,8 +123,10 @@ def main() -> int:
     except Exception as exc:
         print(f"certificate regeneration failed: {exc}", file=sys.stderr)
         failed += 1
-    print("NOTE (ENG-004 §10): this fast suite does not re-derive the rigorous "
-          "scalar E1 canary; run scripts/run_rigorous_scalar.py for that.")
+    print("NOTE (ENG-004 §10 / ENG-005 §12): this fast suite does not re-derive any "
+          "rigorous certificate — not the scalar canary, not degree-1/degree-2, not "
+          "the T=84 chain. Run scripts/run_rigorous_chain.py for that and read its "
+          "exit code before believing an E1 claim is current.")
     return 1 if failed else 0
 
 

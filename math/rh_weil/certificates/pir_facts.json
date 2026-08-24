@@ -4,32 +4,11 @@
   "work_order": "WO-RH-16",
   "rh_proof_claim": false,
   "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
-  "n_facts": 7,
-  "refused_promotions": [
-    {
-      "certificate_file": "e1_degree1_log3_log4.json",
-      "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
-      "evidence_class_declared": "E3"
-    },
-    {
-      "certificate_file": "e1_degree2_compact_log3_log4.json",
-      "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
-      "evidence_class_declared": "E3"
-    },
-    {
-      "certificate_file": "e1_fourier_T84_points.json",
-      "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
-      "evidence_class_declared": "E1"
-    },
-    {
-      "certificate_file": "e1_fourier_T84_uniform_degree2.json",
-      "reason": "promotion_state=QUARANTINED_NORMALIZATION_ADJUDICATION",
-      "evidence_class_declared": "E1"
-    }
-  ],
+  "n_facts": 12,
+  "refused_promotions": [],
   "facts": [
     {
-      "fact_id": "fct_sha256_90a0f2b0d641bb74",
+      "fact_id": "fct_sha256_e7b7c348843512ee",
       "pir_level": "L2",
       "evidence_level": "E0",
       "analyzer": {
@@ -39,6 +18,7 @@
       },
       "content": {
         "certificate_file": "e0_exact_identities.json",
+        "point_scoped": false,
         "program": "RH/Weil exact identities",
         "status": "REGENERATED",
         "claim_scope": "finite_dimensional_weil_compression",
@@ -53,7 +33,7 @@
       "warnings": []
     },
     {
-      "fact_id": "fct_sha256_4eb71900226c07e1",
+      "fact_id": "fct_sha256_65022701821b81c6",
       "pir_level": "L2",
       "evidence_level": "E0",
       "analyzer": {
@@ -63,6 +43,7 @@
       },
       "content": {
         "certificate_file": "e0_scalar_cell_log3_log4.json",
+        "point_scoped": false,
         "program": "RH/Weil scalar cell [log3, log4]",
         "status": "REGENERATED",
         "claim_scope": "finite_dimensional_weil_compression",
@@ -77,7 +58,7 @@
       "warnings": []
     },
     {
-      "fact_id": "fct_sha256_763c0fcdc26d18bd",
+      "fact_id": "fct_sha256_1b66e412e4d1c5cb",
       "pir_level": "L2",
       "evidence_level": "E0",
       "analyzer": {
@@ -87,6 +68,7 @@
       },
       "content": {
         "certificate_file": "normalization_adjudication.json",
+        "point_scoped": false,
         "program": "RH/Weil normalization adjudication",
         "status": "ADJUDICATED",
         "claim_scope": "finite_dimensional_weil_compression",
@@ -101,7 +83,7 @@
       "warnings": []
     },
     {
-      "fact_id": "fct_sha256_86e7e644146c0bed",
+      "fact_id": "fct_sha256_4980a4871f5c9fb9",
       "pir_level": "L2",
       "evidence_level": "E2",
       "analyzer": {
@@ -111,6 +93,7 @@
       },
       "content": {
         "certificate_file": "normalization_crosscheck.json",
+        "point_scoped": false,
         "program": "RH/Weil normalization cross-check",
         "status": "AGREE",
         "claim_scope": "finite_dimensional_weil_compression",
@@ -130,7 +113,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_424ff459c5120783",
+      "fact_id": "fct_sha256_a57fc232aedd559f",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -140,6 +123,7 @@
       },
       "content": {
         "certificate_file": "e1_scalar_log3_log4.json",
+        "point_scoped": false,
         "program": "RH/Weil scalar cell \u2014 Candidate-A E1 canary",
         "status": "PASS",
         "claim_scope": "finite_dimensional_weil_compression",
@@ -159,7 +143,157 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_15a850434b9a9676",
+      "fact_id": "fct_sha256_b68b87c8456eff6d",
+      "pir_level": "L2",
+      "evidence_level": "E1",
+      "analyzer": {
+        "id": "rh_weil.e1_degree1_log3_log4",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "e1_degree1_log3_log4.json",
+        "point_scoped": false,
+        "program": "RH/Weil degree-1 odd pivot \u2014 Candidate-A recovery",
+        "status": "PASS",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E1"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e1_degree1_log3_log4.json",
+          "message": "degree-1 odd pivot O1, cutoff-free, uniform on [log3, log4]"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_e0a61413ff61ecf8",
+      "pir_level": "L2",
+      "evidence_level": "E1",
+      "analyzer": {
+        "id": "rh_weil.e1_degree2_compact_log3_log4",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "e1_degree2_compact_log3_log4.json",
+        "point_scoped": false,
+        "program": "RH/Weil compact degree-2 even determinant \u2014 Candidate-A recovery",
+        "status": "PASS",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E1"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e1_degree2_compact_log3_log4.json",
+          "message": "compact degree-2 even determinant E2, cutoff-free, uniform on [log3, log4]"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_41862ff308525cbe",
+      "pir_level": "L2",
+      "evidence_level": "E1",
+      "analyzer": {
+        "id": "rh_weil.e1_fourier_T84_points",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "e1_fourier_T84_points.json",
+        "point_scoped": true,
+        "program": "RH/Weil direct-Fourier T=84 point entries \u2014 Candidate A",
+        "status": "PASS",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E1"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e1_fourier_T84_points.json",
+          "message": "direct-Fourier T=84 entries at selected L \u2014 point-scoped, not a cell claim"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_eae53dc326c2e1ed",
+      "pir_level": "L2",
+      "evidence_level": "E1",
+      "analyzer": {
+        "id": "rh_weil.e1_fourier_T84_interior_minimum",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "e1_fourier_T84_interior_minimum.json",
+        "point_scoped": false,
+        "program": "RH/Weil T=84 degree-2 interior minimum \u2014 Candidate A",
+        "status": "PASS",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E1"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e1_fourier_T84_interior_minimum.json",
+          "message": "direct-Fourier T=84 interior minimum: minimiser enclosure, curvature and derivative-sign inequalities on the governed interval"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_3a294600b51b5e49",
+      "pir_level": "L2",
+      "evidence_level": "E1",
+      "analyzer": {
+        "id": "rh_weil.e1_fourier_T84_uniform_degree2",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "e1_fourier_T84_uniform_degree2.json",
+        "point_scoped": false,
+        "program": "RH/Weil direct-Fourier T=84 uniform degree-2 \u2014 Candidate A",
+        "status": "PASS",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E1"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e1_fourier_T84_uniform_degree2.json",
+          "message": "direct-Fourier T=84 uniform degree-2 lower bound on [log3, log4]"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_ac7b035d418b5b2c",
       "pir_level": "L2",
       "evidence_level": "E3",
       "analyzer": {
@@ -169,8 +303,9 @@
       },
       "content": {
         "certificate_file": "e3_fourier_T84_scan.json",
-        "program": "RH/Weil direct-Fourier T=84 probe scan",
-        "status": "HEURISTIC_SCAN_PENDING_INTERVAL_COVERAGE",
+        "point_scoped": false,
+        "program": "RH/Weil T=84 topology scan \u2014 fresh under Candidate A",
+        "status": "SCANNED",
         "claim_scope": "finite_dimensional_weil_compression",
         "rh_proof_claim": false,
         "evidence_class_declared": "E3"
@@ -183,12 +318,12 @@
       "warnings": [
         {
           "location": "e3_fourier_T84_scan.json",
-          "message": "E3 energy probe \u2014 not the true Weil Gram"
+          "message": "fresh Candidate-A T=84 topology scan \u2014 E3 evidence, never a warrant"
         }
       ]
     },
     {
-      "fact_id": "fct_sha256_4ba06d233e37f79f",
+      "fact_id": "fct_sha256_2611b093225b91d4",
       "pir_level": "L2",
       "evidence_level": "E3",
       "analyzer": {
@@ -198,6 +333,7 @@
       },
       "content": {
         "certificate_file": "external/connes_cvs_crossvalidation_v0.1.json",
+        "point_scoped": false,
         "program": "Atlas RH/Weil \u00d7 Connes-CvS cross-validation",
         "status": null,
         "claim_scope": "finite_dimensional_weil_compression",

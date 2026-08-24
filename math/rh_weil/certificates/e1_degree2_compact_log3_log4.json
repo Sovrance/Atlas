@@ -1,76 +1,115 @@
 {
-  "certificate_version": "0.3",
-  "program": "RH/Weil compact degree-2 even block",
-  "work_order": "WO-RH-11",
-  "evidence_class": "E3",
-  "status": "POLE_WIRED_PENDING_TIGHT_TAIL_FOR_E1",
-  "hard_constraints_certified": false,
+  "certificate_version": "1.0",
+  "program": "RH/Weil compact degree-2 even determinant \u2014 Candidate-A recovery",
+  "work_order": "ATLAS-RH-ENG-005 \u00a75",
+  "evidence_class": "E1",
+  "rigorous": true,
+  "status": "PASS",
+  "hard_constraints_certified": true,
+  "promotion_state": "PROMOTED",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "claim_scope": "finite_dimensional_weil_compression",
   "rh_proof_claim": false,
-  "normalization": "G = G0 - Gp + Ginf",
   "domain": {
     "L_interval": [
       "log(3)",
       "log(4)"
-    ]
+    ],
+    "L_left": "1.0986122886681098",
+    "L_right": "1.3862943611198906",
+    "closed": true
   },
-  "samples": [
-    {
-      "L": 1.0986122886681098,
-      "E2_lower": -1.9987956875259946e-05,
-      "D2_lower": 0.0025165880200164483,
-      "full_det_lower": -3.35263141440301e-07,
-      "pole_det_abs": 7.965459555662261e-59
-    },
-    {
-      "L": 1.1059498113,
-      "E2_lower": 4.110090097668081e-06,
-      "D2_lower": 0.0028795620778913696,
-      "full_det_lower": 7.713829225955413e-08,
-      "pole_det_abs": 7.965459555662261e-59
-    },
-    {
-      "L": 1.2,
-      "E2_lower": 0.0003050100606582414,
-      "D2_lower": 0.00921692218519455,
-      "full_det_lower": 1.2086483984121298e-05,
-      "pole_det_abs": 1.5930919111324523e-58
-    },
-    {
-      "L": 1.3862943611198906,
-      "E2_lower": 0.0032836590707158975,
-      "D2_lower": 0.04164155217562705,
-      "full_det_lower": 0.0001579981910275177,
-      "pole_det_abs": 0.0
+  "basis": "{1, b}, b = x(L-x)",
+  "prime_kernel": "K00 = 2(L-a); K0b = (L-a)^2(L+2a)/3; Kbb = (L-a)^3(L^2+3La+a^2)/15",
+  "pole_candidate": "A",
+  "claim": "E2(L) = G00 Gbb - G0b^2 >= certified_lower_bound > 0 on [log 3, log 4]",
+  "certified_lower_bound": "2.065258695110749e-06",
+  "cutoff_free": true,
+  "archimedean_route": {
+    "method": "exact real-space kernel transform (no frequency cutoff)",
+    "formula": "Ginf_ij(L) = (K(0)/2)h_+(0) + int_0^L [K(0)-K(u)]w(u)du + K(0)S(L),  w(u)=e^{-u/2}/(1-e^{-2u}), S(L)=sum_n e^{-(2n+1/2)L}/(2n+1/2)",
+    "analytic_hypothesis": "termwise transform of the digamma series; see src/curvature_derivation.py INTERCHANGE_HYPOTHESIS",
+    "independent_cross_check": "frequency-space panel integration in src/weil_entries.py agrees to 2e-16 on the fast-decaying entries and differs on the slow-decaying ones by exactly the expected T-truncation tail"
+  },
+  "subdivision_statistics": {
+    "quantity": "E2",
+    "certified_lower_bound": "2.065258695110749e-06",
+    "boxes_examined": 178,
+    "boxes_accepted": 105,
+    "max_subdivision_depth": 3,
+    "argmin_box": [
+      "1.1345725477245825",
+      "1.136820063915612"
+    ],
+    "argmin_box_enclosure": [
+      "2.065258695110749e-06",
+      "1.1005860880813776e-05"
+    ],
+    "max_box_enclosure_width": "0.0002194964718000847",
+    "initial_boxes": 32,
+    "precision_bits": 220,
+    "method": "adaptive_interval_branch_and_bound",
+    "topology_proved": "uniform positive lower bound by exhaustive cover"
+  },
+  "parity_identities": {
+    "checked": [
+      {
+        "L": "1.0986122886681098",
+        "E2": "4.56171332184005e-06",
+        "O1": "0.015418132186809144",
+        "D2_raw": "0.0025054439036435996",
+        "D2_matches_E2_plus_L2_G00_O1": true,
+        "det_matches_O1_times_E2": true
+      },
+      {
+        "L": "1.2",
+        "E2": "1.6480790927311825e-05",
+        "O1": "0.03712537493426367",
+        "D2_raw": "0.004674637321656188",
+        "D2_matches_E2_plus_L2_G00_O1": true,
+        "det_matches_O1_times_E2": true
+      },
+      {
+        "L": "1.2828",
+        "E2": "2.908340278241516e-05",
+        "O1": "0.04561083894344056",
+        "D2_raw": "0.005687669763463683",
+        "D2_matches_E2_plus_L2_G00_O1": true,
+        "det_matches_O1_times_E2": true
+      },
+      {
+        "L": "1.3862943611198906",
+        "E2": "3.4019666607702896e-05",
+        "O1": "0.04162742952533871",
+        "D2_raw": "0.007764476837615636",
+        "D2_matches_E2_plus_L2_G00_O1": true,
+        "det_matches_O1_times_E2": true
+      }
+    ],
+    "all_hold": true,
+    "note": "D2 = E2 + L^2 G00 O1 and det(G_deg<=2) = O1 E2 both follow from the pole and prime blocks being parity block diagonal"
+  },
+  "dependencies": {
+    "source_hashes": {
+      "scripts/certify_cutoff_free_e1.py": "543a3f1a5f7bb8297486a83a9087117f9688e188378166b334728fb70853cfdc",
+      "src/archimedean_realspace.py": "7f7ad450a566408970b3c7d4f4599bae213da332f3ae4cd3da7367be073c8224",
+      "src/curvature_derivation.py": "3531ccedf688aad63bbe238d8c9bc6e87e6681a50bdd2f763701431ba74fd691",
+      "src/e1_cutoff_free.py": "4ac37a92964d7eca888ce868ebeeaaa5f4a54efc2002c7069e937f96fd1c3a2e",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "69ebe3e80b4600a780b657b2568090fe778ee683fc4ace5df41d514b514cb640",
+      "src/weil_entries.py": "67fd54c3f0956fde310de321ecbc9d0c0b86fcd7323e86c204c0881963216e5f"
     }
-  ],
-  "min_sample_E2_lower": -1.9987956875259946e-05,
-  "all_samples_definitely_positive": false,
-  "pole_rank1_regression_ok": true,
-  "backend": {
-    "name": "python-flint/Arb",
-    "version": "0.9.0",
-    "precision_bits": 192
   },
-  "dependencies": [
-    "e0_scalar_cell_log3_log4.json",
-    "WO-RH-10 assembly"
-  ],
-  "note": "Even pole outer-product (\u221a3/2)(v\u208av\u208a\u1d40+v\u208bv\u208b\u1d40) wired. Cutoff-free archimedean uses truncated Fourier + absolute tail majorant; tighten tail / quad before E1 promotion.",
-  "generated_utc": "2026-08-16T02:56:12Z",
-  "content_hash": "fc9d8fcfdffd0c175743448be3a2e03f057607382fc7f8ae0afd767c1c3e54c5",
-  "quarantine": {
-    "reason": "Depends on the even pole block under adjudication (WO-RH-17). The repository block (sqrt(3)/2)(v+v+^T+v-v-^T) equals the explicit-formula pole times (sqrt(3)/2)cosh(L/2), which is 1 only at L = log 3; values at any other L carry that factor. Regenerate under the frozen normalization (WO-RH-19/20) before any promotion.",
-    "work_order": "WO-RH-17",
-    "adjudication_certificate": "normalization_adjudication.json",
-    "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
-    "prior_state": {
-      "hard_constraints_certified": false,
-      "status": "POLE_WIRED_PENDING_TIGHT_TAIL_FOR_E1"
-    },
-    "pre_quarantine_content_hash": "d33afa67f2d4a8f83f90d7035e3024dfc80721472ed3f9b3d8d2ee60c800dc21",
-    "evidence_class_preserved": "E3",
-    "note": "not relabelled E3 on purpose; the historical claim is preserved as evidence",
-    "numerically_unaffected_at": "L = log 3 (the calibration fixed point) \u2014 still not promotable until regenerated"
+  "backend": 220,
+  "precision_bits": 220,
+  "mpmath_used": false,
+  "quick_mode": false,
+  "historical_values_note": "Historical degree-1/degree-2 numbers were produced under the REJECTED Candidate-B pole and are regression evidence only, never a warrant.",
+  "quarantine_released": {
+    "by": "ATLAS-RH-ENG-005 \u00a75 Candidate-A recovery",
+    "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
+    "authorised_because": "rigorous cutoff-free Candidate-A regeneration passed"
   },
-  "promotion_state": "QUARANTINED_NORMALIZATION_ADJUDICATION"
+  "generated_utc": "2026-08-24T17:33:00Z",
+  "content_hash": "b91146b9c63049070dd8f3315f10e169db4b379e523725f354444921dbc1bd57"
 }
