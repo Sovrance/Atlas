@@ -40,12 +40,20 @@ CERT_DIR = ROOT / "certificates"
 QUARANTINE_STATE = N.QUARANTINE_STATE
 AFFECTED = list(N.QUARANTINED_CERTIFICATES)
 
-AFFECTED_ORDERS = ["WO-RH-05"] + [f"WO-RH-{n:02d}" for n in range(9, 16)]
+# ENG-004 recovered the scalar cell (WO-RH-09), so it is no longer quarantined
+# and must not be flipped back on every runner pass. The rest stay put until
+# ENG-005 regenerates them.
+RECOVERED_ORDERS = {"WO-RH-09"}
+AFFECTED_ORDERS = [
+    wo for wo in (["WO-RH-05"] + [f"WO-RH-{n:02d}" for n in range(9, 16)])
+    if wo not in RECOVERED_ORDERS
+]
 
 REASON = N.QUARANTINE_REASON
 
 
 def quarantine_certificate(path: Path, release: bool = False) -> str:
+    name = path.name
     body = json.loads(path.read_text(encoding="utf-8"))
     if release:
         if body.get("promotion_state") != QUARANTINE_STATE:
@@ -60,6 +68,18 @@ def quarantine_certificate(path: Path, release: bool = False) -> str:
 
     if body.get("promotion_state") == QUARANTINE_STATE:
         return "already-quarantined"
+
+    # A later work order may release a file after regenerating it rigorously
+    # under the active normalization (ENG-004 §4 does this for the scalar
+    # canary). Re-quarantining it here would undo that on every runner pass.
+    # The release must still stand up: it needs the marker *and* a clean
+    # promotion predicate, so a legacy certifier's output -- which carries
+    # neither -- is quarantined as before.
+    if name in N.RELEASED_CERTIFICATES and body.get("quarantine_released"):
+        import promotion
+
+        if promotion.promotion_refusal(body) is None:
+            return f"released-by {N.RELEASED_CERTIFICATES[name]}"
 
     # prior_state (the claim being suspended) is captured by quarantine_block.
     body["quarantine"] = N.quarantine_block(body)
