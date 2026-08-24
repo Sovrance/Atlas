@@ -44,32 +44,32 @@
     "numeric_corroboration": [
       {
         "t": 2.0,
-        "t_h_plus_prime_upper": 1.0601037727205234,
-        "kappa_bound": 1.65,
+        "t_h_plus_prime_upper": "1.0601037727205234",
+        "kappa_bound": "1.65",
         "holds": true
       },
       {
         "t": 10.0,
-        "t_h_plus_prime_upper": 1.000836273015684,
-        "kappa_bound": 1.13,
+        "t_h_plus_prime_upper": "1.000836273015684",
+        "kappa_bound": "1.13",
         "holds": true
       },
       {
         "t": 1000.0,
-        "t_h_plus_prime_upper": 0.9999962966667395,
-        "kappa_bound": 1.0013,
+        "t_h_plus_prime_upper": "0.9999962966667395",
+        "kappa_bound": "1.0013",
         "holds": true
       },
       {
         "t": 100000.0,
-        "t_h_plus_prime_upper": 0.9999984258700323,
-        "kappa_bound": 1.000013,
+        "t_h_plus_prime_upper": "0.9999984258700323",
+        "kappa_bound": "1.000013",
         "holds": true
       },
       {
         "t": 200000.0,
-        "t_h_plus_prime_upper": 0.9999996064859974,
-        "kappa_bound": 1.0000065,
+        "t_h_plus_prime_upper": "0.9999996064859974",
+        "kappa_bound": "1.0000065",
         "holds": true
       }
     ]
@@ -280,8 +280,115 @@
   "subdivision_statistics": {
     "grid_points": 18,
     "tangent_certificates": 16,
-    "quadrature_panels_per_point": 6,
-    "quadrature_panel_radius_max": 9.08019312889608e-31,
+    "quadrature": {
+      "method": "arb_acb_integral_panelled",
+      "T": 200000.0,
+      "panel_schedule": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          2.0,
+          4.0
+        ],
+        [
+          4.0,
+          8.0
+        ],
+        [
+          8.0,
+          16.0
+        ],
+        [
+          16.0,
+          32.0
+        ],
+        [
+          32.0,
+          64.0
+        ],
+        [
+          64.0,
+          128.0
+        ],
+        [
+          128.0,
+          256.0
+        ],
+        [
+          256.0,
+          512.0
+        ],
+        [
+          512.0,
+          1024.0
+        ],
+        [
+          1024.0,
+          2048.0
+        ],
+        [
+          2048.0,
+          4096.0
+        ],
+        [
+          4096.0,
+          8192.0
+        ],
+        [
+          8192.0,
+          16384.0
+        ],
+        [
+          16384.0,
+          32768.0
+        ],
+        [
+          32768.0,
+          65536.0
+        ],
+        [
+          65536.0,
+          131072.0
+        ],
+        [
+          131072.0,
+          200000.0
+        ]
+      ],
+      "n_panels": 19,
+      "panel_radii": [
+        9.107432536226738e-31,
+        2.376326436804892e-58,
+        2.475822562413641e-58,
+        9.339057347126805e-59,
+        5.773680190163792e-59,
+        4.7716385194762e-59,
+        4.230803228515996e-59,
+        7.793992031743433e-60,
+        8.848011225506299e-60,
+        1.004493498609067e-59,
+        1.1141002528984036e-59,
+        1.235630867941949e-59,
+        1.3734739707448213e-59,
+        1.5177540818304826e-59,
+        1.6763451169978338e-59,
+        1.8237463822548619e-59,
+        1.9768495764473542e-59,
+        2.1295048765787387e-59,
+        1.3979416990435478e-59
+      ],
+      "max_panel_radius": 9.107432536226738e-31,
+      "options": {},
+      "trapezoid_path_used": false
+    },
+    "quadrature_panels_per_point": 19,
+    "quadrature_panel_radius_max": 9.107432536226738e-31,
     "prime_powers_in_cell": [
       2,
       3
@@ -338,9 +445,9 @@
       "scripts/certify_scalar_canary.py": "a18eceab1ba44c07fd16ac8fb731f31dc47f93b1df93765d643267f9e6160972",
       "src/interval_backend.py": "16a88ee30a863d3bd517e46ff3afed4e6ed44fa6fe3162f7762b7ee8bf6253a8",
       "src/normalization.py": "03f5d4ac77cc4173a1544dd19e63c3bf03aa61da2513638aa860b90d410ce951",
-      "src/pole.py": "8117b9a130c69f44f1942876c78b9d260a1392b1879b2aad9b87bbdac89555bf",
+      "src/pole.py": "69ebe3e80b4600a780b657b2568090fe778ee683fc4ace5df41d514b514cb640",
       "src/scalar.py": "7fda1299cdf5a69f14a00ff23b5b199fff8359897297c3f06f39f896053eed23",
-      "src/scalar_canary.py": "27cb419c6026bf92caef48056ba3be30619b2d6839b9c77ae961c34099020754"
+      "src/scalar_canary.py": "d2be2201a3ed8adde59824db3dc7969e5089e16536fe90112abb0281d74cb794"
     }
   },
   "quick_mode": false,
@@ -349,6 +456,6 @@
     "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
     "authorised_because": "rigorous Candidate-A regeneration passed"
   },
-  "generated_utc": "2026-08-24T10:16:24Z",
-  "content_hash": "31601bd690be58c521f14396f800ed1dae6ad85c27838b40b80adcf5d9d0cb9b"
+  "generated_utc": "2026-08-24T13:32:26Z",
+  "content_hash": "5b8b1af691bd383ad1349fb8efc4600e744e32885ae2a4926683f3ed717ee368"
 }
