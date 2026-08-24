@@ -143,7 +143,7 @@ is applied to the whole assembled entry.
 
 ---
 
-## 6. T=84: a different object (§6/§7/§9/§10)
+## 6. T=84: a different object (§6/§7/§8/§9/§10)
 
 The T=84 matrix is **not** an approximation of the cutoff-free entries. Its
 archimedean term stops at `T = 84` by definition, so the frequency route *is* the
@@ -232,7 +232,70 @@ enclosure of the exact second jet — replaces `25 r` with `r(|E2''| + O(r))`, o
 
 ---
 
-## 7. Limitations (stated, not hidden)
+## 7. What the T=84 degree-2 certificates actually say
+
+The five numbers, as certified. Every one is an Arb enclosure or an interval
+cover over one; none is a grid reading.
+
+**Stationary point.** `L* ≈ 1.1059498111650625`, rigorously
+
+```
+L* ∈ [1.1059498108971377, 1.1059498114329873]        width 5.358e-10
+```
+
+by 25 steps of certified bisection on `sign(E2')`. The sign change is proved at
+both ends, not interpolated:
+
+```
+E2'(a) ∈ [-7.117519911064466e-13, -4.499039734895273e-13]      < 0
+E2'(b) ∈ [ 5.732226310831418e-14,  3.191702815722664e-13]      > 0
+```
+
+Point enclosures of `E2'` come back with width ~3e-13, so the bracket is limited
+by the requested tolerance, not by the arithmetic.
+
+**Basin bound.** `E2_84(L) >= 3.4251152511218656e-06` on
+`[1.1058498108971377, 1.1060498114329873]` — 8 boxes, all clearing at
+subdivision depth 0.
+
+**The inequalities that exclude lower values elsewhere.**
+
+| inequality | interval | certified margin | cover |
+|---|---|---|---|
+| `E2'' > 0` | `[L*−1e-4, L*+1e-4]` | `>= 1.197065e-03` | 64 boxes, depth 0 |
+| `E2' < 0` | `[log 3, L*−1e-4]` | `−E2' >= 1.765709e-08` | 58 boxes, depth 3 |
+| `E2' > 0` | `[L*+1e-4, L*+0.03]` | `E2' >= 3.929881e-09` | 130 boxes, depth 3 |
+
+`E2'` is strictly increasing on the window, so `L*` is its only zero there and a
+strict minimum; `E2` falls strictly onto the window from `log 3` and rises
+strictly off it through the band. Both sign margins are small by construction —
+`E2'` vanishes at the window edge — which is what drove both covers to depth 3
+there and nowhere else.
+
+**Final uniform bound.**
+
+```
+E2_84(L) >= 3.4251152511218656e-06 > 0        for every L in [log 3, log 4]
+```
+
+| warrant | bound | governs |
+|---|---|---|
+| exhaustive cover, no topology assumed | `3.1259330426655237e-06` | whole cell, 896 boxes, all depth 0 |
+| same cover, outside the governed interval | `3.847548908412637e-06` | `[1.13605, log 4]` |
+| interior-minimum window bound | `3.4251152511218656e-06` | `[log 3, 1.13605]` |
+
+The two warrants corroborate each other rather than merely coexisting: the
+exhaustive cover's binding box is `[1.1053548372, 1.1056759110]`, immediately
+adjacent to the independently isolated `L*`. A cover that assumed nothing about
+the shape of `E2` bottomed out beside the point the derivative argument located.
+
+`L*` also lands where the historical Run-18 scan put it, to nine digits. That
+scan was Candidate-B and is not reused; the agreement is a regression signal, not
+evidence, and the bracket it suggested was re-certified from scratch.
+
+---
+
+## 8. Limitations (stated, not hidden)
 
 * Everything covers **one cell**, `[log 3, log 4]`. Nothing here says anything
   about other cells or about RH.

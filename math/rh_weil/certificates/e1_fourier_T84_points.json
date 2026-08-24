@@ -137,10 +137,10 @@
   },
   "dependencies": {
     "source_hashes": {
-      "scripts/certify_t84_e1.py": "5e46c48bb23727180f4a667e8c75f71518f833061bc6a2793962203b6e40249e",
-      "src/e1_t84.py": "eef333dba3a063b8eb918a14428022011071398e1aaf8419da8e11996bb9f25a",
-      "src/interval_cover.py": "9c040d6c7fa19d5ef30689da82f0bb4a78cf60c2603d8c7aa7f77eaf824605fa",
-      "src/normalization.py": "03f5d4ac77cc4173a1544dd19e63c3bf03aa61da2513638aa860b90d410ce951",
+      "scripts/certify_t84_e1.py": "91167ad7d85008e10e40179e5c053c0e3b0cde9d7348efd44e5a754186410b88",
+      "src/e1_t84.py": "16a966a36d9da1fc1a07753525ac55bd63058d429bd48628dd4c35e36cea61b3",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
       "src/pole.py": "69ebe3e80b4600a780b657b2568090fe778ee683fc4ace5df41d514b514cb640",
       "src/rigorous_integration.py": "17c49303df67f590d3543699cfa7735ba100ccdb3fdcce7fb32d41955a175ae2",
       "src/t84.py": "7940e80bf737069f6c53bfcd6f3b48e837c2cfd45fcda2496aaa6117ac2df68f",
@@ -155,6 +155,6 @@
     "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
     "authorised_because": "rigorous Candidate-A T=84 regeneration passed"
   },
-  "generated_utc": "2026-08-24T15:35:34Z",
-  "content_hash": "4d2a9eea5d1f3742a507aca8443e24cd03e8bc26ac61ebada2185a9097f2140d"
+  "generated_utc": "2026-08-24T17:46:58Z",
+  "content_hash": "09bc5dabf976d1896e7ba80c2b26012f79ac5c1d9b52592204b8572ab5cf58de"
 }
