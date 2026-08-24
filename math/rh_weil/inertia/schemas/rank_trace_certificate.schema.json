@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Atlas Weil Rank Trace Certificate",
+  "type": "object",
+  "required": ["status", "theorem_id", "hypotheses", "result", "rh_proof_claim"],
+  "properties": {
+    "status": {"enum": ["PASS", "INCONCLUSIVE", "FAIL"]},
+    "theorem_id": {"type": "string"},
+    "hypotheses": {"type": "object"},
+    "inputs": {"type": "object"},
+    "result": {"type": "object"},
+    "normalization_certificate_id": {"type": "string"},
+    "source_hashes": {"type": "object"},
+    "claim_scope": {"const": "finite_dimensional_weil_compression"},
+    "rh_proof_claim": {"const": false}
+  }
+}

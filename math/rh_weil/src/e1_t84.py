@@ -31,7 +31,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 import interval_cover as IC
 import t84
 import weil_entries as WE
-from interval_backend import require_flint, set_precision_bits
+from interval_backend import interval_box, require_flint, set_precision_bits
 
 CELL = (math.log(3.0), math.log(4.0))
 CELL_LABEL = ("log(3)", "log(4)")
@@ -132,7 +132,7 @@ def _entry_evaluator(quantity: str, arb, acb, prime_powers, *, T: float,
                                keys=t84.EVEN_KEYS)[quantity]
         if rad == 0.0:
             return float(centre.lower()), float(centre.upper())
-        box = arb(repr(mid), repr(rad))
+        box = interval_box(lo, hi)
         d1 = t84.block_t84(box, arb, acb, order=1, T=T, prime_powers=prime_powers,
                            options=options, keys=t84.EVEN_KEYS)[f"{quantity}_d1"]
         slope = max(abs(float(d1.lower())), abs(float(d1.upper())))
@@ -349,14 +349,14 @@ def _d1_evaluator(arb, acb, prime_powers, *, T: float, options, centred: bool = 
     def evaluate(lo: float, hi: float) -> Tuple[float, float]:
         mid, rad = (lo + hi) / 2, (hi - lo) / 2
         if rad == 0.0 or not centred:
-            box = arb(repr(mid), repr(rad)) if rad > 0 else arb(repr(mid))
+            box = interval_box(lo, hi) if rad > 0 else arb(repr(mid))
             d1 = t84.block_t84(box, arb, acb, order=1, T=T, prime_powers=prime_powers,
                                options=options, keys=t84.EVEN_KEYS)["E2_d1"]
             return float(d1.lower()), float(d1.upper())
         centre = t84.block_t84(arb(repr(mid)), arb, acb, order=1, T=T,
                                prime_powers=prime_powers, options=options,
                                keys=t84.EVEN_KEYS)["E2_d1"]
-        box = arb(repr(mid), repr(rad))
+        box = interval_box(lo, hi)
         d2 = t84.block_t84(box, arb, acb, order=2, T=T, prime_powers=prime_powers,
                            options=options, keys=t84.EVEN_KEYS)["E2_d2"]
         slope = max(abs(float(d2.lower())), abs(float(d2.upper())))
@@ -378,7 +378,7 @@ def _d2_evaluator(arb, acb, prime_powers, *, T: float, options):
 
     def evaluate(lo: float, hi: float) -> Tuple[float, float]:
         mid, rad = (lo + hi) / 2, (hi - lo) / 2
-        box = arb(repr(mid), repr(rad)) if rad > 0 else arb(repr(mid))
+        box = interval_box(lo, hi) if rad > 0 else arb(repr(mid))
         d2 = t84.block_t84(box, arb, acb, order=2, T=T, prime_powers=prime_powers,
                            options=options, keys=t84.EVEN_KEYS)["E2_d2"]
         return float(d2.lower()), float(d2.upper())

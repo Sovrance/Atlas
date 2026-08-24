@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Atlas Weil Inertia Certificate",
+  "type": "object",
+  "required": ["status", "claim_scope", "dimension", "method", "normalization_certificate_id", "rh_proof_claim"],
+  "properties": {
+    "status": {"enum": ["PASS", "INCONCLUSIVE", "FAIL"]},
+    "claim_scope": {"const": "finite_dimensional_weil_compression"},
+    "dimension": {"type": "integer", "minimum": 1},
+    "n_positive": {"type": ["integer", "null"], "minimum": 0},
+    "n_negative": {"type": ["integer", "null"], "minimum": 0},
+    "n_zero": {"type": ["integer", "null"], "minimum": 0},
+    "method": {"type": "string"},
+    "parameter_domain": {"type": ["object", "null"]},
+    "pivot_intervals": {"type": "array"},
+    "transition_regions": {"type": "array"},
+    "normalization_certificate_id": {"type": "string"},
+    "source_hashes": {"type": "object"},
+    "evidence_class": {"enum": ["E0", "E1", "E3"]},
+    "rh_proof_claim": {"const": false}
+  }
+}

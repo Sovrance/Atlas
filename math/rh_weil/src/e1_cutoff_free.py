@@ -38,7 +38,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import archimedean_realspace as AR
 import weil_entries as WE
-from interval_backend import backend_info, require_flint, set_precision_bits
+from interval_backend import backend_info, interval_box, require_flint, set_precision_bits
 
 CELL_LABEL = ("log(3)", "log(4)")
 CLAIM_SCOPE = "finite_dimensional_weil_compression"
@@ -118,7 +118,7 @@ def certify_positive(
         examined += 1
         deepest = max(deepest, depth)
         mid, rad = (lo + hi) / 2, (hi - lo) / 2
-        box = arb(repr(mid), repr(rad))
+        box = interval_box(lo, hi)
         blk = AR.block_centred(box, arb, acb, prime_powers=primes)
         val = blk[quantity]
         vlo, vhi = float(val.lower()), float(val.upper())
