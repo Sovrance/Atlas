@@ -1,0 +1,186 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil normalization adjudication",
+  "work_order": "WO-RH-17",
+  "status": "ADJUDICATED",
+  "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "fourier_convention": "Fhat(xi) = int_R F(x) e^{-i*xi*x} dx",
+  "tilde_convention": "tilde_h(x) = conj(h(-x)); real basis => tilde_h(x) = h(-x)",
+  "pole_formula": "G0_ij = Fhat_ij(i/2) + Fhat_ij(-i/2) = E_i^+ E_j^- + E_i^- E_j^+, E_i^\u00b1 = int_0^L h_i(x) e^{\u00b1x/2} dx",
+  "prime_formula": "Gp_ij = sum_{q=p^k, log q < L} (log p / sqrt(q)) * K_ij(log q; L), K_ij(a;L) = int_0^{L-a} [h_i(x)h_j(x+a) + h_j(x)h_i(x+a)] dx",
+  "archimedean_formula": "Ginf_ij(T) = (1/pi) int_0^T h_+(t) Re(conj(H_i(t;L)) H_j(t;L)) dt, one-sided frequency integral with the even/real basis",
+  "assembly": "G = G0 - Gp + Ginf",
+  "frequency_integral": "one-sided (0,T], real part taken; even basis",
+  "basis_normalization": "unnormalised polynomials on [0,L]: 1, q1 = x - L/2, b = x(L-x)",
+  "candidate_dispositions": {
+    "candidate_A_explicit_formula": {
+      "formula": "G0_ij = E_i^+E_j^- + E_i^-E_j^+",
+      "disposition": "ADOPTED",
+      "grounds": [
+        "derived step by step from the explicit formula under the stated convention",
+        "independently reproduced by the real-space identity G0_ij = int_0^L K_ij(a) 2cosh(a/2) da using the same K_ij as the prime block",
+        "reproduces the repository's odd pivot -8A^2 exactly (E_q1^+ = 2e^{L/4}A)",
+        "no fitted constant anywhere in the derivation"
+      ]
+    },
+    "candidate_B_repo_sqrt3_over_2": {
+      "formula": "G0_even = (sqrt(3)/2)(v+ v+^T + v- v-^T)",
+      "disposition": "REJECTED",
+      "grounds": [
+        "no derivation from the explicit formula was found in the repository or its history",
+        "on the even sector it equals Candidate A times (sqrt(3)/2)cosh(L/2)",
+        "that factor equals 1 at exactly one point, L = log 3, and differs elsewhere (+0.18% at L=1.1059498113, +2.66% at L=1.20, +8.25% at L=log 4)",
+        "an L-dependent scalar cannot arise from a basis change: a change of basis is a constant congruence G -> S^T G S, so it cannot produce a factor varying with L",
+        "it is therefore a multiplicative calibration fitted at L = log 3, which the P0 runbook forbids"
+      ],
+      "calibration_fixed_point": "L = log 3",
+      "retained_for_audit_as": "normalization.legacy_pole_entry"
+    }
+  },
+  "structural_findings": [
+    "the even basis {1, x(L-x)} is symmetric about x = L/2, so E^- = e^{-L/2}E^+ and the even pole block is rank 1 under BOTH candidates; a rank/determinant regression therefore cannot discriminate them, which is why the conflict survived earlier review",
+    "the pole matrix is parity block diagonal: even-odd cross entries vanish identically",
+    "the defect is confined to the even block; the odd pivot was already correct"
+  ],
+  "crosschecks": [
+    {
+      "L_label": "log3",
+      "L": 1.0986122886681098,
+      "checks": {
+        "pole_closed_form_vs_realspace_kernel_max_rel": 3.6534819421676135e-16,
+        "pole_routes_agree": true,
+        "even_odd_cross_entries_vanish": true,
+        "legacy_over_adopted_ratio": 1.0000000000000002,
+        "matches_sqrt3_over_2_cosh": true,
+        "legacy_relative_error": 2.220446049250313e-16
+      }
+    },
+    {
+      "L_label": "1.1059498113",
+      "L": 1.1059498113,
+      "checks": {
+        "pole_closed_form_vs_realspace_kernel_max_rel": 2.2688445049210547e-16,
+        "pole_routes_agree": true,
+        "even_odd_cross_entries_vanish": true,
+        "legacy_over_adopted_ratio": 1.0018411146853896,
+        "matches_sqrt3_over_2_cosh": true,
+        "legacy_relative_error": 0.001841114685389611
+      }
+    },
+    {
+      "L_label": "1.20",
+      "L": 1.2,
+      "checks": {
+        "pole_closed_form_vs_realspace_kernel_max_rel": 4.440892098500626e-16,
+        "pole_routes_agree": true,
+        "even_odd_cross_entries_vanish": true,
+        "legacy_over_adopted_ratio": 1.0266429943006676,
+        "matches_sqrt3_over_2_cosh": true,
+        "legacy_relative_error": 0.026642994300667633
+      }
+    },
+    {
+      "L_label": "log4",
+      "L": 1.3862943611198906,
+      "checks": {
+        "pole_closed_form_vs_realspace_kernel_max_rel": 3.4938364775810873e-16,
+        "pole_routes_agree": true,
+        "even_odd_cross_entries_vanish": true,
+        "legacy_over_adopted_ratio": 1.0825317547305482,
+        "matches_sqrt3_over_2_cosh": true,
+        "legacy_relative_error": 0.08253175473054819
+      }
+    }
+  ],
+  "symbolic_derivation": {
+    "symbolic_engine": "sympy 1.14.0",
+    "steps": [
+      {
+        "step": "convolution transform identity",
+        "statement": "Fhat_ij(\u00b1i/2) = (int h_i(y)e^{\u00b1y/2}dy)(int h_j(u)e^{\u2213u/2}du) = E_i^\u00b1 E_j^\u2213",
+        "argument": "Fhat(\u00b1i/2)=int F(x)e^{\u00b1x/2}dx with F=h_i*tilde h_j; substitute u=y-x, the exponential separates as e^{\u00b1(y-u)/2}, and the double integral factorises.",
+        "verified": true
+      },
+      {
+        "step": "pole matrix entry",
+        "statement": "G0_ij = Fhat_ij(i/2)+Fhat_ij(-i/2) = E_i^+E_j^- + E_i^-E_j^+",
+        "E_plus": {
+          "one": "2*exp(L/2) - 2",
+          "q1": "L + (L - 4)*exp(L/2) + 4",
+          "b": "4*L + 4*(L - 4)*exp(L/2) + 16"
+        },
+        "E_minus": {
+          "one": "2 - 2*exp(-L/2)",
+          "q1": "(-L + (4 - L)*exp(L/2) - 4)*exp(-L/2)",
+          "b": "4*(L + (L - 4)*exp(L/2) + 4)*exp(-L/2)"
+        },
+        "verified": true
+      },
+      {
+        "step": "parity lemma about x = L/2",
+        "statement": "h(L-x)=\u00b1h(x)  =>  E^- = \u00b1 e^{-L/2} E^+",
+        "per_basis": {
+          "one": {
+            "parity": "even",
+            "identity": "E^- = + e^{-L/2} E^+",
+            "identity_holds": true
+          },
+          "q1": {
+            "parity": "odd",
+            "identity": "E^- = - e^{-L/2} E^+",
+            "identity_holds": true
+          },
+          "b": {
+            "parity": "even",
+            "identity": "E^- = + e^{-L/2} E^+",
+            "identity_holds": true
+          }
+        },
+        "verified": true
+      },
+      {
+        "step": "audit of the repository sqrt(3)/2 block (Candidate B)",
+        "even_sector_determinant_gap": "0",
+        "both_candidates_rank": 1,
+        "quotient_B_over_A": "sqrt(3)*cosh(L/2)/2",
+        "quotient_matches_closed_form": true,
+        "quotient_equals_one_at": [
+          "log(3)"
+        ],
+        "verified": true,
+        "proof_method": "e^{L/4} -> u reduces the identity to a rational function; cancel decides it"
+      },
+      {
+        "step": "odd sector agrees already",
+        "statement": "E_q1^+ = 2 e^{L/4} A(L) with A = L cosh(L/4) - 4 sinh(L/4); hence G0[q1,q1] = 2E^+E^- = -8A^2, the value already in the repository",
+        "verified": true,
+        "proof_method": "e^{L/4} -> u reduces the identity to a rational function; cancel decides it"
+      }
+    ]
+  },
+  "source_hashes": {
+    "normalization.py": "172e811d3dbfc68bcaaba7912bcc4ac7e09ce440a25c8caca333435f93315a21",
+    "providers.py": "8ce7f927b1dc224876769fe23d50908eb1615aa6881cadfd38812fd3f3c4b5e1",
+    "cross_validation.py": "c64120c26a7e7a4faa1ee356b7d1910e6dbc0997e49f5fd755046cae6404cb93",
+    "finite_weil.py(audited)": "06d9052fab1ffdc3e216bef2122bc1f68bcd1d3f931cf8049f288be8c0434f9e"
+  },
+  "primary_sources": [
+    {
+      "role": "primary explicit formula",
+      "ref": "Weil explicit formula, pole term Fhat(i/2)+Fhat(-i/2) for F = h_i * tilde h_j"
+    },
+    {
+      "role": "repository implementation under audit",
+      "ref": "math/rh_weil/src/finite_weil.py::g0_even_block (POLE_EVEN_SCALE='sqrt(3)/2')"
+    },
+    {
+      "role": "regression evidence only",
+      "ref": "math/rh_weil/certificates/*.json (never normative for a normalization dispute)"
+    }
+  ],
+  "hard_constraints_certified": false,
+  "claim_boundary": "finite_block_only_no_rh_proof",
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-24T01:33:52Z",
+  "content_hash": "499377c4521703e690c0cde91d876fe078acab6889697b3774878bc685d0775f"
+}

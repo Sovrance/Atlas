@@ -64,6 +64,16 @@ def regenerate_certificates() -> None:
         certificate_io.build_work_order_status(),
     )
 
+    # WO-RH-17: the adjudication certificate is regenerated from the derivation,
+    # and the quarantine is re-asserted after work_order_status.json is rewritten.
+    import subprocess as _sp
+
+    for script in ("derive_normalization.py", "quarantine_normalization.py"):
+        rc = _sp.run([sys.executable, str(ROOT / "scripts" / script)],
+                     cwd=str(ROOT), capture_output=True, text=True)
+        if rc.returncode != 0:  # pragma: no cover
+            raise RuntimeError(f"{script} failed: {rc.stderr[-400:]}")
+
     # Imported notebook state must remain pending — never silently rewrite to E1.
     imported = ROOT / "certificates" / "imported_notebook_state.json"
     data = json.loads(imported.read_text(encoding="utf-8"))
@@ -78,6 +88,7 @@ def main() -> int:
         TESTS / "test_fourier_forms.py",
         TESTS / "test_connes_cvs_adapter_contract.py",
         TESTS / "test_connes_cvs_crosschecks.py",
+        TESTS / "test_normalization_adjudication.py",
     ]
     failed = 0
     for tf in test_files:
