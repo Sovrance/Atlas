@@ -63,9 +63,21 @@ def certs_to_facts() -> List[Any]:
         ("normalization_adjudication.json", "E0", "SOUND", None),
         ("normalization_crosscheck.json", "E2", "HEURISTIC",
          "three-way internal cross-check; only interval_certified rows may support E1"),
+        # ENG-005 §11: the recovered Candidate-A numerical chain. Each of these
+        # still has to clear the central promotion predicate before it becomes a
+        # fact; being listed here only makes it eligible.
         ("e1_scalar_log3_log4.json", "E1", "SOUND",
          "scalar canary: rigorous Arb lower bound on the recovered Candidate-A cell entry"),
-        ("e3_fourier_T84_scan.json", "E3", "HEURISTIC", "E3 energy probe — not the true Weil Gram"),
+        ("e1_degree1_log3_log4.json", "E1", "SOUND",
+         "degree-1 odd pivot O1, cutoff-free, uniform on [log3, log4]"),
+        ("e1_degree2_compact_log3_log4.json", "E1", "SOUND",
+         "compact degree-2 even determinant E2, cutoff-free, uniform on [log3, log4]"),
+        ("e1_fourier_T84_points.json", "E1", "SOUND",
+         "direct-Fourier T=84 entries at selected L — point-scoped, not a cell claim"),
+        ("e1_fourier_T84_uniform_degree2.json", "E1", "SOUND",
+         "direct-Fourier T=84 uniform degree-2 lower bound on [log3, log4]"),
+        ("e3_fourier_T84_scan.json", "E3", "HEURISTIC",
+         "fresh Candidate-A T=84 topology scan — E3 evidence, never a warrant"),
         ("external/connes_cvs_crossvalidation_v0.1.json", "E3", "HEURISTIC", "external cross-check only"),
     ]
     for fname, ev, tag, warn in mapping:
@@ -80,6 +92,7 @@ def certs_to_facts() -> List[Any]:
             warnings = (Warning_(location=fname, message=warn),)
         content = {
             "certificate_file": fname,
+            "point_scoped": bool(cert.get("point_scoped", False)),
             "program": cert.get("program"),
             "status": cert.get("status"),
             "claim_scope": "finite_dimensional_weil_compression",

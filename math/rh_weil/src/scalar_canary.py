@@ -244,6 +244,30 @@ def invalid_assumption_is_rejected(arb, at: float = INVALID_NEAR_T,
     }
 
 
+def lemma_A_numeric_check(arb, ts=(2.0, 10.0, 1e3, 1e5, 2e5), terms: int = 4000):
+    """Corroborate Lemma A' by summing the positive series directly.
+
+    ``h_+'(t) = (t/2) sum_n a_n/(a_n^2+c^2)^2`` with every term positive, so the
+    truncation is one-sided and its remainder is bounded by the tail integral.
+    """
+    rows = []
+    for t in ts:
+        t_a = arb(repr(t))
+        c = t_a / 2
+        total = arb(0)
+        for n in range(terms):
+            a = arb(n) + arb("0.25")
+            total += a / ((a * a + c * c) ** 2)
+        aN = arb(terms) + arb("0.25")
+        total += arb(0, float((1 / (2 * (aN * aN + c * c))).upper()))
+        t_hp = (t_a * t_a / 2) * total
+        rows.append({"t": t,
+                     "t_h_plus_prime_upper": repr(float(t_hp.upper())),
+                     "kappa_bound": repr(lemma_A_constant(t)),
+                     "holds": float(t_hp.upper()) <= lemma_A_constant(t)})
+    return all(r["holds"] for r in rows), rows
+
+
 def tail_bound(T, arb, acb):
     """Rigorous ``0 <= R_T(L) <= (4/pi)(h_+(T) + kappa(T))/T`` for every ``L > 0``.
 

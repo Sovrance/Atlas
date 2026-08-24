@@ -99,6 +99,7 @@ def main() -> int:
         TESTS / "test_pole_primitive.py",
         TESTS / "test_production_imports.py",
         TESTS / "test_promotion_and_canary.py",
+        TESTS / "test_eng005_recovery.py",
     ]
     failed = 0
     for tf in test_files:
@@ -115,8 +116,10 @@ def main() -> int:
     except Exception as exc:
         print(f"certificate regeneration failed: {exc}", file=sys.stderr)
         failed += 1
-    print("NOTE (ENG-004 §10): this fast suite does not re-derive the rigorous "
-          "scalar E1 canary; run scripts/run_rigorous_scalar.py for that.")
+    print("NOTE (ENG-004 §10 / ENG-005 §12): this fast suite does not re-derive any "
+          "rigorous certificate — not the scalar canary, not degree-1/degree-2, not "
+          "the T=84 chain. Run scripts/run_rigorous_chain.py for that and read its "
+          "exit code before believing an E1 claim is current.")
     return 1 if failed else 0
 
 
