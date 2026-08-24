@@ -40,10 +40,14 @@ CERT_DIR = ROOT / "certificates"
 QUARANTINE_STATE = N.QUARANTINE_STATE
 AFFECTED = list(N.QUARANTINED_CERTIFICATES)
 
-# ENG-004 recovered the scalar cell (WO-RH-09), so it is no longer quarantined
-# and must not be flipped back on every runner pass. The rest stay put until
-# ENG-005 regenerates them.
-RECOVERED_ORDERS = {"WO-RH-09"}
+# ENG-004 recovered the scalar cell (WO-RH-09) and ENG-005 recovered the rest, so
+# none of them may be flipped back on a runner pass. The list is kept explicit
+# rather than derived: an order leaves quarantine only because a work order says
+# so, never because a certificate happens to look healthy.
+RECOVERED_ORDERS = {"WO-RH-09"} | {
+    "WO-RH-05", "WO-RH-10", "WO-RH-11", "WO-RH-12", "WO-RH-13", "WO-RH-14",
+    "WO-RH-15",
+}
 AFFECTED_ORDERS = [
     wo for wo in (["WO-RH-05"] + [f"WO-RH-{n:02d}" for n in range(9, 16)])
     if wo not in RECOVERED_ORDERS

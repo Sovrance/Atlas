@@ -139,6 +139,26 @@ def stage_tail_lemma() -> int:
     return 0
 
 
+def _headline(cert: dict) -> str:
+    """The number a certificate actually certifies, for the policy line.
+
+    Not every rigorous certificate carries a whole-cell ``certified_lower_bound``:
+    the point certificate is point-scoped by design, and the interior-minimum
+    certificate bounds ``E2`` on the interval its argument governs. Falling back
+    to "point-scoped" for the latter would misreport it.
+    """
+    if "certified_lower_bound" in cert:
+        return str(cert["certified_lower_bound"])
+    interior = cert.get("interior_minimum", {})
+    bound = interior.get("basin_bound", {}).get("certified_lower_bound")
+    if bound:
+        gov = interior.get("governed_interval", ["?", "?"])
+        return f"{bound} on [{gov[0]}, {gov[1]}]"
+    if cert.get("point_scoped"):
+        return "point-scoped"
+    return "no bound field"
+
+
 def stage_policy() -> int:
     print("\n=== certificate policy validation ===")
     import promotion
@@ -161,7 +181,7 @@ def stage_policy() -> int:
             print(f"  FAIL {label}: {refusal or ', '.join(marks)}", file=sys.stderr)
             bad += 1
         else:
-            print(f"  ok {label}: {cert.get('certified_lower_bound', 'point-scoped')}")
+            print(f"  ok {label}: {_headline(cert)}")
     return 1 if bad else 0
 
 

@@ -1,110 +1,228 @@
 {
-  "certificate_version": "0.4",
-  "program": "RH/Weil direct-Fourier T=84 uniform degree-2",
-  "work_order": "WO-RH-15",
+  "certificate_version": "1.0",
+  "program": "RH/Weil direct-Fourier T=84 uniform degree-2 \u2014 Candidate A",
+  "work_order": "ATLAS-RH-ENG-005 \u00a710",
   "evidence_class": "E1",
-  "status": "E1_UNIFORM_TRUE_WEIL_GRAM",
-  "hard_constraints_certified": false,
+  "rigorous": true,
+  "status": "PASS",
+  "hard_constraints_certified": true,
+  "promotion_state": "PROMOTED",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "claim_scope": "finite_dimensional_weil_compression",
   "rh_proof_claim": false,
-  "normalization": "G = G0 - Gp + Ginf",
-  "cutoff_T": 84,
+  "T": 84.0,
+  "pole_candidate": "A",
   "domain": {
     "L_interval": [
       "log(3)",
       "log(4)"
-    ]
+    ],
+    "L_left": "1.0986122886681098",
+    "L_right": "1.3862943611198906",
+    "closed": true
   },
-  "strategy": "Regenerated Gram has E2'(L)>0 on the cell (analytic L-derivative of G0-Gp+Ginf), hence min E2 = E2(log3). Combine left-endpoint E1 ball with a grid of E2' enclosures inflated by a derivative-quad remainder.",
-  "backend": {
-    "name": "python-flint/Arb",
-    "version": "0.9.0",
-    "precision_bits": 192
+  "claim": "E2_84(L) = G00 Gbb - G0b^2 >= certified_lower_bound > 0 for every L in [log 3, log 4], for the truncated T=84 finite Weil matrix.",
+  "certified_lower_bound": "3.4251152511218656e-06",
+  "bound_provenance": {
+    "exhaustive_cover_whole_cell": "3.1259330426655237e-06",
+    "exhaustive_cover_outside_governed_interval": "3.847548908412637e-06",
+    "interior_minimum_window_bound": "3.4251152511218656e-06",
+    "governed_interval": [
+      "1.0986122886681098",
+      "1.1360498114329873"
+    ],
+    "rule": "min(interior window bound, cover bound outside the governed interval), floored at the plain whole-cell cover bound so the headline is never weaker than what the cover alone proves"
   },
+  "certified_topology": {
+    "classification": "single_interior_minimum_on_grid",
+    "reason": "E2' changes sign exactly once on the scan grid",
+    "stationary_points": [
+      {
+        "between": [
+          "1.0986122886681098",
+          "1.116592418196346"
+        ],
+        "values": [
+          "-9.998360935714394e-06",
+          "1.6168098132496952e-05"
+        ]
+      }
+    ],
+    "curvature_changes": [
+      {
+        "between": [
+          "1.2064930658375275",
+          "1.224473195365764"
+        ],
+        "values": [
+          "0.00035736426545906563",
+          "-2.470196576386118e-05"
+        ]
+      },
+      {
+        "between": [
+          "1.3323539725351816",
+          "1.3503341020634179"
+        ],
+        "values": [
+          "-0.0005194667879961127",
+          "0.0006286623281135189"
+        ]
+      }
+    ],
+    "grid_min_at_endpoint": true,
+    "warrant": "The uniform bound is established by exhaustive interval cover, which assumes no topology. This classification describes what the fresh Candidate-A scan shows and is E3 evidence, not the warrant.",
+    "candidate_b_topology_reused": false
+  },
+  "interval_coverage": {
+    "quantity": "E2_T84",
+    "certified_lower_bound": "3.1259330426655237e-06",
+    "target": "0.0",
+    "cell": [
+      "1.0986122886681098",
+      "1.3862943611198906"
+    ],
+    "boxes_examined": 896,
+    "boxes_accepted": 896,
+    "max_subdivision_depth": 0,
+    "binding_box": [
+      "1.1053548372411983",
+      "1.105675910982774"
+    ],
+    "binding_box_enclosure": [
+      "3.1259330426655237e-06",
+      "3.727797851323616e-06"
+    ],
+    "max_box_enclosure_width": "1.0886802055409817e-06",
+    "initial_boxes": 896,
+    "method": "adaptive_interval_branch_and_bound",
+    "exclude": [
+      "1.0986122886681098",
+      "1.1360498114329873"
+    ],
+    "certified_lower_bound_outside_exclude": "3.847548908412637e-06",
+    "topology_proved": "uniform lower bound over an exhaustive box cover of the closed cell; no convexity or monotonicity assumed",
+    "T": 84.0,
+    "precision_bits": 110,
+    "box_form": "assembled mean-value: exact midpoint value + radius * exact-jet enclosure",
+    "jets": "exact support-length jets (ENG-005 \u00a79); no finite differences",
+    "quadrature": "deterministic Arb panel schedule for T=84",
+    "parallel_chunks": [
+      {
+        "cell": [
+          "1.0986122886681098",
+          "1.170532806781055"
+        ],
+        "certified_lower_bound": "3.1259330426655237e-06",
+        "boxes_examined": 224,
+        "max_subdivision_depth": 0
+      },
+      {
+        "cell": [
+          "1.170532806781055",
+          "1.2424533248940002"
+        ],
+        "certified_lower_bound": "6.487864048847615e-06",
+        "boxes_examined": 224,
+        "max_subdivision_depth": 0
+      },
+      {
+        "cell": [
+          "1.2424533248940002",
+          "1.3143738430069454"
+        ],
+        "certified_lower_bound": "1.4516468709458181e-05",
+        "boxes_examined": 224,
+        "max_subdivision_depth": 0
+      },
+      {
+        "cell": [
+          "1.3143738430069454",
+          "1.3862943611198906"
+        ],
+        "certified_lower_bound": "2.000720942211141e-05",
+        "boxes_examined": 224,
+        "max_subdivision_depth": 0
+      }
+    ],
+    "chunk_tiling_verified": "consecutive chunk endpoints compared bit-for-bit"
+  },
+  "point_anchors": "see e1_fourier_T84_points.json (\u00a77)",
+  "interior_minimum": {
+    "available": true,
+    "certificate": "e1_fourier_T84_interior_minimum.json",
+    "status": "PASS",
+    "minimiser_enclosure": [
+      "1.1059498108971377",
+      "1.1059498114329873"
+    ],
+    "minimiser_approx": "1.1059498111650625",
+    "window_bound": "3.4251152511218656e-06",
+    "governed_interval": [
+      "1.0986122886681098",
+      "1.1360498114329873"
+    ],
+    "E2_d2_lower_bound": "0.0011970651493288088",
+    "note": "independent second warrant: locates the minimiser and proves no lower values elsewhere, where the exhaustive cover assumes no topology at all. If the two ever disagreed the cover is the warrant."
+  },
+  "jets": "exact support-length jets (\u00a79); no finite differences",
   "quadrature": {
-    "n_quad_derivative": 16384,
-    "n_quad_left_E2": 65536,
-    "derivative_quad_radius": 0.0005
+    "panel_schedule": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        2.0
+      ],
+      [
+        2.0,
+        4.0
+      ],
+      [
+        4.0,
+        8.0
+      ],
+      [
+        8.0,
+        16.0
+      ],
+      [
+        16.0,
+        32.0
+      ],
+      [
+        32.0,
+        64.0
+      ],
+      [
+        64.0,
+        84.0
+      ]
+    ],
+    "method": "arb_acb_integral_panelled"
   },
-  "left_endpoint": {
-    "L": "log(3)",
-    "E2_lower": 2.537215320624563e-06,
-    "E2_upper": 4.39097417193579e-06,
-    "definitely_positive": true
-  },
-  "E2_first_grid_min_lower": 0.0014216447278538223,
-  "E2_first_all_samples_definitely_positive": true,
-  "sample_rows": [
-    {
-      "L": 1.0986122886681098,
-      "E2_first_lower": 0.002058189608120306,
-      "E2_first_upper": 0.0030581896101430223,
-      "E2_mid": 3.464094735857101e-06,
-      "definitely_positive": true
-    },
-    {
-      "L": 1.1465593007434065,
-      "E2_first_lower": 0.0014216447278538223,
-      "E2_first_upper": 0.0024216447298765383,
-      "E2_mid": 0.00010676062025813933,
-      "definitely_positive": true
-    },
-    {
-      "L": 1.1945063128187035,
-      "E2_first_lower": 0.0018541073049248183,
-      "E2_first_upper": 0.0028541073069475345,
-      "E2_mid": 0.0002052021104835469,
-      "definitely_positive": true
-    },
-    {
-      "L": 1.2424533248940002,
-      "E2_first_lower": 0.004395459705577693,
-      "E2_first_upper": 0.005395459707600409,
-      "E2_mid": 0.0003701588448525968,
-      "definitely_positive": true
-    },
-    {
-      "L": 1.290400336969297,
-      "E2_first_lower": 0.009399367098426896,
-      "E2_first_upper": 0.010399367100449612,
-      "E2_mid": 0.0007057057978062224,
-      "definitely_positive": true
-    },
-    {
-      "L": 1.3383473490445938,
-      "E2_first_lower": 0.018056818619007105,
-      "E2_first_upper": 0.01905681862102982,
-      "E2_mid": 0.0013813226153059374,
-      "definitely_positive": true
-    },
-    {
-      "L": 1.3862943611198906,
-      "E2_first_lower": 0.03267643017207805,
-      "E2_first_upper": 0.03367643017410077,
-      "E2_mid": 0.0025935596408819947,
-      "definitely_positive": true
+  "dependencies": {
+    "source_hashes": {
+      "scripts/certify_t84_e1.py": "2dcba79986456a74e6054ab28850a66d8cc30a0e3369aad1f583482130674c8e",
+      "src/e1_t84.py": "16a966a36d9da1fc1a07753525ac55bd63058d429bd48628dd4c35e36cea61b3",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "03f5d4ac77cc4173a1544dd19e63c3bf03aa61da2513638aa860b90d410ce951",
+      "src/pole.py": "69ebe3e80b4600a780b657b2568090fe778ee683fc4ace5df41d514b514cb640",
+      "src/rigorous_integration.py": "17c49303df67f590d3543699cfa7735ba100ccdb3fdcce7fb32d41955a175ae2",
+      "src/t84.py": "7940e80bf737069f6c53bfcd6f3b48e837c2cfd45fcda2496aaa6117ac2df68f",
+      "src/weil_entries.py": "67fd54c3f0956fde310de321ecbc9d0c0b86fcd7323e86c204c0881963216e5f"
     }
-  ],
-  "derived_uniform_E2_lower": 2.537215320624563e-06,
-  "notebook_guide_note": "Notebook Run-18 described an interior E2 minimum near L\u22481.10595 with E2''>0 / E2'>0 split regions. The regenerated true Gram (pole outer-product calibrated at log3) is monotone in E2 on this cell; uniformity uses monotonicity rather than the notebook split.",
-  "dependencies": [
-    "e1_fourier_T84_points.json"
-  ],
-  "note": "rh_proof_claim remains false. E1 here is finite-block T=84 positivity only.",
-  "generated_utc": "2026-08-16T03:00:47Z",
-  "content_hash": "eefad58b3c365a2a647747fb79ac7329d6beec6039029f4792f8c519517ecbf2",
-  "quarantine": {
-    "reason": "Depends on the even pole block under adjudication (WO-RH-17). The repository block (sqrt(3)/2)(v+v+^T+v-v-^T) equals the explicit-formula pole times (sqrt(3)/2)cosh(L/2), which is 1 only at L = log 3; values at any other L carry that factor. Regenerate under the frozen normalization (WO-RH-19/20) before any promotion.",
-    "work_order": "WO-RH-17",
-    "adjudication_certificate": "normalization_adjudication.json",
-    "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
-    "prior_state": {
-      "hard_constraints_certified": true,
-      "status": "E1_UNIFORM_TRUE_WEIL_GRAM"
-    },
-    "pre_quarantine_content_hash": "cc0d02a92d1a91f8cf04e1df8387d840cf52c3d298a6b0eeee3035f629bc8d16",
-    "evidence_class_preserved": "E1",
-    "note": "not relabelled E3 on purpose; the historical claim is preserved as evidence",
-    "numerically_unaffected_at": "L = log 3 (the calibration fixed point) \u2014 still not promotable until regenerated"
   },
-  "promotion_state": "QUARANTINED_NORMALIZATION_ADJUDICATION"
+  "precision_bits": 140,
+  "mpmath_used": false,
+  "quick_mode": false,
+  "quarantine_released": {
+    "by": "ATLAS-RH-ENG-005 \u00a710",
+    "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
+    "authorised_because": "rigorous Candidate-A T=84 regeneration passed"
+  },
+  "generated_utc": "2026-08-24T17:26:23Z",
+  "content_hash": "9a33d953d7dd29b7f03f3e66122f21cfecc5f36620aa96d84000ef57f79f7548"
 }

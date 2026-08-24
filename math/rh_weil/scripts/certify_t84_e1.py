@@ -294,9 +294,13 @@ def _interior_summary() -> dict:
 
 
 def _write(name: str, body: dict, release: bool):
-    if release and body.get("status") == "PASS":
-        import normalization as N
+    import normalization as N
 
+    # Only a certificate the WO-RH-17 quarantine actually covers gets a release
+    # block. The interior-minimum certificate is new in ENG-005 and was never
+    # quarantined, so stamping it "previous_state: QUARANTINED..." would be a
+    # false provenance claim about a file that has no such history.
+    if release and body.get("status") == "PASS" and N.is_quarantined_certificate(name):
         body["quarantine_released"] = {
             "by": body["work_order"],
             "previous_state": N.QUARANTINE_STATE,
