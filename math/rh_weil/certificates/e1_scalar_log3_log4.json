@@ -1,16 +1,77 @@
 {
-  "certificate_version": "0.3",
-  "program": "RH/Weil scalar cell numerical path",
-  "work_order": "WO-RH-09",
-  "evidence_class": "E1_SAMPLES_PLUS_E0_CURVATURE",
-  "status": "ABSOLUTE_G00_REGENERATED_PENDING_FULL_CELL_COVER",
-  "hard_constraints_certified": false,
+  "certificate_version": "1.0",
+  "program": "RH/Weil scalar cell \u2014 Candidate-A E1 canary",
+  "work_order": "ATLAS-RH-ENG-004",
+  "evidence_class": "E1",
+  "rigorous": true,
+  "status": "PASS",
+  "hard_constraints_certified": true,
+  "promotion_state": "PROMOTED",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "claim_scope": "finite_dimensional_weil_compression",
   "rh_proof_claim": false,
-  "normalization": "G = G0 - Gp + Ginf",
   "domain": {
     "L_interval": [
       "log(3)",
       "log(4)"
+    ],
+    "L_left": "1.0986122886681098",
+    "L_right": "1.3862943611198906",
+    "closed": true,
+    "prime_power_breakpoints": "log 3 and log 4 are the cell endpoints; none interior"
+  },
+  "claim": "G00(L) = G0 - Gp + Ginf >= certified_lower_bound > 0 for every L in [log 3, log 4], with G0 the adjudicated Candidate-A pole.",
+  "certified_lower_bound": "0.06962397439120689",
+  "anchor_L": "1.2728",
+  "pole_candidate": "A",
+  "pole_formula": "G0_ij = E_i^+ E_j^- + E_i^- E_j^+, E_i^\u00b1 = int_0^L h_i(x) e^{\u00b1x/2} dx",
+  "convexity_certificate": {
+    "identity": "G00'' = 4cosh(L/2) - e^{L/2}/sinh(L) = 2(r^3-r-1)/(sqrt(r)(r^2-1))",
+    "e0_algebraic_reason": "For r\u2208[3.0,4.0], r\u00b3-r-1 \u2265 23.0 > 0 and \u221ar(r\u00b2-1)>0 \u21d2 W00''(L)=2(r\u00b3-r-1)/(\u221ar(r\u00b2-1)) > 0 algebraically.",
+    "pole_second_derivative": "4 cosh(L/2)  (Candidate A)",
+    "prime_second_derivative": "0 (piecewise linear; breakpoints are the cell endpoints)",
+    "arch_second_derivative": "-e^{L/2}/sinh(L)  (cosine transform of h_+)",
+    "cover_panels": 32,
+    "assembled_curvature_min_lower": 3.3139116540260147,
+    "assembled_matches_e0_on_every_panel": true,
+    "evidence_class": "E0"
+  },
+  "tail_lemma": {
+    "statement": "t h_+'(t) <= 1 + 1.29904/t, hence <= kappa(T) = 1 + 1.3/T on [T, inf)",
+    "upper_bound": "7.237222219837903e-05",
+    "sign": "non-negative: h_+ increasing and h_+(T) > 0, so dropping the tail can only lower the certified bound",
+    "kappa": 1.0000065,
+    "numeric_corroboration": [
+      {
+        "t": 2.0,
+        "t_h_plus_prime_upper": 1.0601037727205234,
+        "kappa_bound": 1.65,
+        "holds": true
+      },
+      {
+        "t": 10.0,
+        "t_h_plus_prime_upper": 1.000836273015684,
+        "kappa_bound": 1.13,
+        "holds": true
+      },
+      {
+        "t": 1000.0,
+        "t_h_plus_prime_upper": 0.9999962966667395,
+        "kappa_bound": 1.0013,
+        "holds": true
+      },
+      {
+        "t": 100000.0,
+        "t_h_plus_prime_upper": 0.9999984258700323,
+        "kappa_bound": 1.000013,
+        "holds": true
+      },
+      {
+        "t": 200000.0,
+        "t_h_plus_prime_upper": 0.9999996064859974,
+        "kappa_bound": 1.0000065,
+        "holds": true
+      }
     ]
   },
   "structural_report": {
@@ -26,66 +87,268 @@
     "evidence_class": "E0",
     "rh_proof_claim": false
   },
-  "samples": [
+  "grid": [
     {
-      "L": 1.0986122896681099,
-      "W00_second_lower": 3.3197640499693275,
-      "W00_second_upper": 3.3197640499693275,
-      "G00_lower": 0.12611902925836344,
-      "G00_upper": 0.13834327797066376,
-      "G00_definitely_positive": true
+      "L": "1.0986122886681098",
+      "G00_lower": "0.13435554996753674",
+      "G00_upper": "0.13442792218973512"
     },
     {
-      "L": 1.1059498113,
-      "W00_second_lower": 3.335377505438275,
-      "W00_second_upper": 3.335377505438275,
-      "G00_lower": 0.1261454985033721,
-      "G00_upper": 0.1383697472156724,
-      "G00_definitely_positive": true
+      "L": "1.1345725477245825",
+      "G00_lower": "0.11357397004936547",
+      "G00_upper": "0.11364634227156385"
     },
     {
-      "L": 1.2,
-      "W00_second_lower": 3.5347290746906297,
-      "W00_second_upper": 3.5347290746906297,
-      "G00_lower": 0.15791911623486102,
-      "G00_upper": 0.17014336494716134,
-      "G00_definitely_positive": true
+      "L": "1.170532806781055",
+      "G00_lower": "0.0971840744187609",
+      "G00_upper": "0.09725644664095928"
     },
     {
-      "L": 1.3862943601198905,
-      "W00_second_lower": 3.9333333311577774,
-      "W00_second_upper": 3.9333333311577774,
-      "G00_lower": 0.41847815464393195,
-      "G00_upper": 0.4307024033562323,
-      "G00_definitely_positive": true
+      "L": "1.2064930658375275",
+      "G00_lower": "0.08528439713249579",
+      "G00_upper": "0.08535676935469418"
+    },
+    {
+      "L": "1.2424533248940002",
+      "G00_lower": "0.07797341513163861",
+      "G00_upper": "0.07804578735383699"
+    },
+    {
+      "L": "1.2628",
+      "G00_lower": "0.07590681915458712",
+      "G00_upper": "0.07597919137678551"
+    },
+    {
+      "L": "1.2678",
+      "G00_lower": "0.07563071118539962",
+      "G00_upper": "0.075703083407598"
+    },
+    {
+      "L": "1.2728",
+      "G00_lower": "0.07544656871107838",
+      "G00_upper": "0.07551894093327677"
+    },
+    {
+      "L": "1.2778",
+      "G00_lower": "0.07535465783182074",
+      "G00_upper": "0.07542703005401913"
+    },
+    {
+      "L": "1.2784135839504729",
+      "G00_lower": "0.07534974523929773",
+      "G00_upper": "0.07542211746149612"
+    },
+    {
+      "L": "1.2828",
+      "G00_lower": "0.07535524480661833",
+      "G00_upper": "0.07542761702881672"
+    },
+    {
+      "L": "1.2877999999999998",
+      "G00_lower": "0.07544859614673012",
+      "G00_upper": "0.0755209683689285"
+    },
+    {
+      "L": "1.2928",
+      "G00_lower": "0.07563497864207333",
+      "G00_upper": "0.07570735086427172"
+    },
+    {
+      "L": "1.2977999999999998",
+      "G00_lower": "0.07591465930480902",
+      "G00_upper": "0.0759870315270074"
+    },
+    {
+      "L": "1.3028",
+      "G00_lower": "0.07628790528661322",
+      "G00_upper": "0.07636027750881161"
+    },
+    {
+      "L": "1.3143738430069454",
+      "G00_lower": "0.0775123180720044",
+      "G00_upper": "0.07758469029420278"
+    },
+    {
+      "L": "1.3503341020634179",
+      "G00_lower": "0.08456053476080835",
+      "G00_upper": "0.08463290698300674"
+    },
+    {
+      "L": "1.3862943611198906",
+      "G00_lower": "0.09659441261953398",
+      "G00_upper": "0.09666678484173237"
     }
   ],
-  "min_sample_W00_second_lower": 3.3197640499693275,
-  "min_sample_G00_lower": 0.12611902925836344,
-  "all_sample_G00_definitely_positive": true,
+  "tangent_certificates": [
+    {
+      "L": "1.1345725477245825",
+      "slope_lower": "-0.5799166270637871",
+      "slope_upper": "-0.4537654576620519",
+      "tangent_lower_bound": "-0.03240369493322161"
+    },
+    {
+      "L": "1.170532806781055",
+      "slope_lower": "-0.4577905800664668",
+      "slope_upper": "-0.3288993287143165",
+      "tangent_lower_bound": "-0.0015895326980571445"
+    },
+    {
+      "L": "1.2064930658375275",
+      "slope_lower": "-0.33292445111873137",
+      "slope_upper": "-0.20129470611685915",
+      "tangent_lower_bound": "0.025424149590178108"
+    },
+    {
+      "L": "1.2424533248940002",
+      "slope_lower": "-0.20531982852127403",
+      "slope_upper": "-0.09801226708854516",
+      "tangent_lower_bound": "0.04843999823941643"
+    },
+    {
+      "L": "1.2628",
+      "slope_lower": "-0.10512617850860267",
+      "slope_upper": "-0.040747149397823035",
+      "tangent_lower_bound": "0.06292432890269166"
+    },
+    {
+      "L": "1.2678",
+      "slope_lower": "-0.06969603827717669",
+      "slope_upper": "-0.02235405042456998",
+      "tangent_lower_bound": "0.06737212365715813"
+    },
+    {
+      "L": "1.2728",
+      "slope_lower": "-0.05130293930392492",
+      "slope_upper": "-0.003907731411850655",
+      "tangent_lower_bound": "0.06962397439120689"
+    },
+    {
+      "L": "1.2778",
+      "slope_lower": "-0.03285662029120431",
+      "slope_upper": "0.10994360205052213",
+      "tangent_lower_bound": "0.05565411540480357"
+    },
+    {
+      "L": "1.2784135839504729",
+      "slope_lower": "-0.1259563824344511",
+      "slope_upper": "0.017752941955285182",
+      "tangent_lower_bound": "0.06176147281282075"
+    },
+    {
+      "L": "1.2828",
+      "slope_lower": "-0.015245397181372421",
+      "slope_upper": "0.03314471246203614",
+      "tangent_lower_bound": "0.06925039607548232"
+    },
+    {
+      "L": "1.2877999999999998",
+      "slope_lower": "0.004195823582681202",
+      "slope_upper": "0.05175094350831791",
+      "tangent_lower_bound": "0.06565795358512552"
+    },
+    {
+      "L": "1.2928",
+      "slope_lower": "0.022802054628964258",
+      "slope_upper": "0.07041057698681669",
+      "tangent_lower_bound": "0.061962109843445544"
+    },
+    {
+      "L": "1.2977999999999998",
+      "slope_lower": "0.04146168810746175",
+      "slope_upper": "0.08912364080051544",
+      "tangent_lower_bound": "0.05816232526818889"
+    },
+    {
+      "L": "1.3028",
+      "slope_lower": "0.060174751921161784",
+      "slope_upper": "0.11204446153376775",
+      "tangent_lower_bound": "0.053409803118619176"
+    },
+    {
+      "L": "1.3143738430069454",
+      "slope_lower": "0.09953829186221518",
+      "slope_upper": "0.19801272565417477",
+      "tangent_lower_bound": "0.034788784605990226"
+    },
+    {
+      "L": "1.3503341020634179",
+      "slope_lower": "0.19398760324975986",
+      "slope_upper": "0.33665636451372943",
+      "tangent_lower_bound": "-0.00018321580565947015"
+    }
+  ],
+  "subdivision_statistics": {
+    "grid_points": 18,
+    "tangent_certificates": 16,
+    "quadrature_panels_per_point": 6,
+    "quadrature_panel_radius_max": 9.08019312889608e-31,
+    "prime_powers_in_cell": [
+      2,
+      3
+    ],
+    "observed_min_lower_on_grid": 0.07534974523929773,
+    "observed_argmin_on_grid": 1.2784135839504729,
+    "integral_options": {},
+    "backend": {
+      "name": "python-flint/Arb",
+      "version": "0.9.0",
+      "precision_bits": 200
+    }
+  },
   "backend": {
     "name": "python-flint/Arb",
     "version": "0.9.0",
-    "precision_bits": 192
+    "precision_bits": 200
   },
-  "notebook_regression_target_G00": "0.0753795566117244",
-  "notebook_target_in_regenerated_range": false,
-  "note": "W00''>0 remains E0 algebraic. Absolute G00 uses even pole outer-product + truncated Fourier + archimedean tail majorant. Regenerated scale (~0.12\u20130.13 near the cell minimizer) differs from the notebook 0.075\u2026 figure; notebook value is not a warrant. Promote to full-cell E1 after interval cover of the unique minimizer.",
-  "generated_utc": "2026-08-16T02:55:48Z",
-  "content_hash": "03d963e92f9fedfc48a29cd4fe73bdec6b83b6b35ff6df2a4e5b9cecfa6af809",
-  "quarantine": {
-    "reason": "Depends on the even pole block under adjudication (WO-RH-17). The repository block (sqrt(3)/2)(v+v+^T+v-v-^T) equals the explicit-formula pole times (sqrt(3)/2)cosh(L/2), which is 1 only at L = log 3; values at any other L carry that factor. Regenerate under the frozen normalization (WO-RH-19/20) before any promotion.",
-    "work_order": "WO-RH-17",
-    "adjudication_certificate": "normalization_adjudication.json",
-    "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
-    "prior_state": {
-      "hard_constraints_certified": true,
-      "status": "ABSOLUTE_G00_REGENERATED_PENDING_FULL_CELL_COVER"
-    },
-    "pre_quarantine_content_hash": "cec25e2af6241bfba032f58df347b60bc77fb3f32008e58fb3265de7a7ab9ba8",
-    "evidence_class_preserved": "E1_SAMPLES_PLUS_E0_CURVATURE",
-    "note": "not relabelled E3 on purpose; the historical claim is preserved as evidence",
-    "numerically_unaffected_at": "L = log 3 (the calibration fixed point) \u2014 still not promotable until regenerated"
+  "precision_bits": 200,
+  "T": 200000,
+  "mpmath_used": false,
+  "regression_review": {
+    "notebook_target_G00": "0.0753795566117244",
+    "status": "CONTAINED",
+    "containing_grid_enclosures": [
+      {
+        "L": "1.2778",
+        "enclosure": [
+          "0.07535465783182074",
+          "0.07542703005401913"
+        ]
+      },
+      {
+        "L": "1.2784135839504729",
+        "enclosure": [
+          "0.07534974523929773",
+          "0.07542211746149612"
+        ]
+      },
+      {
+        "L": "1.2828",
+        "enclosure": [
+          "0.07535524480661833",
+          "0.07542761702881672"
+        ]
+      }
+    ],
+    "observed_min_lower_on_grid": "0.07534974523929773",
+    "observed_argmin_on_grid": "1.2784135839504729",
+    "note": "Regression evidence only, never an acceptance constant. Recorded because the rejected Candidate B kept this entry above ~0.1276 on the cell, which put the historical minimum out of reach; Candidate A recovers it."
   },
-  "promotion_state": "QUARANTINED_NORMALIZATION_ADJUDICATION"
+  "dependencies": {
+    "source_hashes": {
+      "scripts/certify_scalar_canary.py": "a18eceab1ba44c07fd16ac8fb731f31dc47f93b1df93765d643267f9e6160972",
+      "src/interval_backend.py": "16a88ee30a863d3bd517e46ff3afed4e6ed44fa6fe3162f7762b7ee8bf6253a8",
+      "src/normalization.py": "03f5d4ac77cc4173a1544dd19e63c3bf03aa61da2513638aa860b90d410ce951",
+      "src/pole.py": "8117b9a130c69f44f1942876c78b9d260a1392b1879b2aad9b87bbdac89555bf",
+      "src/scalar.py": "7fda1299cdf5a69f14a00ff23b5b199fff8359897297c3f06f39f896053eed23",
+      "src/scalar_canary.py": "27cb419c6026bf92caef48056ba3be30619b2d6839b9c77ae961c34099020754"
+    }
+  },
+  "quick_mode": false,
+  "quarantine_released": {
+    "by": "ATLAS-RH-ENG-004 \u00a74 scalar canary",
+    "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
+    "authorised_because": "rigorous Candidate-A regeneration passed"
+  },
+  "generated_utc": "2026-08-24T10:16:24Z",
+  "content_hash": "31601bd690be58c521f14396f800ed1dae6ad85c27838b40b80adcf5d9d0cb9b"
 }
