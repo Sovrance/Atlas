@@ -155,8 +155,8 @@ def build_work_order_status() -> Dict[str, Any]:
         "certificate_version": "0.2",
         "program": "RH/Weil work-order status",
         "rh_proof_claim": False,
-        "eng_spec": ("ATLAS-RH-ENG-005 core E1 recovery and Candidate-A T=84 "
-                     "reconstruction (baseline: ENG-004)"),
+        "eng_spec": ("ATLAS-RH-ENG-006 Weil inertia, rank-trace, spectral moments "
+                     "and the degree-3 pilot (baseline: ENG-005)"),
         "orders": {
             "WO-RH-01": "done",
             "WO-RH-02": "done_E0_scalar_cell",
@@ -165,7 +165,7 @@ def build_work_order_status() -> Dict[str, Any]:
             "WO-RH-05": "recovered_ENG-005_cutoff_free_uniform_E1",
             "WO-RH-06": "done_partial_E0_certs_no_imported_promotion",
             "WO-RH-07": "done_dedicated_runner",
-            "WO-RH-08": "unblocked_pending_degree3_implementation",
+            "WO-RH-08": "done_ENG-006_odd_degree3_implemented_and_certified",
             "WO-RH-09": "recovered_ENG-004_scalar_canary_PROMOTED",
             "WO-RH-10": "recovered_ENG-005_assembly_real_space_archimedean",
             "WO-RH-11": "recovered_ENG-005_candidate_a_pole_wired",
@@ -179,6 +179,15 @@ def build_work_order_status() -> Dict[str, Any]:
             "ENG-004-P1": "done_candidate_a_centralised_scalar_canary_promoted",
             "ENG-004-P2": "done_ENG-005_degree1_degree2_T84_recovered",
             "ENG-005": "done_core_E1_recovery_and_T84_reconstruction",
+            "WO-RH-28": "done_generic_interval_hermitian_inertia_engine",
+            "WO-RH-29": "done_exact_congruence_sylvester_regression",
+            "WO-RH-30": "done_rank_trace_hilbert_schmidt_engine",
+            "WO-RH-31": "done_spectral_moments_and_b1_adapter",
+            "WO-RH-32": "done_odd_degree3_exact_block",
+            "WO-RH-33": "done_fresh_degree3_E3_scan",
+            "WO-RH-34": "done_degree3_E1_certificate",
+            "WO-RH-35": "done_pir_runner_ci_integration",
+            "WO-RH-36": "done_positivity_vs_inertia_moment_report",
         },
         # Historical values retained verbatim: WO-RH-17 forbids deleting contrary
         # evidence. These are what the tree claimed before the adjudication.
@@ -216,5 +225,14 @@ def build_work_order_status() -> Dict[str, Any]:
             "assuming no topology, and an interior-minimum argument locating L*; the "
             "headline bound is the sharper, floored at what the cover alone proves",
             "E1 filename prefixes may hold non-E1 status until gates close",
+            "ENG-006: WO-RH-08 (degree 3) is no longer blocked -- the odd degree-3 "
+            "block is implemented, its kernels are E0-verified, and it carries a "
+            "rigorous inertia result",
+            "ENG-006: inertia, rank-trace and spectral-moment certificates are "
+            "distinct content kinds from positivity; an inertia certificate never "
+            "satisfies a consumer that requires PSD",
+            "ENG-006: the prime-shift blocks of the odd degree-3 pair are each "
+            "indefinite on the cell, so termwise PSD domination is unavailable and "
+            "the assembled entry must be bounded as a whole",
         ],
     }

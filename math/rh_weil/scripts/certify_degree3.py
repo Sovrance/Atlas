@@ -74,8 +74,20 @@ DEPENDENCIES = (
 PRECISION_BITS = 160
 #: det bottoms out near 1.4e-6 and the interval-L enclosure widens like ~0.15*r,
 #: so separation needs r <~ 1e-5. Starting near that spacing means most boxes
-#: clear without splitting.
+#: clear without splitting. This is enough to decide the *signature*, which is
+#: all the stratification needs.
 INITIAL_CELLS = 8192
+
+#: The magnitude of the bound is a different question from the sign of it. A
+#: cover accepts a box the moment its lower end clears the target, so a cover
+#: sized just to decide positivity reports whatever the worst box happened to
+#: give -- for det that was 9.6e-11 against a true minimum near 1.4e-6, four
+#: orders low. A bound that far below the quantity it bounds is a weak
+#: certificate even though it is a true one (the same point ENG-005 made about
+#: E2). Halving the box radius halves the enclosure width, so a finer cover is
+#: used for the reported bounds: at r ~ 4.4e-6 the width is ~6.6e-7 and the
+#: bound lands near 1.1e-6, within a factor of 1.3 of the truth.
+BOUND_CELLS = {"O1": 8192, "det_odd3": 32768}
 
 
 def _common(status_ok: bool, work_order: str, quick: bool) -> dict:
@@ -159,11 +171,15 @@ def build_e1(scan_body: dict, *, quick: bool) -> tuple:
     if positive_definite:
         # §9 Outcome A names these two explicitly.
         for label, quantity in (("O1", "Oqq"), ("det_odd3", "det")):
+            boxes = cells if quick else BOUND_CELLS[label]
             cov = IC.adaptive_cover(
                 _evaluator(quantity, arb, acb, primes),
                 quantity=f"degree3_{label}", cell=cell, target=0.0,
-                initial_boxes=cells, max_depth=20)
+                initial_boxes=boxes, max_depth=20)
             bounds[label] = {"certified_lower_bound": repr(cov.certified_lower_bound),
+                             "grid_minimum_for_scale": (
+                                 scan_body.get("scan", {}).get("det_min_on_grid", {})
+                                 .get("det") if label == "det_odd3" else None),
                              "cover": cov.to_dict()}
 
     ok = bool(positive_definite) and all(
@@ -293,7 +309,11 @@ def build_moments(e1_body: dict, *, quick: bool) -> dict:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--release", action="store_true")
+    # Accepted for symmetry with the other certifiers and ignored on purpose:
+    # every artifact here is new in ENG-006, so none of them was ever under the
+    # WO-RH-17 quarantine and none has a marker to release.
+    ap.add_argument("--release", action="store_true",
+                    help="accepted and ignored; these artifacts were never quarantined")
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--stage", choices=["scan", "e1", "moments", "all"], default="all")
     ap.add_argument("--scan-points", type=int, default=61)

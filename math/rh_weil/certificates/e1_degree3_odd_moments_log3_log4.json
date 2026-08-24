@@ -23,7 +23,7 @@
       "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
       "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
       "ranktrace/theorem.py": "3079af3fd356a2ee4cc3f25e97eeca143e79271c66ed8d7f7adda89e52d59fac",
-      "scripts/certify_degree3.py": "9219497720af1c34a8e506ae838b619e617270236e02ecf961d6b64b466a1932",
+      "scripts/certify_degree3.py": "decfd3bfccda860180fa42a850dea21cdee769ca1193cee747d884a59f7b721d",
       "src/archimedean_realspace.py": "6d7170233bdda52006c2753f4063b39e91360c4c526a2a0f6e4bd468992cbdf7",
       "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
       "src/degree3.py": "54b316a68786136155cae7c9ee1b9810749793fcdf1855317c79accd30af310d",
@@ -36,12 +36,12 @@
   },
   "precision_bits": 160,
   "mpmath_used": false,
-  "quick_mode": true,
+  "quick_mode": false,
   "evidence_class": "E1",
   "rigorous": true,
-  "status": "QUICK_SMOKE_TEST_NOT_PROMOTABLE",
-  "hard_constraints_certified": false,
-  "promotion_state": "REFUSED",
+  "status": "PASS",
+  "hard_constraints_certified": true,
+  "promotion_state": "PROMOTED",
   "content_kind": "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
   "dimension": 2,
   "inertia_dependency": "WEIL_INERTIA_STRATIFICATION",
@@ -1042,6 +1042,6 @@
     }
   ],
   "note": "Moments are enclosures of traces of matrix powers. INSUFFICIENT_INFORMATION answers are certified results (\u00a76), not failures to compute.",
-  "generated_utc": "2026-08-24T21:27:37Z",
-  "content_hash": "67e43f8ca5b8d09f5dea95b3821c41171b1486f5654297d6070a97681616a62f"
+  "generated_utc": "2026-08-24T21:32:54Z",
+  "content_hash": "96b397e009d4da927b3f92b82947485e41df633ab20d4aff54f173c98809ccb8"
 }
