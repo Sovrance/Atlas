@@ -15,6 +15,7 @@
       -> degree-3 E3 scan
       -> degree-3 E1 positivity or inertia stratification
       -> degree-3 moments
+      -> formal theorem boundary (ENG-007 §12)
       -> PIR
       -> clean-tree / hash validation
 
@@ -71,6 +72,12 @@ DEGREE3_E1_ALTERNATIVES = (
 ENG006_CERTS = [
     ("e1_degree3_odd_moments_log3_log4.json", "degree3 moments"),
 ]
+
+#: ENG-007 artifact. Carries no numeric bound and no normalization binding: the
+#: theorems it reports are finite linear algebra over the reals, true whichever
+#: pole primitive Atlas adopted. It still has to reach PIR, because a formal
+#: warrant that nothing can read is not a warrant.
+FORMAL_CERT = "formal_theorem_certificate.json"
 
 
 def degree3_e1_certificate():
@@ -282,6 +289,37 @@ def stage_degree3() -> int:
     return 0
 
 
+def stage_formal() -> int:
+    """ENG-007 §10/§12: the theorem manifest gate, then the formal certificate.
+
+    The Lean layer runs when ``lake`` is on PATH and is skipped otherwise; the
+    offline layer -- source hashes, no ``sorry``, no project-local ``axiom``,
+    manifest self-hash, pinned toolchain -- runs unconditionally and is what
+    actually catches statement drift.
+    """
+    print("\n=== formal theorem boundary (ENG-007) ===")
+    import formal_evidence
+
+    if not formal_evidence.manifest_available():
+        print("  FAIL: no theorem manifest; run scripts/check_formal_manifest.py --write",
+              file=sys.stderr)
+        return 1
+    rc = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "certify_formal_boundary.py"), "--check"],
+        cwd=str(ROOT), env=_env(),
+    ).returncode
+    if rc:
+        return rc
+    cert = json.loads((CERT_DIR / FORMAL_CERT).read_text(encoding="utf-8"))
+    print(f"  proved: {len(cert.get('formal_theorem_ids') or ())} finite theorems")
+    print(f"  axioms: {', '.join(cert.get('axioms') or ()) or 'none'}")
+    for u in cert.get("unproved_statements") or ():
+        print(f"  recorded unproved: {u.get('id')} -> {u.get('status')} (warrant {u.get('warrant')})")
+    backed = sorted(cert.get("backs_certificates") or ())
+    print(f"  backs {len(backed)} numeric certificates; their numeric warrants are unchanged")
+    return 0
+
+
 def stage_pir() -> int:
     print("\n=== PIR ===")
     import pir_bridge
@@ -297,6 +335,8 @@ def stage_pir() -> int:
     expected = [n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
     if d3_name:
         expected.append(d3_name)
+    if (CERT_DIR / FORMAL_CERT).exists():
+        expected.append(FORMAL_CERT)
     missing = [n for n in expected if n not in promoted]
     if missing:
         print(f"  FAIL: recovered certificates did not reach PIR: {missing}", file=sys.stderr)
@@ -317,6 +357,8 @@ def stage_hashes() -> int:
     checked = [n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
     if d3_name:
         checked.append(d3_name)
+    if (CERT_DIR / FORMAL_CERT).exists():
+        checked.append(FORMAL_CERT)
     for name in checked:
         cert = json.loads((CERT_DIR / name).read_text(encoding="utf-8"))
         stale = promotion.stale_dependencies(cert)
@@ -376,7 +418,8 @@ def main() -> int:
             [sys.executable, str(ROOT / "tests" / "test_degree3_exact.py")]):
         return 1
 
-    for stage in (stage_engines, stage_degree3, stage_policy, stage_pir, stage_hashes):
+    for stage in (stage_engines, stage_degree3, stage_policy, stage_formal,
+                  stage_pir, stage_hashes):
         if stage():
             return 1
 

@@ -4,13 +4,15 @@
   "work_order": "WO-RH-16",
   "rh_proof_claim": false,
   "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
-  "n_facts": 15,
+  "n_facts": 16,
   "content_kinds": [
     "WEIL_INERTIA_CERTIFICATE",
     "WEIL_INERTIA_STRATIFICATION",
     "WEIL_RANK_TRACE_CERTIFICATE",
-    "WEIL_SPECTRAL_MOMENT_CERTIFICATE"
+    "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+    "FORMAL_THEOREM_CERTIFICATE"
   ],
+  "formal_manifest_id": "formal_sha256_3a3565111f8aaf0c1403bb699a8f3d06afb5b78ca0a148f9a510214b0a4f7988",
   "refused_promotions": [],
   "facts": [
     {
@@ -185,7 +187,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_9c02c5703d9c5ba0",
+      "fact_id": "fct_sha256_4adf295cbb10ac88",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -201,7 +203,16 @@
         "claim_scope": "finite_dimensional_weil_compression",
         "rh_proof_claim": false,
         "evidence_class_declared": "E1",
-        "satisfies_psd_requirement": false
+        "satisfies_psd_requirement": false,
+        "formal_manifest_id": "formal_sha256_3a3565111f8aaf0c1403bb699a8f3d06afb5b78ca0a148f9a510214b0a4f7988",
+        "formal_theorem_ids": [
+          "pd_two_by_two",
+          "certificate_even2_implies_pd",
+          "weil_basis_parity",
+          "odd_degree3_factorization"
+        ],
+        "numeric_warrant": "E1",
+        "logical_implication_warrant": "FORMAL"
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",
@@ -340,7 +351,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_8fd23199a49496f9",
+      "fact_id": "fct_sha256_28e00c3170f86498",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -357,7 +368,20 @@
         "rh_proof_claim": false,
         "evidence_class_declared": "E1",
         "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
-        "satisfies_psd_requirement": true
+        "satisfies_psd_requirement": true,
+        "formal_manifest_id": "formal_sha256_3a3565111f8aaf0c1403bb699a8f3d06afb5b78ca0a148f9a510214b0a4f7988",
+        "formal_theorem_ids": [
+          "inertia_congruence_positive",
+          "inertia_congruence_negative",
+          "inertia_congruence_rank",
+          "pd_two_by_two",
+          "certificate_even2_implies_pd",
+          "weil_basis_parity",
+          "odd_degree3_cross_block",
+          "odd_degree3_factorization"
+        ],
+        "numeric_warrant": "E1",
+        "logical_implication_warrant": "FORMAL"
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",
@@ -372,7 +396,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_9029c4e8c4086580",
+      "fact_id": "fct_sha256_bfdefef40b843889",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -389,7 +413,13 @@
         "rh_proof_claim": false,
         "evidence_class_declared": "E1",
         "content_kind": "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
-        "satisfies_psd_requirement": false
+        "satisfies_psd_requirement": false,
+        "formal_manifest_id": "formal_sha256_3a3565111f8aaf0c1403bb699a8f3d06afb5b78ca0a148f9a510214b0a4f7988",
+        "formal_theorem_ids": [
+          "rank_trace_hs"
+        ],
+        "numeric_warrant": "E1",
+        "logical_implication_warrant": "FORMAL"
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",
@@ -463,6 +493,67 @@
         {
           "location": "external/connes_cvs_crossvalidation_v0.1.json",
           "message": "external cross-check only"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_c01ae598fac9b2da",
+      "pir_level": "L2",
+      "evidence_level": "E0",
+      "analyzer": {
+        "id": "rh_weil.formal_theorem_certificate",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "formal_theorem_certificate.json",
+        "point_scoped": false,
+        "program": "RH/Weil finite theorem boundary",
+        "status": "PASS",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "FORMAL",
+        "content_kind": "FORMAL_THEOREM_CERTIFICATE",
+        "satisfies_psd_requirement": false,
+        "numeric_warrant": null,
+        "logical_implication_warrant": "FORMAL",
+        "formal_manifest_id": "formal_sha256_3a3565111f8aaf0c1403bb699a8f3d06afb5b78ca0a148f9a510214b0a4f7988",
+        "formal_theorem_ids": [
+          "inertia_congruence_positive",
+          "inertia_congruence_negative",
+          "inertia_congruence_rank",
+          "pd_two_by_two",
+          "pd_three_by_three",
+          "certificate_even2_implies_pd",
+          "weil_basis_parity",
+          "odd_degree3_cross_block",
+          "odd_degree3_factorization",
+          "rank_trace_hs"
+        ],
+        "lean_toolchain": "leanprover/lean4:v4.34.0-rc2",
+        "mathlib_commit": "f1c1e67f08f57b6d7088b1a98fdceab6da4407ee",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unproved_statements": [
+          {
+            "id": "rank_trace_general",
+            "status": "EXTERNAL_THEOREM_PENDING_FORMAL_PROOF",
+            "warrant": null
+          }
+        ]
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "formal_theorem_certificate.json",
+          "message": "machine-checked finite theorems only \u2014 proves implications, never a numeric bound"
         }
       ]
     }

@@ -29,11 +29,19 @@ from inertia.certificate import (  # noqa: E402
     satisfies_psd_requirement,
 )
 
+# ENG-007 §12: the formal channel. A formal theorem strengthens an exact
+# theorem dependency; it never converts interval numerical evidence to FORMAL.
+# The two warrants therefore travel in two separate fields on every fact, and
+# the formal artifact itself carries no numeric warrant at all.
+import formal_evidence  # noqa: E402
+from formal_evidence import KIND_FORMAL  # noqa: E402
+
 CONTENT_KINDS = (
     KIND_INERTIA,
     KIND_STRATIFICATION,
     "WEIL_RANK_TRACE_CERTIFICATE",
     "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+    KIND_FORMAL,
 )
 
 try:
@@ -114,6 +122,13 @@ def certs_to_facts() -> List[Any]:
         ("e3_degree3_odd_scan_log3_log4.json", "E3", "HEURISTIC",
          "fresh Candidate-A degree-3 scan — E3 evidence, never a warrant"),
         ("external/connes_cvs_crossvalidation_v0.1.json", "E3", "HEURISTIC", "external cross-check only"),
+        # ENG-007: the formal boundary. Emitted at E0 because every theorem it
+        # reports is an exact finite algebraic fact, machine-checked under a
+        # pinned toolchain -- PIR's ladder has no FORMAL rung, so the FORMAL
+        # warrant travels in the content as logical_implication_warrant rather
+        # than being smuggled into the evidence level.
+        ("formal_theorem_certificate.json", "E0", "SOUND",
+         "machine-checked finite theorems only — proves implications, never a numeric bound"),
     ]
     for fname, ev, tag, warn in mapping:
         cert = _load(fname)
@@ -142,6 +157,30 @@ def certs_to_facts() -> List[Any]:
         # PSD-requiring consumer reads one field instead of inferring positivity
         # from a signature it may not understand.
         content["satisfies_psd_requirement"] = bool(satisfies_psd_requirement(cert))
+        # §12: which warrant grades the numbers, and which grades the step from
+        # those numbers to the claim. They are different questions and a
+        # consumer that conflates them would read a proved implication as a
+        # certified value.
+        if kind == KIND_FORMAL:
+            content["numeric_warrant"] = None
+            content["logical_implication_warrant"] = cert.get(
+                "logical_implication_warrant", formal_evidence.FORMAL_WARRANT
+            )
+            content["formal_manifest_id"] = cert.get("formal_manifest_id")
+            content["formal_theorem_ids"] = list(cert.get("formal_theorem_ids") or ())
+            content["lean_toolchain"] = cert.get("lean_toolchain")
+            content["mathlib_commit"] = cert.get("mathlib_commit")
+            content["axioms"] = list(cert.get("axioms") or ())
+            content["unproved_statements"] = [
+                {"id": u.get("id"), "status": u.get("status"), "warrant": u.get("warrant")}
+                for u in cert.get("unproved_statements") or ()
+            ]
+        else:
+            formal = formal_evidence.formal_block(
+                fname, content["evidence_class_declared"]
+            )
+            if formal:
+                content.update(formal)
         if kind in (KIND_INERTIA, KIND_STRATIFICATION):
             content["inertia"] = {
                 "n_positive": cert.get("n_positive"),
@@ -201,6 +240,7 @@ def export_pir_facts(path: Path | None = None) -> Path:
             "active_normalization_id": _active_normalization_id(),
             "n_facts": len(facts),
             "content_kinds": list(CONTENT_KINDS),
+            "formal_manifest_id": formal_evidence.manifest_id(),
             "refused_promotions": refused_promotions(),
             "facts": [
                 {
