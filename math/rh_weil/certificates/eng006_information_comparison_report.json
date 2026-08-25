@@ -36,7 +36,7 @@
           0
         ],
         "uniform_bounds": {
-          "O1": "0.015331267702267608",
+          "O1": "0.015331267702040234",
           "det_odd3": "1.073120529992708e-06"
         }
       }
@@ -109,6 +109,6 @@
     "A null or weak result is preserved here rather than tuned away (\u00a710).",
     "E3: this is an interpretation of certified artifacts, not itself a certified claim. The numbers it quotes are certified; the comparisons it draws are commentary."
   ],
-  "generated_utc": "2026-08-25T02:13:30Z",
-  "content_hash": "52da8bafa8e825c5cbe097fe534ad6f9f223f7b515009a39460770902ce7105d"
+  "generated_utc": "2026-08-25T16:40:18Z",
+  "content_hash": "be2106852d7704b3fb43a3b7f044c93674090dedad57cac086f55f4d8cc564ed"
 }

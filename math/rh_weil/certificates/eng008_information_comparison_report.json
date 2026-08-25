@@ -1,0 +1,161 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil information comparison, 3x3 even block",
+  "work_order": "ATLAS-RH-ENG-008",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "rh_proof_claim": false,
+  "evidence_class": "E3",
+  "rigorous": false,
+  "hard_constraints_certified": false,
+  "psd_claim": false,
+  "status": "REPORT",
+  "subject": "3x3 even Weil block {1, b, b^2} on [log 3, log 4]",
+  "dimension": 3,
+  "inertia": [
+    [
+      3,
+      0,
+      0
+    ]
+  ],
+  "positivity_certified": true,
+  "questions": [
+    {
+      "question": "Did positivity alone fully characterize the block?",
+      "answer": "no -- and this is the first block in the program where that is true",
+      "why": "At 3x3 the trace and determinant no longer fix the spectrum: two matrices can share both and differ in signature. ENG-006's block was 2x2, where (trace > 0, det > 0) *is* the signature, so every channel there agreed with the determinant by construction. Here positivity is a genuine one-bit answer and the signature is three numbers."
+    },
+    {
+      "question": "What did inertia provide beyond positivity?",
+      "answer": "the answer would have survived a negative outcome; positivity would not",
+      "why": "The stratification route returns a signature for every L whether or not the block is definite. Had any part of the cell come out indefinite, the run would have produced strata and bounded transition regions rather than nothing. That the cell turned out to be one stratum is a fact about this block, not about the method.",
+      "signatures_seen": [
+        [
+          3,
+          0,
+          0
+        ]
+      ],
+      "transition_regions": [],
+      "boxes_examined": 2920
+    },
+    {
+      "question": "Did the moments alone force the inertia?",
+      "answer": "INSUFFICIENT_INFORMATION",
+      "why": "for n = 3 the map from a spectrum to (m1..m4) is not injective; the moments constrain the inertia but do not fix it",
+      "detail": "This is the substantive difference from ENG-006. At n = 2 the map from a spectrum to (m1, m2) is injective, so the moments recovered the inertia exactly and the channel looked stronger than it is. At n = 3 that map is not injective: the moments constrain the inertia and do not force it. The 2x2 result was an artefact of the dimension; this one is the general behaviour.",
+      "queries": {
+        "moments_force_psd": {
+          "query": "moments_force_psd",
+          "status": "INSUFFICIENT_INFORMATION",
+          "answer": null,
+          "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        "minimum_negative_eigenvalue_count": {
+          "query": "minimum_negative_eigenvalue_count",
+          "status": "INSUFFICIENT_INFORMATION",
+          "minimum": 0,
+          "reason": "no localizing obstruction found; 0 negatives stays feasible",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        "minimum_positive_eigenvalue_count": {
+          "query": "minimum_positive_eigenvalue_count",
+          "status": "CONCLUSIVE",
+          "minimum": 1,
+          "conclusion": "at least one eigenvalue is positive",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": false,
+            "definitely_not_psd": true,
+            "inertia": [
+              0,
+              2,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        "inertia_determined_by_moments": {
+          "query": "inertia_determined_by_moments",
+          "n": 3,
+          "status": "INSUFFICIENT_INFORMATION",
+          "determined": false,
+          "reason": "for n = 3 the map from a spectrum to (m1..m4) is not injective; the moments constrain the inertia but do not fix it"
+        },
+        "smallest_eigenvalue_bounds": {
+          "query": "smallest_eigenvalue_bounds",
+          "status": "CONCLUSIVE",
+          "lambda_min": {
+            "lo": "-0.044774014409155606",
+            "hi": "1.8569482149580262e-05"
+          },
+          "lambda_max": {
+            "lo": "0.08960373726475854",
+            "hi": "0.13439632115606376"
+          },
+          "tight": false,
+          "method": "wolkowicz_styan_from_m1_m2",
+          "note": "two-sided bounds only; m1 and m2 do not determine the spectrum for n = 3"
+        }
+      }
+    },
+    {
+      "question": "Did rank-trace improve on a trivial bound?",
+      "answer": "barely: rank >= 1 against a true rank of 3",
+      "why": "The inequality is tight at projections. This block's eigenvalues are nowhere near 1 -- its trace is around 0.1 across the whole cell, so all three eigenvalues together sum to a tenth of what a single unit eigenvalue would contribute -- and the bound degrades accordingly. Recorded as a weak result rather than tuned until it looked better.",
+      "certified_rank_lower_bound": 1,
+      "true_rank": 3,
+      "strictly_better_than_zero": true,
+      "attains_the_true_rank": false,
+      "weak": true,
+      "note": "ENG-006 reported rank >= 1 against a true rank of 2. The same shortfall at 3x3 gives rank >= 1 against 3, so the gap widened with dimension rather than closing."
+    },
+    {
+      "question": "What would determinant-only reporting have lost?",
+      "answer": "the sign pattern, and any indefinite outcome",
+      "why": "A positive determinant on a 3x3 is consistent with signature (3,0,0) and with (1,2,0) -- two negative eigenvalues multiply to a positive contribution. So det > 0 alone would not have distinguished a positive definite block from one with a two-dimensional negative subspace. That ambiguity does not exist at 2x2, which is the concrete sense in which this block exercises the machinery beyond what ENG-006 could.",
+      "worked_example": {
+        "signature_(3,0,0)": "eigenvalues (1, 1, 1), det = +1",
+        "signature_(1,2,0)": "eigenvalues (1, -1, -1), det = +1",
+        "conclusion": "identical determinant sign, different inertia"
+      },
+      "certified_determinant_lower_bound": "2.4352136989119354e-14"
+    }
+  ],
+  "caveats": [
+    "This is an interpretation of certified artifacts, not itself a certified claim: the numbers it quotes are certified, the comparisons it draws are commentary.",
+    "Every answer is about one block on one cell under one normalization.",
+    "A null or weak result is preserved here rather than tuned away."
+  ],
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_even3_information.py": "dc124d99dde5bcfe9ba7d207c244345a3c685c1579ffe886dd33a8511081b7b2"
+    }
+  },
+  "generated_utc": "2026-08-25T12:28:24Z",
+  "content_hash": "7a916189a69e747b88d35df8a3b206ab9c9d7d25a2e6833b8cf857697dc93e7a"
+}

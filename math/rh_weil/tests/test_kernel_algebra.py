@@ -137,7 +137,8 @@ class TheFactorizationIsRecoveredAndUsed(unittest.TestCase):
     derived engine evaluated the *expanded* polynomial instead, which is the same
     number on an exact carrier and a much wider one on a ball: the prime block's
     enclosure widened 3x for ``K_q1q1`` and 48x for ``K_b3b3``, costing the
-    degree-3 determinant bound 26% and the 3x3 third minor 73%.
+    degree-3 determinant bound 26%. (The 3x3 covers are insensitive: they only
+    ever evaluate kernels at box midpoints, via the centred mean-value form.)
 
     These tests pin both halves -- that the factorization is found, and that
     using it is what keeps the enclosures tight.

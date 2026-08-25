@@ -17,21 +17,21 @@
   },
   "dependencies": {
     "source_hashes": {
-      "inertia/certificate.py": "4acd4f716f94245974b06bef726d3592534dd3ea9c4b46e7845c68cae97fe742",
+      "inertia/certificate.py": "82ea60b71081bfd1c2005c6440996b4828c622aced3658253a33c9ba48f1d420",
       "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
       "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
       "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
       "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
       "ranktrace/theorem.py": "b6f2d310c778a2411ce0a44cafb69f5ee3487e473823127b5b8440f120004681",
       "scripts/certify_degree3.py": "cb0538391c4d937f7e4345fbf5a6d42165de22fce40b6bd287b4c9f2b2a3a47e",
-      "src/archimedean_realspace.py": "6d7170233bdda52006c2753f4063b39e91360c4c526a2a0f6e4bd468992cbdf7",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
       "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
       "src/degree3.py": "54b316a68786136155cae7c9ee1b9810749793fcdf1855317c79accd30af310d",
       "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "b33886a1ac351198a3cce1e91a461bc89bdaf9c97eaa421a6be751bd2840fa2f",
-      "src/weil_entries.py": "1ed480a115c62f5da8f42f427d0492b30a6c24f171856c5021534de9891b15db"
+      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
   "precision_bits": 160,
@@ -1335,6 +1335,6 @@
     "consequence": "the degree-3 Gram is block diagonal; the odd block is 2x2 and can be treated on its own"
   },
   "note": "E3 heuristic only. Eigenvalues here come from the closed 2x2 form at grid points; they locate apparent features and can never promote an E1 inertia claim (\u00a714.4).",
-  "generated_utc": "2026-08-24T23:43:05Z",
-  "content_hash": "62f2a955d9c9feaa432a96366f1bcb6dee0c8f941a1a75b15a24544beb7b8446"
+  "generated_utc": "2026-08-25T16:14:06Z",
+  "content_hash": "7f6dee6e49c8438c22329bae0c35eea83e7228cae05f5baffc232f8cfede306d"
 }

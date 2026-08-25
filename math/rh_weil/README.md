@@ -66,11 +66,11 @@ here that disagrees with its certificate fails the gate.
 | `T=84` degree-2 `E2,84`, points | `log 3`, `1.20`, `log 4` | positive at each | E1 | `e1_fourier_T84_points.json` |
 | `T=84` interior minimum | cell | `L*` isolated to `[1.1059498108971377, 1.1059498114329873]`, a strict interior minimum | E1 | `e1_fourier_T84_interior_minimum.json` |
 | `T=84` degree-2 uniform | cell | `E2,84(L) ≥ 3.4251152511218656e-06 > 0` | E1 | `e1_fourier_T84_uniform_degree2.json` |
-| odd degree-3 block | cell | positive definite, inertia `(2,0,0)`, one stratum, no transition regions; `O1 ≥ 0.015331267702267608`, `det ≥ 1.073120529992708e-06` | E1 | `e1_degree3_odd_positivity_log3_log4.json` |
+| odd degree-3 block | cell | positive definite, inertia `(2,0,0)`, one stratum, no transition regions; `O1 ≥ 0.015331267702040234`, `det ≥ 1.073120529992708e-06` | E1 | `e1_degree3_odd_positivity_log3_log4.json` |
 | rank–trace | 3 degree-3 sample points | `rank ≥ 1` — nontrivial but weak, against a true rank of 2 | E1 | `e1_degree3_odd_moments_log3_log4.json` |
 | spectral moments `m₁..m₄` | 3 degree-3 sample points | dimension 2; mixed conclusive / insufficient B1 queries | E1 | `e1_degree3_odd_moments_log3_log4.json` |
-| **3×3 even block `{1, b, b²}`** | cell | **positive definite, inertia `(3,0,0)`**, one stratum, no transition regions; `Δ1 ≥ 0.07537591825740127`, `Δ2 ≥ 3.335516179674528e-06`, `Δ3 ≥ 2.4352136989119354e-14` | E1 | `e1_degree4_even3_positivity_log3_log4.json` |
-| 3×3 even block, inertia route | cell | `(3,0,0)` by interval LDL* congruence, 2920 boxes, max depth 3 | E1 | `e1_degree4_even3_inertia_log3_log4.json` |
+| **3×3 even block `{1, b, b²}`** | cell | **positive definite, inertia `(3,0,0)`**, one stratum, no transition regions; `Δ1 ≥ 0.07537591825740127`, `Δ2 ≥ 3.4244304067666463e-06`, `Δ3 ≥ 6.451586222238981e-15` | E1 | `e1_degree4_even3_positivity_log3_log4.json` |
+| 3×3 even block, inertia route | cell | `(3,0,0)` by interval LDL* congruence, 2838 boxes, max depth 3 | E1 | `e1_degree4_even3_inertia_log3_log4.json` |
 | 3×3 even moments `m₁..m₄` | 5 sample points | moments do **not** force the inertia at `n = 3`; rank–trace `≥ 1` against a true rank of 3 | E1 | `e1_degree4_even3_moments_log3_log4.json` |
 | finite theorem boundary | — | 15 theorems proved in Lean 4 / Mathlib, no `sorry`, three standard axioms | FORMAL (implication only) | `formal_theorem_certificate.json` |
 | 3×3 even independent assembly | 5 points | agrees with the rigorous assembly to `1.5637e-13` | **E3 — regression only, never a warrant** | `e3_degree4_even3_crosscheck.json` |

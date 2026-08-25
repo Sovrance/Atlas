@@ -1,0 +1,397 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil 3x3 even block, independent assembly cross-check",
+  "work_order": "ATLAS-RH-ENG-008",
+  "content_kind": "WEIL_SCAN_PREVIEW",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "rh_proof_claim": false,
+  "evidence_class": "E3",
+  "rigorous": false,
+  "hard_constraints_certified": false,
+  "psd_claim": false,
+  "status": "PASS",
+  "mpmath_used": true,
+  "method": "second assembly of G = G0 - Gp + Ginf in mpmath, with the overlap kernels integrated symbolically by SymPy from their definition and the pole Laplace transforms evaluated by quadrature rather than in closed form; imports none of the modules it checks",
+  "independence": {
+    "shares_with_rigorous_path": "the formula only",
+    "does_not_import": [
+      "basis_algebra",
+      "pole",
+      "weil_entries",
+      "archimedean_realspace",
+      "even3"
+    ]
+  },
+  "worst_relative_difference": "1.5636871047679373e-13",
+  "points": [
+    {
+      "L": "1.09861228866811",
+      "entries": {
+        "G00": {
+          "rigorous_enclosure": [
+            "0.1343917359816934",
+            "0.13439173598169354"
+          ],
+          "independent_value": "0.13439173598169346",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "0.0"
+        },
+        "G01": {
+          "rigorous_enclosure": [
+            "0.00046500042187316826",
+            "0.00046500042187318984"
+          ],
+          "independent_value": "0.0004650004218731782",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.8652923678958764e-15"
+        },
+        "G02": {
+          "rigorous_enclosure": [
+            "-0.0006322031698816186",
+            "-0.0006322031698816136"
+          ],
+          "independent_value": "-0.0006322031698816162",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.7149584566121804e-16"
+        },
+        "G11": {
+          "rigorous_enclosure": [
+            "3.5552325292030164e-05",
+            "3.555232529203728e-05"
+          ],
+          "independent_value": "3.55523252920335e-05",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "6.2897910681876416e-15"
+        },
+        "G12": {
+          "rigorous_enclosure": [
+            "-2.758810147303922e-06",
+            "-2.758810147301895e-06"
+          ],
+          "independent_value": "-2.758810147302971e-06",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "2.2566584251567735e-14"
+        },
+        "G22": {
+          "rigorous_enclosure": [
+            "6.171813376750985e-06",
+            "6.171813376751608e-06"
+          ],
+          "independent_value": "6.171813376751277e-06",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "3.1565694873787103e-15"
+        }
+      },
+      "independent_minors": [
+        "0.13439173598169346",
+        "4.5617133218400155e-06",
+        "1.4543640779540854e-11"
+      ],
+      "rigorous_minors": [
+        "0.13439173598169346",
+        "4.561713321840045e-06",
+        "1.4543640779541058e-11"
+      ]
+    },
+    {
+      "L": "1.170532806781055",
+      "entries": {
+        "G00": {
+          "rigorous_enclosure": [
+            "0.09722026064702323",
+            "0.09722026064702335"
+          ],
+          "independent_value": "0.09722026064702328",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.427458403778654e-16"
+        },
+        "G01": {
+          "rigorous_enclosure": [
+            "0.0021698472908533847",
+            "0.0021698472908534077"
+          ],
+          "independent_value": "0.0021698472908533955",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.9986700023651714e-16"
+        },
+        "G02": {
+          "rigorous_enclosure": [
+            "-0.00044323560150371977",
+            "-0.00044323560150371413"
+          ],
+          "independent_value": "-0.00044323560150371705",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "2.4461080490990577e-16"
+        },
+        "G11": {
+          "rigorous_enclosure": [
+            "0.00016438043489089055",
+            "0.00016438043489089906"
+          ],
+          "independent_value": "0.00016438043489089459",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.3191377346155926e-15"
+        },
+        "G12": {
+          "rigorous_enclosure": [
+            "-1.829896629596199e-05",
+            "-1.8298966295959233e-05"
+          ],
+          "independent_value": "-1.82989662959607e-05",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "4.814011080718417e-15"
+        },
+        "G22": {
+          "rigorous_enclosure": [
+            "4.19597551871514e-06",
+            "4.195975518716112e-06"
+          ],
+          "independent_value": "4.195975518715595e-06",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "7.469113894640225e-15"
+        }
+      },
+      "independent_minors": [
+        "0.09722026064702328",
+        "1.1272871459739994e-05",
+        "1.765065161587832e-11"
+      ],
+      "rigorous_minors": [
+        "0.0972202606470233",
+        "1.1272871459740013e-05",
+        "1.7650651615878876e-11"
+      ]
+    },
+    {
+      "L": "1.2",
+      "entries": {
+        "G00": {
+          "rigorous_enclosure": [
+            "0.087132612932396",
+            "0.08713261293239614"
+          ],
+          "independent_value": "0.08713261293239606",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.5927202617671837e-16"
+        },
+        "G01": {
+          "rigorous_enclosure": [
+            "0.0021067398784343177",
+            "0.002106739878434344"
+          ],
+          "independent_value": "0.00210673987843433",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "4.117080361306884e-16"
+        },
+        "G02": {
+          "rigorous_enclosure": [
+            "-0.00033159859913728693",
+            "-0.0003315985991372801"
+          ],
+          "independent_value": "-0.0003315985991372836",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.634811147131293e-16"
+        },
+        "G11": {
+          "rigorous_enclosure": [
+            "0.00024008397244929948",
+            "0.00024008397244931003"
+          ],
+          "independent_value": "0.00024008397244930455",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "9.03185799055737e-16"
+        },
+        "G12": {
+          "rigorous_enclosure": [
+            "-1.7978468701021337e-05",
+            "-1.797846870101775e-05"
+          ],
+          "independent_value": "-1.7978468701019653e-05",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "6.030559056589843e-15"
+        },
+        "G22": {
+          "rigorous_enclosure": [
+            "2.9021111525699616e-06",
+            "2.902111152571294e-06"
+          ],
+          "independent_value": "2.902111152570584e-06",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.5031194358271517e-14"
+        }
+      },
+      "independent_minors": [
+        "0.08713261293239606",
+        "1.64807909273118e-05",
+        "1.838578269109878e-11"
+      ],
+      "rigorous_minors": [
+        "0.08713261293239608",
+        "1.6480790927311815e-05",
+        "1.838578269109973e-11"
+      ]
+    },
+    {
+      "L": "1.314373843006945",
+      "entries": {
+        "G00": {
+          "rigorous_enclosure": [
+            "0.07754850404842754",
+            "0.07754850404842771"
+          ],
+          "independent_value": "0.07754850404842764",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.7895622846764434e-16"
+        },
+        "G01": {
+          "rigorous_enclosure": [
+            "-1.573066421874911e-05",
+            "-1.5730664218713936e-05"
+          ],
+          "independent_value": "-1.5730664218733983e-05",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.5636871047679373e-13"
+        },
+        "G02": {
+          "rigorous_enclosure": [
+            "-0.00021230147424819087",
+            "-0.00021230147424818047"
+          ],
+          "independent_value": "-0.00021230147424818613",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "2.17043204687156e-15"
+        },
+        "G11": {
+          "rigorous_enclosure": [
+            "0.00040420939119601324",
+            "0.0004042093911960306"
+          ],
+          "independent_value": "0.00040420939119602137",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.3411392660589113e-15"
+        },
+        "G12": {
+          "rigorous_enclosure": [
+            "1.6766087519416297e-05",
+            "1.6766087519423348e-05"
+          ],
+          "independent_value": "1.6766087519419627e-05",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.172078122193876e-14"
+        },
+        "G22": {
+          "rigorous_enclosure": [
+            "1.941688905505214e-06",
+            "1.9416889055083967e-06"
+          ],
+          "independent_value": "1.9416889055067077e-06",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "5.0167042031287516e-14"
+        }
+      },
+      "independent_minors": [
+        "0.07754850404842764",
+        "3.1345586155780366e-05",
+        "2.0957855062386473e-11"
+      ],
+      "rigorous_minors": [
+        "0.07754850404842763",
+        "3.134558615578041e-05",
+        "2.0957855062389145e-11"
+      ]
+    },
+    {
+      "L": "1.386294361119891",
+      "entries": {
+        "G00": {
+          "rigorous_enclosure": [
+            "0.09663059879144272",
+            "0.09663059879144284"
+          ],
+          "independent_value": "0.09663059879144278",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.4361690790892024e-16"
+        },
+        "G01": {
+          "rigorous_enclosure": [
+            "-0.0006521468528637729",
+            "-0.000652146852863745"
+          ],
+          "independent_value": "-0.00065214685286376",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.4962610813071056e-15"
+        },
+        "G02": {
+          "rigorous_enclosure": [
+            "-0.00044822318639288077",
+            "-0.000448223186392872"
+          ],
+          "independent_value": "-0.0004482231863928766",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "4.837778166768821e-16"
+        },
+        "G11": {
+          "rigorous_enclosure": [
+            "0.00035646019538536155",
+            "0.0003564601953853769"
+          ],
+          "independent_value": "0.00035646019538536876",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.2166319679125723e-15"
+        },
+        "G12": {
+          "rigorous_enclosure": [
+            "3.863796117626437e-05",
+            "3.8637961176271315e-05"
+          ],
+          "independent_value": "3.863796117626762e-05",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "5.787487001578251e-15"
+        },
+        "G22": {
+          "rigorous_enclosure": [
+            "7.592624577791249e-06",
+            "7.592624577794771e-06"
+          ],
+          "independent_value": "7.592624577792898e-06",
+          "independent_value_inside_enclosure": true,
+          "relative_difference": "1.4725915642475715e-14"
+        }
+      },
+      "independent_minors": [
+        "0.09663059879144278",
+        "3.401966660770277e-05",
+        "6.501353608259881e-11"
+      ],
+      "rigorous_minors": [
+        "0.09663059879144277",
+        "3.401966660770281e-05",
+        "6.501353608260138e-11"
+      ]
+    }
+  ],
+  "note": "E3. mpmath never certifies in this program; this is regression evidence that the rigorous assembly computes what it claims.",
+  "dependencies": {
+    "source_hashes": {
+      "inertia/certificate.py": "82ea60b71081bfd1c2005c6440996b4828c622aced3658253a33c9ba48f1d420",
+      "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
+      "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
+      "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
+      "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
+      "ranktrace/theorem.py": "b6f2d310c778a2411ce0a44cafb69f5ee3487e473823127b5b8440f120004681",
+      "scripts/certify_even3.py": "ca57f64d0e19978f5b2d4a75222087f76a8aa15031d54da0852ad70ede7ac96b",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "26c7e3f4fc43603132c686a9938665e63c477159b2933aa7239cb03e11c0c0be",
+      "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
+      "src/even3.py": "91079176c5480f2bf100a69c85fb62cc3d77cfcc4340f8c40d54151df48eebf3",
+      "src/independent_even3.py": "72cef0a99aa987d86957dbf915b1401c1ec1ea6310a58eacc85135a6f208a1c2",
+      "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "generated_utc": "2026-08-25T16:27:23Z",
+  "content_hash": "0fcc26c4ed5b0ffd46d8bcf3975c546758c6427d7da1156b35ca9f6c7b4474ac"
+}

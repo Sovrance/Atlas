@@ -309,7 +309,7 @@ def kernel_degree_in_a(i: str, j: str) -> int:
 # into every coefficient independently, so their widths stop cancelling. The
 # first version of this module evaluated the expanded form and the prime block's
 # enclosure widened by 3x for `K_q1q1` and 48x for `K_b3b3`, which cost the
-# degree-3 determinant bound 26% and the 3x3 third minor 73%.
+# degree-3 determinant bound 26%.
 #
 # So the factorization is recovered here, automatically, by synthetic division in
 # `a` at the root `a = L`, repeated while the remainder is exactly the zero

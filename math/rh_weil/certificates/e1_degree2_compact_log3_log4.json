@@ -45,7 +45,7 @@
       "2.0652586666890377e-06",
       "1.1005860909235486e-05"
     ],
-    "max_box_enclosure_width": "0.0002194964718000847",
+    "max_box_enclosure_width": "0.00021949647225483204",
     "initial_boxes": 32,
     "precision_bits": 220,
     "method": "adaptive_interval_branch_and_bound",
@@ -92,12 +92,12 @@
   "dependencies": {
     "source_hashes": {
       "scripts/certify_cutoff_free_e1.py": "543a3f1a5f7bb8297486a83a9087117f9688e188378166b334728fb70853cfdc",
-      "src/archimedean_realspace.py": "6d7170233bdda52006c2753f4063b39e91360c4c526a2a0f6e4bd468992cbdf7",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
       "src/curvature_derivation.py": "3531ccedf688aad63bbe238d8c9bc6e87e6681a50bdd2f763701431ba74fd691",
       "src/e1_cutoff_free.py": "1e74ff1c16fdd0c6eb33c840dce014f01479fb58028f724801df6f0390f43840",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "b33886a1ac351198a3cce1e91a461bc89bdaf9c97eaa421a6be751bd2840fa2f",
-      "src/weil_entries.py": "1ed480a115c62f5da8f42f427d0492b30a6c24f171856c5021534de9891b15db"
+      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
   "backend": 220,
@@ -110,6 +110,6 @@
     "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
     "authorised_because": "rigorous cutoff-free Candidate-A regeneration passed"
   },
-  "generated_utc": "2026-08-24T21:40:42Z",
-  "content_hash": "3be6131ae0a7d3b9f073f4279cebb4884aa1a58de0c5d8b6e303c29402a1a255"
+  "generated_utc": "2026-08-25T14:48:37Z",
+  "content_hash": "2a95cc1f0435be1af5f8bdc6cf3ec5a53dfff6e9a16fa1513e096b80ca17c905"
 }

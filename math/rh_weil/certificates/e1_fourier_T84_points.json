@@ -141,10 +141,10 @@
       "src/e1_t84.py": "b6dea4a0614d8447d68409a9a0317bddd07a89b453c553afe186903e786093d5",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "b33886a1ac351198a3cce1e91a461bc89bdaf9c97eaa421a6be751bd2840fa2f",
+      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
       "src/rigorous_integration.py": "17c49303df67f590d3543699cfa7735ba100ccdb3fdcce7fb32d41955a175ae2",
       "src/t84.py": "7940e80bf737069f6c53bfcd6f3b48e837c2cfd45fcda2496aaa6117ac2df68f",
-      "src/weil_entries.py": "1ed480a115c62f5da8f42f427d0492b30a6c24f171856c5021534de9891b15db"
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
   "precision_bits": 140,
@@ -155,6 +155,6 @@
     "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
     "authorised_because": "rigorous Candidate-A T=84 regeneration passed"
   },
-  "generated_utc": "2026-08-24T21:54:44Z",
-  "content_hash": "19ee9f8c3eb4a42aeda801698ae6fe393c4d088e8e5043d4a6473554fc13e6eb"
+  "generated_utc": "2026-08-25T15:06:51Z",
+  "content_hash": "a1cee551a5d7eca2750b5e1f0919f16114d8cec5cea4d0c8af09f88d59cc4a9d"
 }
