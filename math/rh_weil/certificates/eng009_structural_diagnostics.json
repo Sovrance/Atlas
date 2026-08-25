@@ -1,0 +1,282 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil cross-block structural diagnostics",
+  "work_order": "ATLAS-RH-ENG-008",
+  "prepared_for": "ATLAS-RH-ENG-009",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "rh_proof_claim": false,
+  "evidence_class": "E3",
+  "rigorous": false,
+  "hard_constraints_certified": false,
+  "psd_claim": false,
+  "status": "REPORT",
+  "cell": "[log 3, log 4]",
+  "blocks": [
+    {
+      "block": "scalar",
+      "basis": [
+        "one"
+      ],
+      "dimension": 1,
+      "certificate": "e1_scalar_log3_log4.json",
+      "smallest_certified_quantity": "0.06962397439120689",
+      "quantity": "G00",
+      "inertia": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "block": "degree-1 odd",
+      "basis": [
+        "q1"
+      ],
+      "dimension": 1,
+      "certificate": "e1_degree1_log3_log4.json",
+      "smallest_certified_quantity": "0.015026786946870317",
+      "quantity": "O1 = G[q1,q1]",
+      "inertia": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "block": "degree-2 even",
+      "basis": [
+        "one",
+        "b"
+      ],
+      "dimension": 2,
+      "certificate": "e1_degree2_compact_log3_log4.json",
+      "smallest_certified_quantity": "2.0652586666890377e-06",
+      "quantity": "E2 = det",
+      "inertia": [
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "block": "degree-3 odd",
+      "basis": [
+        "q1",
+        "b3"
+      ],
+      "dimension": 2,
+      "certificate": "e1_degree3_odd_positivity_log3_log4.json",
+      "smallest_certified_quantity": "1.073120529992708e-06",
+      "quantity": "det",
+      "leading_entry_bound": "0.015331267702267608",
+      "inertia": [
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "block": "degree-4 even",
+      "basis": [
+        "one",
+        "b",
+        "b2"
+      ],
+      "dimension": 3,
+      "certificate": "e1_degree4_even3_positivity_log3_log4.json",
+      "smallest_certified_quantity": "2.4352136989119354e-14",
+      "quantity": "Delta3 = det",
+      "leading_entry_bound": "0.07537591825740127",
+      "second_minor_bound": "3.335516179674528e-06",
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "preconditioner_exponents": [
+        -2,
+        -6,
+        -9
+      ],
+      "conditioning_note": "the raw third minor is ~1e-11 while the entries are O(1e-1); the frozen dyadic preconditioner brings the three rescaled minors to O(1), which is ten orders of magnitude and costs nothing -- the scaling is exact and the congruence theorem says the inertia is unchanged"
+    }
+  ],
+  "trace_and_moment_scales": [
+    {
+      "L": "1.09861228866811",
+      "label": "log3",
+      "trace": {
+        "lo": "0.13443346012036209",
+        "hi": "0.13443346012036236",
+        "width": "2.7755575615628914e-16"
+      },
+      "hs_norm_squared": {
+        "lo": "0.01806237182993503",
+        "hi": "0.018062371829935128",
+        "width": "9.71445146547012e-17"
+      },
+      "determinant": {
+        "lo": "1.4543640779533605e-11",
+        "hi": "1.454364077954851e-11",
+        "width": "1.4905406897293424e-23"
+      },
+      "trace_over_dimension": "0.04481115337345407",
+      "m2_over_dimension": "0.00602079060997836"
+    },
+    {
+      "L": "1.170532806781055",
+      "label": "L=1.170533",
+      "trace": {
+        "lo": "0.09738883705743279",
+        "hi": "0.09738883705743298",
+        "width": "1.942890293094024e-16"
+      },
+      "hs_norm_squared": {
+        "lo": "0.00946161617864116",
+        "hi": "0.009461616178641215",
+        "width": "5.551115123125783e-17"
+      },
+      "determinant": {
+        "lo": "1.7650651615858096e-11",
+        "hi": "1.765065161589966e-11",
+        "width": "4.1562594606521855e-23"
+      },
+      "trace_over_dimension": "0.032462945685810964",
+      "m2_over_dimension": "0.0031538720595470624"
+    },
+    {
+      "L": "1.2",
+      "label": "L=1.200000",
+      "trace": {
+        "lo": "0.08737559901599784",
+        "hi": "0.08737559901599803",
+        "width": "1.942890293094024e-16"
+      },
+      "hs_norm_squared": {
+        "lo": "0.0076012471527061535",
+        "hi": "0.007601247152706192",
+        "width": "3.8163916471489756e-17"
+      },
+      "determinant": {
+        "lo": "1.8385782691072093e-11",
+        "hi": "1.8385782691127366e-11",
+        "width": "5.527246702473473e-23"
+      },
+      "trace_over_dimension": "0.02912519967199931",
+      "m2_over_dimension": "0.0025337490509020574"
+    },
+    {
+      "L": "1.314373843006945",
+      "label": "L=1.314374",
+      "trace": {
+        "lo": "0.07795465512852902",
+        "hi": "0.07795465512852927",
+        "width": "2.498001805406602e-16"
+      },
+      "hs_norm_squared": {
+        "lo": "0.006014025070093971",
+        "hi": "0.0060140250700940106",
+        "width": "3.9898639947466563e-17"
+      },
+      "determinant": {
+        "lo": "2.095785506232734e-11",
+        "hi": "2.095785506245095e-11",
+        "width": "1.2361180278839307e-22"
+      },
+      "trace_over_dimension": "0.025984885042843048",
+      "m2_over_dimension": "0.0020046750233646635"
+    },
+    {
+      "L": "1.386294361119891",
+      "label": "log4",
+      "trace": {
+        "lo": "0.09699465161140583",
+        "hi": "0.09699465161140602",
+        "width": "1.942890293094024e-16"
+      },
+      "hs_norm_squared": {
+        "lo": "0.009338855129180717",
+        "hi": "0.009338855129180772",
+        "width": "5.551115123125783e-17"
+      },
+      "determinant": {
+        "lo": "6.501353608250295e-11",
+        "hi": "6.501353608269981e-11",
+        "width": "1.9686898578762059e-22"
+      },
+      "trace_over_dimension": "0.03233155053713531",
+      "m2_over_dimension": "0.003112951709726915"
+    }
+  ],
+  "candidate_invariants": [
+    {
+      "candidate": "every certified even/odd Weil block on this cell is positive definite",
+      "supported_by": [
+        "scalar",
+        "degree-1 odd",
+        "degree-2 even",
+        "degree-3 odd",
+        "degree-4 even"
+      ],
+      "status": "consistent with every block certified so far",
+      "falsifier": "a single cell, block or basis extension whose certified signature has a nonzero negative index. The stratification machinery would report it rather than fail, so this is a cheap test to run and not an assumption anything here rests on.",
+      "explicitly_not_claimed": "nothing about blocks at higher degree, other cells, or any infinite-dimensional limit"
+    },
+    {
+      "candidate": "the smallest certified minor falls by roughly five orders of magnitude per added dimension",
+      "observed": [
+        {
+          "dimension": 1,
+          "smallest_certified_quantity": "0.06962397439120689",
+          "block": "scalar"
+        },
+        {
+          "dimension": 1,
+          "smallest_certified_quantity": "0.015026786946870317",
+          "block": "degree-1 odd"
+        },
+        {
+          "dimension": 2,
+          "smallest_certified_quantity": "2.0652586666890377e-06",
+          "block": "degree-2 even"
+        },
+        {
+          "dimension": 2,
+          "smallest_certified_quantity": "1.073120529992708e-06",
+          "block": "degree-3 odd"
+        },
+        {
+          "dimension": 3,
+          "smallest_certified_quantity": "2.4352136989119354e-14",
+          "block": "degree-4 even"
+        }
+      ],
+      "status": "a numerical pattern across five blocks, not a theorem",
+      "falsifier": "a block whose certified determinant bound does not follow the trend, or the same blocks recertified with a sharper cover -- the bounds are lower bounds, so part of the decline is the cover's conservatism rather than the block's",
+      "explicitly_not_claimed": "any extrapolation to dimension 4 or beyond, and in particular no inference that the trend continues to a limit"
+    },
+    {
+      "candidate": "conditioning degrades with dimension faster than the determinant does",
+      "observed": {
+        "degree-2 even": "no preconditioner needed",
+        "degree-3 odd": "no preconditioner needed",
+        "degree-4 even": "ten orders of magnitude, dyadic diagonal"
+      },
+      "status": "one data point for the claim; recorded so ENG-009 can look for a second",
+      "falsifier": "a 4x4 block that certifies without preconditioning",
+      "explicitly_not_claimed": "any rate"
+    }
+  ],
+  "hard_boundary": "No infinite-dimensional theorem is inferred, suggested or implied by anything in this file. Every row is a finite block on one cell under one normalization, and the patterns across them are observations about five certificates, not evidence about a limit.",
+  "caveats": [
+    "Certified bounds are lower bounds, so differences between blocks mix the block's own scale with how hard the cover worked.",
+    "The rank-trace column is weak everywhere it appears and gets weaker with dimension; that is a property of the inequality at small eigenvalues, not of the blocks."
+  ],
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_even3_information.py": "dc124d99dde5bcfe9ba7d207c244345a3c685c1579ffe886dd33a8511081b7b2"
+    }
+  },
+  "generated_utc": "2026-08-25T12:28:24Z",
+  "content_hash": "a20370b5881c1839da20edf26ab956ba67e47a4cdac728f7e1ef6c79f2a0e466"
+}

@@ -22,7 +22,7 @@ Two independent routes reach that conclusion and both are kept.
 
 | route | what it does | outcome |
 |---|---|---|
-| interval LDL* congruence | eliminates the preconditioned block, stratifies the cell by signature | `(3,0,0)`, 2920 boxes, max depth 3 |
+| interval LDL* congruence | eliminates the preconditioned block, stratifies the cell by signature | `(3,0,0)`, 2838 boxes, max depth 3 |
 | Sylvester's criterion | three separate adaptive interval covers of the leading principal minors | `Δ1, Δ2, Δ3` all uniformly positive |
 
 They share the assembly and nothing after it. Agreement is therefore evidence;
@@ -184,7 +184,6 @@ The measured cost, on the box the certificates actually bind at:
 | prime block, `q1q1` | 3× wider |
 | prime block, `b3b3` | 48× wider |
 | degree-3 determinant bound | 26% lower |
-| 3×3 third minor `Δ3` | 73% lower |
 
 The fix is to recover the factorization rather than to special-case it: repeated
 exact synthetic division of the bivariate kernel by `(a − L)` in `a`, at the root
@@ -196,8 +195,17 @@ restores every radius bit-for-bit, and the degree-3 determinant enclosure back t
 
 The multiplicities are pinned as literals in `tests/test_kernel_algebra.py`, and
 one test measures the width ratio on a ball directly, so the factorization
-silently ceasing to be *used* fails a gate rather than quietly costing 73% of a
-bound.
+silently ceasing to be *used* fails a gate rather than quietly costing a quarter
+of a bound.
+
+One path turned out *insensitive* to this regression, and recording why is part
+of the record: the 3×3 block's own covers reproduce bit-identically across the
+fix. Its entries are assembled in the centred mean-value form, so the kernels
+are only ever evaluated at the *midpoint* of a box — a point, where expanded and
+factored evaluation differ below what a double can express — and all of a box's
+width comes from the derivative enclosure, which is a different code path. The
+degree-3 covers, by contrast, evaluate entries directly on wide balls, which is
+where the 26% came from and went back to.
 
 The same tests record why the multiplicity claim is restricted to same-parity
 pairs: a cross-parity kernel is the **zero polynomial** in `(a, L)`, exactly —
@@ -300,8 +308,8 @@ Read from the certificates by `scripts/check_docs.py`, not transcribed.
 | quantity | bound (raw) | bound (preconditioned) |
 |---|---|---|
 | `Δ1` | `≥ 0.07537591825740127` | `≥ 1.2060146921184203` |
-| `Δ2` | `≥ 3.335516179674528e-06` | `≥ 0.21859638835114986` |
-| `Δ3` | `≥ 2.4352136989119354e-14` | `≥ 0.00041836652782391813` |
+| `Δ2` | `≥ 3.4244304067666463e-06` | `≥ 0.22442347113785893` |
+| `Δ3` | `≥ 6.451586222238981e-15` | `≥ 0.00011083740732736244` |
 
 The `Δ3` bound is conservative: pointwise determinants across the cell run from
 `1.4e-11` to `6.5e-11`, so the certified lower bound sits well below the true

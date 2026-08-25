@@ -1,0 +1,1042 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil 3x3 even block, spectral moments and rank-trace",
+  "work_order": "ATLAS-RH-ENG-008",
+  "content_kind": "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "rh_proof_claim": false,
+  "evidence_class": "E1",
+  "rigorous": true,
+  "hard_constraints_certified": true,
+  "psd_claim": false,
+  "status": "PASS",
+  "mpmath_used": false,
+  "dimension": 3,
+  "basis": {
+    "basis_id": "weil_even3_one_b_b2_v1",
+    "elements": [
+      "one",
+      "b",
+      "b2"
+    ],
+    "definitions": {
+      "one": "1",
+      "b": "x(L - x)",
+      "b2": "x^2 (L - x)^2 = b(x)^2"
+    },
+    "parity_about_midpoint": {
+      "one": "even",
+      "b": "even",
+      "b2": "even"
+    },
+    "spans_in_u": "span{1, u^2, u^4} with u = x - L/2",
+    "kernel_degrees_in_a": {
+      "one_one": 1,
+      "one_b": 3,
+      "one_b2": 5,
+      "b_b": 5,
+      "b_b2": 7,
+      "b2_b2": 9
+    }
+  },
+  "observed_inertia": [
+    3,
+    0,
+    0
+  ],
+  "points": [
+    {
+      "label": "log3",
+      "L": "1.09861228866811",
+      "trace": {
+        "lo": "0.13443346012036209",
+        "hi": "0.13443346012036236",
+        "width": "2.7755575615628914e-16"
+      },
+      "hs_norm_squared": {
+        "lo": "0.01806237182993503",
+        "hi": "0.018062371829935128",
+        "width": "9.71445146547012e-17"
+      },
+      "determinant": {
+        "lo": "1.4543640779533605e-11",
+        "hi": "1.454364077954851e-11",
+        "width": "1.4905406897293424e-23"
+      },
+      "moments": {
+        "m1": {
+          "lo": "0.13443346012036209",
+          "hi": "0.13443346012036236",
+          "width": "2.7755575615628914e-16"
+        },
+        "m2": {
+          "lo": "0.01806237182993503",
+          "hi": "0.018062371829935128",
+          "width": "9.71445146547012e-17"
+        },
+        "m3": {
+          "lo": "0.0024275161372234043",
+          "hi": "0.002427516137223418",
+          "width": "1.3877787807814457e-17"
+        },
+        "m4": {
+          "lo": "0.0003262492341096003",
+          "hi": "0.0003262492341096032",
+          "width": "2.927345865710862e-18"
+        }
+      },
+      "b1_queries": [
+        {
+          "query": "moments_force_psd",
+          "status": "INSUFFICIENT_INFORMATION",
+          "answer": null,
+          "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "minimum_negative_eigenvalue_count",
+          "status": "INSUFFICIENT_INFORMATION",
+          "minimum": 0,
+          "reason": "no localizing obstruction found; 0 negatives stays feasible",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "minimum_positive_eigenvalue_count",
+          "status": "CONCLUSIVE",
+          "minimum": 1,
+          "conclusion": "at least one eigenvalue is positive",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": false,
+            "definitely_not_psd": true,
+            "inertia": [
+              0,
+              2,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "smallest_eigenvalue_bounds",
+          "status": "CONCLUSIVE",
+          "lambda_min": {
+            "lo": "-0.044774014409155606",
+            "hi": "1.8569482149580262e-05"
+          },
+          "lambda_max": {
+            "lo": "0.08960373726475854",
+            "hi": "0.13439632115606376"
+          },
+          "tight": false,
+          "method": "wolkowicz_styan_from_m1_m2",
+          "note": "two-sided bounds only; m1 and m2 do not determine the spectrum for n = 3"
+        },
+        {
+          "query": "inertia_determined_by_moments",
+          "n": 3,
+          "status": "INSUFFICIENT_INFORMATION",
+          "determined": false,
+          "reason": "for n = 3 the map from a spectrum to (m1..m4) is not injective; the moments constrain the inertia but do not fix it"
+        }
+      ],
+      "b1_hankel_view": {
+        "available": false,
+        "reason": "B1 is exact-rational; these moments are enclosures"
+      },
+      "rank_trace": {
+        "content_kind": "WEIL_RANK_TRACE_CERTIFICATE",
+        "status": "PASS",
+        "theorem_id": "rank_trace_hs_v1",
+        "statement": "rank(P) >= 2 tr(P) + 4 tr(Q) - 4 b - ||P + Q||_HS^2",
+        "hypotheses": {
+          "P_positive_semidefinite": {
+            "statement": "P is positive semidefinite",
+            "verified": true,
+            "evidence": {
+              "why": "certified inertia (3,0,0) on this cell",
+              "certificate": "e1_degree4_even3_inertia_log3_log4.json"
+            }
+          },
+          "Q_hermitian": {
+            "statement": "Q is Hermitian",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "trivially Hermitian": true
+            }
+          },
+          "Q_positive_index_at_most_b": {
+            "statement": "Q has at most b positive directions",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "positive_index": 0,
+              "b": 0
+            }
+          },
+          "shared_normalization": {
+            "statement": "all terms use the theorem's normalization",
+            "verified": true,
+            "evidence": {
+              "requirement": "spectrum of P contained in [0, 1]",
+              "lambda_min_lower": "0 (P is positive semidefinite)",
+              "lambda_max_upper": "0.13443346012036236",
+              "argument": "lambda_min >= 0 from the certified inertia; lambda_max <= tr(P) because P is PSD, so every eigenvalue is bounded by the sum of them all. No eigenvalue solver is used or needed.",
+              "eigenvalue_solver_used": false
+            }
+          }
+        },
+        "inputs": {
+          "trace_P": {
+            "lo": "0.13443346012036209",
+            "hi": "0.13443346012036236"
+          },
+          "trace_Q": {
+            "lo": "0",
+            "hi": "0"
+          },
+          "hs_sq_P_plus_Q": {
+            "lo": "0.01806237182993503",
+            "hi": "0.018062371829935128"
+          },
+          "positive_index_Q_bound": 0,
+          "normalization": "trace_normalized_finite_dimensional"
+        },
+        "result": {
+          "rhs_enclosure": {
+            "lo": "0.25080454841078903",
+            "hi": "0.2508045484107897"
+          },
+          "certified_rank_lower_bound": 1,
+          "trivial": false,
+          "interpretation": "rank(P) >= 1 on these inputs"
+        },
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false
+      }
+    },
+    {
+      "label": "L=1.170533",
+      "L": "1.170532806781055",
+      "trace": {
+        "lo": "0.09738883705743279",
+        "hi": "0.09738883705743298",
+        "width": "1.942890293094024e-16"
+      },
+      "hs_norm_squared": {
+        "lo": "0.00946161617864116",
+        "hi": "0.009461616178641215",
+        "width": "5.551115123125783e-17"
+      },
+      "determinant": {
+        "lo": "1.7650651615858096e-11",
+        "hi": "1.765065161589966e-11",
+        "width": "4.1562594606521855e-23"
+      },
+      "moments": {
+        "m1": {
+          "lo": "0.09738883705743279",
+          "hi": "0.09738883705743298",
+          "width": "1.942890293094024e-16"
+        },
+        "m2": {
+          "lo": "0.00946161617864116",
+          "hi": "0.009461616178641215",
+          "width": "5.551115123125783e-17"
+        },
+        "m3": {
+          "lo": "0.0009203373674649674",
+          "hi": "0.0009203373674649729",
+          "width": "5.421010862427522e-18"
+        },
+        "m4": {
+          "lo": "8.952192379105255e-05",
+          "hi": "8.952192379105342e-05",
+          "width": "8.673617379884035e-19"
+        }
+      },
+      "b1_queries": [
+        {
+          "query": "moments_force_psd",
+          "status": "INSUFFICIENT_INFORMATION",
+          "answer": null,
+          "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "minimum_negative_eigenvalue_count",
+          "status": "INSUFFICIENT_INFORMATION",
+          "minimum": 0,
+          "reason": "no localizing obstruction found; 0 negatives stays feasible",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "minimum_positive_eigenvalue_count",
+          "status": "CONCLUSIVE",
+          "minimum": 1,
+          "conclusion": "at least one eigenvalue is positive",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": false,
+            "definitely_not_psd": true,
+            "inertia": [
+              0,
+              2,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "smallest_eigenvalue_bounds",
+          "status": "CONCLUSIVE",
+          "lambda_min": {
+            "lo": "-0.032344912123981925",
+            "hi": "5.901678091478817e-05"
+          },
+          "lambda_max": {
+            "lo": "0.0648668745907071",
+            "hi": "0.09727080349560384"
+          },
+          "tight": false,
+          "method": "wolkowicz_styan_from_m1_m2",
+          "note": "two-sided bounds only; m1 and m2 do not determine the spectrum for n = 3"
+        },
+        {
+          "query": "inertia_determined_by_moments",
+          "n": 3,
+          "status": "INSUFFICIENT_INFORMATION",
+          "determined": false,
+          "reason": "for n = 3 the map from a spectrum to (m1..m4) is not injective; the moments constrain the inertia but do not fix it"
+        }
+      ],
+      "b1_hankel_view": {
+        "available": false,
+        "reason": "B1 is exact-rational; these moments are enclosures"
+      },
+      "rank_trace": {
+        "content_kind": "WEIL_RANK_TRACE_CERTIFICATE",
+        "status": "PASS",
+        "theorem_id": "rank_trace_hs_v1",
+        "statement": "rank(P) >= 2 tr(P) + 4 tr(Q) - 4 b - ||P + Q||_HS^2",
+        "hypotheses": {
+          "P_positive_semidefinite": {
+            "statement": "P is positive semidefinite",
+            "verified": true,
+            "evidence": {
+              "why": "certified inertia (3,0,0) on this cell",
+              "certificate": "e1_degree4_even3_inertia_log3_log4.json"
+            }
+          },
+          "Q_hermitian": {
+            "statement": "Q is Hermitian",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "trivially Hermitian": true
+            }
+          },
+          "Q_positive_index_at_most_b": {
+            "statement": "Q has at most b positive directions",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "positive_index": 0,
+              "b": 0
+            }
+          },
+          "shared_normalization": {
+            "statement": "all terms use the theorem's normalization",
+            "verified": true,
+            "evidence": {
+              "requirement": "spectrum of P contained in [0, 1]",
+              "lambda_min_lower": "0 (P is positive semidefinite)",
+              "lambda_max_upper": "0.09738883705743298",
+              "argument": "lambda_min >= 0 from the certified inertia; lambda_max <= tr(P) because P is PSD, so every eigenvalue is bounded by the sum of them all. No eigenvalue solver is used or needed.",
+              "eigenvalue_solver_used": false
+            }
+          }
+        },
+        "inputs": {
+          "trace_P": {
+            "lo": "0.09738883705743279",
+            "hi": "0.09738883705743298"
+          },
+          "trace_Q": {
+            "lo": "0",
+            "hi": "0"
+          },
+          "hs_sq_P_plus_Q": {
+            "lo": "0.00946161617864116",
+            "hi": "0.009461616178641215"
+          },
+          "positive_index_Q_bound": 0,
+          "normalization": "trace_normalized_finite_dimensional"
+        },
+        "result": {
+          "rhs_enclosure": {
+            "lo": "0.18531605793622435",
+            "hi": "0.1853160579362248"
+          },
+          "certified_rank_lower_bound": 1,
+          "trivial": false,
+          "interpretation": "rank(P) >= 1 on these inputs"
+        },
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false
+      }
+    },
+    {
+      "label": "L=1.200000",
+      "L": "1.2",
+      "trace": {
+        "lo": "0.08737559901599784",
+        "hi": "0.08737559901599803",
+        "width": "1.942890293094024e-16"
+      },
+      "hs_norm_squared": {
+        "lo": "0.0076012471527061535",
+        "hi": "0.007601247152706192",
+        "width": "3.8163916471489756e-17"
+      },
+      "determinant": {
+        "lo": "1.8385782691072093e-11",
+        "hi": "1.8385782691127366e-11",
+        "width": "5.527246702473473e-23"
+      },
+      "moments": {
+        "m1": {
+          "lo": "0.08737559901599784",
+          "hi": "0.08737559901599803",
+          "width": "1.942890293094024e-16"
+        },
+        "m2": {
+          "lo": "0.0076012471527061535",
+          "hi": "0.007601247152706192",
+          "width": "3.8163916471489756e-17"
+        },
+        "m3": {
+          "lo": "0.000662711039851978",
+          "hi": "0.0006627110398519826",
+          "width": "4.553649124439119e-18"
+        },
+        "m4": {
+          "lo": "5.777841198263612e-05",
+          "hi": "5.777841198263666e-05",
+          "width": "5.421010862427522e-19"
+        }
+      },
+      "b1_queries": [
+        {
+          "query": "moments_force_psd",
+          "status": "INSUFFICIENT_INFORMATION",
+          "answer": null,
+          "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "minimum_negative_eigenvalue_count",
+          "status": "INSUFFICIENT_INFORMATION",
+          "minimum": 0,
+          "reason": "no localizing obstruction found; 0 negatives stays feasible",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "minimum_positive_eigenvalue_count",
+          "status": "CONCLUSIVE",
+          "minimum": 1,
+          "conclusion": "at least one eigenvalue is positive",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": false,
+            "definitely_not_psd": true,
+            "inertia": [
+              0,
+              2,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "smallest_eigenvalue_bounds",
+          "status": "CONCLUSIVE",
+          "lambda_min": {
+            "lo": "-0.028934628005461805",
+            "hi": "9.528583326897862e-05"
+          },
+          "lambda_max": {
+            "lo": "0.058155113510729634",
+            "hi": "0.08718502734946044"
+          },
+          "tight": false,
+          "method": "wolkowicz_styan_from_m1_m2",
+          "note": "two-sided bounds only; m1 and m2 do not determine the spectrum for n = 3"
+        },
+        {
+          "query": "inertia_determined_by_moments",
+          "n": 3,
+          "status": "INSUFFICIENT_INFORMATION",
+          "determined": false,
+          "reason": "for n = 3 the map from a spectrum to (m1..m4) is not injective; the moments constrain the inertia but do not fix it"
+        }
+      ],
+      "b1_hankel_view": {
+        "available": false,
+        "reason": "B1 is exact-rational; these moments are enclosures"
+      },
+      "rank_trace": {
+        "content_kind": "WEIL_RANK_TRACE_CERTIFICATE",
+        "status": "PASS",
+        "theorem_id": "rank_trace_hs_v1",
+        "statement": "rank(P) >= 2 tr(P) + 4 tr(Q) - 4 b - ||P + Q||_HS^2",
+        "hypotheses": {
+          "P_positive_semidefinite": {
+            "statement": "P is positive semidefinite",
+            "verified": true,
+            "evidence": {
+              "why": "certified inertia (3,0,0) on this cell",
+              "certificate": "e1_degree4_even3_inertia_log3_log4.json"
+            }
+          },
+          "Q_hermitian": {
+            "statement": "Q is Hermitian",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "trivially Hermitian": true
+            }
+          },
+          "Q_positive_index_at_most_b": {
+            "statement": "Q has at most b positive directions",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "positive_index": 0,
+              "b": 0
+            }
+          },
+          "shared_normalization": {
+            "statement": "all terms use the theorem's normalization",
+            "verified": true,
+            "evidence": {
+              "requirement": "spectrum of P contained in [0, 1]",
+              "lambda_min_lower": "0 (P is positive semidefinite)",
+              "lambda_max_upper": "0.08737559901599803",
+              "argument": "lambda_min >= 0 from the certified inertia; lambda_max <= tr(P) because P is PSD, so every eigenvalue is bounded by the sum of them all. No eigenvalue solver is used or needed.",
+              "eigenvalue_solver_used": false
+            }
+          }
+        },
+        "inputs": {
+          "trace_P": {
+            "lo": "0.08737559901599784",
+            "hi": "0.08737559901599803"
+          },
+          "trace_Q": {
+            "lo": "0",
+            "hi": "0"
+          },
+          "hs_sq_P_plus_Q": {
+            "lo": "0.0076012471527061535",
+            "hi": "0.007601247152706192"
+          },
+          "positive_index_Q_bound": 0,
+          "normalization": "trace_normalized_finite_dimensional"
+        },
+        "result": {
+          "rhs_enclosure": {
+            "lo": "0.1671499508792895",
+            "hi": "0.1671499508792899"
+          },
+          "certified_rank_lower_bound": 1,
+          "trivial": false,
+          "interpretation": "rank(P) >= 1 on these inputs"
+        },
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false
+      }
+    },
+    {
+      "label": "L=1.314374",
+      "L": "1.314373843006945",
+      "trace": {
+        "lo": "0.07795465512852902",
+        "hi": "0.07795465512852927",
+        "width": "2.498001805406602e-16"
+      },
+      "hs_norm_squared": {
+        "lo": "0.006014025070093971",
+        "hi": "0.0060140250700940106",
+        "width": "3.9898639947466563e-17"
+      },
+      "determinant": {
+        "lo": "2.095785506232734e-11",
+        "hi": "2.095785506245095e-11",
+        "width": "1.2361180278839307e-22"
+      },
+      "moments": {
+        "m1": {
+          "lo": "0.07795465512852902",
+          "hi": "0.07795465512852927",
+          "width": "2.498001805406602e-16"
+        },
+        "m2": {
+          "lo": "0.006014025070093971",
+          "hi": "0.0060140250700940106",
+          "width": "3.9898639947466563e-17"
+        },
+        "m3": {
+          "lo": "0.00046636951505707057",
+          "hi": "0.00046636951505707425",
+          "width": "3.686287386450715e-18"
+        },
+        "m4": {
+          "lo": "3.616652567335661e-05",
+          "hi": "3.616652567335707e-05",
+          "width": "4.607859233063394e-19"
+        }
+      },
+      "b1_queries": [
+        {
+          "query": "moments_force_psd",
+          "status": "INSUFFICIENT_INFORMATION",
+          "answer": null,
+          "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "minimum_negative_eigenvalue_count",
+          "status": "INSUFFICIENT_INFORMATION",
+          "minimum": 0,
+          "reason": "no localizing obstruction found; 0 negatives stays feasible",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "minimum_positive_eigenvalue_count",
+          "status": "CONCLUSIVE",
+          "minimum": 1,
+          "conclusion": "at least one eigenvalue is positive",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": false,
+            "definitely_not_psd": true,
+            "inertia": [
+              0,
+              2,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "smallest_eigenvalue_bounds",
+          "status": "CONCLUSIVE",
+          "lambda_min": {
+            "lo": "-0.025579846560742487",
+            "hi": "0.00020251924105052705"
+          },
+          "lambda_max": {
+            "lo": "0.051767250844635564",
+            "hi": "0.07754961664642859"
+          },
+          "tight": false,
+          "method": "wolkowicz_styan_from_m1_m2",
+          "note": "two-sided bounds only; m1 and m2 do not determine the spectrum for n = 3"
+        },
+        {
+          "query": "inertia_determined_by_moments",
+          "n": 3,
+          "status": "INSUFFICIENT_INFORMATION",
+          "determined": false,
+          "reason": "for n = 3 the map from a spectrum to (m1..m4) is not injective; the moments constrain the inertia but do not fix it"
+        }
+      ],
+      "b1_hankel_view": {
+        "available": false,
+        "reason": "B1 is exact-rational; these moments are enclosures"
+      },
+      "rank_trace": {
+        "content_kind": "WEIL_RANK_TRACE_CERTIFICATE",
+        "status": "PASS",
+        "theorem_id": "rank_trace_hs_v1",
+        "statement": "rank(P) >= 2 tr(P) + 4 tr(Q) - 4 b - ||P + Q||_HS^2",
+        "hypotheses": {
+          "P_positive_semidefinite": {
+            "statement": "P is positive semidefinite",
+            "verified": true,
+            "evidence": {
+              "why": "certified inertia (3,0,0) on this cell",
+              "certificate": "e1_degree4_even3_inertia_log3_log4.json"
+            }
+          },
+          "Q_hermitian": {
+            "statement": "Q is Hermitian",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "trivially Hermitian": true
+            }
+          },
+          "Q_positive_index_at_most_b": {
+            "statement": "Q has at most b positive directions",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "positive_index": 0,
+              "b": 0
+            }
+          },
+          "shared_normalization": {
+            "statement": "all terms use the theorem's normalization",
+            "verified": true,
+            "evidence": {
+              "requirement": "spectrum of P contained in [0, 1]",
+              "lambda_min_lower": "0 (P is positive semidefinite)",
+              "lambda_max_upper": "0.07795465512852927",
+              "argument": "lambda_min >= 0 from the certified inertia; lambda_max <= tr(P) because P is PSD, so every eigenvalue is bounded by the sum of them all. No eigenvalue solver is used or needed.",
+              "eigenvalue_solver_used": false
+            }
+          }
+        },
+        "inputs": {
+          "trace_P": {
+            "lo": "0.07795465512852902",
+            "hi": "0.07795465512852927"
+          },
+          "trace_Q": {
+            "lo": "0",
+            "hi": "0"
+          },
+          "hs_sq_P_plus_Q": {
+            "lo": "0.006014025070093971",
+            "hi": "0.0060140250700940106"
+          },
+          "positive_index_Q_bound": 0,
+          "normalization": "trace_normalized_finite_dimensional"
+        },
+        "result": {
+          "rhs_enclosure": {
+            "lo": "0.14989528518696402",
+            "hi": "0.14989528518696457"
+          },
+          "certified_rank_lower_bound": 1,
+          "trivial": false,
+          "interpretation": "rank(P) >= 1 on these inputs"
+        },
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false
+      }
+    },
+    {
+      "label": "log4",
+      "L": "1.386294361119891",
+      "trace": {
+        "lo": "0.09699465161140583",
+        "hi": "0.09699465161140602",
+        "width": "1.942890293094024e-16"
+      },
+      "hs_norm_squared": {
+        "lo": "0.009338855129180717",
+        "hi": "0.009338855129180772",
+        "width": "5.551115123125783e-17"
+      },
+      "determinant": {
+        "lo": "6.501353608250295e-11",
+        "hi": "6.501353608269981e-11",
+        "width": "1.9686898578762059e-22"
+      },
+      "moments": {
+        "m1": {
+          "lo": "0.09699465161140583",
+          "hi": "0.09699465161140602",
+          "width": "1.942890293094024e-16"
+        },
+        "m2": {
+          "lo": "0.009338855129180717",
+          "hi": "0.009338855129180772",
+          "width": "5.551115123125783e-17"
+        },
+        "m3": {
+          "lo": "0.0009024676749174562",
+          "hi": "0.0009024676749174614",
+          "width": "5.204170427930421e-18"
+        },
+        "m4": {
+          "lo": "8.721185243739774e-05",
+          "hi": "8.721185243739858e-05",
+          "width": "8.402566836762659e-19"
+        }
+      },
+      "b1_queries": [
+        {
+          "query": "moments_force_psd",
+          "status": "INSUFFICIENT_INFORMATION",
+          "answer": null,
+          "reason": "the degree-1 localizing matrix is not refuted, but PSD-ness of a truncated localizing matrix is necessary and not sufficient for support in [0, inf); establishing it would need a flat extension (Curto-Fialkow) that these moments do not supply",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "minimum_negative_eigenvalue_count",
+          "status": "INSUFFICIENT_INFORMATION",
+          "minimum": 0,
+          "reason": "no localizing obstruction found; 0 negatives stays feasible",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": true,
+            "definitely_not_psd": false,
+            "inertia": [
+              2,
+              0,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "minimum_positive_eigenvalue_count",
+          "status": "CONCLUSIVE",
+          "minimum": 1,
+          "conclusion": "at least one eigenvalue is positive",
+          "localizing_matrix_status": {
+            "engine": "inertia.ldl.interval_inertia",
+            "status": "PASS",
+            "is_psd": false,
+            "definitely_not_psd": true,
+            "inertia": [
+              0,
+              2,
+              0
+            ],
+            "blocker": null
+          }
+        },
+        {
+          "query": "smallest_eigenvalue_bounds",
+          "status": "CONCLUSIVE",
+          "lambda_min": {
+            "lo": "-0.031974320883623696",
+            "hi": "0.00017861482675605723"
+          },
+          "lambda_max": {
+            "lo": "0.06448448624751456",
+            "hi": "0.09663742195789432"
+          },
+          "tight": false,
+          "method": "wolkowicz_styan_from_m1_m2",
+          "note": "two-sided bounds only; m1 and m2 do not determine the spectrum for n = 3"
+        },
+        {
+          "query": "inertia_determined_by_moments",
+          "n": 3,
+          "status": "INSUFFICIENT_INFORMATION",
+          "determined": false,
+          "reason": "for n = 3 the map from a spectrum to (m1..m4) is not injective; the moments constrain the inertia but do not fix it"
+        }
+      ],
+      "b1_hankel_view": {
+        "available": false,
+        "reason": "B1 is exact-rational; these moments are enclosures"
+      },
+      "rank_trace": {
+        "content_kind": "WEIL_RANK_TRACE_CERTIFICATE",
+        "status": "PASS",
+        "theorem_id": "rank_trace_hs_v1",
+        "statement": "rank(P) >= 2 tr(P) + 4 tr(Q) - 4 b - ||P + Q||_HS^2",
+        "hypotheses": {
+          "P_positive_semidefinite": {
+            "statement": "P is positive semidefinite",
+            "verified": true,
+            "evidence": {
+              "why": "certified inertia (3,0,0) on this cell",
+              "certificate": "e1_degree4_even3_inertia_log3_log4.json"
+            }
+          },
+          "Q_hermitian": {
+            "statement": "Q is Hermitian",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "trivially Hermitian": true
+            }
+          },
+          "Q_positive_index_at_most_b": {
+            "statement": "Q has at most b positive directions",
+            "verified": true,
+            "evidence": {
+              "Q": "zero matrix",
+              "positive_index": 0,
+              "b": 0
+            }
+          },
+          "shared_normalization": {
+            "statement": "all terms use the theorem's normalization",
+            "verified": true,
+            "evidence": {
+              "requirement": "spectrum of P contained in [0, 1]",
+              "lambda_min_lower": "0 (P is positive semidefinite)",
+              "lambda_max_upper": "0.09699465161140602",
+              "argument": "lambda_min >= 0 from the certified inertia; lambda_max <= tr(P) because P is PSD, so every eigenvalue is bounded by the sum of them all. No eigenvalue solver is used or needed.",
+              "eigenvalue_solver_used": false
+            }
+          }
+        },
+        "inputs": {
+          "trace_P": {
+            "lo": "0.09699465161140583",
+            "hi": "0.09699465161140602"
+          },
+          "trace_Q": {
+            "lo": "0",
+            "hi": "0"
+          },
+          "hs_sq_P_plus_Q": {
+            "lo": "0.009338855129180717",
+            "hi": "0.009338855129180772"
+          },
+          "positive_index_Q_bound": 0,
+          "normalization": "trace_normalized_finite_dimensional"
+        },
+        "result": {
+          "rhs_enclosure": {
+            "lo": "0.18465044809363088",
+            "hi": "0.18465044809363132"
+          },
+          "certified_rank_lower_bound": 1,
+          "trivial": false,
+          "interpretation": "rank(P) >= 1 on these inputs"
+        },
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false
+      }
+    }
+  ],
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "inertia/certificate.py": "82ea60b71081bfd1c2005c6440996b4828c622aced3658253a33c9ba48f1d420",
+      "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
+      "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
+      "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
+      "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
+      "ranktrace/theorem.py": "b6f2d310c778a2411ce0a44cafb69f5ee3487e473823127b5b8440f120004681",
+      "scripts/certify_even3.py": "ca57f64d0e19978f5b2d4a75222087f76a8aa15031d54da0852ad70ede7ac96b",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
+      "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
+      "src/even3.py": "91079176c5480f2bf100a69c85fb62cc3d77cfcc4340f8c40d54151df48eebf3",
+      "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "generated_utc": "2026-08-25T21:24:46Z",
+  "content_hash": "4d0b316dfd8bc32591d998f2fc2f282cb63fab92beb72b38ee65d1b99e1173c7"
+}

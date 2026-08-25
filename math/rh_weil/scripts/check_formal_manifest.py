@@ -69,6 +69,7 @@ HASHED_SOURCES = (
     "formal/AtlasRH/WeilBasis.lean",
     "formal/AtlasRH/RankTrace.lean",
     "formal/AtlasRH/CertificateSemantics.lean",
+    "formal/AtlasRH/GeneralizedGap.lean",
     "formal/comparator/TrustedStatements.lean",
     "formal/comparator/Solution.lean",
     "formal/comparator/PrintAxioms.lean",

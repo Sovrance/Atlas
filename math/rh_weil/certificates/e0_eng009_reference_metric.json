@@ -1,0 +1,269 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil generalized gap \u2014 Candidate A",
+  "work_order": "WO-RH-58",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_GENERALIZED_GAP_CERTIFICATE",
+  "role": "reference_metric",
+  "evidence_class": "E0",
+  "numeric_warrant": "E0",
+  "rigorous": true,
+  "hard_constraints_certified": true,
+  "psd_claim": false,
+  "status": "PASS",
+  "mpmath_used": false,
+  "arithmetic": "exact_rational",
+  "statement": "The L^2 reference metric M_ij(L) = int_0^L h_i h_j dx is positive definite on every listed block for every L > 0, by exact Sylvester minors of M(1) and the diagonal congruence M(L) = D^T M(1) D, D = diag(L^(d_i + 1/2)).",
+  "blocks": {
+    "scalar": {
+      "reference_metric": "l2_gram_on_support",
+      "definition": "M_ij(L) = int_0^L h_i(x; L) h_j(x; L) dx",
+      "basis": [
+        "one"
+      ],
+      "homogeneity_degrees": {
+        "one": 0
+      },
+      "monomial_form": {
+        "one_one": {
+          "coefficient": "1",
+          "l_power": 1
+        }
+      },
+      "congruence": "M(L) = D(L)^T M(1) D(L), D(L) = diag(L^(d_i + 1/2))",
+      "unit_matrix": [
+        [
+          "1"
+        ]
+      ],
+      "unit_leading_minors": [
+        "1"
+      ],
+      "conclusion": "M(L) positive definite for every L > 0",
+      "evidence_class": "E0",
+      "arithmetic": "exact_rational"
+    },
+    "degree1_odd": {
+      "reference_metric": "l2_gram_on_support",
+      "definition": "M_ij(L) = int_0^L h_i(x; L) h_j(x; L) dx",
+      "basis": [
+        "q1"
+      ],
+      "homogeneity_degrees": {
+        "q1": 1
+      },
+      "monomial_form": {
+        "q1_q1": {
+          "coefficient": "1/12",
+          "l_power": 3
+        }
+      },
+      "congruence": "M(L) = D(L)^T M(1) D(L), D(L) = diag(L^(d_i + 1/2))",
+      "unit_matrix": [
+        [
+          "1/12"
+        ]
+      ],
+      "unit_leading_minors": [
+        "1/12"
+      ],
+      "conclusion": "M(L) positive definite for every L > 0",
+      "evidence_class": "E0",
+      "arithmetic": "exact_rational"
+    },
+    "degree2_even": {
+      "reference_metric": "l2_gram_on_support",
+      "definition": "M_ij(L) = int_0^L h_i(x; L) h_j(x; L) dx",
+      "basis": [
+        "one",
+        "b"
+      ],
+      "homogeneity_degrees": {
+        "one": 0,
+        "b": 2
+      },
+      "monomial_form": {
+        "one_one": {
+          "coefficient": "1",
+          "l_power": 1
+        },
+        "one_b": {
+          "coefficient": "1/6",
+          "l_power": 3
+        },
+        "b_one": {
+          "coefficient": "1/6",
+          "l_power": 3
+        },
+        "b_b": {
+          "coefficient": "1/30",
+          "l_power": 5
+        }
+      },
+      "congruence": "M(L) = D(L)^T M(1) D(L), D(L) = diag(L^(d_i + 1/2))",
+      "unit_matrix": [
+        [
+          "1",
+          "1/6"
+        ],
+        [
+          "1/6",
+          "1/30"
+        ]
+      ],
+      "unit_leading_minors": [
+        "1",
+        "1/180"
+      ],
+      "conclusion": "M(L) positive definite for every L > 0",
+      "evidence_class": "E0",
+      "arithmetic": "exact_rational"
+    },
+    "degree3_odd": {
+      "reference_metric": "l2_gram_on_support",
+      "definition": "M_ij(L) = int_0^L h_i(x; L) h_j(x; L) dx",
+      "basis": [
+        "q1",
+        "b3"
+      ],
+      "homogeneity_degrees": {
+        "q1": 1,
+        "b3": 3
+      },
+      "monomial_form": {
+        "q1_q1": {
+          "coefficient": "1/12",
+          "l_power": 3
+        },
+        "q1_b3": {
+          "coefficient": "1/120",
+          "l_power": 5
+        },
+        "b3_q1": {
+          "coefficient": "1/120",
+          "l_power": 5
+        },
+        "b3_b3": {
+          "coefficient": "1/840",
+          "l_power": 7
+        }
+      },
+      "congruence": "M(L) = D(L)^T M(1) D(L), D(L) = diag(L^(d_i + 1/2))",
+      "unit_matrix": [
+        [
+          "1/12",
+          "1/120"
+        ],
+        [
+          "1/120",
+          "1/840"
+        ]
+      ],
+      "unit_leading_minors": [
+        "1/12",
+        "1/33600"
+      ],
+      "conclusion": "M(L) positive definite for every L > 0",
+      "evidence_class": "E0",
+      "arithmetic": "exact_rational"
+    },
+    "degree4_even3": {
+      "reference_metric": "l2_gram_on_support",
+      "definition": "M_ij(L) = int_0^L h_i(x; L) h_j(x; L) dx",
+      "basis": [
+        "one",
+        "b",
+        "b2"
+      ],
+      "homogeneity_degrees": {
+        "one": 0,
+        "b": 2,
+        "b2": 4
+      },
+      "monomial_form": {
+        "one_one": {
+          "coefficient": "1",
+          "l_power": 1
+        },
+        "one_b": {
+          "coefficient": "1/6",
+          "l_power": 3
+        },
+        "one_b2": {
+          "coefficient": "1/30",
+          "l_power": 5
+        },
+        "b_one": {
+          "coefficient": "1/6",
+          "l_power": 3
+        },
+        "b_b": {
+          "coefficient": "1/30",
+          "l_power": 5
+        },
+        "b_b2": {
+          "coefficient": "1/140",
+          "l_power": 7
+        },
+        "b2_one": {
+          "coefficient": "1/30",
+          "l_power": 5
+        },
+        "b2_b": {
+          "coefficient": "1/140",
+          "l_power": 7
+        },
+        "b2_b2": {
+          "coefficient": "1/630",
+          "l_power": 9
+        }
+      },
+      "congruence": "M(L) = D(L)^T M(1) D(L), D(L) = diag(L^(d_i + 1/2))",
+      "unit_matrix": [
+        [
+          "1",
+          "1/6",
+          "1/30"
+        ],
+        [
+          "1/6",
+          "1/30",
+          "1/140"
+        ],
+        [
+          "1/30",
+          "1/140",
+          "1/630"
+        ]
+      ],
+      "unit_leading_minors": [
+        "1",
+        "1/180",
+        "1/7938000"
+      ],
+      "conclusion": "M(L) positive definite for every L > 0",
+      "evidence_class": "E0",
+      "arithmetic": "exact_rational"
+    }
+  },
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/certify_generalized_gap.py": "22b2c9a0ce10aa50c553dbe8b640db308411aed7e0c214cd2fbd64335a493d09",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
+      "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
+      "src/even3.py": "91079176c5480f2bf100a69c85fb62cc3d77cfcc4340f8c40d54151df48eebf3",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-25T21:24:46Z",
+  "content_hash": "916789c8b48253d65bfe634ae7c1095f941eb077f45673865b1a9a2f54c1a9ad"
+}

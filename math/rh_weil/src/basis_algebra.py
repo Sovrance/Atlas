@@ -41,17 +41,25 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 #: given as ``{L_power: rational}``. This is the single primitive: everything
 #: else in this module is derived from it.
 #:
-#:   one = 1
-#:   q1  = x - L/2
-#:   b   = L x - x^2
-#:   b3  = -(L^2/2) x + (3L/2) x^2 - x^3
-#:   b2  = L^2 x^2 - 2L x^3 + x^4
+#:   one   = 1
+#:   q1    = x - L/2
+#:   b     = L x - x^2
+#:   b3    = -(L^2/2) x + (3L/2) x^2 - x^3
+#:   b2    = L^2 x^2 - 2L x^3 + x^4
+#:   bcube = L^3 x^3 - 3L^2 x^4 + 3L x^5 - x^6
+#:
+#: ``bcube = b^3`` is the ENG-010 element (ENG-009 §WO-RH-62): the fourth even
+#: sector direction, supplying ``u^6`` in ``u = x - L/2``. E0-prepared here so
+#: its kernels, endpoint polynomials and reference metric derive from the same
+#: table as everything else; no E1 certificate uses it yet.
 BASIS_L_POLY: Dict[str, Tuple[Dict[int, Fraction], ...]] = {
     "one": ({0: Fraction(1)},),
     "q1": ({1: Fraction(-1, 2)}, {0: Fraction(1)}),
     "b": ({}, {1: Fraction(1)}, {0: Fraction(-1)}),
     "b3": ({}, {2: Fraction(-1, 2)}, {1: Fraction(3, 2)}, {0: Fraction(-1)}),
     "b2": ({}, {}, {2: Fraction(1)}, {1: Fraction(-2)}, {0: Fraction(1)}),
+    "bcube": ({}, {}, {}, {3: Fraction(1)}, {2: Fraction(-3)},
+              {1: Fraction(3)}, {0: Fraction(-1)}),
 }
 
 BASIS_NAMES: Tuple[str, ...] = tuple(BASIS_L_POLY)
@@ -59,6 +67,7 @@ BASIS_NAMES: Tuple[str, ...] = tuple(BASIS_L_POLY)
 #: Parity about ``x = L/2``, checked exactly in the tests rather than asserted.
 BASIS_PARITY: Dict[str, str] = {
     "one": "even", "q1": "odd", "b": "even", "b3": "odd", "b2": "even",
+    "bcube": "even",
 }
 
 
@@ -309,7 +318,7 @@ def kernel_degree_in_a(i: str, j: str) -> int:
 # into every coefficient independently, so their widths stop cancelling. The
 # first version of this module evaluated the expanded form and the prime block's
 # enclosure widened by 3x for `K_q1q1` and 48x for `K_b3b3`, which cost the
-# degree-3 determinant bound 26% and the 3x3 third minor 73%.
+# degree-3 determinant bound 26%.
 #
 # So the factorization is recovered here, automatically, by synthetic division in
 # `a` at the root `a = L`, repeated while the remainder is exactly the zero

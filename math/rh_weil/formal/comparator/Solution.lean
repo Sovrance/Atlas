@@ -125,6 +125,31 @@ theorem atlas_diagonal_congruence_preserves_rank :
   have h := AtlasRH.rank_diagonal_congruence A hx hy hz
   simpa [AtlasRH.diag3] using h
 
+/-! ## The generalized gap (ENG-009) -/
+
+theorem atlas_generalized_rayleigh : generalized_rayleigh_statement := by
+  intro n G M lam h v
+  simpa [AtlasRH.qform] using
+    AtlasRH.rayleigh_lower_of_shifted_psd (G := G) (M := M) (lam := lam) h v
+
+theorem atlas_generalized_pencil_congruence :
+    generalized_pencil_congruence_statement := by
+  intro n S G M lam hS
+  constructor
+  · exact AtlasRH.shifted_posDef_of_congruence hS
+  · exact AtlasRH.shifted_posDef_congruence hS
+
+theorem atlas_preconditioned_gap_certificate3 :
+    preconditioned_gap_certificate3_statement := by
+  intro x y z lam G M a b c d e f d1 d2 d3 hx hy hz hcong h1 h2 h3 hb1 hb2 hb3 v
+  have h := AtlasRH.gap_of_preconditioned_certificate3
+    { d1Lower := d1, d2Lower := d2, d3Lower := d3
+      h_d1_pos := h1, h_d2_pos := h2, h_d3_pos := h3 }
+    (x := x) (y := y) (z := z) (lam := lam) (G := G) (M := M)
+    hx hy hz ?_ ⟨hb1, hb2, hb3⟩ v
+  · simpa [AtlasRH.qform] using h
+  · simpa [AtlasRH.diag3, AtlasRH.sym3] using hcong
+
 /-! ## Rank–trace -/
 
 theorem atlas_rank_trace_hs : rank_trace_hs_statement := by

@@ -178,6 +178,39 @@
         "Quot.sound",
         "propext"
       ]
+    },
+    {
+      "id": "generalized_rayleigh",
+      "trusted_statement": "AtlasRH.GeneralizedRayleighStatement",
+      "solution_theorem": "Comparator.atlas_generalized_rayleigh",
+      "statement_hash": "sha256:ea579845c441aef43d19cc779c5ce6e022ab54ea55e94382b591e6cd685a3485",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "id": "generalized_pencil_congruence",
+      "trusted_statement": "AtlasRH.GeneralizedPencilCongruenceStatement",
+      "solution_theorem": "Comparator.atlas_generalized_pencil_congruence",
+      "statement_hash": "sha256:8e65e916743858085d864ecae2fba111074019f5ad6562efa25cb06371bf5b6b",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "id": "preconditioned_gap_certificate3",
+      "trusted_statement": "AtlasRH.PreconditionedGapCertificate3Statement",
+      "solution_theorem": "Comparator.atlas_preconditioned_gap_certificate3",
+      "statement_hash": "sha256:713843533c7a67c0e9f0e0bd4afb030e49de169bc7b9f050d85ab1431b656860",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
     }
   ],
   "unproved_statements": [
@@ -192,19 +225,20 @@
   "sources": {
     "formal/lean-toolchain": "8190e75a201741065fe508b28955dd64dd72d090babe5f70ce6848879d68ae88",
     "formal/lakefile.toml": "3fb605fd1290fcca3ca0e0d80fcd83ad66b7fa8e60fb4197ffd165e10ce1ef27",
-    "formal/AtlasRH.lean": "2a3716f90d831d5de6981ca4929cf281790eec11373e7f2ffcea972e0136ffcb",
+    "formal/AtlasRH.lean": "fc23c987dd755dfd18f94e49278ff41c6de753abaa210576758de49bfe1ec838",
     "formal/AtlasRH/Definitions.lean": "0a5e23b599fe52adc0002d024fefaec64ec9adae1b44ac3f20aa5592182f9688",
-    "formal/AtlasRH/Statements.lean": "d831bcfe674a88cc946296f11cd2c13001855d16144319236e54cdb6b5b38dd6",
+    "formal/AtlasRH/Statements.lean": "e39b8bd73a6ad6bbaaee00cd6608440e9d9fc3010644bba096b9cba4980b04cc",
     "formal/AtlasRH/Positivity.lean": "4d33dcd7cccaca0b9fd2d236be726c00a5d3cba363d876ebe431e332da4bb0a1",
     "formal/AtlasRH/MatrixInertia.lean": "23accbf303407561e500b2158dd4742703efe350ecf79c8c8c0fd6002c2cf2c6",
     "formal/AtlasRH/WeilBasis.lean": "cf74fffabe96a46b85a9099c0d3de1aec941ac8b1193ee3df05704e1fb6e8339",
     "formal/AtlasRH/RankTrace.lean": "49383c41d84f8ba74349e59a7abfbd4fce2c423cd494f01818804ed0c3bb419e",
     "formal/AtlasRH/CertificateSemantics.lean": "89cb59d5a5ec02d8276ef62f41b645824c6906ee06192922572f76194398b057",
-    "formal/comparator/TrustedStatements.lean": "5654b321b88c0a6353f74136c6d4cd2da6e11451bdde902854d3b60d50a2bb73",
-    "formal/comparator/Solution.lean": "378991e9ad719fa7a80f9c7056597c267a413da9f69f8c4b5b9ff5020a40ea35",
-    "formal/comparator/PrintAxioms.lean": "54fd6a9749b8186097da5d624a34cad91a8aa27cc179cdf7ad27b47d0b55aa41"
+    "formal/AtlasRH/GeneralizedGap.lean": "ed07339e7dd5db976d66d15e3821f86fe5a24d4fc5dea570117e9e8dea2f8e72",
+    "formal/comparator/TrustedStatements.lean": "1803b2c7a27af4c510fb0ad0b9967e7322d1238015296ff3d1a802d4981bbb1f",
+    "formal/comparator/Solution.lean": "f6ce704a681d662c28fc594e55ea33a1255972bb4fd62d230ac7132159603885",
+    "formal/comparator/PrintAxioms.lean": "c0fa674229d6225f2ea16b42081161d2fcc94535a0a4f75865d4c8ad2e63fb95"
   },
   "note": "Every theorem listed here is finite linear algebra over the reals. A formal theorem may strengthen an exact theorem dependency; it never converts interval numerical evidence to FORMAL.",
-  "manifest_id": "formal_sha256_35fbf9fabdb5db985deee8d85083498eb3647097d34bdceeb3c606899a7f2ad9",
-  "generated_utc": "2026-08-25T12:23:50Z"
+  "manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
+  "generated_utc": "2026-08-25T20:17:12Z"
 }

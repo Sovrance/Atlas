@@ -12,7 +12,7 @@
   "numeric_warrant": null,
   "logical_implication_warrant": "FORMAL",
   "psd_claim": false,
-  "formal_manifest_id": "formal_sha256_3a3565111f8aaf0c1403bb699a8f3d06afb5b78ca0a148f9a510214b0a4f7988",
+  "formal_manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
   "formal_project": "AtlasRH",
   "lean_toolchain": "leanprover/lean4:v4.34.0-rc2",
   "mathlib_commit": "f1c1e67f08f57b6d7088b1a98fdceab6da4407ee",
@@ -26,7 +26,15 @@
     "weil_basis_parity",
     "odd_degree3_cross_block",
     "odd_degree3_factorization",
-    "rank_trace_hs"
+    "pd_three_by_three_certificate",
+    "diagonal_congruence_preserves_pd",
+    "preconditioned_certificate3",
+    "diagonal_congruence_preserves_index",
+    "diagonal_congruence_preserves_rank",
+    "rank_trace_hs",
+    "generalized_rayleigh",
+    "generalized_pencil_congruence",
+    "preconditioned_gap_certificate3"
   ],
   "theorems": [
     {
@@ -84,10 +92,58 @@
       "statement_hash": "sha256:25ecd35397cca0d8ff3d4cf570e406cc451c1fbec784b93bdff903cc54c69358"
     },
     {
+      "id": "pd_three_by_three_certificate",
+      "trusted_statement": "AtlasRH.PdThreeByThreeCertificateStatement",
+      "solution_theorem": "Comparator.atlas_pd_three_by_three_certificate",
+      "statement_hash": "sha256:487e677fcdf8406645b1371d7b062316363a0c53820a41359dc43bd23182fb86"
+    },
+    {
+      "id": "diagonal_congruence_preserves_pd",
+      "trusted_statement": "AtlasRH.DiagonalCongruencePreservesPdStatement",
+      "solution_theorem": "Comparator.atlas_diagonal_congruence_preserves_pd",
+      "statement_hash": "sha256:80ac3325ff72b7fd564426822edfb49c6def15cd374eeeee01db461030cd4ff5"
+    },
+    {
+      "id": "preconditioned_certificate3",
+      "trusted_statement": "AtlasRH.PreconditionedCertificate3Statement",
+      "solution_theorem": "Comparator.atlas_preconditioned_certificate3",
+      "statement_hash": "sha256:2e2edae7db165f0e8401ae40edc741bf2b58640fffe7188119c01c413ba8610c"
+    },
+    {
+      "id": "diagonal_congruence_preserves_index",
+      "trusted_statement": "AtlasRH.DiagonalCongruencePreservesIndexStatement",
+      "solution_theorem": "Comparator.atlas_diagonal_congruence_preserves_index",
+      "statement_hash": "sha256:e0cf3f8d84427da4bf9a1d5a14919b058290983f0c88d2a0b32006d2c718bd89"
+    },
+    {
+      "id": "diagonal_congruence_preserves_rank",
+      "trusted_statement": "AtlasRH.DiagonalCongruencePreservesRankStatement",
+      "solution_theorem": "Comparator.atlas_diagonal_congruence_preserves_rank",
+      "statement_hash": "sha256:e7542df166929c6d9f51f0ef8e37ed9348d9b380e8fe9fe893b985ee58189fb2"
+    },
+    {
       "id": "rank_trace_hs",
       "trusted_statement": "AtlasRH.RankTraceZeroQStatement",
       "solution_theorem": "Comparator.atlas_rank_trace_hs",
       "statement_hash": "sha256:296a922a09a0dcfe69778285d06e1a4cfcdebfe79e56746a84186085084b4914"
+    },
+    {
+      "id": "generalized_rayleigh",
+      "trusted_statement": "AtlasRH.GeneralizedRayleighStatement",
+      "solution_theorem": "Comparator.atlas_generalized_rayleigh",
+      "statement_hash": "sha256:ea579845c441aef43d19cc779c5ce6e022ab54ea55e94382b591e6cd685a3485"
+    },
+    {
+      "id": "generalized_pencil_congruence",
+      "trusted_statement": "AtlasRH.GeneralizedPencilCongruenceStatement",
+      "solution_theorem": "Comparator.atlas_generalized_pencil_congruence",
+      "statement_hash": "sha256:8e65e916743858085d864ecae2fba111074019f5ad6562efa25cb06371bf5b6b"
+    },
+    {
+      "id": "preconditioned_gap_certificate3",
+      "trusted_statement": "AtlasRH.PreconditionedGapCertificate3Statement",
+      "solution_theorem": "Comparator.atlas_preconditioned_gap_certificate3",
+      "statement_hash": "sha256:713843533c7a67c0e9f0e0bd4afb030e49de169bc7b9f050d85ab1431b656860"
     }
   ],
   "axioms": [
@@ -135,6 +191,32 @@
       "weil_basis_parity",
       "odd_degree3_cross_block",
       "odd_degree3_factorization"
+    ],
+    "e1_degree4_even3_inertia_log3_log4.json": [
+      "inertia_congruence_positive",
+      "inertia_congruence_negative",
+      "inertia_congruence_rank",
+      "diagonal_congruence_preserves_index",
+      "diagonal_congruence_preserves_rank",
+      "weil_basis_parity"
+    ],
+    "e1_degree4_even3_moments_log3_log4.json": [
+      "rank_trace_hs"
+    ],
+    "e1_degree4_even3_positivity_log3_log4.json": [
+      "pd_three_by_three",
+      "pd_three_by_three_certificate",
+      "preconditioned_certificate3",
+      "diagonal_congruence_preserves_pd",
+      "weil_basis_parity",
+      "odd_degree3_cross_block"
+    ],
+    "e1_eng009_generalized_gap_log3_log4.json": [
+      "generalized_rayleigh",
+      "generalized_pencil_congruence",
+      "preconditioned_gap_certificate3",
+      "pd_three_by_three",
+      "diagonal_congruence_preserves_pd"
     ]
   },
   "note": "A formal theorem strengthens an exact theorem dependency. It does not convert interval numerical evidence to FORMAL: the numeric warrant of every certificate listed under backs_certificates is unchanged by this artifact.",
@@ -142,19 +224,20 @@
     "source_hashes": {
       "formal/lean-toolchain": "8190e75a201741065fe508b28955dd64dd72d090babe5f70ce6848879d68ae88",
       "formal/lakefile.toml": "3fb605fd1290fcca3ca0e0d80fcd83ad66b7fa8e60fb4197ffd165e10ce1ef27",
-      "formal/AtlasRH.lean": "2a3716f90d831d5de6981ca4929cf281790eec11373e7f2ffcea972e0136ffcb",
+      "formal/AtlasRH.lean": "fc23c987dd755dfd18f94e49278ff41c6de753abaa210576758de49bfe1ec838",
       "formal/AtlasRH/Definitions.lean": "0a5e23b599fe52adc0002d024fefaec64ec9adae1b44ac3f20aa5592182f9688",
-      "formal/AtlasRH/Statements.lean": "2f915ff04ec46e5e7819e988dde65016de267524282d30071023c78aadf3a578",
+      "formal/AtlasRH/Statements.lean": "e39b8bd73a6ad6bbaaee00cd6608440e9d9fc3010644bba096b9cba4980b04cc",
       "formal/AtlasRH/Positivity.lean": "4d33dcd7cccaca0b9fd2d236be726c00a5d3cba363d876ebe431e332da4bb0a1",
-      "formal/AtlasRH/MatrixInertia.lean": "a645b55e5c77cd8f3b699fbf10b2bf13c0a46011cceefba0c9e1b906173c3042",
+      "formal/AtlasRH/MatrixInertia.lean": "23accbf303407561e500b2158dd4742703efe350ecf79c8c8c0fd6002c2cf2c6",
       "formal/AtlasRH/WeilBasis.lean": "cf74fffabe96a46b85a9099c0d3de1aec941ac8b1193ee3df05704e1fb6e8339",
       "formal/AtlasRH/RankTrace.lean": "49383c41d84f8ba74349e59a7abfbd4fce2c423cd494f01818804ed0c3bb419e",
-      "formal/AtlasRH/CertificateSemantics.lean": "56f80f6f13136ec5b2e5b2c92077b09ff3e01432e3481131a5e1cb213fa47c55",
-      "formal/comparator/TrustedStatements.lean": "000089ba4c03eb4ab078d510783a4c19aafba39910a9c575dc51b392e6685412",
-      "formal/comparator/Solution.lean": "feffa291b5d6634453052f7d5431a20781c8d68218447a624d0ae3486d037a0e",
-      "formal/comparator/PrintAxioms.lean": "981f8a140124245ded7ce16a87fb38259bf4bd4879902b53b8f590d51418f573"
+      "formal/AtlasRH/CertificateSemantics.lean": "89cb59d5a5ec02d8276ef62f41b645824c6906ee06192922572f76194398b057",
+      "formal/AtlasRH/GeneralizedGap.lean": "ed07339e7dd5db976d66d15e3821f86fe5a24d4fc5dea570117e9e8dea2f8e72",
+      "formal/comparator/TrustedStatements.lean": "1803b2c7a27af4c510fb0ad0b9967e7322d1238015296ff3d1a802d4981bbb1f",
+      "formal/comparator/Solution.lean": "f6ce704a681d662c28fc594e55ea33a1255972bb4fd62d230ac7132159603885",
+      "formal/comparator/PrintAxioms.lean": "c0fa674229d6225f2ea16b42081161d2fcc94535a0a4f75865d4c8ad2e63fb95"
     }
   },
-  "generated_utc": "2026-08-25T02:07:23Z",
-  "content_hash": "4b1f4cb7c910c838f81c950876d47a7ea03a7420b537ee61e2dbf0ad33e1bbb4"
+  "generated_utc": "2026-08-25T21:27:19Z",
+  "content_hash": "35d1c0cb42c57c7eb597aa3712788fd7b1063baceb4f1abed2bca934169ee4d9"
 }

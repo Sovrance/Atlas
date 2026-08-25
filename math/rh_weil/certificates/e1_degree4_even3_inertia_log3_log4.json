@@ -1,0 +1,149 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil 3x3 even block, whole-cell inertia",
+  "work_order": "ATLAS-RH-ENG-008",
+  "content_kind": "WEIL_INERTIA_CERTIFICATE",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "rh_proof_claim": false,
+  "evidence_class": "E1",
+  "rigorous": true,
+  "hard_constraints_certified": true,
+  "psd_claim": false,
+  "status": "PASS",
+  "mpmath_used": false,
+  "backend": "python-flint / Arb",
+  "precision_bits": 160,
+  "basis": {
+    "basis_id": "weil_even3_one_b_b2_v1",
+    "elements": [
+      "one",
+      "b",
+      "b2"
+    ],
+    "definitions": {
+      "one": "1",
+      "b": "x(L - x)",
+      "b2": "x^2 (L - x)^2 = b(x)^2"
+    },
+    "parity_about_midpoint": {
+      "one": "even",
+      "b": "even",
+      "b2": "even"
+    },
+    "spans_in_u": "span{1, u^2, u^4} with u = x - L/2",
+    "kernel_degrees_in_a": {
+      "one_one": 1,
+      "one_b": 3,
+      "one_b2": 5,
+      "b_b": 5,
+      "b_b2": 7,
+      "b2_b2": 9
+    }
+  },
+  "domain": {
+    "cell": [
+      "1.0986122886681098",
+      "1.3862943611198906"
+    ],
+    "label": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "method": "interval Hermitian LDL* congruence on the preconditioned block, with adaptive subdivision of the L cell; no eigenvalue solver anywhere on this path",
+  "preconditioner": {
+    "form": "diagonal_dyadic",
+    "frozen_for_cell": true,
+    "definition": "D = diag(2^{-e_k}), e_k = round(log2(sqrt(G_kk)))",
+    "exponents": [
+      -2,
+      -6,
+      -9
+    ],
+    "diagonal": [
+      "4.0",
+      "64.0",
+      "512.0"
+    ],
+    "inverse_diagonal": [
+      "0.25",
+      "0.015625",
+      "0.001953125"
+    ],
+    "exactly_representable": true,
+    "invertible": true,
+    "invertibility_argument": "diagonal with entries 2^{-e_k}, e_k a finite integer, so every entry is a nonzero dyadic rational and det D = 2^{-sum e_k} != 0 exactly; no enclosure is involved",
+    "width_added": "none: scaling an Arb ball by a power of two is exact",
+    "licensed_by": [
+      "AtlasRH.posIndexAtLeast_congruence_iff",
+      "AtlasRH.negIndexAtLeast_congruence_iff",
+      "AtlasRH.rank_congruence"
+    ],
+    "claim_effect": "none -- congruence by an invertible matrix preserves the positive index, the negative index and the rank, so the inertia read off D^T G D is the inertia of G"
+  },
+  "stratification": {
+    "status": "PASS",
+    "cell": [
+      "1.0986122886681098",
+      "1.3862943611198906"
+    ],
+    "constant_inertia": true,
+    "strata": [
+      {
+        "interval": [
+          "1.0986122886681098",
+          "1.3862943611198906"
+        ],
+        "n_positive": 3,
+        "n_negative": 0,
+        "n_zero": 0,
+        "cells_merged": 1547
+      }
+    ],
+    "transition_regions": [],
+    "boxes_examined": 2838,
+    "max_subdivision_depth": 3,
+    "subdivision_policy": {
+      "initial_cells": 256,
+      "max_depth": 12,
+      "min_width": 1e-12
+    },
+    "method": "interval_ldl_congruence_with_adaptive_subdivision",
+    "coverage": "the strata and transition regions together tile the cell exactly; every point of the cell lies in one of them"
+  },
+  "signatures_seen": [
+    [
+      3,
+      0,
+      0
+    ]
+  ],
+  "constant_on_cell": true,
+  "n_positive": 3,
+  "n_negative": 0,
+  "n_zero": 0,
+  "elapsed_seconds": "129.47089195251465",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "inertia/certificate.py": "82ea60b71081bfd1c2005c6440996b4828c622aced3658253a33c9ba48f1d420",
+      "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
+      "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
+      "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
+      "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
+      "ranktrace/theorem.py": "b6f2d310c778a2411ce0a44cafb69f5ee3487e473823127b5b8440f120004681",
+      "scripts/certify_even3.py": "ca57f64d0e19978f5b2d4a75222087f76a8aa15031d54da0852ad70ede7ac96b",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
+      "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
+      "src/even3.py": "91079176c5480f2bf100a69c85fb62cc3d77cfcc4340f8c40d54151df48eebf3",
+      "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "generated_utc": "2026-08-25T21:21:46Z",
+  "content_hash": "fb9602a36dbbbfc2af5c7061269bab79ade61f1b66ac0c4634bbd81594df0631"
+}

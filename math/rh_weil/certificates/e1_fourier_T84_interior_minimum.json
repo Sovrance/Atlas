@@ -163,10 +163,10 @@
           "1.1360498114329873"
         ],
         "statement": "E2' > 0, so E2 is strictly increasing off the window",
-        "certified_margin": "3.92988131631062e-09",
+        "certified_margin": "3.92988176039983e-09",
         "cover": {
           "quantity": "+E2_d1",
-          "certified_lower_bound": "3.92988131631062e-09",
+          "certified_lower_bound": "3.92988176039983e-09",
           "target": "0.0",
           "cell": [
             "1.1060498114329873",
@@ -180,8 +180,8 @@
             "1.1062060614329874"
           ],
           "binding_box_enclosure": [
-            "3.92988131631062e-09",
-            "6.203492573035312e-07"
+            "3.92988176039983e-09",
+            "6.20349256859442e-07"
           ],
           "max_box_enclosure_width": "1.2034358562118541e-05",
           "initial_boxes": 96,
@@ -257,15 +257,15 @@
       "src/e1_t84.py": "b6dea4a0614d8447d68409a9a0317bddd07a89b453c553afe186903e786093d5",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "b33886a1ac351198a3cce1e91a461bc89bdaf9c97eaa421a6be751bd2840fa2f",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
       "src/rigorous_integration.py": "17c49303df67f590d3543699cfa7735ba100ccdb3fdcce7fb32d41955a175ae2",
       "src/t84.py": "7940e80bf737069f6c53bfcd6f3b48e837c2cfd45fcda2496aaa6117ac2df68f",
-      "src/weil_entries.py": "1ed480a115c62f5da8f42f427d0492b30a6c24f171856c5021534de9891b15db"
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
   "precision_bits": 110,
   "mpmath_used": false,
   "quick_mode": false,
-  "generated_utc": "2026-08-24T22:22:14Z",
-  "content_hash": "702c20ba833553bdd865ed402ba9cb09b40d975809035128d15b8e76ddb029a8"
+  "generated_utc": "2026-08-25T20:55:35Z",
+  "content_hash": "20adbaac1677c83cd4766ff2a338668eed0d1118f9f02822550c9212dc7c56c9"
 }

@@ -97,6 +97,17 @@ FORMAL_BACKING: Dict[str, Tuple[str, ...]] = {
     # that is proved. The general case is recorded in the manifest as unproved
     # and carries no warrant.
     "e1_degree3_odd_moments_log3_log4.json": ("rank_trace_hs",),
+    # ENG-009: the generalized gap. Its lower bounds are shifted-positivity
+    # covers of the preconditioned pencil, so the licensing chain is the
+    # Rayleigh implication, its congruence invariance, and the composed 3x3
+    # form the runtime actually replays for the even block.
+    "e1_eng009_generalized_gap_log3_log4.json": (
+        "generalized_rayleigh",
+        "generalized_pencil_congruence",
+        "preconditioned_gap_certificate3",
+        "pd_three_by_three",
+        "diagonal_congruence_preserves_pd",
+    ),
 }
 
 

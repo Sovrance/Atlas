@@ -53,7 +53,7 @@ definitions through a proof library.
 
 ## What is proved
 
-Ten theorems, each named in the manifest:
+Eighteen theorems, each named in the manifest:
 
 * `inertia_congruence_positive`, `inertia_congruence_negative`,
   `inertia_congruence_rank` — Sylvester's law of inertia in the index
@@ -72,6 +72,17 @@ Ten theorems, each named in the manifest:
 * `weil_basis_parity`, `odd_degree3_cross_block`, `odd_degree3_factorization` —
   midpoint parity of `1, b, q1, b3`; cross-parity blocks of a
   reflection-invariant pairing vanish; the parity determinant factorization.
+* `pd_three_by_three_certificate`, `diagonal_congruence_preserves_pd`,
+  `preconditioned_certificate3`, `diagonal_congruence_preserves_index`,
+  `diagonal_congruence_preserves_rank` — the ENG-008 3×3 certificate semantics:
+  minor bounds imply definiteness, and the exact dyadic preconditioner changes
+  neither the answer nor the signature nor the rank.
+* `generalized_rayleigh`, `generalized_pencil_congruence`,
+  `preconditioned_gap_certificate3` — the ENG-009 generalized-gap implication:
+  shifted positivity of `G − λM` is the Rayleigh bound `λ·vᵀMv ≤ vᵀGv`; the
+  certified gap transports across any invertible simultaneous congruence with
+  the same `λ`; and the preconditioned 3×3 minor bounds compose all the way to
+  the Rayleigh bound for the original pencil.
 * `rank_trace_hs` — the rank–trace inequality in the `Q = 0` case, which is the
   case the degree-3 certificate actually uses.
 

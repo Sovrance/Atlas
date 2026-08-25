@@ -3,9 +3,9 @@
   "program": "RH/Weil documentation freshness",
   "work_order": "ATLAS-RH-ENG-007",
   "rh_proof_claim": false,
-  "note": "ENG-007 §14: documentation freshness as a testable invariant. `scripts/check_docs.py` reads this file. Stale instructions are a correctness problem, not a tidiness problem -- an agent that believes a superseded status will regenerate or reinterpret the wrong mathematics, so a docs-only failure blocks merge.",
-  "current_work_order": "ATLAS-RH-ENG-008",
-  "latest_completed_work_order": "ATLAS-RH-ENG-007",
+  "note": "ENG-007 \u00a714: documentation freshness as a testable invariant. `scripts/check_docs.py` reads this file. Stale instructions are a correctness problem, not a tidiness problem -- an agent that believes a superseded status will regenerate or reinterpret the wrong mathematics, so a docs-only failure blocks merge.",
+  "current_work_order": "ATLAS-RH-ENG-009",
+  "latest_completed_work_order": "ATLAS-RH-ENG-008",
   "status_source": "certificates/work_order_status.json",
   "canonical_docs": [
     "README.md",
@@ -22,7 +22,9 @@
     "docs/CORE_E1_RECOVERY_ENG005_v0.1.md",
     "docs/INERTIA_RANKTRACE_MOMENTS_ENG006_v0.1.md",
     "docs/FORMAL_BOUNDARY_ENG007_v0.1.md",
-    "docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md"
+    "docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md",
+    "docs/GENERALIZED_GAP_ENG009_v0.1.md",
+    "docs/BRIDGE_CANDIDATES_ENG009_v0.1.md"
   ],
   "root_docs": [
     "../../README.md"
@@ -83,7 +85,7 @@
       "phrases": [
         "Current certified results",
         "Current frontier",
-        "ATLAS-RH-ENG-008"
+        "ATLAS-RH-ENG-009"
       ]
     },
     {
@@ -184,6 +186,96 @@
       "path": [
         "worst_relative_difference"
       ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_eng009_generalized_gap_log3_log4.json",
+      "path": [
+        "blocks",
+        0,
+        "certified_lambda_lower_float"
+      ]
+    },
+    {
+      "doc": "docs/GENERALIZED_GAP_ENG009_v0.1.md",
+      "certificate": "e1_eng009_generalized_gap_log3_log4.json",
+      "path": [
+        "blocks",
+        0,
+        "certified_lambda_lower_float"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_eng009_generalized_gap_log3_log4.json",
+      "path": [
+        "blocks",
+        1,
+        "certified_lambda_lower_float"
+      ]
+    },
+    {
+      "doc": "docs/GENERALIZED_GAP_ENG009_v0.1.md",
+      "certificate": "e1_eng009_generalized_gap_log3_log4.json",
+      "path": [
+        "blocks",
+        1,
+        "certified_lambda_lower_float"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_eng009_generalized_gap_log3_log4.json",
+      "path": [
+        "blocks",
+        2,
+        "certified_lambda_lower_float"
+      ]
+    },
+    {
+      "doc": "docs/GENERALIZED_GAP_ENG009_v0.1.md",
+      "certificate": "e1_eng009_generalized_gap_log3_log4.json",
+      "path": [
+        "blocks",
+        2,
+        "certified_lambda_lower_float"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_eng009_generalized_gap_log3_log4.json",
+      "path": [
+        "blocks",
+        3,
+        "certified_lambda_lower_float"
+      ]
+    },
+    {
+      "doc": "docs/GENERALIZED_GAP_ENG009_v0.1.md",
+      "certificate": "e1_eng009_generalized_gap_log3_log4.json",
+      "path": [
+        "blocks",
+        3,
+        "certified_lambda_lower_float"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_eng009_generalized_gap_log3_log4.json",
+      "path": [
+        "blocks",
+        4,
+        "certified_lambda_lower_float"
+      ]
+    },
+    {
+      "doc": "docs/GENERALIZED_GAP_ENG009_v0.1.md",
+      "certificate": "e1_eng009_generalized_gap_log3_log4.json",
+      "path": [
+        "blocks",
+        4,
+        "certified_lambda_lower_float"
+      ]
     }
   ],
   "status_table_orders": [
@@ -200,7 +292,11 @@
     "WO-RH-49",
     "WO-RH-51",
     "WO-RH-53",
-    "WO-RH-55"
+    "WO-RH-55",
+    "WO-RH-58",
+    "WO-RH-59",
+    "WO-RH-62",
+    "WO-RH-63"
   ],
   "root_atlas_doc_glob": "docs/constant-atlas-v*.md",
   "canonical_docs_note": "Live documents and completed work-order records. Both must carry the claim boundary and neither may repeat a superseded status: a record describes what a work order did, which is never the same as instructing a future agent to act on a state that has since closed.",

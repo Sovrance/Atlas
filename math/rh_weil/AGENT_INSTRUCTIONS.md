@@ -1,6 +1,6 @@
 ---
 status: CURRENT
-work_order: ATLAS-RH-ENG-008
+work_order: ATLAS-RH-ENG-009
 supersedes: docs/history/agent-instructions-initial-integration.md
 ---
 
@@ -111,7 +111,25 @@ Two working rules this block added, both worth keeping:
   theorem that says the inertia is unchanged. Powers of two give all three for
   free; a general Jacobi scaling gives none of them.
 
-After that, ENG-009 takes the cross-block diagnostics in
-`certificates/eng009_structural_diagnostics.json`. Those record candidate
-invariants with falsifiers, and infer nothing about an infinite-dimensional
-limit.
+ENG-009 answered what those margins measure: the determinant collapse is
+mostly the coordinate system (the healthy exact reference metric loses seven
+of the thirteen orders by itself), and the congruence-invariant generalized
+gap `λmin(G, M)` — certified for all five blocks against the exact `L²` Gram
+metric — is the primary margin observable from now on. Raw determinant
+magnitude is never quoted as distance-to-failure. See
+[`docs/GENERALIZED_GAP_ENG009_v0.1.md`](docs/GENERALIZED_GAP_ENG009_v0.1.md).
+
+One working rule ENG-009 added:
+
+* **A margin is quoted against a named metric or not at all.** Anything that
+  moves by `det(S)²` under a change of basis is a statement about the
+  coordinates. The pencil `(G, M)` with the exact `L²` reference metric is the
+  invariant object, its shifted-positivity certificates are eigensolver-free,
+  and the implication is proved in Lean (`generalized_rayleigh`,
+  `generalized_pencil_congruence`).
+
+Next, ENG-010 certifies the even 4×4 block `{1, b, b², b³}` — selected in
+`certificates/eng009_next_block_selection.json` because the fitted E3 scaling
+models genuinely disagree there. `bcube` is E0-prepared; the E3 preview is
+`certificates/e3_eng010_even4_preview.json`; no infinite-dimensional limit is
+inferred from any of it.
