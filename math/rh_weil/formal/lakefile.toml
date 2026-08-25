@@ -1,0 +1,17 @@
+name = "AtlasRH"
+defaultTargets = ["AtlasRH"]
+
+# ENG-007 §4: the Mathlib revision is pinned to an exact commit, not a branch or
+# a version range. A floating dependency would let the meaning of a proved
+# theorem change without any commit in this repository -- which is precisely the
+# statement drift this work order exists to prevent.
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "f1c1e67f08f57b6d7088b1a98fdceab6da4407ee"
+
+[[lean_lib]]
+name = "AtlasRH"
+
+[[lean_lib]]
+name = "comparator"

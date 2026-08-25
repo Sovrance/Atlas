@@ -1,80 +1,89 @@
-# Agent Work Order — RH Research Notebook V2 -> Atlas
+---
+status: CURRENT
+work_order: ATLAS-RH-ENG-007
+supersedes: docs/history/agent-instructions-initial-integration.md
+---
 
-## Mission
+# RH / Weil — live agent instructions
 
-Turn the imported RH/Weil notebook state into a reproducible Atlas-native certified program without weakening Atlas's epistemic rules or overwriting existing work.
+**Read this before touching `math/rh_weil/`.** It describes the repository as it
+is now, not as it was at integration. The original integration work order is
+preserved at
+[`docs/history/agent-instructions-initial-integration.md`](docs/history/agent-instructions-initial-integration.md)
+and is **historical**: it says WO-RH-05 is open and degree 3 must not start, and
+both of those are false today.
+
+Machine-readable status is
+[`certificates/work_order_status.json`](certificates/work_order_status.json).
+When this file and that file disagree, that file wins and this one is a bug —
+`scripts/check_docs.py` fails CI on exactly that disagreement.
 
 ## Non-negotiable rules
 
-1. Never emit or imply `RH PROVED` from finite polynomial blocks.
-2. Keep the sign convention `G = G0 - Gp + Ginf` under an explicit normalization audit.
-3. `uncertified != pass`: imported numerical values remain pending until regenerated.
-4. Exact identities and interval claims must be separated from floating scans.
-5. Every E1 claim must record interval, precision, algorithm/version, source hash, and outward-rounded lower/upper bounds.
+These have not changed and are not up for renegotiation by a future work order
+that finds them inconvenient.
+
+1. Never emit or imply `RH PROVED` from finite polynomial blocks. Every artifact
+   carries `rh_proof_claim: false` and `claim_scope:
+   finite_dimensional_weil_compression`.
+2. The sign convention is `G = G0 - Gp + Ginf` under the frozen Candidate-A
+   normalization (WO-RH-17). The rejected `(sqrt(3)/2)` calibration is archival
+   in `src/rejected_pole.py` and production may not import it.
+3. `uncertified != pass`. Imported or historical numbers stay pending until
+   regenerated locally.
+4. Exact identities (E0), interval certificates (E1) and floating scans (E3) are
+   separate evidence classes. A scan never promotes an E1 claim.
+5. Every E1 claim records interval, precision, algorithm, source hashes and
+   outward-rounded bounds. A certificate whose source hashes are stale is
+   refused by the promotion predicate, not merely flagged.
 6. Spectral/quantum material is diagnostic only.
 7. Do not modify unrelated Atlas certificates or benchmark outputs.
 
-## Implementation order
+## What is already done
 
-### WO-RH-01 — normalization + exact identities
-- Implement and test the polynomial overlap formula
-  `C_ij(a,L)=sum_{r=0}^j binom(j,r) a^(j-r)(L-a)^(i+r+1)/(i+r+1)`.
-- Verify midpoint-odd and bubble kernels in `src/core.py`.
-- Verify parity identities and the degree-2 determinant factorization.
-- Gate: stdlib tests pass with no optional numerical dependency.
+| Work order | State |
+|---|---|
+| WO-RH-01…04 | exact identities, f1 audit, even block — **E0** |
+| WO-RH-05, 10–15 | **recovered by ENG-005** (were quarantined by WO-RH-17) |
+| WO-RH-08 | **done by ENG-006** — odd degree-3 implemented and certified |
+| WO-RH-17/18 | normalization adjudicated, Candidate A adopted |
+| WO-RH-28…36 | inertia, rank–trace, moments, degree-3 pilot — ENG-006 |
+| WO-RH-37…46 | **current work** — formal boundary and documentation truth pass |
 
-### WO-RH-02 — scalar interval verifier
-- Implement prime-power cell splitting for arbitrary bounded L intervals.
-- Use `W00'' = 2(r^3-r-1)/(sqrt(r)(r^2-1))`, r=e^L.
-- Verify downward derivative jump `-2 Lambda(q)/sqrt(q)` at q=p^k.
-- Certify at most one interior scalar minimizer per cell.
-- Reproduce the `[log 3, log 4]` scalar certificate before importing any lower bound as E1.
+See the README's *Current certified results* table for the numbers, and
+`work_order_status.json` for the authoritative per-order state.
 
-### WO-RH-03 — f1 audit
-- Independently derive `K_q1q1` and its sign threshold.
-- Reproduce the midpoint-reflection identity and odd pivot.
-- Add a normalization/sign regression test.
+## How to run things
 
-### WO-RH-04 — even {0,2} block
-- Use bubble basis `b=x(L-x)` rather than raw monomials for numerical work.
-- Reproduce `K00`, `K0b`, `Kbb` and individual prime-kernel determinant.
-- Reproduce the compact real-space degree-2 certificate.
+```bash
+python3 scripts/run_rh_weil_suite.py             # fast path — does NOT re-derive E1
+python3 scripts/run_rigorous_chain.py --release  # the real chain, in canonical order
+python3 scripts/ci_inertia.py --gate fast        # exact gates, no python-flint needed
+python3 scripts/ci_inertia.py --gate rigorous    # interval gates, python-flint required
+python3 scripts/check_docs.py                    # documentation truth gate
+```
 
-### WO-RH-05 — direct Fourier cross-check
-- Cutoff T=84.
-- Implement stable entire low-frequency forms for H0/Hb; never divide naively near t=0.
-- Integrate Taylor jets in L directly, not finite differences.
-- Target interval statements:
-  * `E2,84'' > 0` on `[log 3, 1.20]`;
-  * `E2,84' > 0` on `[1.20, log 4]`.
-- Combine with one interval point ball near `L=1.1059498113`.
-- Only after uniform coverage may the direct-Fourier certificate become E1/SOUND.
+Passing the fast suite does **not** mean the E1 certificates are current. Read
+the rigorous chain's exit code before believing any E1 claim is fresh.
 
-### WO-RH-06 — Atlas certificate + PIR bridge
-- Emit stable JSON into `math/rh_weil/certificates/` and optionally mirror a headline certificate into root `certificates/` only after review.
-- Add content hash and explicit claim scope.
-- Lower exact identities as E0/SOUND facts and interval results as E1/SOUND facts.
-- Imported transcript values must never masquerade as regenerated Atlas evidence.
+## Working rules for an agent
 
-### WO-RH-07 — CI
-- Add RH tests to a dedicated runner first. Do not silently expand `ci/run_all_certified.py` until certificates are reproducible on the target CI image.
-- CI must fail on certificate degradation, missing coverage cells, sign-convention change, or evidence-level promotion without regenerated evidence.
+* **Regenerate, don't hand-edit.** Certificates are build outputs. If you change
+  a file listed in a certifier's `DEPENDENCIES`, that certificate is stale by
+  construction and the chain will refuse it until you re-run the certifier.
+* **A stop condition is a result.** If an interval cover cannot separate, if two
+  independent implementations disagree, or if a hypothesis cannot be discharged,
+  report it. Do not widen a tolerance until the red goes away.
+* **INCONCLUSIVE is a valid output.** So is a weak bound. Both are preferable to
+  a number whose derivation you cannot defend.
+* **Keep the evidence classes apart.** The most common way this program could go
+  wrong is a floating diagnostic quietly becoming a warrant.
 
-### WO-RH-08 — degree 3
-Only after WO-RH-05 closes, start odd block `{q1, b3}` with `b3=x(L-x)(x-L/2)` and endpoint-jet tail bounds.
+## Current frontier
 
-## Acceptance criteria
+ENG-007: make the finite theorem boundary formally replayable in Lean, and make
+the documentation mechanically unable to fall behind the implementation. See
+[`docs/FORMAL_BOUNDARY_ENG007_v0.1.md`](docs/FORMAL_BOUNDARY_ENG007_v0.1.md).
 
-A coding agent is finished only when:
-- exact tests pass;
-- every E1 number is regenerated locally;
-- certificate schema validates;
-- no imported claim is silently promoted;
-- README claim boundary remains intact;
-- `git diff` contains no unrelated changes.
-
-## External cross-validation extension — Connes-CvS
-
-After WO-RH-05 is stable, execute the optional external work order at
-`external/AGENT_WORK_ORDER_CONNES_CVS.md`.  This does not replace any Atlas-native
-certificate and is not a required runtime dependency.
+After that, ENG-008 attacks the first genuinely >2-dimensional parity block,
+where inertia and moments add information that a 2x2 determinant does not.
