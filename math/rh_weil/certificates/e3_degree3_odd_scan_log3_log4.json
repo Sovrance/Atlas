@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "source_hashes": {
-      "inertia/certificate.py": "4acd4f716f94245974b06bef726d3592534dd3ea9c4b46e7845c68cae97fe742",
+      "inertia/certificate.py": "3c628ede2ed57fea6205b05c72cf10d1556f8f7a994f88c74184ead21b936a09",
       "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
       "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
       "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
@@ -1335,6 +1335,6 @@
     "consequence": "the degree-3 Gram is block diagonal; the odd block is 2x2 and can be treated on its own"
   },
   "note": "E3 heuristic only. Eigenvalues here come from the closed 2x2 form at grid points; they locate apparent features and can never promote an E1 inertia claim (\u00a714.4).",
-  "generated_utc": "2026-08-24T23:43:05Z",
-  "content_hash": "62f2a955d9c9feaa432a96366f1bcb6dee0c8f941a1a75b15a24544beb7b8446"
+  "generated_utc": "2026-08-25T05:32:14Z",
+  "content_hash": "40c32c50e5785d297b01115301d2f798356fc4bec4482b70cc64fe41db125eef"
 }

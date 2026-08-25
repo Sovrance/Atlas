@@ -26,6 +26,11 @@ KIND_STRATIFICATION = "WEIL_INERTIA_STRATIFICATION"
 #: they may never satisfy a consumer requiring PSD, whatever their signature.
 INERTIA_KINDS = (KIND_INERTIA, KIND_STRATIFICATION)
 
+#: Kinds that can never satisfy a PSD-requiring consumer, whatever their fields say.
+#: Inertia kinds know a signature; a formal theorem knows an implication. Neither has
+#: measured the block in front of the consumer.
+NON_MEASUREMENT_KINDS = frozenset(INERTIA_KINDS) | frozenset({"FORMAL_THEOREM_CERTIFICATE"})
+
 
 def satisfies_psd_requirement(cert: Dict[str, Any]) -> bool:
     """True only if this certificate *claims* PSD and its signature backs it.
@@ -46,6 +51,15 @@ def satisfies_psd_requirement(cert: Dict[str, Any]) -> bool:
     known, since an unresolved ``n_zero`` leaves open a negative direction
     hiding in the part that did not resolve.
 
+    ENG-007 §12 added a third refused kind for the same reason, not a new one.
+    A ``FORMAL_THEOREM_CERTIFICATE`` records that Lean proved an implication; it
+    carries no interval evidence about any particular matrix. It is about
+    positive definiteness, which is exactly what makes it dangerous here -- a
+    body naming ``pd_two_by_two`` with ``psd_claim: true`` reads as favourable
+    and would have satisfied a PSD consumer while measuring nothing. The rule is
+    the same one the inertia kinds are refused under: knowing a theorem, like
+    knowing a signature, is not the same as having measured this block.
+
     An earlier version refused only stratifications and inferred the rest from
     the signature. That let a passing ``WEIL_INERTIA_CERTIFICATE`` with
     ``(2, 0, 0)`` satisfy a PSD consumer while its own body said
@@ -54,7 +68,7 @@ def satisfies_psd_requirement(cert: Dict[str, Any]) -> bool:
     """
     if cert.get("rh_proof_claim") is not False:
         return False
-    if cert.get("content_kind") in INERTIA_KINDS:
+    if cert.get("content_kind") in NON_MEASUREMENT_KINDS:
         return False
     if cert.get("psd_claim") is not True:
         return False

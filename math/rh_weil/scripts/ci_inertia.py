@@ -98,8 +98,12 @@ def check_pir_kinds() -> int:
     import pir_bridge
     from inertia.certificate import satisfies_psd_requirement
 
+    # ENG-007 §12 adds FORMAL_THEOREM_CERTIFICATE. The set stays exact rather than
+    # becoming a subset check: a new content kind must be declared here deliberately, so
+    # that the PSD case below is written for it at the same time.
     expected = {"WEIL_INERTIA_CERTIFICATE", "WEIL_INERTIA_STRATIFICATION",
-                "WEIL_RANK_TRACE_CERTIFICATE", "WEIL_SPECTRAL_MOMENT_CERTIFICATE"}
+                "WEIL_RANK_TRACE_CERTIFICATE", "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+                "FORMAL_THEOREM_CERTIFICATE"}
     if set(pir_bridge.CONTENT_KINDS) != expected:
         print(f"  FAIL: content kinds are {pir_bridge.CONTENT_KINDS}", file=sys.stderr)
         return 1
@@ -123,6 +127,14 @@ def check_pir_kinds() -> int:
         ("positivity certificate without an explicit claim",
          {**base, "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
           "n_negative": 0, "n_zero": 0}, False),
+        # ENG-007 §12: a proved implication is not a measurement. A formal theorem fact
+        # carries no interval evidence at all, so it must not satisfy a PSD-requiring
+        # consumer -- even though it is about positive definiteness and looks favourable.
+        # This is the same trap the definite-inertia case above closes.
+        ("formal theorem certificate about positive definiteness",
+         {**base, "content_kind": "FORMAL_THEOREM_CERTIFICATE",
+          "theorem_id": "pd_two_by_two", "n_negative": 0, "n_zero": 0,
+          "psd_claim": True, "logical_implication_warrant": "FORMAL"}, False),
     ]
     for label, body, want in cases:
         got = satisfies_psd_requirement(body)
