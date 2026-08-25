@@ -38,8 +38,15 @@ noncomputable def q1 (L x : ℝ) : ℝ := x - L / 2
 /-- The odd degree-3 element `b3(x) = x(L-x)(x - L/2)`. -/
 noncomputable def b3 (L x : ℝ) : ℝ := x * (L - x) * (x - L / 2)
 
-/-- The constant `1` is reflection-even (trivially). -/
-theorem one_even (L x : ℝ) : (1 : ℝ) = 1 := rfl
+/-- The constant basis element `c(x) = 1`. -/
+def const1 (_L _x : ℝ) : ℝ := 1
+
+/-- `c` is reflection-**even**: `c(L - x) = c(x)`.
+
+Stated through `reflect` rather than as `(1 : ℝ) = 1`. The trivial form proves nothing
+about parity, and a theorem whose name claims more than its statement is the drift this
+module exists to rule out. -/
+theorem const1_even (L x : ℝ) : const1 L (reflect L x) = const1 L x := rfl
 
 /-- `b` is reflection-**even**: `b(L - x) = b(x)`. -/
 theorem bubble_even (L x : ℝ) : bubble L (reflect L x) = bubble L x := by
