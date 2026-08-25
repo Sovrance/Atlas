@@ -4,13 +4,14 @@
   "work_order": "WO-RH-16",
   "rh_proof_claim": false,
   "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
-  "n_facts": 16,
+  "n_facts": 17,
   "content_kinds": [
     "WEIL_INERTIA_CERTIFICATE",
     "WEIL_INERTIA_STRATIFICATION",
     "WEIL_RANK_TRACE_CERTIFICATE",
     "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
-    "FORMAL_THEOREM_CERTIFICATE"
+    "FORMAL_THEOREM_CERTIFICATE",
+    "WEIL_PILOT_CONDITIONING_PREVIEW"
   ],
   "formal_manifest_id": "formal_sha256_3a3565111f8aaf0c1403bb699a8f3d06afb5b78ca0a148f9a510214b0a4f7988",
   "refused_promotions": [],
@@ -554,6 +555,38 @@
         {
           "location": "formal_theorem_certificate.json",
           "message": "machine-checked finite theorems only \u2014 proves implications, never a numeric bound"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_de73bddf631bc53e",
+      "pir_level": "L2",
+      "evidence_level": "E3",
+      "analyzer": {
+        "id": "rh_weil.e3_pilot3_even_conditioning_log3_log4",
+        "version": "0.2.0",
+        "tag": "HEURISTIC"
+      },
+      "content": {
+        "certificate_file": "e3_pilot3_even_conditioning_log3_log4.json",
+        "point_scoped": false,
+        "program": "RH/Weil 3x3 even parity block, ENG-008 preparation",
+        "status": "PREVIEW",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E3",
+        "content_kind": "WEIL_PILOT_CONDITIONING_PREVIEW",
+        "satisfies_psd_requirement": false
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e3_pilot3_even_conditioning_log3_log4.json",
+          "message": "ENG-008 preparation: mpmath preview of the 3x3 even block, floating eigenvalue solver \u2014 E3 evidence, never a warrant"
         }
       ]
     }

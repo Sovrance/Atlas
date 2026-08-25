@@ -42,6 +42,9 @@ CONTENT_KINDS = (
     "WEIL_RANK_TRACE_CERTIFICATE",
     "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
     KIND_FORMAL,
+    # ENG-007 §15: the ENG-008 preparation preview. E3, and tagged with its own
+    # kind so no consumer can mistake a plan input for a result.
+    "WEIL_PILOT_CONDITIONING_PREVIEW",
 )
 
 try:
@@ -129,6 +132,9 @@ def certs_to_facts() -> List[Any]:
         # than being smuggled into the evidence level.
         ("formal_theorem_certificate.json", "E0", "SOUND",
          "machine-checked finite theorems only — proves implications, never a numeric bound"),
+        ("e3_pilot3_even_conditioning_log3_log4.json", "E3", "HEURISTIC",
+         "ENG-008 preparation: mpmath preview of the 3x3 even block, floating "
+         "eigenvalue solver — E3 evidence, never a warrant"),
     ]
     for fname, ev, tag, warn in mapping:
         cert = _load(fname)

@@ -418,6 +418,13 @@ def main() -> int:
             [sys.executable, str(ROOT / "tests" / "test_degree3_exact.py")]):
         return 1
 
+    # ENG-007 §15: the 3x3 pilot's exact identities. E0 only -- the E3 preview
+    # is `scripts/preview_pilot3.py` and is deliberately not in this chain,
+    # because a heuristic preview has no business gating a rigorous run.
+    if _run("3x3 pilot exact identities (ENG-007 §15)",
+            [sys.executable, str(ROOT / "tests" / "test_pilot3_exact.py")]):
+        return 1
+
     for stage in (stage_engines, stage_degree3, stage_policy, stage_formal,
                   stage_pir, stage_hashes):
         if stage():
