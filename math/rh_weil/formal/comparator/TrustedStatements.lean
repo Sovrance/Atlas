@@ -80,6 +80,18 @@ abbrev generalized_pencil_congruence_statement : Prop :=
 abbrev preconditioned_gap_certificate3_statement : Prop :=
   AtlasRH.PreconditionedGapCertificate3Statement
 
+/-- A rigorous 4×4 minor certificate implies positive definiteness. -/
+abbrev pd_four_by_four_certificate_statement : Prop :=
+  AtlasRH.PdFourByFourCertificateStatement
+
+/-- Preconditioned 4×4 minor bounds imply the original block is PD. -/
+abbrev preconditioned_certificate4_statement : Prop :=
+  AtlasRH.PreconditionedCertificate4Statement
+
+/-- Preconditioned shifted 4×4 minor bounds imply the generalized Rayleigh bound. -/
+abbrev preconditioned_gap_certificate4_statement : Prop :=
+  AtlasRH.PreconditionedGapCertificate4Statement
+
 /-- The rank–trace inequality in the `Q = 0` case the runtime uses. -/
 abbrev rank_trace_hs_statement : Prop := AtlasRH.RankTraceZeroQStatement
 

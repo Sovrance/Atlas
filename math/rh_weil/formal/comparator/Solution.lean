@@ -150,6 +150,47 @@ theorem atlas_preconditioned_gap_certificate3 :
   · simpa [AtlasRH.qform] using h
   · simpa [AtlasRH.diag3, AtlasRH.sym3] using hcong
 
+/-! ## The 4×4 block (ENG-010) -/
+
+theorem atlas_pd_four_by_four_certificate : pd_four_by_four_certificate_statement := by
+  intro a b c d e f g h i j d1 d2 d3 d4 h1 h2 h3 h4 hb1 hb2 hb3 hb4
+  have hpd := AtlasRH.posDef_of_certificate4
+    { d1Lower := d1, d2Lower := d2, d3Lower := d3, d4Lower := d4
+      h_d1_pos := h1, h_d2_pos := h2, h_d3_pos := h3, h_d4_pos := h4 }
+    (a := a) (b := b) (c := c) (d := d) (e := e) (f := f) (g := g) (h := h)
+    (i := i) (j := j)
+    ⟨hb1, by simpa [AtlasRH.minor2of4] using hb2,
+     by simpa [AtlasRH.minor3of4] using hb3,
+     by simpa [AtlasRH.minor4of4] using hb4⟩
+  simpa [AtlasRH.sym4] using hpd
+
+theorem atlas_preconditioned_certificate4 : preconditioned_certificate4_statement := by
+  intro w x y z A a b c d e f g h i j d1 d2 d3 d4 hw hx hy hz hcong
+    h1 h2 h3 h4 hb1 hb2 hb3 hb4
+  refine AtlasRH.posDef_of_preconditioned_certificate4
+    { d1Lower := d1, d2Lower := d2, d3Lower := d3, d4Lower := d4
+      h_d1_pos := h1, h_d2_pos := h2, h_d3_pos := h3, h_d4_pos := h4 }
+    hw hx hy hz ?_
+    ⟨hb1, by simpa [AtlasRH.minor2of4] using hb2,
+     by simpa [AtlasRH.minor3of4] using hb3,
+     by simpa [AtlasRH.minor4of4] using hb4⟩
+  simpa [AtlasRH.diag4, AtlasRH.sym4] using hcong
+
+theorem atlas_preconditioned_gap_certificate4 :
+    preconditioned_gap_certificate4_statement := by
+  intro w x y z lam G M a b c d e f g h i j d1 d2 d3 d4 hw hx hy hz hcong
+    h1 h2 h3 h4 hb1 hb2 hb3 hb4 v
+  have hq := AtlasRH.gap_of_preconditioned_certificate4
+    { d1Lower := d1, d2Lower := d2, d3Lower := d3, d4Lower := d4
+      h_d1_pos := h1, h_d2_pos := h2, h_d3_pos := h3, h_d4_pos := h4 }
+    (w := w) (x := x) (y := y) (z := z) (lam := lam) (G := G) (M := M)
+    hw hx hy hz ?_
+    ⟨hb1, by simpa [AtlasRH.minor2of4] using hb2,
+     by simpa [AtlasRH.minor3of4] using hb3,
+     by simpa [AtlasRH.minor4of4] using hb4⟩ v
+  · simpa [AtlasRH.qform] using hq
+  · simpa [AtlasRH.diag4, AtlasRH.sym4] using hcong
+
 /-! ## Rank–trace -/
 
 theorem atlas_rank_trace_hs : rank_trace_hs_statement := by

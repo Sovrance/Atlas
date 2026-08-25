@@ -163,6 +163,29 @@ def certs_to_facts() -> List[Any]:
         ("e3_eng010_even4_preview.json", "E3", "HEURISTIC",
          "ENG-010 preparation: float preview of the 4x4 even block — E3 "
          "evidence, never a warrant"),
+        # ENG-010: the 4x4 block itself and the model adjudication.
+        ("e0_degree6_even4_exact_identities.json", "E0", "SOUND", ""),
+        ("e0_eng010_even4_reference_metric.json", "E0", "SOUND",
+         "exact L2 reference metric on {1, b, b^2, b^3}: PD for every L > 0"),
+        ("e3_degree6_even4_crosscheck.json", "E3", "HEURISTIC",
+         "independent mpmath/SymPy assembly — E3 regression evidence, never a warrant"),
+        ("e1_degree6_even4_inertia_log3_log4.json", "E1", "SOUND",
+         "4x4 even block: certified whole-cell inertia over [log3, log4]"),
+        ("e1_degree6_even4_positivity_log3_log4.json", "E1", "SOUND",
+         "4x4 even block: uniform positive definiteness over [log3, log4]"),
+        ("e1_eng010_even4_generalized_gap_log3_log4.json", "E1", "SOUND",
+         "4x4 even block: generalized gap enclosure against the exact L2 metric"),
+        ("e1_degree6_even4_moments_log3_log4.json", "E1", "SOUND",
+         "4x4 even block: spectral moments and rank-trace at sample points"),
+        ("eng010_scaling_model_adjudication.json", "E1", "SOUND",
+         "the preregistered ENG-009 models adjudicated against the certified "
+         "n=4 gap, before any refit"),
+        ("eng010_information_comparison_report.json", "E1", "SOUND",
+         "information-channel comparison at n = 4, certified numbers only"),
+        ("e3_eng010_scaling_models_refit.json", "E3", "HEURISTIC",
+         "post-adjudication exploratory refit — E3, never promotable"),
+        ("eng011_target_selection.json", "E3", "HEURISTIC",
+         "the ENG-011 selection — a plan, not a numeric fact"),
     ]
     for fname, ev, tag, warn in mapping:
         cert = _load(fname)

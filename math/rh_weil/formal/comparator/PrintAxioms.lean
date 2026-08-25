@@ -83,7 +83,16 @@ def atlasAudited : List (String × Name × Name) :=
       ``AtlasRH.GeneralizedPencilCongruenceStatement)
   , ("preconditioned_gap_certificate3",
       ``Comparator.atlas_preconditioned_gap_certificate3,
-      ``AtlasRH.PreconditionedGapCertificate3Statement) ]
+      ``AtlasRH.PreconditionedGapCertificate3Statement)
+  , ("pd_four_by_four_certificate",
+      ``Comparator.atlas_pd_four_by_four_certificate,
+      ``AtlasRH.PdFourByFourCertificateStatement)
+  , ("preconditioned_certificate4",
+      ``Comparator.atlas_preconditioned_certificate4,
+      ``AtlasRH.PreconditionedCertificate4Statement)
+  , ("preconditioned_gap_certificate4",
+      ``Comparator.atlas_preconditioned_gap_certificate4,
+      ``AtlasRH.PreconditionedGapCertificate4Statement) ]
 
 run_cmd do
   let env ← getEnv
