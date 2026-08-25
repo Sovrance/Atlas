@@ -15,3 +15,6 @@ gv-*.zip
 # CI build outputs (regenerated certificates, run manifests)
 build/
 
+
+# Lean build outputs (AtlasRH formal project)
+math/rh_weil/formal/.lake/

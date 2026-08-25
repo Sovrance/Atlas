@@ -1,3 +1,26 @@
+# HISTORICAL DELIVERY MANIFEST -- do not run `sha256sum -c` against this file
+# and conclude the tree is corrupt.
+#
+# These are the hashes of the files as delivered by the original integration
+# package (WO-RH-01..07). Every certificate listed below is a *build output* and
+# has been regenerated many times since -- under a different pole normalization
+# (WO-RH-17 rejected the one in force when these hashes were taken), by ENG-004,
+# ENG-005, ENG-006 and ENG-007. Twelve of twelve entries no longer match, by
+# design.
+#
+# The live integrity mechanism is per-certificate and is enforced rather than
+# recorded:
+#
+#   * each certificate carries its own `content_hash`;
+#   * each carries `dependencies.source_hashes` for every module it was built
+#     from, and `promotion.stale_dependencies` refuses it the moment one drifts;
+#   * each rigorous certificate binds the active normalization id;
+#   * `scripts/run_rigorous_chain.py` validates all of that on every run.
+#
+# A static checksum list over regenerated build outputs cannot stay true, which
+# is why this file is kept as a delivery record and not as a check. See
+# ATLAS-RH-ENG-007 and `docs/FORMAL_BOUNDARY_ENG007_v0.1.md`.
+#
 956cf216ee23de2e69321bd6893f2b658130bb37565f78b01a9bcc08743e1e80  certificates/e0_exact_identities.json
 6fb66c5d7f63f98e0208c8fe4cf4b4e54497205e6e8ff219981a38c08049e934  certificates/e0_scalar_cell_log3_log4.json
 29a4af4d4366276a58cac7c0f6357a8ae33c2f2929e99e45a6f8859a81ad7b7e  certificates/e1_degree1_log3_log4.json

@@ -1,3 +1,14 @@
+---
+status: HISTORICAL
+superseded_by: ATLAS-RH-ENG-007
+---
+
+> **HISTORICAL / SUPERSEDED.** This is ATLAS-RH-ENG-002: the execution checklist for that work order. Every box has since been closed, and several of its instructions were later reversed by the WO-RH-17 normalization adjudication.
+> It is kept as the record of what was asked and when, not as instruction. For
+> the live state read [`../AGENT_INSTRUCTIONS.md`](../AGENT_INSTRUCTIONS.md) and
+> [`../certificates/work_order_status.json`](../certificates/work_order_status.json).
+> No RH proof claim is made here or anywhere in this program.
+
 # Agent Execution Checklist --- ATLAS-RH-ENG-002
 
 ## Baseline

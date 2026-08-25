@@ -155,8 +155,10 @@ def build_work_order_status() -> Dict[str, Any]:
         "certificate_version": "0.2",
         "program": "RH/Weil work-order status",
         "rh_proof_claim": False,
-        "eng_spec": ("ATLAS-RH-ENG-006 Weil inertia, rank-trace, spectral moments "
-                     "and the degree-3 pilot (baseline: ENG-005)"),
+        "eng_spec": ("ATLAS-RH-ENG-007 formal theorem boundary, statement comparator "
+                     "and documentation truth pass (baseline: ENG-006)"),
+        "current_work_order": "ATLAS-RH-ENG-007",
+        "latest_completed_work_order": "ATLAS-RH-ENG-006",
         "orders": {
             "WO-RH-01": "done",
             "WO-RH-02": "done_E0_scalar_cell",
@@ -188,6 +190,17 @@ def build_work_order_status() -> Dict[str, Any]:
             "WO-RH-34": "done_degree3_E1_certificate",
             "WO-RH-35": "done_pir_runner_ci_integration",
             "WO-RH-36": "done_positivity_vs_inertia_moment_report",
+            "ENG-006": "done_inertia_ranktrace_moments_and_degree3_pilot",
+            "WO-RH-37": "done_ENG-007_documentation_truth_audit",
+            "WO-RH-38": "done_ENG-007_pinned_lean_project_and_theorem_boundary",
+            "WO-RH-39": "done_ENG-007_congruence_inertia_and_2x2_3x3_criteria",
+            "WO-RH-40": "partial_ENG-007_rank_trace_zero_Q_proved_general_case_recorded_unproved",
+            "WO-RH-41": "done_ENG-007_weil_parity_and_determinant_identities",
+            "WO-RH-42": "done_ENG-007_certificate_semantics_theorems",
+            "WO-RH-43": "done_ENG-007_statement_comparator_axiom_audit_and_manifest",
+            "WO-RH-44": "done_ENG-007_formal_evidence_in_pir",
+            "WO-RH-45": "done_ENG-007_readme_refresh_and_docs_gate",
+            "WO-RH-46": "done_ENG-007_3x3_even_pilot_prepared_E0_and_E3_only",
         },
         # Historical values retained verbatim: WO-RH-17 forbids deleting contrary
         # evidence. These are what the tree claimed before the adjudication.
@@ -234,5 +247,21 @@ def build_work_order_status() -> Dict[str, Any]:
             "ENG-006: the prime-shift blocks of the odd degree-3 pair are each "
             "indefinite on the cell, so termwise PSD domination is unavailable and "
             "the assembled entry must be bounded as a whole",
+            "ENG-007: the Lean project under formal/ pins an exact toolchain and "
+            "mathlib commit; ten finite theorems are proved with no sorry and only "
+            "the three standard axioms",
+            "ENG-007: a formal theorem strengthens an exact theorem dependency and "
+            "never converts interval numerical evidence to FORMAL; PIR facts carry "
+            "numeric_warrant and logical_implication_warrant as separate fields",
+            "ENG-007: WO-RH-40 is deliberately partial. The Q = 0 case the runtime "
+            "uses is proved; the general case is recorded as "
+            "EXTERNAL_THEOREM_PENDING_FORMAL_PROOF with a null warrant and no "
+            "inhabitant anywhere in the project",
+            "ENG-007: zeta-23-lean is an architecture reference pinned at "
+            "cec57f9, REFERENCE_ONLY -- nothing is vendored, imported or depended on, "
+            "and its toolchain does not currently compose with Atlas's",
+            "ENG-007: the 3x3 even pilot block {1, b, b2} is prepared, not certified "
+            "-- E0 kernel identities and an E3 conditioning preview only, per the "
+            "work order's instruction not to promote a new E1 degree result",
         ],
     }

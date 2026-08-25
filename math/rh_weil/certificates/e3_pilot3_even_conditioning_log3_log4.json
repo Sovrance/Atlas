@@ -1,0 +1,343 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil 3x3 even parity block, ENG-008 preparation",
+  "work_order": "ATLAS-RH-ENG-007",
+  "content_kind": "WEIL_PILOT_CONDITIONING_PREVIEW",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "rh_proof_claim": false,
+  "evidence_class": "E3",
+  "rigorous": false,
+  "hard_constraints_certified": false,
+  "psd_claim": false,
+  "status": "PREVIEW",
+  "mpmath_used": true,
+  "eigenvalue_solver_used": true,
+  "basis": [
+    "one",
+    "b",
+    "b2"
+  ],
+  "basis_description": "one = 1, b = x(L-x), b2 = x^2 (L-x)^2; all even about x = L/2",
+  "domain": {
+    "cell": [
+      "1.0986122886681098",
+      "1.3862943611198906"
+    ],
+    "label": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "T": 84.0,
+  "dps": 30,
+  "grid_points": 9,
+  "rows": [
+    {
+      "L": "1.0986122886681098",
+      "leading_minors": [
+        "0.10735670041459189",
+        "3.4640947469748187e-06",
+        "8.581405486845256e-12"
+      ],
+      "eigenvalues": [
+        "2.4771517469100508e-06",
+        "3.226663486587768e-05",
+        "0.10736238174767959"
+      ],
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "condition_number": "43341.05969955263",
+      "diagonal_spread": "17396.008334794114",
+      "jacobi_scales": [
+        "3.0520062767952187",
+        "170.862106584658",
+        "402.54109718611346"
+      ],
+      "condition_number_after_jacobi": "8.370599789886187",
+      "inertia_after_jacobi": [
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "L": "1.1345725477245825",
+      "leading_minors": [
+        "0.0862022686137993",
+        "4.06873569204113e-06",
+        "7.081162208664757e-12"
+      ],
+      "eigenvalues": [
+        "1.7381512321089914e-06",
+        "4.7240166986979333e-05",
+        "0.08623936661734483"
+      ],
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "condition_number": "49615.571432588185",
+      "diagonal_spread": "15599.923566012347",
+      "jacobi_scales": [
+        "3.4059686975602013",
+        "111.42069356639416",
+        "425.4043118150044"
+      ],
+      "condition_number_after_jacobi": "13.508613414509847",
+      "inertia_after_jacobi": [
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "L": "1.170532806781055",
+      "leading_minors": [
+        "0.0701489199691068",
+        "6.736264938165786e-06",
+        "8.084392894440293e-12"
+      ],
+      "eigenvalues": [
+        "1.1971993794973817e-06",
+        "9.616750905422839e-05",
+        "0.07021866390066712"
+      ],
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "condition_number": "58652.43927051392",
+      "diagonal_spread": "16720.588784705644",
+      "jacobi_scales": [
+        "3.775630672412147",
+        "78.34688944689393",
+        "488.2196878115269"
+      ],
+      "condition_number_after_jacobi": "13.423726752961489",
+      "inertia_after_jacobi": [
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "L": "1.2064930658375275",
+      "leading_minors": [
+        "0.057951539103041995",
+        "1.0571442176437176e-05",
+        "8.264688543900171e-12"
+      ],
+      "eigenvalues": [
+        "7.807909332356517e-07",
+        "0.0001824192385195565",
+        "0.05802579398040576"
+      ],
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "condition_number": "74316.68518478161",
+      "diagonal_spread": "22072.2125894791",
+      "jacobi_scales": [
+        "4.154009760844004",
+        "62.64339186598778",
+        "617.1495943786601"
+      ],
+      "condition_number_after_jacobi": "12.232075118356104",
+      "inertia_after_jacobi": [
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "L": "1.2424533248940002",
+      "leading_minors": [
+        "0.05089750295322189",
+        "1.4737597817551735e-05",
+        "7.46941529958176e-12"
+      ],
+      "eigenvalues": [
+        "5.067394295589649e-07",
+        "0.00028934465789948513",
+        "0.050943225627057"
+      ],
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "condition_number": "100531.40264098824",
+      "diagonal_spread": "36564.20188867758",
+      "jacobi_scales": [
+        "4.4325307984247315",
+        "54.702658002442284",
+        "847.578264427592"
+      ],
+      "condition_number_after_jacobi": "9.617655442273154",
+      "inertia_after_jacobi": [
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "L": "1.2784135839504729",
+      "leading_minors": [
+        "0.048058946311945655",
+        "1.797478647525179e-05",
+        "6.4940162914424015e-12"
+      ],
+      "eigenvalues": [
+        "3.6120950242332355e-07",
+        "0.0003739960691101202",
+        "0.04807144415720722"
+      ],
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "condition_number": "133084.66093693557",
+      "diagonal_spread": "46212.02054668189",
+      "jacobi_scales": [
+        "4.561554600880356",
+        "50.91085106654819",
+        "980.5965400225083"
+      ],
+      "condition_number_after_jacobi": "9.749344152383674",
+      "inertia_after_jacobi": [
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "L": "1.3143738430069454",
+      "leading_minors": [
+        "0.05039364223735271",
+        "2.02769760571677e-05",
+        "7.79810958810744e-12"
+      ],
+      "eigenvalues": [
+        "3.8391246664954134e-07",
+        "0.0004030638495762097",
+        "0.050394515088563595"
+      ],
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "condition_number": "131265.6385669465",
+      "diagonal_spread": "25966.81610546134",
+      "jacobi_scales": [
+        "4.4546350081165995",
+        "49.85191551980831",
+        "717.8297888578205"
+      ],
+      "condition_number_after_jacobi": "18.130048279683525",
+      "inertia_after_jacobi": [
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "L": "1.3503341020634179",
+      "leading_minors": [
+        "0.05731262824061216",
+        "2.185863657256561e-05",
+        "1.4252745323791271e-11"
+      ],
+      "eigenvalues": [
+        "6.488677559554876e-07",
+        "0.0003832098620586923",
+        "0.0573199303882791"
+      ],
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "condition_number": "88338.38615369763",
+      "diagonal_spread": "13676.806681420458",
+      "jacobi_scales": [
+        "4.177099665181645",
+        "50.83480221885928",
+        "488.50295119402904"
+      ],
+      "condition_number_after_jacobi": "23.754333626512572",
+      "inertia_after_jacobi": [
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "L": "1.3862943611198906",
+      "leading_minors": [
+        "0.06943326574384157",
+        "2.417808670991184e-05",
+        "3.249871024816507e-11"
+      ],
+      "eigenvalues": [
+        "1.3310333643951982e-06",
+        "0.0003516031152164929",
+        "0.06944235963606381"
+      ],
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "condition_number": "52171.76480592384",
+      "diagonal_spread": "9146.329030734365",
+      "jacobi_scales": [
+        "3.7950386544218024",
+        "53.11665066483683",
+        "362.94399400889097"
+      ],
+      "condition_number_after_jacobi": "20.642697012303593",
+      "inertia_after_jacobi": [
+        3,
+        0,
+        0
+      ]
+    }
+  ],
+  "summary": {
+    "inertias_seen": [
+      [
+        3,
+        0,
+        0
+      ]
+    ],
+    "inertia_constant_on_grid": true,
+    "min_third_leading_minor": "6.4940162914424015e-12",
+    "min_eigenvalue": "3.6120950242332355e-07",
+    "max_condition_number": "133084.66093693557",
+    "max_condition_number_after_jacobi": "23.754333626512572"
+  },
+  "eng008_notes": [
+    "The Jacobi rescaling D M D is a congruence, so it changes no part of the inertia -- that is AtlasRH.posIndexAtLeast_congruence_iff and AtlasRH.rank_congruence, both proved. Conditioning is therefore free to fix and the fix costs no information.",
+    "b2 is quadratic in L, unlike every basis element ENG-005 uses. pole.py's _laplace_d2L drops the second integral because d^2_L h = 0 for a linear-in-L element; that simplification is invalid for b2, so any E2''-style curvature argument on this block needs that machinery extended first.",
+    "The third leading minor and the smallest eigenvalue sit on very different scales here, which is the gap a 2x2 block does not have: on a 2x2 the determinant fixes the spectrum given the trace, and ENG-006 found inertia and moments adding nothing as a result.",
+    "This is E3. It is a plan input, never a warrant."
+  ],
+  "dependencies": {
+    "source_hashes": {
+      "scripts/preview_pilot3.py": "b6ffb9fccfe929a7b87d535c64652d8cb631f784db2b6fa264edb93272e91867",
+      "src/pilot3.py": "dfe706432be30dd9d40556573105170b91abb2673c47823f8847fa0039581bb1"
+    }
+  },
+  "generated_utc": "2026-08-25T02:23:14Z",
+  "content_hash": "9e9c4dc3fe4706b0371ceb0a24424b8a772aa9dece4fe7bd7850255b76a2febe"
+}

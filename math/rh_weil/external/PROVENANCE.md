@@ -1,5 +1,9 @@
 # Connes-CvS provenance (WO-CVS-01)
 
+
+**No RH proof claim is made** by this layer or by anything it feeds. The
+external oracle is a cross-check on shared ingredients; it certifies nothing.
+
 ## Reviewed package
 
 | Field | Value |

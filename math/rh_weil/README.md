@@ -1,250 +1,272 @@
-# RH / Weil Positivity Program (Research Notebook V2)
+# RH / Weil finite-compression verifier
 
-This directory integrates the RH Research Notebook V2 into Atlas as the reproducible source behind the Constant Atlas positivity-verifier example (`G00 > 0`, Schur pivot positivity).
+Reproducible source behind the Constant Atlas positivity-verifier example
+(`G00 > 0`, Schur pivot positivity), grown into a program of its own.
 
-## Scope and claim boundary
+Live agent instructions: [`AGENT_INSTRUCTIONS.md`](AGENT_INSTRUCTIONS.md).
+Machine-readable status:
+[`certificates/work_order_status.json`](certificates/work_order_status.json) —
+when this file disagrees with that one, that one wins and this one is a bug.
+[`scripts/check_docs.py`](scripts/check_docs.py) fails CI on exactly that
+disagreement.
 
-This program studies finite-dimensional polynomial compressions of the localized Weil quadratic form. **It does not prove the Riemann Hypothesis.** A finite block certificate is evidence only for that stated block, interval, normalization, and cutoff/representation.
+---
 
-Accepted assembly convention:
+## 1. Scope and claim boundary
 
-`G = G^0 - G^p + G^infinity`.
+This program studies **finite-dimensional polynomial compressions of the
+localized Weil quadratic form**. **It does not prove the Riemann Hypothesis.**
+A finite block certificate is evidence for that stated block, interval,
+normalization and cutoff, and for nothing else. Every artifact carries
+`rh_proof_claim: false` and `claim_scope: finite_dimensional_weil_compression`.
 
-Current certified/research cell: `L in [log(3), log(4)]`.
+Accepted assembly convention: `G = G0 - Gp + Ginf`.
+Current research cell: `L ∈ [log 3, log 4]`.
 
-## Evidence policy
+## 2. Active normalization
 
-- E0 / SOUND: exact algebraic identities independently re-derived/tested.
-- E1 / SOUND: interval-certified numerical statements with reproducible interval engine and certificate.
-- E3 / HEURISTIC: floating scans and localization of candidate minima.
-- Spectral/quantum analogies: diagnostics only; never proof warrants.
+The pole block is **adjudicated** (WO-RH-17) and frozen. The adopted form comes
+from the explicit formula,
 
-Imported notebook claims are intentionally marked `IMPORTED_PENDING_REGENERATION` until an Atlas agent reproduces them from the code in this repository. Do not promote them merely because they appeared in the prior notebook transcript.
+`G0_ij = Fhat_ij(i/2) + Fhat_ij(-i/2) = E_i^+ E_j^- + E_i^- E_j^+`,
+`E_i^± = ∫_0^L h_i(x) e^{±x/2} dx`,
 
-## Normalization is frozen (WO-RH-17, P0) and now lives in one module (ENG-004)
-
-The pole block is **adjudicated**. The adopted form is derived from the explicit
-formula,
-
-`G0_ij = Fhat_ij(i/2) + Fhat_ij(-i/2) = E_i^+ E_j^- + E_i^- E_j^+`,  `E_i^± = ∫_0^L h_i(x) e^{±x/2} dx`,
-
-and the legacy even block `(√3/2)(v₊v₊ᵀ+v₋v₋ᵀ)` is **rejected**: it equals the
-adopted pole times `(√3/2)cosh(L/2)`, a factor that is 1 only at `L = log 3` — a
-calibration fitted at one test point (+8.25 % at `L = log 4`). The odd pivot
+and the legacy even block `(√3/2)(v₊v₊ᵀ + v₋v₋ᵀ)` is **rejected**: it equals the
+adopted pole times `(√3/2)cosh(L/2)`, a factor equal to 1 only at `L = log 3` —
+a calibration fitted at one test point (+8.25 % at `L = log 4`). The odd pivot
 `−8A²` was already correct and is unchanged.
 
-`src/pole.py` is the **single** implementation (`laplace_plus`, `laplace_minus`,
-`pole_gram_entry`, `pole_gram_matrix`, `pole_gram_entry_dL`). Every production
-path routes through it. The rejected candidate has been moved out of production
-into `src/rejected_pole.py`, which is archival: `tests/test_production_imports.py`
-fails CI if anything under `src/` imports it or spells its scale in executable
-code. Two copies of the rejected block existed before this change — the pole
-assembly and, separately, its `L`-derivative in the jet module.
+`src/pole.py` is the single implementation and every production path routes
+through it. The rejected candidate is archival in `src/rejected_pole.py`;
+`tests/test_production_imports.py` fails CI if anything under `src/` imports it
+or spells its scale in executable code.
 
-See [`docs/NORMALIZATION_ADJUDICATION_v0.1.md`](docs/NORMALIZATION_ADJUDICATION_v0.1.md),
-`certificates/normalization_adjudication.json` and
-`certificates/normalization_crosscheck.json`. That comparison is a
-**three-way internal cross-check** (explicit formula, compact real space, direct
-Fourier); the external Connes/CvS provider quantifies no projection or truncation
-error, so it reports `NOT_COMPARABLE` and never certifies.
+Active normalization id: `norm_sha256_f84b2fae2e13c777b1f829ef2567699c`. Every
+rigorous certificate binds it, and the promotion predicate refuses a certificate
+whose id has drifted.
 
 Certificates that depended on the rejected block are
-`QUARANTINED_NORMALIZATION_ADJUDICATION` — preserved, not deleted, not relabelled —
-and the promotion predicate refuses them. The quarantine is enforced at the point
-of write, so re-running a legacy certifier cannot erase it. They must be
-**regenerated** under the frozen normalization, never reinterpreted.
+`QUARANTINED_NORMALIZATION_ADJUDICATION` — preserved, not deleted, not
+relabelled. The quarantine is enforced at the point of write, so re-running a
+legacy certifier cannot erase it. They must be **regenerated**, never
+reinterpreted. See
+[`docs/NORMALIZATION_ADJUDICATION_v0.1.md`](docs/NORMALIZATION_ADJUDICATION_v0.1.md).
 
-## Scalar E1 canary (ATLAS-RH-ENG-004)
+## 3. Current certified results
 
-The scalar cell entry is the first artifact regenerated under Candidate A and the
-only one ENG-004 releases from quarantine. `certificates/e1_scalar_log3_log4.json`
-carries a **uniform** rigorous lower bound over `[log 3, log 4]`, computed with
-python-flint/Arb — there is no mpmath path that may emit E1.
+Numbers are read from the certificates by
+[`scripts/check_docs.py`](scripts/check_docs.py), not from prose memory; a value
+here that disagrees with its certificate fails the gate.
 
-The bound rests on convexity, which is algebraic rather than numeric. `Gp` is
-piecewise linear with breakpoints exactly at the cell endpoints, the pole
-contributes `G0'' = 4cosh(L/2)`, and the archimedean term's cosine transform gives
-`Ginf'' = −e^{L/2}/sinh L`, so
+| Object | Domain | Result | Warrant | Certificate |
+|---|---|---|---|---|
+| scalar `G00` | `[log 3, log 4]` | `≥ 0.06962397439120689` | E1 | `e1_scalar_log3_log4.json` |
+| degree-1 odd `O1` | cell | `≥ 0.015026786946870317` | E1 | `e1_degree1_log3_log4.json` |
+| compact degree-2 even `E2` | cell | `≥ 2.0652586666890377e-06` | E1 | `e1_degree2_compact_log3_log4.json` |
+| `T=84` degree-2 `E2,84`, points | `log 3`, `1.20`, `log 4` | positive at each | E1 | `e1_fourier_T84_points.json` |
+| `T=84` interior minimum | cell | `L*` isolated to `[1.1059498108971377, 1.1059498114329873]`, a strict interior minimum | E1 | `e1_fourier_T84_interior_minimum.json` |
+| `T=84` degree-2 uniform | cell | `E2,84(L) ≥ 3.4251152511218656e-06 > 0` | E1 | `e1_fourier_T84_uniform_degree2.json` |
+| odd degree-3 block | cell | positive definite, inertia `(2,0,0)`, one stratum, no transition regions; `O1 ≥ 0.015331267702267608`, `det ≥ 1.073120529992708e-06` | E1 | `e1_degree3_odd_positivity_log3_log4.json` |
+| rank–trace | 3 degree-3 sample points | `rank ≥ 1` — nontrivial but weak, against a true rank of 2 | E1 | `e1_degree3_odd_moments_log3_log4.json` |
+| spectral moments `m₁..m₄` | 3 degree-3 sample points | dimension 2; mixed conclusive / insufficient B1 queries | E1 | `e1_degree3_odd_moments_log3_log4.json` |
+| finite theorem boundary | — | 10 theorems proved in Lean 4 / Mathlib, no `sorry`, three standard axioms | FORMAL (implication only) | `formal_theorem_certificate.json` |
+| 3×3 even pilot `{1, b, b²}` | cell, 9-point grid | inertia `(3,0,0)` on the grid; conditioning `1.3e5 → 2.4e1` under a Jacobi congruence | **E3 — preview, never a warrant** | `e3_pilot3_even_conditioning_log3_log4.json` |
 
-`G00''(L) = 4cosh(L/2) − e^{L/2}/sinh(L) = 2(r³−r−1)/(√r(r²−1))`,  `r = eᴸ`,
+Two of those rows deserve their qualifiers. The rank–trace bound is *weak*: it
+proves `rank ≥ 1` where the rank is 2, and saying so is the point — a bound that
+is true and uninformative is still a result, and pretending otherwise is how a
+program starts believing its own machinery. And the B1 moment queries come back
+**INSUFFICIENT_INFORMATION** for "do the moments force PSD" even though the block
+*is* positive definite, because PSD-ness of a truncated localizing matrix is
+necessary and not sufficient; only the refuting direction is available from four
+moments.
 
-which is exactly the repository's E0 curvature `W00''`, already proved positive on
-the cell. That identity is itself independent evidence for the adjudication: the
-`4cosh(L/2)` term is produced by Candidate A's pole and by nothing else, so the
-rejected block cannot reproduce the certified curvature.
+### Work-order status
 
-Regression note: the historical notebook minimum `0.0753795566…` — which the
-rejected calibration had put out of reach, holding this entry above ≈0.1276 on the
-cell — falls **inside** the recovered enclosure. It is recorded as regression
-evidence only; the acceptance gate is the positive bound, never a fitted constant.
+| Order | State |
+|---|---|
+| WO-RH-01…04 | exact identities, f1 audit, even block — E0 |
+| WO-RH-05 | **recovered by ENG-005** — cutoff-free uniform E1 |
+| WO-RH-08 | **done by ENG-006** — odd degree-3 implemented and certified |
+| WO-RH-09 | **recovered by ENG-004** — scalar canary PROMOTED |
+| WO-RH-15 | **recovered by ENG-005** — T=84 uniform E1 + interior minimum |
+| WO-RH-17/18 | normalization adjudicated, Candidate A adopted, three-way internal cross-check |
+| WO-RH-28…33 | inertia, rank–trace, moment engines; degree-3 exact block and E3 scan |
+| WO-RH-34 | degree-3 E1 certificate — positive definite |
+| WO-RH-36 | positivity-vs-inertia/moment information report |
+| WO-RH-38 | pinned Lean project and theorem boundary |
+| WO-RH-43 | statement comparator, axiom audit, theorem manifest |
+| WO-RH-46 | 3×3 even pilot prepared — E0 identities and an E3 preview only |
 
-Degree-1, compact degree-2 and both T=84 E1 artifacts remain quarantined. ENG-005
-recovers them.
+The authoritative per-order state, including the pre-quarantine values WO-RH-17
+forbids deleting, is
+[`certificates/work_order_status.json`](certificates/work_order_status.json).
 
-```bash
-python3 scripts/derive_normalization.py           # derivation + adjudication certificate (requires SymPy)
-python3 scripts/run_normalization_crosscheck.py   # three-way internal cross-check (--no-arch to skip the slow route)
-python3 scripts/quarantine_normalization.py       # idempotent quarantine
-python3 scripts/run_rigorous_scalar.py            # the rigorous scalar path, in order
+## 4. Verifier architecture
+
+```
+src/pole.py            the one Candidate-A pole primitive
+src/weil_entries.py    prime kernels, frequency-space archimedean route, assembly
+src/archimedean_realspace.py
+                       the exact real-space archimedean form and its L-jets
+src/interval_cover.py  the shared adaptive interval branch-and-bound
+src/promotion.py       the one promotion predicate; source hashes; normalization binding
+inertia/               interval Hermitian LDL congruence, signature, stratification
+ranktrace/             the rank-trace / Hilbert-Schmidt theorem with enforced hypotheses
+moments/               m1..m4 as traces of powers, fed to the Atlas B1 solver
+formal/                the Lean 4 project: definitions, statements, proofs, comparator
+src/formal_evidence.py the FORMAL warrant and the boundary it may not cross
+src/pilot3.py          the 3x3 even pilot prepared for ENG-008
 ```
 
-## Core E1 recovery (ATLAS-RH-ENG-005)
+Four facts about this architecture are load-bearing:
 
-ENG-004 recovered the scalar cell. ENG-005 recovers the rest of the Candidate-A
-chain and rebuilds the T=84 topology from scratch.
+* **No eigenvalue solver is reachable from any rigorous path.** A gate in
+  `scripts/ci_inertia.py` proves it by import scan. Signatures come from interval
+  LDL congruence, cross-checked against Descartes' rule of signs on the
+  characteristic polynomial — exact, because a symmetric matrix is real-rooted.
+* **mpmath never certifies.** E1 requires python-flint/Arb. mpmath appears in E3
+  previews and in the pilot, both labelled.
+* **Derivatives are exact jets, never finite differences** in a rigorous path.
+  Finite differences appear only as a check on the jets — and earned it: they
+  caught a `d²/dL²(L³/6)` coefficient written as `L/2` instead of `L`.
+* **Certificates are build outputs.** Each records the source hashes it depends
+  on; editing a certifier's dependency makes its certificate stale by
+  construction and the chain refuses it.
 
-**Degree-1 and compact degree-2** are cutoff-free — no frequency truncation to
-bound away — because the archimedean term now has an exact real-space form:
-
-`Ginf_ij(L) = (K(0)/2)h₊(0) + ∫₀^L [K(0)−K(u)]·w(u)du + K(0)·S(L)`
-
-with `w(u) = e^{−u/2}/(1−e^{−2u})` and `S(L) = Σₙ e^{−(2n+1/2)L}/(2n+1/2)`, using
-the same `K_ij` as the prime block. This matters because the frequency-space
-definition is an oscillatory half-line integral: fine at a point, useless on an
-`L`-interval, which is why ENG-004 had to reach for convexity. The real-space form
-has no oscillation, so ordinary interval subdivision works — and it is ~1000×
-faster. The two routes agree exactly on the fast-decaying entries and differ on
-the slow-decaying ones by precisely the expected truncation tail, so each
-cross-checks the other.
-
-The naive interchange gives `−∫₀^L K(u)w(u)du`, which diverges; the constant part
-of `h₊` contributes a delta at the origin that the naive swap drops. Keeping it
-produces the `K(0)−K(u)` numerator, which vanishes linearly and cancels the `1/u`.
-
-**T=84** is a different object, not an approximation of these: its archimedean
-term stops at `T = 84` by definition, so the frequency route *is* the definition
-there. Its topology was rescanned fresh under Candidate A — the rejected
-Candidate-B monotonicity topology is not reused, and the superseded scan is kept
-under `certificates/history/` as provenance.
-
-All `L`-derivatives are **exact support-length jets**, never finite differences:
-`d_L^n H₀ = (it)^{n−1}e^{itL}`, `d_L Hb = ∫₀^L x e^{itx}dx`, `d_L² Hb = L e^{itL}`,
-with binomial convolution for the Gram entries. Finite differences appear only as
-a *check* on those jets — and earned their place: they caught a `d²/dL²(L³/6)`
-coefficient written as `L/2` instead of `L`, which threw `d²O1` off by 0.70.
-
-Uniform bounds come from one shared adaptive interval cover
-(`src/interval_cover.py`), which assumes no topology at all — §8 forbids
-precommitting to convexity or monotonicity, so each certificate records the
-topology it actually established.
-
-At `T = 84` a second, independent warrant sits alongside that cover: instead of
-merely bounding `E2`, it **locates the minimiser**. Certified bisection on
-`sign(E2')` pins `L*` to a nine-digit interval; `E2'' > 0` on a window around it
-makes `L*` the unique critical point there and a strict minimum; an interval
-cover of that short window bounds `E2` almost as tightly as a point evaluation;
-and certified derivative signs (`E2' < 0` to the left, `E2' > 0` through a band
-to the right) show nothing outside the window can be lower. The headline bound is
-the sharper of the two warrants, floored at what the plain cover alone proves, so
-the second warrant can only improve the number.
-
-The derivative argument governs a band, not the whole cell: the `E2''` enclosure
-on a box of radius `r` carries a ~`300 r` dependency blow-up that cannot be
-centred away (that would need an exact third jet, and a finite-difference one is
-forbidden in an E1 path), so past the band it is cheaper and no less rigorous to
-bound `E2` directly. Each certificate names the interval its warrant governs, and
-the intervals abut exactly.
+## 5. Canonical commands
 
 ```bash
-python3 scripts/run_rigorous_chain.py      # the whole chain, in canonical order
+python3 math/rh_weil/scripts/run_rh_weil_suite.py        # fast path — does NOT re-derive E1
+python3 math/rh_weil/scripts/run_rigorous_chain.py --release
+python3 math/rh_weil/scripts/ci_inertia.py --gate fast
+python3 math/rh_weil/scripts/ci_inertia.py --gate rigorous
+python3 math/rh_weil/scripts/check_docs.py               # rh-docs gate
+python3 math/rh_weil/scripts/ci_formal.py                # rh-formal gate
 ```
 
-### Rigorous dependencies
+Passing the fast suite does **not** mean the rigorous certificates are current —
+it does not re-derive the scalar canary. Read the rigorous chain's exit code
+before believing an E1 claim is fresh.
 
-SymPy and python-flint are **required** for the rigorous/research path, not
-optional extras. A missing one now fails the job rather than degrading an artifact
-to weaker evidence and dirtying the tree:
+The formal layer, from `math/rh_weil/formal/`:
 
 ```bash
-pip install -r requirements-rigorous.txt
+lake build                                    # AtlasRH + comparator
+lake env lean comparator/PrintAxioms.lean     # statement comparator + axiom report
+python3 ../scripts/check_formal_manifest.py   # manifest gate (Lean layer optional)
 ```
 
-`scripts/run_rh_weil_suite.py` is the fast path. Passing it does **not** mean the
-rigorous certificates are current — it does not re-derive the scalar canary. Read
-`scripts/run_rigorous_scalar.py`'s exit code before believing an E1 claim is fresh.
-
-## Inertia, rank-trace and spectral moments (ATLAS-RH-ENG-006)
-
-Through ENG-005 every block was asked one question — is it positive? That is a
-single bit, and when the answer is no the run ends with nothing. ENG-006 adds
-three channels so an indefinite block still yields a rigorous result:
-
-* **inertia** (`inertia/`) — the full signature `(n₊, n₋, n₀)` by interval
-  Hermitian LDL congruence, checked against an independent oracle that reads the
-  inertia off the characteristic polynomial by Descartes' rule of signs (exact,
-  because a symmetric matrix is real-rooted);
-* **rank–trace** (`ranktrace/`) — `rank(P) ≥ 2 tr(P) + 4 tr(Q) − 4b − ‖P+Q‖²_HS`
-  with its four hypotheses enforced, not assumed;
-* **spectral moments** (`moments/`) — `m₁..m₄` as traces of matrix powers, fed to
-  the existing Atlas B1 truncated-moment solver rather than a second one.
-
-Three things these refuse to do. An interval result never claims an exact zero,
-so singular inputs come back `INCONCLUSIVE` rather than `n₀ = 1`. A rank–trace
-call with any unverified hypothesis produces no number at all. And "the moments
-force PSD" comes back `INSUFFICIENT_INFORMATION` even for a positive definite
-matrix, because PSD-ness of a truncated localizing matrix is necessary and not
-sufficient — only the refuting direction is available from four moments.
-
-**The odd degree-3 block** `[[G_q1q1, G_q1b3], [G_q1b3, G_b3b3]]` is the first
-live workload, and it came out **positive definite**: inertia `(2,0,0)` uniformly
-on `[log 3, log 4]`, one stratum and no transition regions, with
-`O1 ≥ 1.5331e-02` and `det ≥ 1.0731e-06`. The work order did not require this —
-an inertia stratification would have counted as success — and the same machinery
-would have produced one had any part of the cell been indefinite.
-
-Its two kernels are re-derived from the basis with SymPy on every run:
-
-`K_q1b3 = (L−a)²(L³ + 2L²a − 12La² − 6a³)/60` and
-`K_b3b3 = (L−a)³(L⁴ + 3L³a − 15L²a² − 18La³ − 6a⁴)/420`.
-
-Every active prime-shift block on the cell is indefinite — determinant negative,
-inertia `(1,1,0)` — which is kept as a regression test. It is why the assembled
-entry has to be bounded as a whole and why termwise PSD domination is unavailable.
-
-Positivity and inertia are distinct content kinds. An inertia certificate never
-satisfies a consumer requiring PSD, even when its signature is `(2,0,0)`; the
-degree-3 artifact answers such a consumer as a *positivity* certificate carrying
-certified bounds, with the inertia object nested inside it still refusing.
+Rigorous dependencies are required, not optional extras — a missing one fails
+the job rather than degrading an artifact to weaker evidence:
 
 ```bash
-python3 scripts/certify_degree3.py            # scan, E1 result, moments
-python3 scripts/ci_inertia.py --gate fast     # exact gates, no python-flint needed
-python3 scripts/ci_inertia.py --gate rigorous # interval gates, python-flint required
-python3 scripts/report_information_comparison.py
+pip install -r math/rh_weil/requirements-rigorous.txt
 ```
 
-## Current priority
+## 6. Evidence and certificate taxonomy
 
-ENG-005 recovered the E1 chain and ENG-006 delivered the inertia/rank-trace/moment
-channels and the degree-3 pilot. Next is ENG-007: formalize the stabilized theorem
-boundary in Lean — Sylvester inertia under congruence, the 2x2/3x3 criteria, the
-rank-trace theorem, certificate semantics, and selected degree-3 exact identities.
-Only after that should the program widen to additional prime-power cells or higher
-polynomial degree at scale.
+| Class | Meaning | May it warrant a claim? |
+|---|---|---|
+| **E0 / SOUND** | exact algebraic identity, independently re-derived | yes |
+| **E1 / SOUND** | interval-certified, python-flint/Arb, outward rounded, hashes bound | yes |
+| **E3 / HEURISTIC** | floating scan, topology preview, conditioning report | never |
+| **FORMAL** | a machine-checked *implication*, Lean 4 / Mathlib, pinned toolchain | only the implication |
 
-**Executed in-repo so far (see `certificates/work_order_status.json`):**
-- WO-RH-01/03/04 — exact identities, f1 audit, bubble block (E0)
-- WO-RH-02 — scalar cell `[log 3, log 4]` algebraic `W00''>0` (E0)
-- WO-RH-05 — stable `H0`/`Hb` + L-jets; E3 energy-probe scan only (interval E1 **open**)
-- WO-RH-06/07 — regenerated E0 certificates + dedicated runner (does not expand root CI)
+`FORMAL` is deliberately not a rung of the E-ladder: the ladder grades how
+reliable a **number** is, and `FORMAL` grades whether an **implication** was
+checked. The two travel in separate fields, `numeric_warrant` and
+`logical_implication_warrant`, on every PIR fact. So the degree-3 result reads:
 
-Run:
-
-```bash
-python math/rh_weil/scripts/run_rh_weil_suite.py
+```
+Arb interval enclosure                E1     the bounds hold
+Lean: positive bounds => PD           FORMAL the bounds suffice
 ```
 
-See `AGENT_INSTRUCTIONS.md` and `notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md`.
+Remove either half and the claim is gone. A formal theorem may strengthen an
+exact theorem dependency; it **never** converts interval numerical evidence to
+FORMAL.
 
-Optional external oracle (not required at runtime): `external/` wraps
-`connes-cvs` for independent cross-checks of shared Weil ingredients. See
-`external/CONNES_CVS_MAPPING.md` and `external/PROVENANCE.md`. Do not compare
-Galerkin matrix entries to Atlas polynomial Gram blocks by index.
+Content kinds are also load-bearing. An **inertia** certificate never satisfies
+a consumer requiring PSD, even when its signature is `(2,0,0)` — "I know the
+signature" must not be read as "it is positive". The degree-3 artifact answers
+such a consumer as a *positivity* certificate carrying certified bounds, with
+the inertia object nested inside it still refusing.
 
-Regenerate the external cross-validation certificate (research env):
+Imported notebook claims stay `IMPORTED_PENDING_REGENERATION` until regenerated
+in-repo. `uncertified != pass`.
+
+## 7. External cross-validation
+
+**Connes / CvS** (`external/`) — an optional external oracle for shared Weil
+ingredients. It quantifies no projection or truncation error, so it reports
+`NOT_COMPARABLE` and **never certifies**. Do not compare Galerkin matrix entries
+to Atlas polynomial Gram blocks by index. See
+[`external/CONNES_CVS_MAPPING.md`](external/CONNES_CVS_MAPPING.md) and
+[`external/PROVENANCE.md`](external/PROVENANCE.md).
 
 ```bash
 pip install 'connes-cvs==0.3.1' python-flint mpmath
-python math/rh_weil/scripts/run_connes_cvs_crosschecks.py
+python3 math/rh_weil/scripts/run_connes_cvs_crosschecks.py
 ```
 
+The internal cross-check is separate and is **three-way** — explicit formula,
+compact real space, direct Fourier (`certificates/normalization_crosscheck.json`).
+
+**zeta-23-lean** (`external/zeta23/`) — architecture reference for the formal
+layer, pinned at commit `cec57f9`, Apache-2.0. Status is `REFERENCE_ONLY`:
+nothing is vendored, imported or depended on, and its toolchain does not
+currently compose with this project's. Its mapping records one thing worth
+knowing: the general rank–trace inequality Atlas carries as *unproved* is proved
+upstream as `Zeta23.RHLinalg.rank_trace_ineq_two`. See
+[`external/zeta23/MAPPING.md`](external/zeta23/MAPPING.md).
+
+## 8. Current frontier — ATLAS-RH-ENG-007, formal replay
+
+ENG-005 recovered the E1 chain; ENG-006 added the inertia, rank–trace and moment
+channels and the degree-3 pilot. **ENG-007 is the current work order**: make the
+finite theorem boundary formally replayable, and make the documentation
+mechanically unable to fall behind the implementation.
+
+What that means concretely:
+
+* ten finite theorems proved in Lean 4 against a pinned Mathlib commit — the
+  congruence-invariance of the positive index, the negative index and the rank
+  (Sylvester's law in the formulation the runtime uses); the 2×2 and 3×3
+  leading-principal-minor criteria, both directions; the certificate implication;
+  the Weil parity and determinant identities; and the rank–trace inequality in
+  the `Q = 0` case;
+* a **statement comparator**: each proof is typed against a trusted statement, so
+  a drifted proposition fails to elaborate, and the statement's elaborated form
+  is hashed into `formal/manifests/theorem_manifest.json`;
+* an **axiom audit**: no `sorry` in the proof library, no project-local `axiom`,
+  and every theorem's axiom set contained in `{propext, Classical.choice,
+  Quot.sound}`, enumerated rather than hidden;
+* what is **not** proved, recorded rather than omitted: the general rank–trace
+  inequality is carried as a `def … : Prop` with no inhabitant, marked
+  `EXTERNAL_THEOREM_PENDING_FORMAL_PROOF` with a null warrant;
+* documentation as a merge gate — `scripts/check_docs.py`.
+
+See [`docs/FORMAL_BOUNDARY_ENG007_v0.1.md`](docs/FORMAL_BOUNDARY_ENG007_v0.1.md)
+and [`formal/README.md`](formal/README.md).
+
+**Next: ENG-008** takes the 3×3 even parity block `{1, b, b²}` that WO-RH-46
+prepared, where the determinant is no longer the whole story and inertia and
+moments have room to add information a 2×2 does not have.
+
+## 9. History
+
+Work-order records, each accurate for the work it describes:
+
+* [`docs/NORMALIZATION_ADJUDICATION_v0.1.md`](docs/NORMALIZATION_ADJUDICATION_v0.1.md) — WO-RH-17/18, the pole adjudication (still in force)
+* [`docs/SCALAR_E1_CANARY_ENG004_v0.1.md`](docs/SCALAR_E1_CANARY_ENG004_v0.1.md) — ENG-004
+* [`docs/CORE_E1_RECOVERY_ENG005_v0.1.md`](docs/CORE_E1_RECOVERY_ENG005_v0.1.md) — ENG-005
+* [`docs/INERTIA_RANKTRACE_MOMENTS_ENG006_v0.1.md`](docs/INERTIA_RANKTRACE_MOMENTS_ENG006_v0.1.md) — ENG-006
+* [`docs/FORMAL_BOUNDARY_ENG007_v0.1.md`](docs/FORMAL_BOUNDARY_ENG007_v0.1.md) — ENG-007
+
+Superseded instructions, preserved and labelled rather than deleted:
+
+* [`docs/history/agent-instructions-initial-integration.md`](docs/history/agent-instructions-initial-integration.md) — the original integration work order
+* [`docs/ATLAS_RH_ENG_002_Mathematical_Parity_Run18.md`](docs/ATLAS_RH_ENG_002_Mathematical_Parity_Run18.md), [`docs/README.md`](docs/README.md), [`docs/AGENT_EXECUTION_CHECKLIST.md`](docs/AGENT_EXECUTION_CHECKLIST.md) — ENG-002
+* `certificates/history/` — superseded certificates, kept as provenance
+* [`notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md`](notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md) — the imported notebook checkpoint and what became of each of its claims
