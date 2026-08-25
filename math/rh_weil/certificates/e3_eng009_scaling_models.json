@@ -1,0 +1,303 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil scaling models \u2014 Candidate A",
+  "work_order": "WO-RH-60",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_SCALING_MODEL",
+  "evidence_class": "E3",
+  "numeric_warrant": "NONE \u2014 E3 exploratory fits over E1 enclosures; cannot promote and cannot enter PIR as facts",
+  "rigorous": false,
+  "psd_claim": false,
+  "status": "EXPLORATORY",
+  "anti_overclaim": [
+    "five finite blocks do not establish asymptotics",
+    "no asymptotic/infinite-limit model is a promoted fact",
+    "finite-T and cutoff-free families are not one scaling sequence"
+  ],
+  "quantity_modelled": "lambda_min(G, M) vs block dimension n, per parity family, cutoff-free blocks only",
+  "models": [
+    {
+      "model": "exponential_decay",
+      "formula": "lambda_min(n) = C * rho^n",
+      "family": "even",
+      "fitted": {
+        "C": "1.5981731652537126",
+        "rho": "0.0261684849365411"
+      },
+      "fit_method": "least squares on log lambda vs n",
+      "data_points": [
+        {
+          "n": 1,
+          "enclosure": [
+            "0.052666425704956055",
+            "0.058518285644676"
+          ]
+        },
+        {
+          "n": 2,
+          "enclosure": [
+            "0.0005867481231689453",
+            "0.0006520075621795992"
+          ]
+        },
+        {
+          "n": 3,
+          "enclosure": [
+            "3.606081008911133e-05",
+            "4.007732435284577e-05"
+          ]
+        }
+      ],
+      "input_warrant": "E1 enclosures; the fit itself is E3",
+      "extrapolation_status": "EXPLORATORY_NEVER_PROMOTED",
+      "next_block_prediction": {
+        "n": 4,
+        "value": "7.494422124752805e-07"
+      },
+      "falsifier": "certified lambda_min enclosure of the even family's n = 4 block lying outside [1.499e-07, 3.747e-06] rejects this model at the stated tolerance"
+    },
+    {
+      "model": "power_law_decay",
+      "formula": "lambda_min(n) = C * n^(-p)",
+      "family": "even",
+      "fitted": {
+        "C": "0.05694748502469613",
+        "p": "6.616812177071395"
+      },
+      "fit_method": "least squares on log lambda vs log n",
+      "data_points": [
+        {
+          "n": 1,
+          "enclosure": [
+            "0.052666425704956055",
+            "0.058518285644676"
+          ]
+        },
+        {
+          "n": 2,
+          "enclosure": [
+            "0.0005867481231689453",
+            "0.0006520075621795992"
+          ]
+        },
+        {
+          "n": 3,
+          "enclosure": [
+            "3.606081008911133e-05",
+            "4.007732435284577e-05"
+          ]
+        }
+      ],
+      "input_warrant": "E1 enclosures; the fit itself is E3",
+      "extrapolation_status": "EXPLORATORY_NEVER_PROMOTED",
+      "next_block_prediction": {
+        "n": 4,
+        "value": "5.912302781842369e-06"
+      },
+      "falsifier": "certified lambda_min enclosure of the even family's n = 4 block lying outside [1.182e-06, 2.956e-05] rejects this model at the stated tolerance"
+    },
+    {
+      "model": "normalized_gap_stability",
+      "formula": "lambda_min(n) * K^n stabilizes for some fixed K",
+      "family": "even",
+      "fitted": {
+        "note": "with only 3 points this is indistinguishable from exponential decay; recorded as a hypothesis, not a fit"
+      },
+      "fit_method": "none (insufficient points)",
+      "data_points": [
+        {
+          "n": 1,
+          "enclosure": [
+            "0.052666425704956055",
+            "0.058518285644676"
+          ]
+        },
+        {
+          "n": 2,
+          "enclosure": [
+            "0.0005867481231689453",
+            "0.0006520075621795992"
+          ]
+        },
+        {
+          "n": 3,
+          "enclosure": [
+            "3.606081008911133e-05",
+            "4.007732435284577e-05"
+          ]
+        }
+      ],
+      "input_warrant": "E1 enclosures",
+      "extrapolation_status": "EXPLORATORY_NEVER_PROMOTED",
+      "falsifier": "successive ratios lambda(n+1)/lambda(n) failing to converge as n grows rejects stability of the normalized gap"
+    },
+    {
+      "model": "no_trend",
+      "formula": "lambda_min(n) ~ const",
+      "family": "even",
+      "fitted": {},
+      "fit_method": "none",
+      "data_points": [
+        {
+          "n": 1,
+          "enclosure": [
+            "0.052666425704956055",
+            "0.058518285644676"
+          ]
+        },
+        {
+          "n": 2,
+          "enclosure": [
+            "0.0005867481231689453",
+            "0.0006520075621795992"
+          ]
+        },
+        {
+          "n": 3,
+          "enclosure": [
+            "3.606081008911133e-05",
+            "4.007732435284577e-05"
+          ]
+        }
+      ],
+      "input_warrant": "E1 enclosures",
+      "extrapolation_status": "ALREADY_REJECTED_BY_THE_DATA",
+      "falsifier": "already falsified: the certified enclosures at different n are disjoint and monotone decreasing"
+    },
+    {
+      "model": "exponential_decay",
+      "formula": "lambda_min(n) = C * rho^n",
+      "family": "odd",
+      "fitted": {
+        "C": "3.3492815334210744",
+        "rho": "0.03957778731184659"
+      },
+      "fit_method": "least squares on log lambda vs n",
+      "data_points": [
+        {
+          "n": 1,
+          "enclosure": [
+            "0.12558043003082275",
+            "0.1395338743236466"
+          ]
+        },
+        {
+          "n": 2,
+          "enclosure": [
+            "0.004970192909240723",
+            "0.005522444641828629"
+          ]
+        }
+      ],
+      "input_warrant": "E1 enclosures; the fit itself is E3",
+      "extrapolation_status": "EXPLORATORY_NEVER_PROMOTED",
+      "next_block_prediction": {
+        "n": 3,
+        "value": "0.0002076376886682589"
+      },
+      "falsifier": "certified lambda_min enclosure of the odd family's n = 3 block lying outside [4.153e-05, 1.038e-03] rejects this model at the stated tolerance"
+    },
+    {
+      "model": "power_law_decay",
+      "formula": "lambda_min(n) = C * n^(-p)",
+      "family": "odd",
+      "fitted": {
+        "C": "0.13255715217723477",
+        "p": "4.6591652323528905"
+      },
+      "fit_method": "least squares on log lambda vs log n",
+      "data_points": [
+        {
+          "n": 1,
+          "enclosure": [
+            "0.12558043003082275",
+            "0.1395338743236466"
+          ]
+        },
+        {
+          "n": 2,
+          "enclosure": [
+            "0.004970192909240723",
+            "0.005522444641828629"
+          ]
+        }
+      ],
+      "input_warrant": "E1 enclosures; the fit itself is E3",
+      "extrapolation_status": "EXPLORATORY_NEVER_PROMOTED",
+      "next_block_prediction": {
+        "n": 3,
+        "value": "0.0007932615489589016"
+      },
+      "falsifier": "certified lambda_min enclosure of the odd family's n = 3 block lying outside [1.587e-04, 3.966e-03] rejects this model at the stated tolerance"
+    },
+    {
+      "model": "normalized_gap_stability",
+      "formula": "lambda_min(n) * K^n stabilizes for some fixed K",
+      "family": "odd",
+      "fitted": {
+        "note": "with only 2 points this is indistinguishable from exponential decay; recorded as a hypothesis, not a fit"
+      },
+      "fit_method": "none (insufficient points)",
+      "data_points": [
+        {
+          "n": 1,
+          "enclosure": [
+            "0.12558043003082275",
+            "0.1395338743236466"
+          ]
+        },
+        {
+          "n": 2,
+          "enclosure": [
+            "0.004970192909240723",
+            "0.005522444641828629"
+          ]
+        }
+      ],
+      "input_warrant": "E1 enclosures",
+      "extrapolation_status": "EXPLORATORY_NEVER_PROMOTED",
+      "falsifier": "successive ratios lambda(n+1)/lambda(n) failing to converge as n grows rejects stability of the normalized gap"
+    },
+    {
+      "model": "no_trend",
+      "formula": "lambda_min(n) ~ const",
+      "family": "odd",
+      "fitted": {},
+      "fit_method": "none",
+      "data_points": [
+        {
+          "n": 1,
+          "enclosure": [
+            "0.12558043003082275",
+            "0.1395338743236466"
+          ]
+        },
+        {
+          "n": 2,
+          "enclosure": [
+            "0.004970192909240723",
+            "0.005522444641828629"
+          ]
+        }
+      ],
+      "input_warrant": "E1 enclosures",
+      "extrapolation_status": "ALREADY_REJECTED_BY_THE_DATA",
+      "falsifier": "already falsified: the certified enclosures at different n are disjoint and monotone decreasing"
+    }
+  ],
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_eng009.py": "b28d084969c95ba37c52c4054260132f75d242d45ad4528b04ed7c2f01e9ac99",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-25T21:28:28Z",
+  "content_hash": "2719ade96da77279ea6350fdfb19f49c1a22434e970fafc302036480a85d6a23"
+}

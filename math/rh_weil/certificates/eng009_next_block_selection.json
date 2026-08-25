@@ -1,0 +1,112 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil next-block selection \u2014 Candidate A",
+  "work_order": "WO-RH-62",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_NEXT_BLOCK_SELECTION",
+  "evidence_class": "E3",
+  "numeric_warrant": "NONE \u2014 a plan, informed by E1 data; the plan itself asserts no numeric fact",
+  "rigorous": false,
+  "psd_claim": false,
+  "status": "SELECTED",
+  "selection": "even4",
+  "selection_criteria": [
+    "genuinely increases dimension",
+    "exact kernels derivable by the generalized basis algebra",
+    "natural reference metric tractable",
+    "conditioning manageable with frozen exact congruence",
+    "adds new subspace information",
+    "best discriminates plausible scaling laws"
+  ],
+  "candidates": [
+    {
+      "candidate": "even4",
+      "basis": [
+        "one",
+        "b",
+        "b2",
+        "bcube"
+      ],
+      "dimension": 4,
+      "increases_dimension": true,
+      "kernels_derivable": "yes -- derived and tested already (E0 prep done)",
+      "reference_metric_tractable": "yes -- exact monomials; M(1) minors 1, 1/180, 1/7938000, 1/88104560544000",
+      "conditioning": "manageable: same frozen dyadic congruence pattern; preview preconditioned minors are O(1)-O(1e-3)",
+      "adds_new_subspace": "yes -- u^6 in u = x - L/2, first even sextic",
+      "scaling_discrimination": "best available: a 4th point in the family whose exponential and power-law fits diverge by construction at n = 4",
+      "selected": true
+    },
+    {
+      "candidate": "odd3",
+      "basis": [
+        "q1",
+        "b3",
+        "b2q1 (= b^2 q1, odd, degree 5)"
+      ],
+      "dimension": 3,
+      "increases_dimension": true,
+      "kernels_derivable": "yes -- same table mechanism would derive them",
+      "reference_metric_tractable": "yes -- same homogeneity argument",
+      "adds_new_subspace": "yes -- u^5 direction",
+      "scaling_discrimination": "weaker: gives the odd family a 3rd point, where the even family would get a 4th",
+      "selected": false,
+      "why_not": "the odd family's gap (5.0e-3 at n = 2) is two orders healthier than the even family's (3.7e-5 at n = 3); the scaling question lives in the even family, so that is where the discriminating point belongs"
+    },
+    {
+      "candidate": "full5_mixed",
+      "basis": [
+        "one",
+        "q1",
+        "b",
+        "b3",
+        "b2"
+      ],
+      "dimension": 5,
+      "increases_dimension": true,
+      "adds_new_subspace": "no -- parity makes it block-diagonal in the certified blocks; spectrum is their union",
+      "selected": false,
+      "why_not": "a repackaging of certified results, not new information"
+    },
+    {
+      "candidate": "T84_degree3",
+      "basis": [
+        "one",
+        "b (finite T = 84)"
+      ],
+      "increases_dimension": false,
+      "selected": false,
+      "why_not": "different family: finite-T and cutoff-free blocks are not one scaling sequence (\u00a7Anti-overclaim)"
+    }
+  ],
+  "eng010_falsifier_inputs": [
+    {
+      "model": "exponential_decay",
+      "prediction_at_n4": "7.494422124752805e-07",
+      "falsifier": "certified lambda_min enclosure of the even family's n = 4 block lying outside [1.499e-07, 3.747e-06] rejects this model at the stated tolerance"
+    },
+    {
+      "model": "power_law_decay",
+      "prediction_at_n4": "5.912302781842369e-06",
+      "falsifier": "certified lambda_min enclosure of the even family's n = 4 block lying outside [1.182e-06, 2.956e-05] rejects this model at the stated tolerance"
+    }
+  ],
+  "preparation": {
+    "e0": "bcube in basis_algebra.BASIS_L_POLY and pole.basis_coeffs; kernels/multiplicities pinned in tests",
+    "e3_preview": "e3_eng010_even4_preview.json"
+  },
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_eng009.py": "b28d084969c95ba37c52c4054260132f75d242d45ad4528b04ed7c2f01e9ac99",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-25T21:28:28Z",
+  "content_hash": "3d016cd6a4667b5500c2d06ba0073c22780d78f45577311cfa76ec813a2405aa"
+}

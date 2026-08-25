@@ -1,0 +1,866 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil structural diagnostics \u2014 Candidate A",
+  "work_order": "WO-RH-56/59/61",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_STRUCTURAL_DIAGNOSTIC",
+  "evidence_class": "E1",
+  "numeric_warrant": "E1 for every enclosure; E0 for the reference metric facts; nothing here is E3",
+  "rigorous": true,
+  "hard_constraints_certified": true,
+  "psd_claim": false,
+  "status": "PASS",
+  "mpmath_used": false,
+  "regenerated_from": "promoted certificates and current code, not hand-entered JSON",
+  "cell": [
+    "log 3",
+    "log 4"
+  ],
+  "cutoff_free_blocks": [
+    {
+      "block": "scalar",
+      "basis": [
+        "one"
+      ],
+      "dimension": 1,
+      "parity": "even",
+      "family": "even",
+      "cutoff_status": "cutoff_free",
+      "inertia": [
+        1,
+        0,
+        0
+      ],
+      "raw_det_lower_bound_uniform": "0.06962397439120689",
+      "generalized_gap": {
+        "lambda_lower_uniform": "0.052666425704956055",
+        "lambda_upper_at_bottleneck": "0.058518285644676",
+        "bottleneck_L": "1.2963937134787091",
+        "reference_metric": "l2_gram_on_support"
+      },
+      "preconditioner_exponents": null,
+      "point_diagnostics": [
+        {
+          "L": "1.0986122886681098",
+          "trace": [
+            "0.13439173598169368",
+            "0.1343917359816938"
+          ],
+          "trace_over_n": [
+            "0.13439173598169368",
+            "0.1343917359816938"
+          ],
+          "det": [
+            "0.13439173598169368",
+            "0.1343917359816938"
+          ],
+          "det_reference_metric": [
+            "1.0986122886681098",
+            "1.0986122886681098"
+          ],
+          "normalized_det_trace": [
+            "0.9999999999999991",
+            "1.0000000000000009"
+          ],
+          "normalized_det_diag": [
+            "0.9999999999999991",
+            "1.0000000000000009"
+          ],
+          "det_over_det_M": [
+            "0.12232862982501495",
+            "0.12232862982501506"
+          ],
+          "diag_ratio_raw": "1.0",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        },
+        {
+          "L": "1.2",
+          "trace": [
+            "0.087132612932396",
+            "0.08713261293239613"
+          ],
+          "trace_over_n": [
+            "0.087132612932396",
+            "0.08713261293239613"
+          ],
+          "det": [
+            "0.087132612932396",
+            "0.08713261293239613"
+          ],
+          "det_reference_metric": [
+            "1.2",
+            "1.2"
+          ],
+          "normalized_det_trace": [
+            "0.9999999999999986",
+            "1.0000000000000013"
+          ],
+          "normalized_det_diag": [
+            "0.9999999999999986",
+            "1.0000000000000013"
+          ],
+          "det_over_det_M": [
+            "0.07261051077699666",
+            "0.07261051077699678"
+          ],
+          "diag_ratio_raw": "1.0",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        },
+        {
+          "L": "1.3862943611198906",
+          "trace": [
+            "0.09663059879144283",
+            "0.09663059879144294"
+          ],
+          "trace_over_n": [
+            "0.09663059879144283",
+            "0.09663059879144294"
+          ],
+          "det": [
+            "0.09663059879144283",
+            "0.09663059879144294"
+          ],
+          "det_reference_metric": [
+            "1.3862943611198906",
+            "1.3862943611198906"
+          ],
+          "normalized_det_trace": [
+            "0.9999999999999989",
+            "1.000000000000001"
+          ],
+          "normalized_det_diag": [
+            "0.9999999999999989",
+            "1.000000000000001"
+          ],
+          "det_over_det_M": [
+            "0.06970424283727282",
+            "0.06970424283727289"
+          ],
+          "diag_ratio_raw": "1.0",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        }
+      ],
+      "certificates": {
+        "positivity": {
+          "file": "e1_scalar_log3_log4.json",
+          "content_hash": "2d38ccd1a8d27ef5e652c4c38f1d6d304a14e63a78a072b907748c0cdb0b3e36"
+        },
+        "generalized_gap": {
+          "file": "e1_eng009_generalized_gap_log3_log4.json",
+          "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+        },
+        "reference_metric": {
+          "file": "e0_eng009_reference_metric.json",
+          "content_hash": "916789c8b48253d65bfe634ae7c1095f941eb077f45673865b1a9a2f54c1a9ad"
+        }
+      },
+      "numeric_warrant": "E1",
+      "logical_implication_warrant": "FORMAL for the blocks the manifest lists; see formal_theorem_certificate.json"
+    },
+    {
+      "block": "degree1_odd",
+      "basis": [
+        "q1"
+      ],
+      "dimension": 1,
+      "parity": "odd",
+      "family": "odd",
+      "cutoff_status": "cutoff_free",
+      "inertia": [
+        1,
+        0,
+        0
+      ],
+      "raw_det_lower_bound_uniform": "0.015026786943232338",
+      "generalized_gap": {
+        "lambda_lower_uniform": "0.12558043003082275",
+        "lambda_upper_at_bottleneck": "0.1395338743236466",
+        "bottleneck_L": "1.0986122886681098",
+        "reference_metric": "l2_gram_on_support"
+      },
+      "preconditioner_exponents": null,
+      "point_diagnostics": [
+        {
+          "L": "1.0986122886681098",
+          "trace": [
+            "0.015418132186809128",
+            "0.01541813218680916"
+          ],
+          "trace_over_n": [
+            "0.015418132186809128",
+            "0.01541813218680916"
+          ],
+          "det": [
+            "0.015418132186809128",
+            "0.01541813218680916"
+          ],
+          "det_reference_metric": [
+            "0.11049741334532565",
+            "0.11049741334532565"
+          ],
+          "normalized_det_trace": [
+            "0.999999999999998",
+            "1.000000000000002"
+          ],
+          "normalized_det_diag": [
+            "0.999999999999998",
+            "1.000000000000002"
+          ],
+          "det_over_det_M": [
+            "0.13953387432359618",
+            "0.13953387432359646"
+          ],
+          "diag_ratio_raw": "1.0",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        },
+        {
+          "L": "1.2",
+          "trace": [
+            "0.03712537493426365",
+            "0.03712537493426369"
+          ],
+          "trace_over_n": [
+            "0.03712537493426365",
+            "0.03712537493426369"
+          ],
+          "det": [
+            "0.03712537493426365",
+            "0.03712537493426369"
+          ],
+          "det_reference_metric": [
+            "0.144",
+            "0.144"
+          ],
+          "normalized_det_trace": [
+            "0.9999999999999989",
+            "1.000000000000001"
+          ],
+          "normalized_det_diag": [
+            "0.9999999999999989",
+            "1.000000000000001"
+          ],
+          "det_over_det_M": [
+            "0.25781510371016425",
+            "0.25781510371016453"
+          ],
+          "diag_ratio_raw": "1.0",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        },
+        {
+          "L": "1.3862943611198906",
+          "trace": [
+            "0.04162742952533869",
+            "0.04162742952533874"
+          ],
+          "trace_over_n": [
+            "0.04162742952533869",
+            "0.04162742952533874"
+          ],
+          "det": [
+            "0.04162742952533869",
+            "0.04162742952533874"
+          ],
+          "det_reference_metric": [
+            "0.2220164346592863",
+            "0.2220164346592863"
+          ],
+          "normalized_det_trace": [
+            "0.9999999999999989",
+            "1.000000000000001"
+          ],
+          "normalized_det_diag": [
+            "0.9999999999999989",
+            "1.000000000000001"
+          ],
+          "det_over_det_M": [
+            "0.18749706340083114",
+            "0.18749706340083136"
+          ],
+          "diag_ratio_raw": "1.0",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        }
+      ],
+      "certificates": {
+        "positivity": {
+          "file": "e1_degree1_log3_log4.json",
+          "content_hash": "e381de8e704cfee4effd773e6d8b7ad56ba38471d7064ed1334e16cc08095d69"
+        },
+        "generalized_gap": {
+          "file": "e1_eng009_generalized_gap_log3_log4.json",
+          "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+        },
+        "reference_metric": {
+          "file": "e0_eng009_reference_metric.json",
+          "content_hash": "916789c8b48253d65bfe634ae7c1095f941eb077f45673865b1a9a2f54c1a9ad"
+        }
+      },
+      "numeric_warrant": "E1",
+      "logical_implication_warrant": "FORMAL for the blocks the manifest lists; see formal_theorem_certificate.json"
+    },
+    {
+      "block": "degree2_even",
+      "basis": [
+        "one",
+        "b"
+      ],
+      "dimension": 2,
+      "parity": "even",
+      "family": "even",
+      "cutoff_status": "cutoff_free",
+      "inertia": [
+        2,
+        0,
+        0
+      ],
+      "raw_det_lower_bound_uniform": "2.0652586666890377e-06",
+      "generalized_gap": {
+        "lambda_lower_uniform": "0.0005867481231689453",
+        "lambda_upper_at_bottleneck": "0.0006520075621795992",
+        "bottleneck_L": "1.0986122886681098",
+        "reference_metric": "l2_gram_on_support"
+      },
+      "preconditioner_exponents": null,
+      "point_diagnostics": [
+        {
+          "L": "1.0986122886681098",
+          "trace": [
+            "0.13442728830698572",
+            "0.13442728830698583"
+          ],
+          "trace_over_n": [
+            "0.06721364415349286",
+            "0.06721364415349292"
+          ],
+          "det": [
+            "4.56171332183956e-06",
+            "4.561713321840539e-06"
+          ],
+          "det_reference_metric": [
+            "0.009767742684806199",
+            "0.009767742684806199"
+          ],
+          "normalized_det_trace": [
+            "0.001009748238105116",
+            "0.0010097482381053345"
+          ],
+          "normalized_det_diag": [
+            "0.9547450469171245",
+            "0.9547450469175212"
+          ],
+          "det_over_det_M": [
+            "0.00046701817083442834",
+            "0.0004670181708345286"
+          ],
+          "diag_ratio_raw": "3780.1110019604694",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        },
+        {
+          "L": "1.2",
+          "trace": [
+            "0.08737269690484531",
+            "0.08737269690484543"
+          ],
+          "trace_over_n": [
+            "0.043686348452422655",
+            "0.04368634845242272"
+          ],
+          "det": [
+            "1.6480790927311297e-05",
+            "1.6480790927312354e-05"
+          ],
+          "det_reference_metric": [
+            "0.0165888",
+            "0.0165888"
+          ],
+          "normalized_det_trace": [
+            "0.008635481518879464",
+            "0.008635481518880045"
+          ],
+          "normalized_det_diag": [
+            "0.7878329558436596",
+            "0.7878329558437458"
+          ],
+          "det_over_det_M": [
+            "0.0009934890364168172",
+            "0.0009934890364168808"
+          ],
+          "diag_ratio_raw": "362.9255715968071",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        },
+        {
+          "L": "1.3862943611198906",
+          "trace": [
+            "0.09698705898682819",
+            "0.09698705898682831"
+          ],
+          "trace_over_n": [
+            "0.048493529493414095",
+            "0.04849352949341416"
+          ],
+          "det": [
+            "3.40196666077021e-05",
+            "3.4019666607703655e-05"
+          ],
+          "det_reference_metric": [
+            "0.03943303780705692",
+            "0.03943303780705692"
+          ],
+          "normalized_det_trace": [
+            "0.01446646645661671",
+            "0.01446646645661741"
+          ],
+          "normalized_det_diag": [
+            "0.9876528963465464",
+            "0.987652896346635"
+          ],
+          "det_over_det_M": [
+            "0.0008627199044151237",
+            "0.0008627199044151631"
+          ],
+          "diag_ratio_raw": "271.0838406150101",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        }
+      ],
+      "certificates": {
+        "positivity": {
+          "file": "e1_degree2_compact_log3_log4.json",
+          "content_hash": "f297359c59adc454fc1aba7ee07d8c424fb9768dd9d963b39d4ae36873394bcf"
+        },
+        "generalized_gap": {
+          "file": "e1_eng009_generalized_gap_log3_log4.json",
+          "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+        },
+        "reference_metric": {
+          "file": "e0_eng009_reference_metric.json",
+          "content_hash": "916789c8b48253d65bfe634ae7c1095f941eb077f45673865b1a9a2f54c1a9ad"
+        }
+      },
+      "numeric_warrant": "E1",
+      "logical_implication_warrant": "FORMAL for the blocks the manifest lists; see formal_theorem_certificate.json"
+    },
+    {
+      "block": "degree3_odd",
+      "basis": [
+        "q1",
+        "b3"
+      ],
+      "dimension": 2,
+      "parity": "odd",
+      "family": "odd",
+      "cutoff_status": "cutoff_free",
+      "inertia": [
+        2,
+        0,
+        0
+      ],
+      "raw_det_lower_bound_uniform": "1.073120529992708e-06",
+      "generalized_gap": {
+        "lambda_lower_uniform": "0.004970192909240723",
+        "lambda_upper_at_bottleneck": "0.005522444641828629",
+        "bottleneck_L": "1.2604334544222364",
+        "reference_metric": "l2_gram_on_support"
+      },
+      "preconditioner_exponents": null,
+      "point_diagnostics": [
+        {
+          "L": "1.0986122886681098",
+          "trace": [
+            "0.01551144269906253",
+            "0.015511442699062562"
+          ],
+          "trace_over_n": [
+            "0.007755721349531265",
+            "0.007755721349531281"
+          ],
+          "det": [
+            "1.4311083865668532e-06",
+            "1.4311083865668688e-06"
+          ],
+          "det_reference_metric": [
+            "7.622637170451535e-05",
+            "7.622637170451535e-05"
+          ],
+          "normalized_det_trace": [
+            "0.023791845578653152",
+            "0.02379184557865351"
+          ],
+          "normalized_det_diag": [
+            "0.9947413891112168",
+            "0.994741389111238"
+          ],
+          "det_over_det_M": [
+            "0.018774452391810224",
+            "0.01877445239181043"
+          ],
+          "diag_ratio_raw": "165.23467522006808",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        },
+        {
+          "L": "1.2",
+          "trace": [
+            "0.03717157883058259",
+            "0.037171578830582634"
+          ],
+          "trace_over_n": [
+            "0.018585789415291296",
+            "0.018585789415291317"
+          ],
+          "det": [
+            "1.5566937675663303e-06",
+            "1.5566937675663919e-06"
+          ],
+          "det_reference_metric": [
+            "0.00018427786971428572",
+            "0.00018427786971428572"
+          ],
+          "normalized_det_trace": [
+            "0.0045065185435284195",
+            "0.004506518543528608"
+          ],
+          "normalized_det_diag": [
+            "0.9075148445590842",
+            "0.9075148445591499"
+          ],
+          "det_over_det_M": [
+            "0.00844753507287615",
+            "0.008447535072876483"
+          ],
+          "diag_ratio_raw": "803.5117791362554",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        },
+        {
+          "L": "1.3862943611198906",
+          "trace": [
+            "0.04176408308662612",
+            "0.04176408308662618"
+          ],
+          "trace_over_n": [
+            "0.02088204154331306",
+            "0.02088204154331309"
+          ],
+          "det": [
+            "4.9694049925813455e-06",
+            "4.969404992581498e-06"
+          ],
+          "det_reference_metric": [
+            "0.0007802167859676377",
+            "0.0007802167859676377"
+          ],
+          "normalized_det_trace": [
+            "0.011396158506814679",
+            "0.011396158506815057"
+          ],
+          "normalized_det_diag": [
+            "0.8735823352237043",
+            "0.8735823352237521"
+          ],
+          "det_over_det_M": [
+            "0.006369261828195875",
+            "0.00636926182819607"
+          ],
+          "diag_ratio_raw": "304.6201586929665",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        }
+      ],
+      "certificates": {
+        "positivity": {
+          "file": "e1_degree3_odd_positivity_log3_log4.json",
+          "content_hash": "91b13024a30285d5743275bb68fe909553e1738faabfd8d83ed8f93618ff64eb"
+        },
+        "generalized_gap": {
+          "file": "e1_eng009_generalized_gap_log3_log4.json",
+          "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+        },
+        "reference_metric": {
+          "file": "e0_eng009_reference_metric.json",
+          "content_hash": "916789c8b48253d65bfe634ae7c1095f941eb077f45673865b1a9a2f54c1a9ad"
+        },
+        "moments": {
+          "file": "e1_degree3_odd_moments_log3_log4.json",
+          "content_hash": "a37071138f2e6c4a8474e37bbe18150dcdda5d085578dde4ddd743523eacca53"
+        },
+        "inertia": {
+          "file": "e1_degree3_odd_positivity_log3_log4.json"
+        }
+      },
+      "numeric_warrant": "E1",
+      "logical_implication_warrant": "FORMAL for the blocks the manifest lists; see formal_theorem_certificate.json"
+    },
+    {
+      "block": "degree4_even3",
+      "basis": [
+        "one",
+        "b",
+        "b2"
+      ],
+      "dimension": 3,
+      "parity": "even",
+      "family": "even",
+      "cutoff_status": "cutoff_free",
+      "inertia": [
+        3,
+        0,
+        0
+      ],
+      "raw_det_lower_bound_uniform": "6.451586222238981e-15",
+      "generalized_gap": {
+        "lambda_lower_uniform": "3.606081008911133e-05",
+        "lambda_upper_at_bottleneck": "4.007732435284577e-05",
+        "bottleneck_L": "1.2963937134787091",
+        "reference_metric": "l2_gram_on_support"
+      },
+      "preconditioner_exponents": [
+        2,
+        6,
+        9
+      ],
+      "point_diagnostics": [
+        {
+          "L": "1.0986122886681098",
+          "trace": [
+            "0.13443346012036247",
+            "0.13443346012036259"
+          ],
+          "trace_over_n": [
+            "0.044811153373454156",
+            "0.0448111533734542"
+          ],
+          "det": [
+            "1.4543640779533652e-11",
+            "1.4543640779548556e-11"
+          ],
+          "det_reference_metric": [
+            "5.163636879767267e-07",
+            "5.163636879767267e-07"
+          ],
+          "normalized_det_trace": [
+            "1.616273203264155e-07",
+            "1.6162732032658156e-07"
+          ],
+          "normalized_det_diag": [
+            "0.4931962649247002",
+            "0.49319626492535434"
+          ],
+          "det_over_det_M": [
+            "2.816549869437983e-05",
+            "2.8165498694408694e-05"
+          ],
+          "diag_ratio_raw": "21775.08096533445",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        },
+        {
+          "L": "1.2",
+          "trace": [
+            "0.08737559901599787",
+            "0.087375599015998"
+          ],
+          "trace_over_n": [
+            "0.02912519967199929",
+            "0.029125199671999336"
+          ],
+          "det": [
+            "1.8385782691072093e-11",
+            "1.8385782691127363e-11"
+          ],
+          "det_reference_metric": [
+            "1.940919825470694e-06",
+            "1.940919825470694e-06"
+          ],
+          "normalized_det_trace": [
+            "7.44175535201278e-07",
+            "7.441755352035185e-07"
+          ],
+          "normalized_det_diag": [
+            "0.30284762651994773",
+            "0.3028476265210108"
+          ],
+          "det_over_det_M": [
+            "9.47271620898269e-06",
+            "9.472716209011165e-06"
+          ],
+          "diag_ratio_raw": "30023.871709812323",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        },
+        {
+          "L": "1.3862943611198906",
+          "trace": [
+            "0.09699465161140598",
+            "0.09699465161140611"
+          ],
+          "trace_over_n": [
+            "0.03233155053713533",
+            "0.03233155053713537"
+          ],
+          "det": [
+            "6.501353608250278e-11",
+            "6.501353608269963e-11"
+          ],
+          "det_reference_metric": [
+            "1.6909110259840426e-05",
+            "1.6909110259840426e-05"
+          ],
+          "normalized_det_trace": [
+            "1.9236417297497425e-06",
+            "1.9236417297555747e-06"
+          ],
+          "normalized_det_diag": [
+            "0.24859142848346313",
+            "0.24859142848434207"
+          ],
+          "det_over_det_M": [
+            "3.844882142433691e-06",
+            "3.8448821424453335e-06"
+          ],
+          "diag_ratio_raw": "12726.903299561218",
+          "note": "det_over_det_M is the product of the generalized eigenvalues of (G, M) -- congruence-invariant, unlike everything labelled raw or normalized"
+        }
+      ],
+      "certificates": {
+        "positivity": {
+          "file": "e1_degree4_even3_positivity_log3_log4.json",
+          "content_hash": "b8dae231d6ec04f98197b4653661d7bb9d3f0542cfea9d86aa2b64c131a37cf2"
+        },
+        "generalized_gap": {
+          "file": "e1_eng009_generalized_gap_log3_log4.json",
+          "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+        },
+        "reference_metric": {
+          "file": "e0_eng009_reference_metric.json",
+          "content_hash": "916789c8b48253d65bfe634ae7c1095f941eb077f45673865b1a9a2f54c1a9ad"
+        },
+        "moments": {
+          "file": "e1_degree4_even3_moments_log3_log4.json",
+          "content_hash": "4d0b316dfd8bc32591d998f2fc2f282cb63fab92beb72b38ee65d1b99e1173c7"
+        },
+        "inertia": {
+          "file": "e1_degree4_even3_inertia_log3_log4.json"
+        }
+      },
+      "numeric_warrant": "E1",
+      "logical_implication_warrant": "FORMAL for the blocks the manifest lists; see formal_theorem_certificate.json"
+    }
+  ],
+  "finite_T_family": {
+    "note": "finite-T and cutoff-free families are not one scaling sequence (\u00a7Anti-overclaim); the T=84 results are recorded for completeness and enter no scaling model",
+    "certificates": [
+      "e1_fourier_T84_points.json",
+      "e1_fourier_T84_interior_minimum.json",
+      "e1_fourier_T84_uniform_degree2.json"
+    ],
+    "uniform_bound": "3.4251152511218656e-06"
+  },
+  "determinant_collapse_verdict": {
+    "question": "is the 3x3 raw determinant scale (~1e-14 uniform bound, ~1e-11 pointwise) intrinsic spectral collapse or a coordinate/scale artifact?",
+    "answer": "MOSTLY_COORDINATE_DRIVEN_BUT_THE_GAP_ALSO_DECAYS",
+    "evidence": {
+      "raw_det_orders_lost_scalar_to_3x3": "13.033092304995792",
+      "generalized_gap_orders_lost_scalar_to_3x3": "3.164498366519473",
+      "reference_metric_det_orders_lost_same_span": "6.899711094571145",
+      "reading": "the raw determinant loses ~13 orders of magnitude from the scalar to the 3x3 block, but ~7 of those are already present in the determinant of the perfectly healthy exact reference metric (a Hankel moment matrix, PD for every L > 0). The congruence-invariant generalized gap loses only ~3 orders over the same span. So most of the collapse is the coordinate system, not the spectrum"
+    },
+    "but": "the generalized gap does decay with dimension -- [0.052666425704956055, 0.058518285644676] -> [0.0005867481231689453, 0.0006520075621795992] -> [3.606081008911133e-05, 4.007732435284577e-05] along the even family -- so the honest statement is both halves: the determinant's spectacular collapse is mostly scale, and the intrinsic gap shrinks at a far slower, so-far-unclassified rate. Which decay law it follows is exactly what the ENG-010 falsifiers test",
+    "bottleneck": {
+      "note": "every block's gap bottleneck sits at the same interior region or endpoint recorded in its certificate; see upper_bound_at_bottleneck per block"
+    },
+    "insufficient_information": false
+  },
+  "information_channel_comparison": {
+    "channels": [
+      {
+        "channel": "positivity (minors)",
+        "basis_invariant": false,
+        "rigorously_certifiable": true,
+        "sensitivity_near_indefiniteness": "high (a minor crosses zero)",
+        "cost": "high (adaptive covers per minor)",
+        "useful_after_positivity_fails": false,
+        "cross_dimension_comparable": false,
+        "formalizable": "yes (posDef_of_certificate3 in the manifest)"
+      },
+      {
+        "channel": "inertia (LDL* congruence)",
+        "basis_invariant": true,
+        "rigorously_certifiable": true,
+        "sensitivity_near_indefiniteness": "high (signature changes)",
+        "cost": "high (stratification)",
+        "useful_after_positivity_fails": true,
+        "cross_dimension_comparable": "partially (a signature, not a magnitude)",
+        "formalizable": "yes (congruence theorems in the manifest)"
+      },
+      {
+        "channel": "generalized gap lambda_min(G, M)",
+        "basis_invariant": true,
+        "rigorously_certifiable": true,
+        "sensitivity_near_indefiniteness": "high and graded (goes to 0 continuously)",
+        "cost": "moderate (shifted covers + one Rayleigh witness)",
+        "useful_after_positivity_fails": true,
+        "cross_dimension_comparable": true,
+        "formalizable": "yes (rayleigh_lower_of_shifted_psd)"
+      },
+      {
+        "channel": "raw determinant / minors",
+        "basis_invariant": false,
+        "rigorously_certifiable": true,
+        "sensitivity_near_indefiniteness": "confounded with scale",
+        "cost": "moderate",
+        "useful_after_positivity_fails": "sign only",
+        "cross_dimension_comparable": false,
+        "formalizable": "yes"
+      },
+      {
+        "channel": "moments m1..m4",
+        "basis_invariant": false,
+        "rigorously_certifiable": true,
+        "sensitivity_near_indefiniteness": "low at n >= 3: ENG-008 showed the moments no longer force the inertia",
+        "cost": "low",
+        "useful_after_positivity_fails": true,
+        "cross_dimension_comparable": "normalized (m2/n) only",
+        "formalizable": "partially (rank_trace_general still recorded unproved)"
+      },
+      {
+        "channel": "rank-trace bound",
+        "basis_invariant": false,
+        "rigorously_certifiable": true,
+        "sensitivity_near_indefiniteness": "low (weakens with dimension: 1/2 -> 1/3)",
+        "cost": "low",
+        "useful_after_positivity_fails": true,
+        "cross_dimension_comparable": false,
+        "formalizable": "recorded EXTERNAL_THEOREM_PENDING_FORMAL_PROOF"
+      },
+      {
+        "channel": "conditioning (raw and preconditioned)",
+        "basis_invariant": false,
+        "rigorously_certifiable": true,
+        "sensitivity_near_indefiniteness": "indirect",
+        "cost": "low",
+        "useful_after_positivity_fails": true,
+        "cross_dimension_comparable": "as a diagnostic only",
+        "formalizable": "the congruence step is formal already"
+      }
+    ],
+    "primary_diagnostic_vector": [
+      "inertia",
+      "generalized_lambda_min_lower (vs l2_gram_on_support)",
+      "trace_over_n",
+      "normalized_m2 (m2/n)",
+      "conditioning (raw diag ratio + preconditioned)",
+      "moments m1..m4",
+      "rank_trace_bound"
+    ],
+    "rationale": "the generalized gap is the only channel that is simultaneously basis-invariant, graded (not a yes/no), certifiable without an eigensolver, meaningful after positivity fails, comparable across dimension, and already formalized; inertia stays first in the vector because it is the claim the others qualify"
+  },
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_eng009.py": "b28d084969c95ba37c52c4054260132f75d242d45ad4528b04ed7c2f01e9ac99",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-25T21:28:28Z",
+  "content_hash": "fb3d1eba6f6cb51c721f9ef833013630c29a11617b1cc9e0451bc2a2cf48585d"
+}

@@ -117,7 +117,7 @@
       "minor": "Delta1",
       "scale_factor_from_preconditioner": "16.0",
       "implied_raw_lower_bound": "0.07537591825740127",
-      "elapsed_seconds": "19.673892498016357"
+      "elapsed_seconds": "11.414782047271729"
     },
     {
       "quantity": "even3_Delta2_preconditioned",
@@ -145,7 +145,7 @@
       "minor": "Delta2",
       "scale_factor_from_preconditioner": "65536.0",
       "implied_raw_lower_bound": "3.4244304067666463e-06",
-      "elapsed_seconds": "19.705819845199585"
+      "elapsed_seconds": "11.196097135543823"
     },
     {
       "quantity": "even3_Delta3_preconditioned",
@@ -173,7 +173,7 @@
       "minor": "Delta3",
       "scale_factor_from_preconditioner": "17179869184.0",
       "implied_raw_lower_bound": "6.451586222238981e-15",
-      "elapsed_seconds": "262.3068878650665"
+      "elapsed_seconds": "156.9435043334961"
     }
   ],
   "warrants": [
@@ -205,16 +205,16 @@
       "ranktrace/theorem.py": "b6f2d310c778a2411ce0a44cafb69f5ee3487e473823127b5b8440f120004681",
       "scripts/certify_even3.py": "ca57f64d0e19978f5b2d4a75222087f76a8aa15031d54da0852ad70ede7ac96b",
       "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
-      "src/basis_algebra.py": "26c7e3f4fc43603132c686a9938665e63c477159b2933aa7239cb03e11c0c0be",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
       "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
       "src/even3.py": "91079176c5480f2bf100a69c85fb62cc3d77cfcc4340f8c40d54151df48eebf3",
       "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
       "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
-  "generated_utc": "2026-08-25T16:36:17Z",
-  "content_hash": "5051050fafbd37c1f5ef2d1b9c3c016ba536137bccbf2da506ea9b22de202723"
+  "generated_utc": "2026-08-25T21:24:46Z",
+  "content_hash": "b8dae231d6ec04f98197b4653661d7bb9d3f0542cfea9d86aa2b64c131a37cf2"
 }

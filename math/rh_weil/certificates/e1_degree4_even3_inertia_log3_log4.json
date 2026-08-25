@@ -122,7 +122,7 @@
   "n_positive": 3,
   "n_negative": 0,
   "n_zero": 0,
-  "elapsed_seconds": "232.54035806655884",
+  "elapsed_seconds": "129.47089195251465",
   "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
   "dependencies": {
     "source_hashes": {
@@ -134,16 +134,16 @@
       "ranktrace/theorem.py": "b6f2d310c778a2411ce0a44cafb69f5ee3487e473823127b5b8440f120004681",
       "scripts/certify_even3.py": "ca57f64d0e19978f5b2d4a75222087f76a8aa15031d54da0852ad70ede7ac96b",
       "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
-      "src/basis_algebra.py": "26c7e3f4fc43603132c686a9938665e63c477159b2933aa7239cb03e11c0c0be",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
       "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
       "src/even3.py": "91079176c5480f2bf100a69c85fb62cc3d77cfcc4340f8c40d54151df48eebf3",
       "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
       "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
-  "generated_utc": "2026-08-25T16:31:15Z",
-  "content_hash": "9e6be3ea80ad6b0bf386cd885095e63a3e73215d37fb9fc137448648bb87924a"
+  "generated_utc": "2026-08-25T21:21:46Z",
+  "content_hash": "fb9602a36dbbbfc2af5c7061269bab79ade61f1b66ac0c4634bbd81594df0631"
 }

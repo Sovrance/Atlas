@@ -30,7 +30,7 @@
       "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
       "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
@@ -1335,6 +1335,6 @@
     "consequence": "the degree-3 Gram is block diagonal; the odd block is 2x2 and can be treated on its own"
   },
   "note": "E3 heuristic only. Eigenvalues here come from the closed 2x2 form at grid points; they locate apparent features and can never promote an E1 inertia claim (\u00a714.4).",
-  "generated_utc": "2026-08-25T16:14:06Z",
-  "content_hash": "7f6dee6e49c8438c22329bae0c35eea83e7228cae05f5baffc232f8cfede306d"
+  "generated_utc": "2026-08-25T21:12:19Z",
+  "content_hash": "93ef30e1fec03a938e141f61b0334b8529f7c9916867cf9059a46b43891b2620"
 }

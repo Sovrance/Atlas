@@ -4,7 +4,7 @@
   "work_order": "WO-RH-16",
   "rh_proof_claim": false,
   "active_normalization_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
-  "n_facts": 22,
+  "n_facts": 28,
   "content_kinds": [
     "WEIL_INERTIA_CERTIFICATE",
     "WEIL_INERTIA_STRATIFICATION",
@@ -14,9 +14,13 @@
     "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
     "FORMAL_THEOREM_CERTIFICATE",
     "WEIL_PILOT_CONDITIONING_PREVIEW",
-    "WEIL_SCAN_PREVIEW"
+    "WEIL_SCAN_PREVIEW",
+    "WEIL_GENERALIZED_GAP_CERTIFICATE",
+    "WEIL_STRUCTURAL_DIAGNOSTIC",
+    "WEIL_SCALING_MODEL",
+    "WEIL_NEXT_BLOCK_SELECTION"
   ],
-  "formal_manifest_id": "formal_sha256_35fbf9fabdb5db985deee8d85083498eb3647097d34bdceeb3c606899a7f2ad9",
+  "formal_manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
   "refused_promotions": [],
   "facts": [
     {
@@ -191,7 +195,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_6ff303251030cede",
+      "fact_id": "fct_sha256_bbc88c9424e5f808",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -208,7 +212,7 @@
         "rh_proof_claim": false,
         "evidence_class_declared": "E1",
         "satisfies_psd_requirement": false,
-        "formal_manifest_id": "formal_sha256_35fbf9fabdb5db985deee8d85083498eb3647097d34bdceeb3c606899a7f2ad9",
+        "formal_manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
         "formal_theorem_ids": [
           "pd_two_by_two",
           "certificate_even2_implies_pd",
@@ -355,7 +359,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_7b7840955e908ff5",
+      "fact_id": "fct_sha256_433133db7094f311",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -373,7 +377,7 @@
         "evidence_class_declared": "E1",
         "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
         "satisfies_psd_requirement": true,
-        "formal_manifest_id": "formal_sha256_35fbf9fabdb5db985deee8d85083498eb3647097d34bdceeb3c606899a7f2ad9",
+        "formal_manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
         "formal_theorem_ids": [
           "inertia_congruence_positive",
           "inertia_congruence_negative",
@@ -400,7 +404,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_002f51371f4baeec",
+      "fact_id": "fct_sha256_b5343502960c4738",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -418,7 +422,7 @@
         "evidence_class_declared": "E1",
         "content_kind": "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
         "satisfies_psd_requirement": false,
-        "formal_manifest_id": "formal_sha256_35fbf9fabdb5db985deee8d85083498eb3647097d34bdceeb3c606899a7f2ad9",
+        "formal_manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
         "formal_theorem_ids": [
           "rank_trace_hs"
         ],
@@ -501,7 +505,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_bd88b66c15a0cb2c",
+      "fact_id": "fct_sha256_e76a727f58f0c1b7",
       "pir_level": "L2",
       "evidence_level": "E0",
       "analyzer": {
@@ -521,7 +525,7 @@
         "satisfies_psd_requirement": false,
         "numeric_warrant": null,
         "logical_implication_warrant": "FORMAL",
-        "formal_manifest_id": "formal_sha256_35fbf9fabdb5db985deee8d85083498eb3647097d34bdceeb3c606899a7f2ad9",
+        "formal_manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
         "formal_theorem_ids": [
           "inertia_congruence_positive",
           "inertia_congruence_negative",
@@ -537,7 +541,10 @@
           "preconditioned_certificate3",
           "diagonal_congruence_preserves_index",
           "diagonal_congruence_preserves_rank",
-          "rank_trace_hs"
+          "rank_trace_hs",
+          "generalized_rayleigh",
+          "generalized_pencil_congruence",
+          "preconditioned_gap_certificate3"
         ],
         "lean_toolchain": "leanprover/lean4:v4.34.0-rc2",
         "mathlib_commit": "f1c1e67f08f57b6d7088b1a98fdceab6da4407ee",
@@ -593,7 +600,7 @@
       "warnings": []
     },
     {
-      "fact_id": "fct_sha256_485dfa8c7614747c",
+      "fact_id": "fct_sha256_011447905a438b1f",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -611,7 +618,7 @@
         "evidence_class_declared": "E1",
         "content_kind": "WEIL_INERTIA_CERTIFICATE",
         "satisfies_psd_requirement": false,
-        "formal_manifest_id": "formal_sha256_35fbf9fabdb5db985deee8d85083498eb3647097d34bdceeb3c606899a7f2ad9",
+        "formal_manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
         "formal_theorem_ids": [
           "inertia_congruence_positive",
           "inertia_congruence_negative",
@@ -641,7 +648,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_14d2615c7f7dba85",
+      "fact_id": "fct_sha256_2d3ac8ae2357e7bb",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -659,7 +666,7 @@
         "evidence_class_declared": "E1",
         "content_kind": "WEIL_DEGREE4_POSITIVITY_CERTIFICATE",
         "satisfies_psd_requirement": true,
-        "formal_manifest_id": "formal_sha256_35fbf9fabdb5db985deee8d85083498eb3647097d34bdceeb3c606899a7f2ad9",
+        "formal_manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
         "formal_theorem_ids": [
           "pd_three_by_three",
           "pd_three_by_three_certificate",
@@ -684,7 +691,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_22639aeb39fa5b8a",
+      "fact_id": "fct_sha256_b7a526c151694f9c",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -702,7 +709,7 @@
         "evidence_class_declared": "E1",
         "content_kind": "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
         "satisfies_psd_requirement": false,
-        "formal_manifest_id": "formal_sha256_35fbf9fabdb5db985deee8d85083498eb3647097d34bdceeb3c606899a7f2ad9",
+        "formal_manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
         "formal_theorem_ids": [
           "rank_trace_hs"
         ],
@@ -782,6 +789,208 @@
         {
           "location": "e3_pilot3_even_conditioning_log3_log4.json",
           "message": "ENG-008 preparation: mpmath preview of the 3x3 even block, floating eigenvalue solver \u2014 E3 evidence, never a warrant"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_1df1c4ce6c40080a",
+      "pir_level": "L2",
+      "evidence_level": "E0",
+      "analyzer": {
+        "id": "rh_weil.e0_eng009_reference_metric",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "e0_eng009_reference_metric.json",
+        "point_scoped": false,
+        "program": "RH/Weil generalized gap \u2014 Candidate A",
+        "status": "PASS",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E0",
+        "content_kind": "WEIL_GENERALIZED_GAP_CERTIFICATE",
+        "satisfies_psd_requirement": false
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e0_eng009_reference_metric.json",
+          "message": "exact L2 reference metric: PD for every L > 0, exact rational proof"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_a6631b449e76cf87",
+      "pir_level": "L2",
+      "evidence_level": "E1",
+      "analyzer": {
+        "id": "rh_weil.e1_eng009_generalized_gap_log3_log4",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "e1_eng009_generalized_gap_log3_log4.json",
+        "point_scoped": false,
+        "program": "RH/Weil generalized gap \u2014 Candidate A",
+        "status": "PASS",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E1",
+        "content_kind": "WEIL_GENERALIZED_GAP_CERTIFICATE",
+        "satisfies_psd_requirement": false,
+        "formal_manifest_id": "formal_sha256_c11797c31380d2bfce54e6e7e58eff6f19ef4271aa10437e028c39461b4b76c6",
+        "formal_theorem_ids": [
+          "generalized_rayleigh",
+          "generalized_pencil_congruence",
+          "preconditioned_gap_certificate3",
+          "pd_three_by_three",
+          "diagonal_congruence_preserves_pd"
+        ],
+        "numeric_warrant": "E1",
+        "logical_implication_warrant": "FORMAL"
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e1_eng009_generalized_gap_log3_log4.json",
+          "message": "generalized gap lambda_min(G, M): uniform lower bounds by shifted positivity, Rayleigh upper bounds at the bottleneck"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_4691b46ca0d84586",
+      "pir_level": "L2",
+      "evidence_level": "E1",
+      "analyzer": {
+        "id": "rh_weil.eng009_structural_dataset",
+        "version": "0.2.0",
+        "tag": "SOUND"
+      },
+      "content": {
+        "certificate_file": "eng009_structural_dataset.json",
+        "point_scoped": false,
+        "program": "RH/Weil structural diagnostics \u2014 Candidate A",
+        "status": "PASS",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E1",
+        "content_kind": "WEIL_STRUCTURAL_DIAGNOSTIC",
+        "satisfies_psd_requirement": false
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "eng009_structural_dataset.json",
+          "message": "cross-block structural dataset regenerated from promoted certificates"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_35218f58886c0850",
+      "pir_level": "L2",
+      "evidence_level": "E3",
+      "analyzer": {
+        "id": "rh_weil.e3_eng009_scaling_models",
+        "version": "0.2.0",
+        "tag": "HEURISTIC"
+      },
+      "content": {
+        "certificate_file": "e3_eng009_scaling_models.json",
+        "point_scoped": false,
+        "program": "RH/Weil scaling models \u2014 Candidate A",
+        "status": "EXPLORATORY",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E3",
+        "content_kind": "WEIL_SCALING_MODEL",
+        "satisfies_psd_requirement": false
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e3_eng009_scaling_models.json",
+          "message": "exploratory finite scaling models \u2014 E3, never promotable to an infinite claim"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_3e544095ddebf454",
+      "pir_level": "L2",
+      "evidence_level": "E3",
+      "analyzer": {
+        "id": "rh_weil.eng009_next_block_selection",
+        "version": "0.2.0",
+        "tag": "HEURISTIC"
+      },
+      "content": {
+        "certificate_file": "eng009_next_block_selection.json",
+        "point_scoped": false,
+        "program": "RH/Weil next-block selection \u2014 Candidate A",
+        "status": "SELECTED",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E3",
+        "content_kind": "WEIL_NEXT_BLOCK_SELECTION",
+        "satisfies_psd_requirement": false
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "eng009_next_block_selection.json",
+          "message": "the ENG-010 target selection \u2014 a plan, not a numeric fact"
+        }
+      ]
+    },
+    {
+      "fact_id": "fct_sha256_71604d646c2ecf4f",
+      "pir_level": "L2",
+      "evidence_level": "E3",
+      "analyzer": {
+        "id": "rh_weil.e3_eng010_even4_preview",
+        "version": "0.2.0",
+        "tag": "HEURISTIC"
+      },
+      "content": {
+        "certificate_file": "e3_eng010_even4_preview.json",
+        "point_scoped": false,
+        "program": "RH/Weil ENG-010 preparation \u2014 Candidate A",
+        "status": "PREVIEW",
+        "claim_scope": "finite_dimensional_weil_compression",
+        "rh_proof_claim": false,
+        "evidence_class_declared": "E3",
+        "content_kind": "WEIL_PILOT_CONDITIONING_PREVIEW",
+        "satisfies_psd_requirement": false
+      },
+      "assumptions": [
+        "asm:normalization:G=G0-Gp+Ginf",
+        "asm:domain:L_in_[log3,log4]",
+        "asm:normalization_id:norm_sha256_f84b2fae2e13c777b1f829ef2567699c"
+      ],
+      "warnings": [
+        {
+          "location": "e3_eng010_even4_preview.json",
+          "message": "ENG-010 preparation: float preview of the 4x4 even block \u2014 E3 evidence, never a warrant"
         }
       ]
     }

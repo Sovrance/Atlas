@@ -234,6 +234,7 @@ def build_dataset() -> Dict[str, Any]:
         "numeric_warrant": ("E1 for every enclosure; E0 for the reference "
                             "metric facts; nothing here is E3"),
         "rigorous": True,
+        "hard_constraints_certified": True,
         "psd_claim": False,
         "status": "PASS",
         "mpmath_used": False,

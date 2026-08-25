@@ -1,0 +1,479 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil generalized gap \u2014 Candidate A",
+  "work_order": "WO-RH-58",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_GENERALIZED_GAP_CERTIFICATE",
+  "role": "gap_enclosures",
+  "evidence_class": "E1",
+  "numeric_warrant": "E1",
+  "logical_implication_warrant": "FORMAL: manifest theorems generalized_rayleigh (shifted positivity is the Rayleigh bound), generalized_pencil_congruence (the bound is invariant under simultaneous congruence), and preconditioned_gap_certificate3 (the composed 3x3 replay)",
+  "rigorous": true,
+  "hard_constraints_certified": true,
+  "psd_claim": false,
+  "status": "PASS",
+  "mpmath_used": false,
+  "backend": "python-flint / Arb",
+  "precision_bits": 160,
+  "statement": "For each block, lambda_min(G, M)(L) >= the stated lower bound for every L in [log 3, log 4], by positivity of all leading minors of G - lam M under adaptive interval covers; and lambda_min at the scouted bottleneck is <= the stated Rayleigh upper bound. M is the exact L^2 reference metric of e0_eng009_reference_metric.json.",
+  "preconditioner_convention": "exponents e mean the congruence D (G - lam M) D with D = diag(2^e); exact powers of two, minor signs unchanged",
+  "invariance_note": "generalized eigenvalues of (G, M) are unchanged under simultaneous congruence G -> S^T G S, M -> S^T M S; raw eigenvalues and raw determinants are not",
+  "domain": {
+    "cell": [
+      "1.0986122886681098",
+      "1.3862943611198906"
+    ],
+    "label": [
+      "log 3",
+      "log 4"
+    ]
+  },
+  "blocks": [
+    {
+      "block": "scalar",
+      "basis": [
+        "one"
+      ],
+      "dimension": 1,
+      "reference_metric": "l2_gram_on_support",
+      "preconditioner_exponents": null,
+      "certified_lambda_lower_uniform": "220899/4194304",
+      "certified_lambda_lower_float": "0.052666425704956055",
+      "status": "PASS",
+      "shifted_minor_covers": [
+        {
+          "minor": 1,
+          "status": "PASS",
+          "certified_lower_bound_preconditioned": "0.0072861660374272386",
+          "boxes": 64,
+          "max_depth": 0
+        }
+      ],
+      "upper_bound_at_bottleneck": {
+        "at_L": "1.2963937134787091",
+        "witness_vector": [
+          "1"
+        ],
+        "rayleigh_enclosure": [
+          "0.05851828564456304",
+          "0.058518285644676"
+        ],
+        "certified_upper_bound": "0.058518285644676"
+      },
+      "scout": {
+        "grid": [
+          "1.0986122886681098",
+          "1.116592418196346",
+          "1.1345725477245825",
+          "1.1525526772528187",
+          "1.170532806781055",
+          "1.1885129363092912",
+          "1.2064930658375275",
+          "1.224473195365764",
+          "1.2424533248940002",
+          "1.2604334544222364",
+          "1.2784135839504729",
+          "1.2963937134787091",
+          "1.3143738430069454",
+          "1.3323539725351816",
+          "1.3503341020634179",
+          "1.3683142315916543",
+          "1.3862943611198906"
+        ],
+        "lambda_star": [
+          "0.12232862982455117",
+          "0.11056689061751968",
+          "0.1001347655628706",
+          "0.09098073155291786",
+          "0.08305641677270614",
+          "0.07631636820678978",
+          "0.07071783961055189",
+          "0.06622059786786849",
+          "0.06278674590339506",
+          "0.06038056049601437",
+          "0.058968343569176795",
+          "0.05851828564391326",
+          "0.05900034032219992",
+          "0.0603861087538462",
+          "0.06264873318741593",
+          "0.06576279876662738",
+          "0.06970424283645116"
+        ],
+        "min_lambda": 0.05851828564391326,
+        "argmin_L": 1.2963937134787091,
+        "evidence_class": "E3",
+        "warrant_note": "scouting only; the covers below are the warrant"
+      },
+      "elapsed_seconds": "0.14826536178588867"
+    },
+    {
+      "block": "degree1_odd",
+      "basis": [
+        "q1"
+      ],
+      "dimension": 1,
+      "reference_metric": "l2_gram_on_support",
+      "preconditioner_exponents": null,
+      "certified_lambda_lower_uniform": "1053445/8388608",
+      "certified_lambda_lower_float": "0.12558043003082275",
+      "status": "PASS",
+      "shifted_minor_covers": [
+        {
+          "minor": 1,
+          "status": "PASS",
+          "certified_lower_bound_preconditioned": "0.0013165152524683473",
+          "boxes": 64,
+          "max_depth": 0
+        }
+      ],
+      "upper_bound_at_bottleneck": {
+        "at_L": "1.0986122886681098",
+        "witness_vector": [
+          "1"
+        ],
+        "rayleigh_enclosure": [
+          "0.13953387432353104",
+          "0.1395338743236466"
+        ],
+        "certified_upper_bound": "0.1395338743236466"
+      },
+      "scout": {
+        "grid": [
+          "1.0986122886681098",
+          "1.116592418196346",
+          "1.1345725477245825",
+          "1.1525526772528187",
+          "1.170532806781055",
+          "1.1885129363092912",
+          "1.2064930658375275",
+          "1.224473195365764",
+          "1.2424533248940002",
+          "1.2604334544222364",
+          "1.2784135839504729",
+          "1.2963937134787091",
+          "1.3143738430069454",
+          "1.3323539725351816",
+          "1.3503341020634179",
+          "1.3683142315916543",
+          "1.3862943611198906"
+        ],
+        "lambda_star": [
+          "0.13953387432320596",
+          "0.17285553751935367",
+          "0.20023541139926238",
+          "0.22221822255778534",
+          "0.23929477953333844",
+          "0.25190784949427325",
+          "0.26045732622060314",
+          "0.2653047832482116",
+          "0.26677749252849026",
+          "0.26517197748853505",
+          "0.26075715971455793",
+          "0.253777150291171",
+          "0.24445372982154367",
+          "0.23298855522352824",
+          "0.2195651263318723",
+          "0.20435054096469685",
+          "0.18749706340076955"
+        ],
+        "min_lambda": 0.13953387432320596,
+        "argmin_L": 1.0986122886681098,
+        "evidence_class": "E3",
+        "warrant_note": "scouting only; the covers below are the warrant"
+      },
+      "elapsed_seconds": "0.26230669021606445"
+    },
+    {
+      "block": "degree2_even",
+      "basis": [
+        "one",
+        "b"
+      ],
+      "dimension": 2,
+      "reference_metric": "l2_gram_on_support",
+      "preconditioner_exponents": null,
+      "certified_lambda_lower_uniform": "2461/4194304",
+      "certified_lambda_lower_float": "0.0005867481231689453",
+      "status": "PASS",
+      "shifted_minor_covers": [
+        {
+          "minor": 1,
+          "status": "PASS",
+          "certified_lower_bound_preconditioned": "0.074570378753419",
+          "boxes": 64,
+          "max_depth": 0
+        },
+        {
+          "minor": 2,
+          "status": "PASS",
+          "certified_lower_bound_preconditioned": "1.481696004108571e-08",
+          "boxes": 202,
+          "max_depth": 3
+        }
+      ],
+      "upper_bound_at_bottleneck": {
+        "at_L": "1.0986122886681098",
+        "witness_vector": [
+          "-1853/771869",
+          "1"
+        ],
+        "rayleigh_enclosure": [
+          "0.0006520075619189503",
+          "0.0006520075621795992"
+        ],
+        "certified_upper_bound": "0.0006520075621795992"
+      },
+      "scout": {
+        "grid": [
+          "1.0986122886681098",
+          "1.116592418196346",
+          "1.1345725477245825",
+          "1.1525526772528187",
+          "1.170532806781055",
+          "1.1885129363092912",
+          "1.2064930658375275",
+          "1.224473195365764",
+          "1.2424533248940002",
+          "1.2604334544222364",
+          "1.2784135839504729",
+          "1.2963937134787091",
+          "1.3143738430069454",
+          "1.3323539725351816",
+          "1.3503341020634179",
+          "1.3683142315916543",
+          "1.3862943611198906"
+        ],
+        "lambda_star": [
+          "0.0006520075612570508",
+          "0.0007617464361828752",
+          "0.0010076547268909053",
+          "0.001379059021928697",
+          "0.001839770287006104",
+          "0.002332658072191407",
+          "0.002790804950564052",
+          "0.0031528502322544227",
+          "0.0033771948410503683",
+          "0.0034496088737796526",
+          "0.0033820818025560584",
+          "0.0032050676863946137",
+          "0.0029574998870884883",
+          "0.0026782747718243627",
+          "0.0024008341943044798",
+          "0.0021507289338842384",
+          "0.0019452591714070877"
+        ],
+        "min_lambda": 0.0006520075612570508,
+        "argmin_L": 1.0986122886681098,
+        "evidence_class": "E3",
+        "warrant_note": "scouting only; the covers below are the warrant"
+      },
+      "elapsed_seconds": "1.629481315612793"
+    },
+    {
+      "block": "degree3_odd",
+      "basis": [
+        "q1",
+        "b3"
+      ],
+      "dimension": 2,
+      "reference_metric": "l2_gram_on_support",
+      "preconditioner_exponents": null,
+      "certified_lambda_lower_uniform": "41693/8388608",
+      "certified_lambda_lower_float": "0.004970192909240723",
+      "status": "PASS",
+      "shifted_minor_covers": [
+        {
+          "minor": 1,
+          "status": "PASS",
+          "certified_lower_bound_preconditioned": "0.014807890627738707",
+          "boxes": 64,
+          "max_depth": 0
+        },
+        {
+          "minor": 2,
+          "status": "PASS",
+          "certified_lower_bound_preconditioned": "2.642982447650236e-10",
+          "boxes": 304,
+          "max_depth": 3
+        }
+      ],
+      "upper_bound_at_bottleneck": {
+        "at_L": "1.2604334544222364",
+        "witness_vector": [
+          "43/35003",
+          "1"
+        ],
+        "rayleigh_enclosure": [
+          "0.0055224446414137715",
+          "0.005522444641828629"
+        ],
+        "certified_upper_bound": "0.005522444641828629"
+      },
+      "scout": {
+        "grid": [
+          "1.0986122886681098",
+          "1.116592418196346",
+          "1.1345725477245825",
+          "1.1525526772528187",
+          "1.170532806781055",
+          "1.1885129363092912",
+          "1.2064930658375275",
+          "1.224473195365764",
+          "1.2424533248940002",
+          "1.2604334544222364",
+          "1.2784135839504729",
+          "1.2963937134787091",
+          "1.3143738430069454",
+          "1.3323539725351816",
+          "1.3503341020634179",
+          "1.3683142315916543",
+          "1.3862943611198906"
+        ],
+        "lambda_star": [
+          "0.031317170366492064",
+          "0.025052473069081316",
+          "0.019934668931455235",
+          "0.01579711518570548",
+          "0.012503366604505572",
+          "0.009943502805981552",
+          "0.008029695820368943",
+          "0.006691690016850771",
+          "0.005872241040378867",
+          "0.005522444641428592",
+          "0.00559684846757591",
+          "0.0060482102089736145",
+          "0.00682172651795554",
+          "0.007848503814784635",
+          "0.009037978135893354",
+          "0.010268938131957839",
+          "0.011378823521226877"
+        ],
+        "min_lambda": 0.005522444641428592,
+        "argmin_L": 1.2604334544222364,
+        "evidence_class": "E3",
+        "warrant_note": "scouting only; the covers below are the warrant"
+      },
+      "elapsed_seconds": "3.042060375213623"
+    },
+    {
+      "block": "degree4_even3",
+      "basis": [
+        "one",
+        "b",
+        "b2"
+      ],
+      "dimension": 3,
+      "reference_metric": "l2_gram_on_support",
+      "preconditioner_exponents": [
+        2,
+        6,
+        9
+      ],
+      "certified_lambda_lower_uniform": "605/16777216",
+      "certified_lambda_lower_float": "3.606081008911133e-05",
+      "status": "PASS",
+      "shifted_minor_covers": [
+        {
+          "minor": 1,
+          "status": "PASS",
+          "certified_lower_bound_preconditioned": "1.2044297640344623",
+          "boxes": 64,
+          "max_depth": 0
+        },
+        {
+          "minor": 2,
+          "status": "PASS",
+          "certified_lower_bound_preconditioned": "0.0013864863366863656",
+          "boxes": 116,
+          "max_depth": 2
+        },
+        {
+          "minor": 3,
+          "status": "PASS",
+          "certified_lower_bound_preconditioned": "2.0238896548285812e-05",
+          "boxes": 6262,
+          "max_depth": 7
+        }
+      ],
+      "upper_bound_at_bottleneck": {
+        "at_L": "1.2963937134787091",
+        "witness_vector": [
+          "2210/852479",
+          "-12298/556379",
+          "1"
+        ],
+        "rayleigh_enclosure": [
+          "4.007732299533197e-05",
+          "4.007732435284577e-05"
+        ],
+        "certified_upper_bound": "4.007732435284577e-05"
+      },
+      "scout": {
+        "grid": [
+          "1.0986122886681098",
+          "1.116592418196346",
+          "1.1345725477245825",
+          "1.1525526772528187",
+          "1.170532806781055",
+          "1.1885129363092912",
+          "1.2064930658375275",
+          "1.224473195365764",
+          "1.2424533248940002",
+          "1.2604334544222364",
+          "1.2784135839504729",
+          "1.2963937134787091",
+          "1.3143738430069454",
+          "1.3323539725351816",
+          "1.3503341020634179",
+          "1.3683142315916543",
+          "1.3862943611198906"
+        ],
+        "lambda_star": [
+          "0.00033298624202870997",
+          "0.0002674359202501364",
+          "0.00021570733315456891",
+          "0.0001725631573208375",
+          "0.00013679111270903377",
+          "0.00010787990777316736",
+          "8.511923351761652e-05",
+          "6.770063555450179e-05",
+          "5.490404691954609e-05",
+          "4.619962419383228e-05",
+          "4.128352247789735e-05",
+          "4.007732331956504e-05",
+          "4.270604949851986e-05",
+          "4.9456965825811494e-05",
+          "6.071210009395145e-05",
+          "7.684316824452253e-05",
+          "9.806727302930085e-05"
+        ],
+        "min_lambda": 4.007732331956504e-05,
+        "argmin_L": 1.2963937134787091,
+        "evidence_class": "E3",
+        "warrant_note": "scouting only; the covers below are the warrant"
+      },
+      "elapsed_seconds": "124.37022018432617"
+    }
+  ],
+  "reference_metric_certificate": "e0_eng009_reference_metric.json",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/certify_generalized_gap.py": "22b2c9a0ce10aa50c553dbe8b640db308411aed7e0c214cd2fbd64335a493d09",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
+      "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
+      "src/even3.py": "91079176c5480f2bf100a69c85fb62cc3d77cfcc4340f8c40d54151df48eebf3",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-25T21:26:55Z",
+  "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+}

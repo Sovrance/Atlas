@@ -30,7 +30,7 @@
       "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
       "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
@@ -178,6 +178,6 @@
     "version": "0.9.0",
     "precision_bits": 160
   },
-  "generated_utc": "2026-08-25T16:27:19Z",
-  "content_hash": "3dd4365825853c43b76b2e95b3b85d2f23c3f113e9fcdcd81e91a078f1416729"
+  "generated_utc": "2026-08-25T21:19:34Z",
+  "content_hash": "91b13024a30285d5743275bb68fe909553e1738faabfd8d83ed8f93618ff64eb"
 }

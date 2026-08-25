@@ -30,7 +30,7 @@
       "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
       "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
@@ -1042,6 +1042,6 @@
     }
   ],
   "note": "Moments are enclosures of traces of matrix powers. INSUFFICIENT_INFORMATION answers are certified results (\u00a76), not failures to compute.",
-  "generated_utc": "2026-08-25T16:27:19Z",
-  "content_hash": "32df81ae7e363328e9545ee025e64a95a43027089aedcbae08a50e168cfddf5f"
+  "generated_utc": "2026-08-25T21:19:34Z",
+  "content_hash": "a37071138f2e6c4a8474e37bbe18150dcdda5d085578dde4ddd743523eacca53"
 }

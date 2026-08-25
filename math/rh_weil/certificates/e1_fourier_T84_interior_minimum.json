@@ -257,7 +257,7 @@
       "src/e1_t84.py": "b6dea4a0614d8447d68409a9a0317bddd07a89b453c553afe186903e786093d5",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
       "src/rigorous_integration.py": "17c49303df67f590d3543699cfa7735ba100ccdb3fdcce7fb32d41955a175ae2",
       "src/t84.py": "7940e80bf737069f6c53bfcd6f3b48e837c2cfd45fcda2496aaa6117ac2df68f",
       "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
@@ -266,6 +266,6 @@
   "precision_bits": 110,
   "mpmath_used": false,
   "quick_mode": false,
-  "generated_utc": "2026-08-25T15:42:00Z",
-  "content_hash": "05691c95ea53ad5620cd51a901d5306fee3a439075dbf0b789b037e3bdae4b9f"
+  "generated_utc": "2026-08-25T20:55:35Z",
+  "content_hash": "20adbaac1677c83cd4766ff2a338668eed0d1118f9f02822550c9212dc7c56c9"
 }

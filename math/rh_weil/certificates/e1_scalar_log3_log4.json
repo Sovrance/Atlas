@@ -445,7 +445,7 @@
       "scripts/certify_scalar_canary.py": "a18eceab1ba44c07fd16ac8fb731f31dc47f93b1df93765d643267f9e6160972",
       "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
       "src/scalar.py": "7fda1299cdf5a69f14a00ff23b5b199fff8359897297c3f06f39f896053eed23",
       "src/scalar_canary.py": "30261d2429bc374781252cf0ea0c039eabba6c7f169fefa0d73023a16c557508"
     }
@@ -456,6 +456,6 @@
     "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
     "authorised_because": "rigorous Candidate-A regeneration passed"
   },
-  "generated_utc": "2026-08-25T14:48:24Z",
-  "content_hash": "eaedecd5d0d16c23659d167d6f77b584482ab05b7578cd48ce291cf045ba9c0d"
+  "generated_utc": "2026-08-25T20:27:04Z",
+  "content_hash": "2d38ccd1a8d27ef5e652c4c38f1d6d304a14e63a78a072b907748c0cdb0b3e36"
 }

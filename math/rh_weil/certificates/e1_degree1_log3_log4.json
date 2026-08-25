@@ -96,7 +96,7 @@
       "src/curvature_derivation.py": "3531ccedf688aad63bbe238d8c9bc6e87e6681a50bdd2f763701431ba74fd691",
       "src/e1_cutoff_free.py": "1e74ff1c16fdd0c6eb33c840dce014f01479fb58028f724801df6f0390f43840",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "6ecbcab504d6657dad1937a23ce66058c3e350c7f3efb6081cddd8aa28c60761",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
       "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
@@ -110,6 +110,6 @@
     "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
     "authorised_because": "rigorous cutoff-free Candidate-A regeneration passed"
   },
-  "generated_utc": "2026-08-25T14:48:26Z",
-  "content_hash": "9a0d0e5baa53927a7535a405fed67aea920d8f7716557b6c7fed3e0b4d6d89b4"
+  "generated_utc": "2026-08-25T20:27:05Z",
+  "content_hash": "e381de8e704cfee4effd773e6d8b7ad56ba38471d7064ed1334e16cc08095d69"
 }

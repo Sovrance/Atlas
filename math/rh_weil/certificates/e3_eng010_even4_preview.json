@@ -1,0 +1,70 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil ENG-010 preparation \u2014 Candidate A",
+  "work_order": "WO-RH-62",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_PILOT_CONDITIONING_PREVIEW",
+  "evidence_class": "E3",
+  "numeric_warrant": "NONE \u2014 float midpoint preview, never a warrant",
+  "rigorous": false,
+  "psd_claim": false,
+  "status": "PREVIEW",
+  "basis": [
+    "one",
+    "b",
+    "b2",
+    "bcube"
+  ],
+  "element_definitions": {
+    "bcube": "b(x)^3 = x^3 (L - x)^3, even, homogeneous degree 6"
+  },
+  "at_L": "1.2424533248940002",
+  "entries_midpoint": {
+    "one_one": "0.07800960120735535",
+    "one_b": "0.0015113752041985527",
+    "one_b2": "-0.00020983090780522795",
+    "one_bcube": "-9.827918885821174e-05",
+    "b_b": "0.00033582617155868323",
+    "b_b2": "-9.773911206667608e-06",
+    "b_bcube": "-1.4259516832049814e-05",
+    "b2_b2": "1.3927900884258544e-06",
+    "b2_bcube": "7.348068284544745e-07",
+    "bcube_bcube": "7.386084141115038e-07"
+  },
+  "leading_minors_float": [
+    "0.07800960120735535",
+    "2.3913410710419565e-05",
+    "1.7267325940647578e-11",
+    "6.352132722321545e-19"
+  ],
+  "scout_generalized_gap": "4.497169993555872e-05",
+  "proposed_preconditioner_exponents": [
+    2,
+    6,
+    10,
+    11
+  ],
+  "preconditioner_convention": "D = diag(2^e) multiplies",
+  "preconditioned_minors_float": [
+    "1.2481536193176856",
+    "1.5671892843180566",
+    "1.1866016032712605",
+    "0.18308776039203356"
+  ],
+  "e0_status": "kernels, endpoint polynomials and reference metric all derive from basis_algebra.BASIS_L_POLY['bcube']; swept by the generic exact tests including direct symbolic integration",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_eng009.py": "b28d084969c95ba37c52c4054260132f75d242d45ad4528b04ed7c2f01e9ac99",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-25T21:28:28Z",
+  "content_hash": "c6a9ac8727766aaaea196b1f88f3e04039780338870f2115ca76f07d8b2ec370"
+}
