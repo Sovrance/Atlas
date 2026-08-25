@@ -35,7 +35,7 @@ from __future__ import annotations
 from fractions import Fraction
 from functools import lru_cache
 from math import comb
-from typing import Any, Dict, List, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 #: Each basis element as ``x``-coefficients, every one a polynomial in ``L``
 #: given as ``{L_power: rational}``. This is the single primitive: everything
@@ -297,6 +297,74 @@ def kernel_degree_in_a(i: str, j: str) -> int:
 
 
 # --------------------------------------------------------------------------- #
+# The (L - a)^m factorization                                                  #
+# --------------------------------------------------------------------------- #
+# Every kernel integrates over `[0, L - a]`, so `(L - a)` divides it -- the old
+# hand-written closed forms all displayed that factor, e.g.
+#
+#     K_b3b3 = (L-a)^3 (L^4 + 3L^3 a - 15L^2 a^2 - 18L a^3 - 6a^4) / 420.
+#
+# On an exact carrier the factored and expanded forms are the same number. On an
+# interval carrier they are not, and the difference is large: expanding puts `L`
+# into every coefficient independently, so their widths stop cancelling. The
+# first version of this module evaluated the expanded form and the prime block's
+# enclosure widened by 3x for `K_q1q1` and 48x for `K_b3b3`, which cost the
+# degree-3 determinant bound 26% and the 3x3 third minor 73%.
+#
+# So the factorization is recovered here, automatically, by synthetic division in
+# `a` at the root `a = L`, repeated while the remainder is exactly the zero
+# polynomial. That is a statement about the exact rational polynomial, decided in
+# exact arithmetic, and it costs nothing: `kernel_value` then evaluates
+# `(L - a)^m * Q(a; L)` with `L - a` formed once.
+def _synthetic_divide_by_a_minus_L(
+    coeffs: Sequence[LPoly],
+) -> Optional[List[LPoly]]:
+    """Divide a polynomial in ``a`` by ``(a - L)``; ``None`` if it does not divide.
+
+    Coefficients are ascending in ``a`` and are themselves exact polynomials in
+    ``L``. Horner's scheme, run in exact rational arithmetic, so "does not
+    divide" is a decision rather than a tolerance.
+    """
+    n = len(coeffs) - 1
+    if n < 1:
+        return None
+    out: List[LPoly] = [dict() for _ in range(n)]
+    carry: LPoly = dict(coeffs[n])
+    for k in range(n - 1, -1, -1):
+        out[k] = dict(carry)
+        shifted: LPoly = {}
+        for e, c in carry.items():
+            _lp_add(shifted, e + 1, c)
+        carry = dict(coeffs[k])
+        for e, c in shifted.items():
+            _lp_add(carry, e, c)
+    return out if not carry else None
+
+
+@lru_cache(maxsize=None)
+def kernel_factored(i: str, j: str) -> Tuple[int, Tuple[LPoly, ...]]:
+    """``K_ij = (L - a)^m * Q(a; L)``, as ``(m, Q-coefficients-in-a)``.
+
+    ``m`` is the exact multiplicity of ``a = L`` as a root, found by repeated
+    synthetic division. The sign is folded into ``Q``, since dividing by
+    ``(a - L)`` differs from dividing by ``(L - a)`` by one factor of ``-1``.
+    """
+    poly = kernel_bipoly(i, j)
+    deg = kernel_degree_in_a(i, j)
+    coeffs: List[LPoly] = [dict() for _ in range(deg + 1)]
+    for (ap, lp), c in poly.items():
+        _lp_add(coeffs[ap], lp, c)
+    m = 0
+    while True:
+        divided = _synthetic_divide_by_a_minus_L(coeffs)
+        if divided is None:
+            break
+        coeffs = [{e: -c for e, c in lc.items()} for lc in divided]
+        m += 1
+    return m, tuple(coeffs)
+
+
+# --------------------------------------------------------------------------- #
 # The three runtime forms                                                      #
 # --------------------------------------------------------------------------- #
 def _eval_L(terms: Sequence[Tuple[int, Fraction]], L: Any, zero: Any) -> Any:
@@ -333,11 +401,19 @@ def kernel_dL_coeffs_in_a(i: str, j: str, L: Any) -> List[Any]:
 
 
 def kernel_value(i: str, j: str, a: Any, L: Any) -> Any:
-    """``K_ij(a; L)`` on the caller's carrier, by Horner in ``a``."""
-    coeffs = kernel_coeffs_in_a(i, j, L)
-    out = coeffs[-1]
-    for c in reversed(coeffs[:-1]):
-        out = out * a + c
+    """``K_ij(a; L)``, evaluated in the factored form ``(L - a)^m Q(a; L)``.
+
+    The factorization is not cosmetic on an interval carrier: see
+    :func:`kernel_factored`. On an exact carrier it makes no difference, and
+    ``tests/test_kernel_algebra.py`` checks the two agree exactly.
+    """
+    m, qcoeffs = kernel_factored(i, j)
+    out = evaluate_l_poly(qcoeffs[-1], L)
+    for lc in reversed(qcoeffs[:-1]):
+        out = out * a + evaluate_l_poly(lc, L)
+    if m:
+        d = L - a
+        out = out * d ** m
     return out
 
 

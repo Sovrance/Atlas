@@ -260,6 +260,10 @@ def gate_fast() -> int:
         # exact half. Both run without python-flint.
         ("exact kernel and derivative algebra", "test_kernel_algebra.py"),
         ("3x3 even block, exact half", "test_even3.py"),
+        # ENG-008 also requires the small-|t| Taylor branch to be preserved
+        # across the kernel/derivative refactor; these pin it and the working
+        # precision the cutover assumes.
+        ("small-|t| Fourier branch", "test_fourier_forms.py"),
     ):
         rc = rc or _run(label, [sys.executable, str(ROOT / "tests" / test)])
     rc = rc or check_schemas()

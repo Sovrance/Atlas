@@ -61,7 +61,7 @@ here that disagrees with its certificate fails the gate.
 | Object | Domain | Result | Warrant | Certificate |
 |---|---|---|---|---|
 | scalar `G00` | `[log 3, log 4]` | `≥ 0.06962397439120689` | E1 | `e1_scalar_log3_log4.json` |
-| degree-1 odd `O1` | cell | `≥ 0.015026786946870317` | E1 | `e1_degree1_log3_log4.json` |
+| degree-1 odd `O1` | cell | `≥ 0.015026786943232338` | E1 | `e1_degree1_log3_log4.json` |
 | compact degree-2 even `E2` | cell | `≥ 2.0652586666890377e-06` | E1 | `e1_degree2_compact_log3_log4.json` |
 | `T=84` degree-2 `E2,84`, points | `log 3`, `1.20`, `log 4` | positive at each | E1 | `e1_fourier_T84_points.json` |
 | `T=84` interior minimum | cell | `L*` isolated to `[1.1059498108971377, 1.1059498114329873]`, a strict interior minimum | E1 | `e1_fourier_T84_interior_minimum.json` |

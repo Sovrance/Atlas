@@ -140,7 +140,13 @@ rather than assumed:
 
 That is a rounding difference with a cause, not a change in the mathematics.
 
-### One regression the refactor did introduce, and how it was caught
+### Two regressions the refactor did introduce, and how they were caught
+
+Both were the same kind of error and neither was a mathematical one. In each
+case the generalization computed the *right number* and a *wider interval*, and
+the width is what a certificate is made of.
+
+#### The endpoint, and cancellation on the carrier
 
 The first version of the generalization computed `h(L; L)` by substituting
 `x = L` on the carrier. `b`, `b3` and `b2` all vanish identically there, but the
@@ -157,6 +163,46 @@ The fix is to do the cancellation in exact rational arithmetic and let the
 carrier see only the simplified polynomial — an identically zero quantity is an
 empty polynomial and evaluates to exact zero. `basis_algebra.endpoint_poly` and
 its two derivatives now hold those, and `pole.py` evaluates them.
+
+#### The kernel, and a factor that had been there all along
+
+Every retired closed form displayed a factor of `(L − a)^m` — `m = 1` for
+`K_one,one` and `K_q1,q1`, rising to `5` for `K_b2,b2`. That is not decoration:
+each kernel integrates over `[0, L − a]`, so the factor is structural. The
+derived engine produced the same polynomial but in *expanded* form, and
+evaluated it by Horner in `a`.
+
+On an exact carrier those are the same number. On a ball they are not. Horner
+treats each occurrence of `a` as an independent quantity, so the correlation
+that makes `(L − a)^5` small when `a` is near `L` is thrown away term by term.
+The measured cost, on the box the certificates actually bind at:
+
+| quantity | cost of evaluating expanded instead of factored |
+|---|---|
+| `K_q1,q1` enclosure radius | 3× wider |
+| `K_b3,b3` enclosure radius | 12× wider |
+| prime block, `q1q1` | 3× wider |
+| prime block, `b3b3` | 48× wider |
+| degree-3 determinant bound | 26% lower |
+| 3×3 third minor `Δ3` | 73% lower |
+
+The fix is to recover the factorization rather than to special-case it: repeated
+exact synthetic division of the bivariate kernel by `(a − L)` in `a`, at the root
+`a = L`, until the remainder no longer vanishes. `basis_algebra.kernel_factored`
+returns the multiplicity and the exact quotient coefficients, and `kernel_value`
+evaluates the quotient by Horner and multiplies by `(L − a)^m` once. That
+restores every radius bit-for-bit, and the degree-3 determinant enclosure back to
+`[1.077648488215e-06, 1.804795874074e-06]` — identical to the pre-refactor run.
+
+The multiplicities are pinned as literals in `tests/test_kernel_algebra.py`, and
+one test measures the width ratio on a ball directly, so the factorization
+silently ceasing to be *used* fails a gate rather than quietly costing 73% of a
+bound.
+
+The same tests record why the multiplicity claim is restricted to same-parity
+pairs: a cross-parity kernel is the **zero polynomial** in `(a, L)`, exactly —
+the parity block structure appearing at the kernel level, and the reason there
+is no `(L − a)` factor to find in it.
 
 The general lesson is worth keeping: *a generalization that is mathematically
 correct can still be numerically much worse, and interval arithmetic is where

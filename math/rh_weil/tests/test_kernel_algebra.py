@@ -129,6 +129,90 @@ class ReproducesTheRetiredTables(unittest.TestCase):
                                            msg=(name, L, sign))
 
 
+class TheFactorizationIsRecoveredAndUsed(unittest.TestCase):
+    """``(L - a)^m`` is not cosmetic on an interval carrier.
+
+    Every kernel integrates over ``[0, L - a]``, so that factor is there, and the
+    retired hand-written closed forms all displayed it. The first version of the
+    derived engine evaluated the *expanded* polynomial instead, which is the same
+    number on an exact carrier and a much wider one on a ball: the prime block's
+    enclosure widened 3x for ``K_q1q1`` and 48x for ``K_b3b3``, costing the
+    degree-3 determinant bound 26% and the 3x3 third minor 73%.
+
+    These tests pin both halves -- that the factorization is found, and that
+    using it is what keeps the enclosures tight.
+    """
+
+    #: The multiplicities the retired closed forms displayed.
+    EXPECTED_M = {
+        ("one", "one"): 1, ("one", "b"): 2, ("b", "b"): 3,
+        ("q1", "q1"): 1, ("q1", "b3"): 2, ("b3", "b3"): 3,
+        ("one", "b2"): 3, ("b", "b2"): 4, ("b2", "b2"): 5,
+    }
+
+    def test_the_multiplicities_match_the_retired_closed_forms(self):
+        for (i, j), m in self.EXPECTED_M.items():
+            self.assertEqual(BA.kernel_factored(i, j)[0], m, (i, j))
+
+    def test_every_same_parity_kernel_has_at_least_one_such_factor(self):
+        # It integrates over [0, L - a]; a nonzero kernel without the factor
+        # would mean the derivation is wrong.
+        for i in BA.BASIS_NAMES:
+            for j in BA.BASIS_NAMES:
+                if BA.BASIS_PARITY[i] != BA.BASIS_PARITY[j]:
+                    continue
+                self.assertGreaterEqual(BA.kernel_factored(i, j)[0], 1, (i, j))
+
+    def test_cross_parity_kernels_vanish_identically(self):
+        # The parity block structure at the kernel level, exactly: a kernel
+        # pairing an even element against an odd one is the zero polynomial in
+        # (a, L), not merely small. This is the same fact `cross_block_vanishes`
+        # records on the Lean side, and it is why the multiplicity test above is
+        # restricted -- the zero polynomial carries no `(L - a)` factor to find.
+        for i in BA.BASIS_NAMES:
+            for j in BA.BASIS_NAMES:
+                if BA.BASIS_PARITY[i] == BA.BASIS_PARITY[j]:
+                    continue
+                self.assertEqual(BA.kernel_bipoly(i, j), {}, (i, j))
+                for L in LS:
+                    for a in AS:
+                        self.assertEqual(BA.kernel_exact(i, j, a, L), 0, (i, j, a, L))
+
+    def test_the_factored_form_is_the_same_number_exactly(self):
+        for i in BA.BASIS_NAMES:
+            for j in BA.BASIS_NAMES:
+                for L in LS:
+                    for a in AS:
+                        self.assertEqual(BA.kernel_value(i, j, a, L),
+                                         BA.kernel_exact(i, j, a, L), (i, j, a, L))
+
+    def test_it_is_materially_tighter_on_a_ball(self):
+        try:
+            from interval_backend import interval_box, require_flint
+        except Exception:  # pragma: no cover
+            raise unittest.SkipTest("python-flint is required")
+        _, arb, _, ctx = require_flint()
+        ctx.prec = 160
+        box = interval_box(1.2559472014002986, 1.2559559807604197)
+        a = arb(2).log()
+
+        def expanded(i, j, a, L):
+            coeffs = BA.kernel_coeffs_in_a(i, j, L)
+            out = coeffs[-1]
+            for c in reversed(coeffs[:-1]):
+                out = out * a + c
+            return out
+
+        for (i, j), floor in ((("q1", "q1"), 2.0), (("b3", "b3"), 5.0),
+                              (("b2", "b2"), 5.0)):
+            wide = float(expanded(i, j, a, box).rad())
+            tight = float(BA.kernel_value(i, j, a, box).rad())
+            self.assertGreater(wide / tight, floor,
+                               f"{i},{j}: factored form only {wide / tight:.1f}x "
+                               "tighter than expanded; the factorization may have "
+                               "stopped being used")
+
+
 class AgreesWithSymbolicIntegration(unittest.TestCase):
     """Independent of the retired tables: the definitions themselves."""
 
