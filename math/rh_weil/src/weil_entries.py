@@ -37,22 +37,16 @@ from __future__ import annotations
 import math
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
+import basis_algebra
 import core
 import pole
 from rigorous_integration import rigorous_panel_integral
 
 BASIS: Tuple[str, ...] = ("one", "q1", "b")
 
-#: Exact prime kernels ``K_ij(a; L)``, as named in ENG-005 §4/§5.
-_KERNELS = {
-    ("one", "one"): core.kernel_00,
-    ("one", "b"): core.kernel_0b,
-    ("b", "b"): core.kernel_bb,
-    ("q1", "q1"): core.kernel_q1q1,
-    # ENG-006 §7: the odd degree-3 partner b3(x) = x(L-x)(x-L/2).
-    ("q1", "b3"): core.kernel_q1b3,
-    ("b3", "b3"): core.kernel_b3b3,
-}
+#: The basis this module assembles over. ENG-008 §WO-RH-47 froze ``b2`` into the
+#: even sector as the third element of ``{1, b, b2}``.
+EVEN3_BASIS: Tuple[str, ...] = ("one", "b", "b2")
 
 
 # --------------------------------------------------------------------------- #
@@ -73,11 +67,16 @@ def prime_powers_below(L_value: float) -> List[Tuple[int, int]]:
 
 
 def kernel(i: str, j: str, a: Any, L: Any) -> Any:
-    """``K_ij(a; L)`` — exact polynomial overlap kernel."""
-    key = (i, j) if (i, j) in _KERNELS else (j, i)
-    if key not in _KERNELS:
-        raise KeyError(f"no kernel for the pair {(i, j)!r}")
-    return _KERNELS[key](a, L)
+    """``K_ij(a; L)`` -- the exact polynomial overlap kernel.
+
+    ENG-008 §WO-RH-48: derived from the basis coefficients by
+    :mod:`basis_algebra` rather than dispatched through a table of hand-written
+    closed forms. The six forms the table held are reproduced exactly -- in
+    exact rational arithmetic, at several ``(a, L)`` -- by
+    ``tests/test_kernel_algebra.py``, which is what makes this a generalization
+    rather than a replacement.
+    """
+    return basis_algebra.kernel_value(i, j, a, L)
 
 
 def prime_entry(i: str, j: str, L, arb,

@@ -37,11 +37,11 @@ POLE_CANDIDATE = "A"
 POLE_STATUS = "ADOPTED_WO_RH_17"
 
 # Basis elements on [0, L], as monomial coefficient tuples (c0, c1, ...).
-BASIS_NAMES: Tuple[str, ...] = ("one", "q1", "b", "b3")
+BASIS_NAMES: Tuple[str, ...] = ("one", "q1", "b", "b3", "b2")
 
 #: Parity about the cell midpoint x = L/2. Drives ``E^- = ± e^{-L/2} E^+``.
 BASIS_PARITY: Dict[str, str] = {"one": "even", "q1": "odd", "b": "even",
-                                "b3": "odd"}
+                                "b3": "odd", "b2": "even"}
 
 # Below this |a*L| the endpoint closed form cancels and the series branch (with a
 # rigorously bounded remainder) is used instead.
@@ -73,6 +73,13 @@ def basis_coeffs(name: str, L: Any) -> Tuple[Any, ...]:
         # ENG-006 §7: b3(x) = x(L-x)(x-L/2) = -x^3 + (3L/2)x^2 - (L^2/2)x.
         # Odd about x = L/2, like q1, so it joins the odd block.
         return (0 * L, -L * L / 2, 3 * L / 2, 0 * L - 1)
+    if name == "b2":
+        # ENG-008 §WO-RH-47: b2(x) = b(x)^2 = x^2(L-x)^2 = L^2 x^2 - 2L x^3 + x^4.
+        # Even about x = L/2, and the third element of the even sector: in
+        # u = x - L/2 the even sector is span{1, u^2, u^4} and b2 supplies u^4.
+        # It is the first basis element that is *quadratic* in L, which is why
+        # the second-derivative machinery below had to be generalized.
+        return (0 * L, 0 * L, L * L, -2 * L, 0 * L + 1)
     raise KeyError(f"unknown basis element {name!r}")
 
 
@@ -288,17 +295,34 @@ def pole_scalar_g00_second_derivative(L: Any) -> Any:
 #
 # Keeping this next to the primitive is the point of ENG-004 §1: the jet module
 # used to carry its own copy, and that copy was of the *rejected* candidate.
+def _horner(coeffs: Sequence[Any], x: Any) -> Any:
+    """``p(x)`` from ascending monomial coefficients."""
+    out = coeffs[-1]
+    for c in reversed(coeffs[:-1]):
+        out = out * x + c
+    return out
+
+
+def _derivative_coeffs(coeffs: Sequence[Any]) -> Tuple[Any, ...]:
+    """Coefficients of ``dp/dx``. Empty input differentiates to zero."""
+    if len(coeffs) <= 1:
+        return (coeffs[0] * 0,) if coeffs else ()
+    return tuple(n * c for n, c in enumerate(coeffs) if n >= 1)
+
+
 def basis_at_right_endpoint(name: str, L: Any) -> Any:
-    """``h_name(L; L)`` -- the integrand at the moving upper limit."""
-    if name == "one":
-        return 0 * L + 1
-    if name == "q1":
-        return L / 2
-    if name == "b":
-        return 0 * L
-    if name == "b3":  # b3(L; L) = L(L-L)(L-L/2) = 0
-        return 0 * L
-    raise KeyError(f"unknown basis element {name!r}")
+    """``h_name(L; L)`` -- the integrand at the moving upper limit.
+
+    Derived from the coefficient table rather than tabulated. ENG-008
+    §WO-RH-49: every boundary quantity the derivative machinery needs is a
+    polynomial evaluation or a coefficient differentiation, and hand-tabulating
+    them is how a wrong coefficient gets in. ENG-005 already caught one --
+    ``d^2/dL^2 (L^3/6)`` written as ``L/2`` instead of ``L``, which threw
+    ``d^2 O1`` off by 0.70. ``tests/test_pole_primitive.py`` pins these against
+    the hand values that were verified then, so the generalization is checked
+    rather than trusted.
+    """
+    return _horner(basis_coeffs(name, L), L)
 
 
 def basis_coeffs_dL(name: str, L: Any) -> Tuple[Any, ...]:
@@ -311,7 +335,46 @@ def basis_coeffs_dL(name: str, L: Any) -> Tuple[Any, ...]:
         return (0 * L, 0 * L + 1)
     if name == "b3":  # d/dL [-x^3 + (3L/2)x^2 - (L^2/2)x] = (3/2)x^2 - L x
         return (0 * L, -L, (0 * L + 3) / 2, 0 * L)
+    if name == "b2":  # d/dL [L^2 x^2 - 2L x^3 + x^4] = 2L x^2 - 2 x^3
+        return (0 * L, 0 * L, 2 * L, 0 * L - 2, 0 * L)
     raise KeyError(f"unknown basis element {name!r}")
+
+
+def basis_coeffs_d2L(name: str, L: Any) -> Tuple[Any, ...]:
+    """Monomial coefficients of ``(d^2/dL^2) h_name(x; L)``.
+
+    ENG-008 §WO-RH-49. ``one``, ``q1`` and ``b`` are linear in ``L`` so this
+    vanishes; ``b3`` is quadratic in ``L`` through its ``-(L^2/2) x`` term, and
+    ``b2`` is quadratic through ``L^2 x^2``. Both survivors are constants in
+    ``L``, so a third derivative would vanish for every element currently in the
+    basis -- but nothing here assumes that.
+    """
+    if name == "one":
+        return (0 * L,)
+    if name == "q1":
+        return (0 * L,)
+    if name == "b":
+        return (0 * L, 0 * L)
+    if name == "b3":  # d^2/dL^2 [-(L^2/2) x + (3L/2) x^2] = -x
+        return (0 * L, 0 * L - 1, 0 * L, 0 * L)
+    if name == "b2":  # d^2/dL^2 [L^2 x^2 - 2L x^3] = 2 x^2
+        return (0 * L, 0 * L, 0 * L + 2, 0 * L, 0 * L)
+    raise KeyError(f"unknown basis element {name!r}")
+
+
+def basis_endpoint_dL(name: str, L: Any) -> Any:
+    """``(d/dL)[h_name(L; L)]`` -- the *total* derivative at the moving limit.
+
+    By the chain rule this is ``(d_x h + d_L h)(L; L)``, and both pieces come
+    from coefficient tables, so neither is hand-derived. For every element in
+    the current basis it is zero, because ``one`` is constant and the other four
+    all vanish at ``x = L``; the general form is kept because that is an
+    accident of this basis, not a fact about the construction.
+    """
+    coeffs = basis_coeffs(name, L)
+    dx = _horner(_derivative_coeffs(coeffs), L) if len(coeffs) > 1 else 0 * L
+    dl = _horner(basis_coeffs_dL(name, L), L)
+    return dx + dl
 
 
 def _laplace_dL(name: str, L: Any, sign: int) -> Any:
@@ -347,45 +410,33 @@ def pole_gram_entry_dL(
 # --------------------------------------------------------------------------- #
 # Second L-derivative of the pole block                                        #
 # --------------------------------------------------------------------------- #
-# Differentiating E^±(L) = int_0^L h_i(x;L) e^{±x/2} dx twice. Every basis
-# element is *linear* in L, so d^2_L h_i = 0 and the second integral drops:
+# Differentiating F(L) = int_0^L h(x; L) e^{s x/2} dx twice, with H(L) = h(L; L):
 #
-#   d^2_L E^± = (d/dL)[h_i(L;L)] e^{±L/2} + h_i(L;L)(±1/2)e^{±L/2}
-#               + (d_L h_i)(L;L) e^{±L/2},
+#   F'  = H(L) e^{sL/2} + int_0^L h_L(x; L) e^{sx/2} dx
+#   F'' = H'(L) e^{sL/2} + (s/2) H(L) e^{sL/2} + h_L(L; L) e^{sL/2}
+#         + int_0^L h_LL(x; L) e^{sx/2} dx
 #
-# with (d/dL)[h_i(L;L)] = (d_x h_i + d_L h_i)(L;L). Per element:
+# ENG-008 §WO-RH-49 replaced a per-element table of closed forms with this, the
+# general expression, evaluated from the coefficient tables. The table was not
+# wrong -- its four entries are reproduced exactly, and
+# ``tests/test_pole_primitive.py`` pins them -- but it had to be extended by
+# hand for every new basis element, and it silently raised ``KeyError`` for one
+# it did not know. ``b2`` was that element.
 #
-#   one : h=1,      h(L;L)=1,   d/dL[h(L;L)]=0,   d_L h(L;L)=0    -> ±(1/2)e^{±L/2}
-#   q1  : h=x-L/2,  h(L;L)=L/2, d/dL[h(L;L)]=1/2, d_L h(L;L)=-1/2 -> ±(L/4)e^{±L/2}
-#   b   : h=x(L-x), h(L;L)=0,   d/dL[h(L;L)]=0,   d_L h(L;L)=L    -> L e^{±L/2}
-#
-# Cross-checked against the closed forms: E_b^+ = 4[(L-4)e^{L/2}+L+4] differentiates
-# twice to L e^{L/2}, matching.
+# The one part worth stating: the integral term is not optional. ``one``, ``q1``
+# and ``b`` are linear in ``L`` so their ``h_LL`` vanishes and it drops, which is
+# why the old table could write them as pure boundary terms; ``b3`` and ``b2``
+# are quadratic in ``L`` and it does not.
 def _laplace_d2L(name: str, L: Any, sign: int) -> Any:
-    """``d^2/dL^2 E_name^sign``.
-
-    With ``F(L) = int_0^L h(x; L) e^{s x/2} dx`` and ``H(L) = h(L; L)``::
-
-        F'' = H'(L) e^{sL/2} + (s/2) H(L) e^{sL/2}
-              + h_L(L; L) e^{sL/2} + int_0^L h_LL(x; L) e^{sx/2} dx
-
-    ``one``, ``q1`` and ``b`` are all *linear* in ``L``, so their ``h_LL``
-    vanishes and the integral term with it -- which is why those three reduce to
-    pure boundary terms. ``b3`` is quadratic in ``L`` (``-(L^2/2) x`` appears in
-    it), so ``h_LL = -x`` survives and the integral has to be carried.
-    """
-    e = _exp(_half(L) * sign * L)
-    if name == "one":
-        return sign * e / 2
-    if name == "q1":
-        return sign * L * e / 4
-    if name == "b":
-        return L * e
-    if name == "b3":
-        # H = H' = 0; h_L(L; L) = (3/2)L^2 - L^2 = L^2/2; h_LL = -x.
-        half = _half(L) * sign
-        return L * L * e / 2 - poly_exp_integral((0 * L, 0 * L + 1), half, L)
-    raise KeyError(f"unknown basis element {name!r}")
+    """``d^2/dL^2 E_name^sign``, from the coefficient tables."""
+    half = _half(L) * sign
+    e = _exp(half * L)
+    boundary = (
+        basis_endpoint_dL(name, L)
+        + half * basis_at_right_endpoint(name, L)
+        + _horner(basis_coeffs_dL(name, L), L)
+    )
+    return boundary * e + poly_exp_integral(basis_coeffs_d2L(name, L), half, L)
 
 
 def laplace_plus_d2L(basis: str, L: Any, backend: str | None = None) -> Any:

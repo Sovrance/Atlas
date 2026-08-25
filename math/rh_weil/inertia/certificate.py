@@ -26,6 +26,20 @@ KIND_STRATIFICATION = "WEIL_INERTIA_STRATIFICATION"
 #: they may never satisfy a consumer requiring PSD, whatever their signature.
 INERTIA_KINDS = (KIND_INERTIA, KIND_STRATIFICATION)
 
+#: The only content kinds a PSD requirement may ever be satisfied by
+#: (ENG-008 §WO-RH-54). This list is default-deny on purpose: the previous rule
+#: refused inertia kinds and trusted every other kind that said ``psd_claim``,
+#: so a kind invented later was licensed by omission. A
+#: ``FORMAL_THEOREM_CERTIFICATE`` claiming PSD would have passed -- it proves an
+#: implication and asserts no number, so it must not. Forgetting to add a kind
+#: here now costs a refusal rather than an unearned licence, and
+#: ``scripts/ci_inertia.py`` fails if this disagrees with the declared
+#: ``psd_licensable`` in ``src/content_kinds.py``.
+PSD_LICENSABLE_KINDS = (
+    "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+    "WEIL_DEGREE4_POSITIVITY_CERTIFICATE",
+)
+
 
 def satisfies_psd_requirement(cert: Dict[str, Any]) -> bool:
     """True only if this certificate *claims* PSD and its signature backs it.
@@ -38,10 +52,12 @@ def satisfies_psd_requirement(cert: Dict[str, Any]) -> bool:
     is positive"; a consumer wanting positivity should be handed something that
     claims positivity.
 
-    So two independent conditions have to hold. The certificate must not be an
-    inertia kind, and it must *say* it is positive via ``psd_claim`` -- an
-    explicit declaration by the producer rather than an inference drawn here
-    from fields the producer never meant that way. The signature is then checked
+    So two independent conditions have to hold. The certificate must be of a
+    kind that positivity is a meaningful claim *for* -- the check is default-deny
+    against ``PSD_LICENSABLE_KINDS``, which refuses inertia artifacts, the formal
+    channel and every heuristic preview -- and it must *say* it is positive via
+    ``psd_claim``, an explicit declaration by the producer rather than an
+    inference drawn here from fields the producer never meant that way. The signature is then checked
     against that claim: zero negative directions, with the zero multiplicity
     known, since an unresolved ``n_zero`` leaves open a negative direction
     hiding in the part that did not resolve.
@@ -54,7 +70,7 @@ def satisfies_psd_requirement(cert: Dict[str, Any]) -> bool:
     """
     if cert.get("rh_proof_claim") is not False:
         return False
-    if cert.get("content_kind") in INERTIA_KINDS:
+    if cert.get("content_kind") not in PSD_LICENSABLE_KINDS:
         return False
     if cert.get("psd_claim") is not True:
         return False
