@@ -1,5 +1,5 @@
 name = "AtlasRH"
-defaultTargets = ["AtlasRH"]
+defaultTargets = ["AtlasRH", "comparator"]
 
 # ENG-007 §4: the Mathlib revision is pinned to an exact commit, not a branch or
 # a version range. A floating dependency would let the meaning of a proved
