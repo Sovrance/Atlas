@@ -23,6 +23,7 @@ No RH proof claim is made in this file.
 -/
 import AtlasRH.Definitions
 import AtlasRH.Positivity
+import AtlasRH.MatrixInertia
 
 namespace AtlasRH
 
@@ -126,6 +127,77 @@ The runtime's LDL engine reports a *transcript*: a sequence of pivots with
 determined signs. For the definite case the transcript's content is exactly that
 every pivot was positive, and the congruence theorems say the signature is then
 the matrix's own. -/
+
+/-! ## The 3×3 certificate (ENG-008 §WO-RH-53)
+
+The 2×2 certificate above carries entry enclosures and lets the determinant
+bound be derived from them, because at 2×2 the worst corner of a determinant is
+findable in closed form. At 3×3 it is not, and encoding interval arithmetic in
+Lean would be the wrong division of labour anyway: §WO-RH-53 is explicit that
+Lean verifies the *implication*, not the Arb arithmetic.
+
+So the 3×3 certificate's semantic payload is stated where the runtime actually
+establishes it -- as certified positive lower bounds on the three leading
+principal minors. Arb proves those hold; what follows is that they suffice. -/
+
+/-- The semantic payload of a 3×3 positive-definiteness certificate: a positive
+certified lower bound for each leading principal minor. -/
+structure PD3Certificate where
+  /-- Certified lower bound on `Δ₁ = a`. -/
+  d1Lower : ℝ
+  /-- Certified lower bound on `Δ₂ = ad − b²`. -/
+  d2Lower : ℝ
+  /-- Certified lower bound on `Δ₃ = det`. -/
+  d3Lower : ℝ
+  h_d1_pos : 0 < d1Lower
+  h_d2_pos : 0 < d2Lower
+  h_d3_pos : 0 < d3Lower
+
+/-- A concrete symmetric 3×3 is *described by* the certificate when each of its
+leading principal minors is at least the corresponding certified bound. -/
+def PD3Certificate.Describes (c : PD3Certificate) (a b cc d e f : ℝ) : Prop :=
+  c.d1Lower ≤ a ∧
+  c.d2Lower ≤ minor2 a b cc d e f ∧
+  c.d3Lower ≤ minor3 a b cc d e f
+
+/-- **The 3×3 certificate implication.**
+
+Certified positive lower bounds on the three leading principal minors imply the
+block is positive definite. This is the theorem the ENG-008 degree-4 result
+rests on: the interval run establishes the three bounds, and this establishes
+that they suffice. -/
+theorem posDef_of_certificate3 (c : PD3Certificate) {a b cc d e f : ℝ}
+    (h : c.Describes a b cc d e f) : (sym3 a b cc d e f).PosDef := by
+  obtain ⟨h1, h2, h3⟩ := h
+  exact posDef_sym3 (lt_of_lt_of_le c.h_d1_pos h1)
+    (lt_of_lt_of_le c.h_d2_pos h2) (lt_of_lt_of_le c.h_d3_pos h3)
+
+/-- And the signature it licenses. -/
+theorem definiteInertia_of_certificate3 (c : PD3Certificate) {a b cc d e f : ℝ}
+    (h : c.Describes a b cc d e f) : HasDefiniteInertia (sym3 a b cc d e f) :=
+  posDef_of_certificate3 c h
+
+/-! ### The certificate the runtime actually produces
+
+The bounds are certified for the *preconditioned* block `DᵀGD`, not for `G`.
+Composing the two steps -- the certificate implication and the diagonal
+congruence -- is the whole chain from what Arb proved to what the certificate
+claims, and it is worth having as one theorem rather than two, because the
+composition is the thing a reader has to trust. -/
+
+/-- **Preconditioned certificate ⟹ the original block is positive definite.**
+
+Given a diagonal preconditioner with nonzero entries, and certified positive
+lower bounds on the three leading minors of the rescaled block, the *original*
+block is positive definite. -/
+theorem posDef_of_preconditioned_certificate3
+    (c : PD3Certificate) {x y z : ℝ} {A : SymMatrix 3} {a b cc d e f : ℝ}
+    (hx : x ≠ 0) (hy : y ≠ 0) (hz : z ≠ 0)
+    (hcong : congruence (diag3 x y z) A = sym3 a b cc d e f)
+    (h : c.Describes a b cc d e f) : A.PosDef := by
+  refine posDef_of_diagonal_congruence hx hy hz ?_
+  rw [hcong]
+  exact posDef_of_certificate3 c h
 
 /-- A congruence transcript witnesses that `A` is congruent to `D` by an
 invertible `S` -- the record `inertia/ldl.py` produces as it eliminates. -/

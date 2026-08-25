@@ -4,8 +4,8 @@
   "work_order": "ATLAS-RH-ENG-007",
   "rh_proof_claim": false,
   "note": "ENG-007 §14: documentation freshness as a testable invariant. `scripts/check_docs.py` reads this file. Stale instructions are a correctness problem, not a tidiness problem -- an agent that believes a superseded status will regenerate or reinterpret the wrong mathematics, so a docs-only failure blocks merge.",
-  "current_work_order": "ATLAS-RH-ENG-007",
-  "latest_completed_work_order": "ATLAS-RH-ENG-006",
+  "current_work_order": "ATLAS-RH-ENG-008",
+  "latest_completed_work_order": "ATLAS-RH-ENG-007",
   "status_source": "certificates/work_order_status.json",
   "canonical_docs": [
     "README.md",
@@ -21,7 +21,8 @@
     "docs/SCALAR_E1_CANARY_ENG004_v0.1.md",
     "docs/CORE_E1_RECOVERY_ENG005_v0.1.md",
     "docs/INERTIA_RANKTRACE_MOMENTS_ENG006_v0.1.md",
-    "docs/FORMAL_BOUNDARY_ENG007_v0.1.md"
+    "docs/FORMAL_BOUNDARY_ENG007_v0.1.md",
+    "docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md"
   ],
   "root_docs": [
     "../../README.md"
@@ -69,6 +70,11 @@
       "id": "eng007_is_next",
       "pattern": "(?i)next is ENG-007",
       "why": "ENG-007 is the current work order, not the next one."
+    },
+    {
+      "id": "eng008_is_next",
+      "pattern": "(?i)next is ENG-008",
+      "why": "ENG-008 is the current work order, not the next one."
     }
   ],
   "required_phrases": [
@@ -77,7 +83,7 @@
       "phrases": [
         "Current certified results",
         "Current frontier",
-        "ATLAS-RH-ENG-007"
+        "ATLAS-RH-ENG-008"
       ]
     },
     {
@@ -144,6 +150,40 @@
         "rigorous_interval",
         0
       ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_degree4_even3_positivity_log3_log4.json",
+      "path": [
+        "leading_minors",
+        0,
+        "implied_raw_lower_bound"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_degree4_even3_positivity_log3_log4.json",
+      "path": [
+        "leading_minors",
+        1,
+        "implied_raw_lower_bound"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_degree4_even3_positivity_log3_log4.json",
+      "path": [
+        "leading_minors",
+        2,
+        "implied_raw_lower_bound"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e3_degree4_even3_crosscheck.json",
+      "path": [
+        "worst_relative_difference"
+      ]
     }
   ],
   "status_table_orders": [
@@ -155,7 +195,12 @@
     "WO-RH-36",
     "WO-RH-38",
     "WO-RH-43",
-    "WO-RH-46"
+    "WO-RH-46",
+    "WO-RH-47",
+    "WO-RH-49",
+    "WO-RH-51",
+    "WO-RH-53",
+    "WO-RH-55"
   ],
   "root_atlas_doc_glob": "docs/constant-atlas-v*.md",
   "canonical_docs_note": "Live documents and completed work-order records. Both must carry the claim boundary and neither may repeat a superseded status: a record describes what a work order did, which is never the same as instructing a future agent to act on a state that has since closed.",

@@ -57,6 +57,21 @@ def atlasAudited : List (String × Name × Name) :=
   , ("odd_degree3_factorization",
       ``Comparator.atlas_odd_degree3_factorization,
       ``AtlasRH.OddDegree3FactorizationStatement)
+  , ("pd_three_by_three_certificate",
+      ``Comparator.atlas_pd_three_by_three_certificate,
+      ``AtlasRH.PdThreeByThreeCertificateStatement)
+  , ("diagonal_congruence_preserves_pd",
+      ``Comparator.atlas_diagonal_congruence_preserves_pd,
+      ``AtlasRH.DiagonalCongruencePreservesPdStatement)
+  , ("preconditioned_certificate3",
+      ``Comparator.atlas_preconditioned_certificate3,
+      ``AtlasRH.PreconditionedCertificate3Statement)
+  , ("diagonal_congruence_preserves_index",
+      ``Comparator.atlas_diagonal_congruence_preserves_index,
+      ``AtlasRH.DiagonalCongruencePreservesIndexStatement)
+  , ("diagonal_congruence_preserves_rank",
+      ``Comparator.atlas_diagonal_congruence_preserves_rank,
+      ``AtlasRH.DiagonalCongruencePreservesRankStatement)
   , ("rank_trace_hs",
       ``Comparator.atlas_rank_trace_hs,
       ``AtlasRH.RankTraceZeroQStatement) ]

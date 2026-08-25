@@ -50,6 +50,7 @@ from math import factorial
 from typing import Any, Dict, List, Optional, Tuple
 
 import core
+import basis_algebra
 import weil_entries as WE
 
 #: Bernoulli numbers B_n^+ (B_1 = +1/2), for u/(1-e^{-u}) = sum_n B_n^+ u^n/n!.
@@ -105,45 +106,17 @@ def kernel_difference_over_u(i: str, j: str, u, L, acb):
 
 
 def kernel_coeffs_in_u(i: str, j: str, L, acb) -> List[Any]:
-    """Coefficients of ``K_ij(u; L)`` as a polynomial in ``u`` (``L`` fixed)."""
-    # Evaluate K at enough points and interpolate exactly? No -- the kernels are
-    # small explicit polynomials, so expand them directly.
-    Lc = acb(L)
-    if (i, j) in (("one", "one"),) or (j, i) in (("one", "one"),):
-        # K00 = 2(L-a)
-        return [2 * Lc, acb(-2)]
-    if {i, j} == {"one", "b"}:
-        # K0b = (L-a)^2 (L+2a)/3
-        # expand: (L^2 - 2La + a^2)(L + 2a)/3
-        #       = (L^3 + 2L^2 a - 2L^2 a - 4L a^2 + L a^2 + 2a^3)/3
-        #       = (L^3 - 3L a^2 + 2 a^3)/3
-        return [Lc**3 / 3, acb(0), -Lc, acb(2) / 3]
-    if (i, j) == ("b", "b"):
-        # Kbb = (L-a)^3 (L^2 + 3La + a^2)/15
-        # (L-a)^3 = L^3 - 3L^2 a + 3L a^2 - a^3
-        # product with (L^2 + 3La + a^2):
-        #   L^5 + 3L^4 a +   L^3 a^2
-        # -3L^4 a - 9L^3 a^2 - 3L^2 a^3
-        # +3L^3 a^2 + 9L^2 a^3 + 3L a^4
-        # -  L^2 a^3 - 3L a^4 -   a^5
-        # = L^5 + 0*a + (1-9+3)L^3 a^2 + (-3+9-1)L^2 a^3 + (3-3)L a^4 - a^5
-        # = L^5 - 5 L^3 a^2 + 5 L^2 a^3 - a^5
-        return [Lc**5 / 15, acb(0), -Lc**3 / 3, Lc**2 / 3, acb(0), acb(-1) / 15]
-    if (i, j) == ("q1", "q1"):
-        # Kq1q1 = (L-a)(L^2 - 2La - 2a^2)/6
-        # = (L^3 - 2L^2 a - 2L a^2 - L^2 a + 2L a^2 + 2a^3)/6
-        # = (L^3 - 3L^2 a + 0*a^2 + 2a^3)/6
-        return [Lc**3 / 6, -Lc**2 / 2, acb(0), acb(1) / 3]
-    # ENG-006 §7 odd degree-3 pairs. Expansions checked against SymPy in
-    # tests/test_degree3_exact.py rather than trusted from the algebra here.
-    if {i, j} == {"q1", "b3"}:
-        # K_q1b3 = (L-a)^2 (L^3 + 2L^2 a - 12L a^2 - 6a^3)/60
-        return [Lc**5 / 60, acb(0), -Lc**3 / 4, Lc**2 / 3, acb(0), acb(-1) / 10]
-    if (i, j) == ("b3", "b3"):
-        # K_b3b3 = (L-a)^3 (L^4 + 3L^3 a - 15L^2 a^2 - 18L a^3 - 6a^4)/420
-        return [Lc**7 / 420, acb(0), -Lc**5 / 20, Lc**4 / 12, acb(0),
-                -Lc**2 / 20, acb(0), acb(1) / 70]
-    raise KeyError(f"no kernel expansion for {(i, j)!r}")
+    """Coefficients of ``K_ij(u; L)`` as a polynomial in ``u`` (``L`` fixed).
+
+    ENG-008 §WO-RH-48: derived from the basis coefficients by
+    :mod:`basis_algebra`, not tabulated. The hand-written table this replaces
+    had one entry per pair and raised ``KeyError`` for anything else, so every
+    new basis element meant deriving and pasting six polynomial identities into
+    three modules. ``tests/test_kernel_algebra.py`` pins the derived values
+    against that table's entries, which ENG-005 and ENG-006 had verified against
+    SymPy, so the generalization is checked rather than assumed.
+    """
+    return basis_algebra.kernel_coeffs_in_a(i, j, acb(L))
 
 
 def kernel_at_zero(i: str, j: str, L, arb):
@@ -262,22 +235,12 @@ def block_realspace(L, arb, acb, *, prime_powers=None, options=None) -> Dict[str
 # The bracket still vanishes at u = 0 (since d_L K(0;L) = K0'), so the 1/u in w
 # is cancelled just as before. No finite differences anywhere (ENG-005 §9).
 def kernel_coeffs_dL_in_u(i: str, j: str, L, acb) -> List[Any]:
-    """Coefficients of ``d/dL K_ij(u; L)`` as a polynomial in ``u``."""
-    Lc = acb(L)
-    if {i, j} == {"one"} or (i, j) == ("one", "one"):
-        return [acb(2), acb(0)]
-    if {i, j} == {"one", "b"}:
-        return [Lc**2, acb(0), acb(-1), acb(0)]
-    if (i, j) == ("b", "b"):
-        return [Lc**4 / 3, acb(0), -Lc**2, acb(2) * Lc / 3, acb(0), acb(0)]
-    if (i, j) == ("q1", "q1"):
-        return [Lc**2 / 2, -Lc, acb(0), acb(0)]
-    if {i, j} == {"q1", "b3"}:
-        return [Lc**4 / 12, acb(0), -Lc**2 * 3 / 4, Lc * 2 / 3, acb(0), acb(0)]
-    if (i, j) == ("b3", "b3"):
-        return [Lc**6 / 60, acb(0), -Lc**4 / 4, Lc**3 / 3, acb(0),
-                -Lc / 10, acb(0), acb(0)]
-    raise KeyError(f"no dL kernel expansion for {(i, j)!r}")
+    """Coefficients of ``d/dL K_ij(u; L)`` as a polynomial in ``u``.
+
+    Differentiated exactly, from the same bivariate table the value comes from
+    (ENG-008 §WO-RH-48). No finite differences anywhere (ENG-005 §9).
+    """
+    return basis_algebra.kernel_dL_coeffs_in_a(i, j, acb(L))
 
 
 def _difference_over_u(coeffs: List[Any], u, acb):

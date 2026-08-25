@@ -45,6 +45,7 @@ SCHEMA_DIR = ROOT / "inertia" / "schemas"
 #: eigenvalue solver.
 RIGOROUS_MODULES = (
     "src/degree3.py", "src/pole.py", "src/core.py", "src/weil_entries.py",
+    "src/basis_algebra.py", "src/even3.py",
     "src/archimedean_realspace.py", "src/interval_cover.py",
     "src/interval_backend.py",
     "inertia/ldl.py", "inertia/stratify.py", "inertia/congruence.py",
@@ -94,34 +95,93 @@ def check_schemas() -> int:
 
 
 def check_pir_kinds() -> int:
+    """Every kind PIR publishes is declared, and the predicate agrees with it.
+
+    This gate used to hold a frozen literal of the four ENG-006 kinds. ENG-007
+    added two more to ``pir_bridge`` without touching it, so ``rh-inertia-fast``
+    went red on merge -- and separately,
+    ``WEIL_DEGREE3_POSITIVITY_CERTIFICATE`` was being emitted and promoted while
+    appearing in no declared list at all. A frozen literal in a second file is
+    not a gate on the first file; it is a copy of it.
+
+    So the check is now a property rather than an equality. Every kind PIR
+    publishes must be declared in ``src/content_kinds.py`` with an explicit
+    ``psd_licensable`` answer, and for each kind the predicate that actually
+    decides -- ``satisfies_psd_requirement`` -- must return that declared answer
+    on a body of that kind built to be as favourable as the kind allows. A new
+    kind that reaches PIR without a licensing decision fails here.
+    """
     print("\n--- PIR content kinds ---")
     import pir_bridge
+    import content_kinds as CK
     from inertia.certificate import satisfies_psd_requirement
 
-    expected = {"WEIL_INERTIA_CERTIFICATE", "WEIL_INERTIA_STRATIFICATION",
-                "WEIL_RANK_TRACE_CERTIFICATE", "WEIL_SPECTRAL_MOMENT_CERTIFICATE"}
-    if set(pir_bridge.CONTENT_KINDS) != expected:
-        print(f"  FAIL: content kinds are {pir_bridge.CONTENT_KINDS}", file=sys.stderr)
+    missing = CK.unregistered(pir_bridge.CONTENT_KINDS)
+    if missing:
+        print(f"  FAIL: undeclared content kinds reach PIR: {missing}", file=sys.stderr)
         return 1
+    if set(pir_bridge.CONTENT_KINDS) != set(CK.REGISTRY):
+        only_pir = sorted(set(pir_bridge.CONTENT_KINDS) - set(CK.REGISTRY))
+        only_reg = sorted(set(CK.REGISTRY) - set(pir_bridge.CONTENT_KINDS))
+        print(f"  FAIL: registry and PIR disagree; PIR-only {only_pir}, "
+              f"registry-only {only_reg}", file=sys.stderr)
+        return 1
+    for kind, entry in sorted(CK.REGISTRY.items()):
+        if entry.warrant_role not in CK.VALID_WARRANT_ROLES:
+            print(f"  FAIL: {kind} declares warrant_role {entry.warrant_role!r}",
+                  file=sys.stderr)
+            return 1
+
+    # The most favourable body each kind could present: PASS, E1, a definite
+    # signature, and an explicit PSD claim. Anything refused *here* is refused
+    # categorically, which is exactly what §11 requires of an inertia artifact.
+    favourable = {
+        "content_kind": None,
+        "rh_proof_claim": False,
+        "psd_claim": True,
+        "status": "PASS",
+        "evidence_class": "E1",
+        "n_positive": 3,
+        "n_negative": 0,
+        "n_zero": 0,
+    }
+    for kind, entry in sorted(CK.REGISTRY.items()):
+        got = satisfies_psd_requirement({**favourable, "content_kind": kind})
+        if got != entry.psd_licensable:
+            print(f"  FAIL: {kind} is declared psd_licensable="
+                  f"{entry.psd_licensable} but the predicate answers {got}",
+                  file=sys.stderr)
+            return 1
+
     # §11: an inertia certificate must never satisfy a PSD-requiring consumer.
     # The *definite* case is the one that matters and the one this gate missed
     # first time round: a favourable signature must not buy an exemption.
-    base = {"status": "PASS", "evidence_class": "E1", "rh_proof_claim": False}
+    base = {"rh_proof_claim": False, "status": "PASS", "evidence_class": "E1"}
     cases = [
-        ("indefinite inertia certificate",
+        ("definite inertia certificate (2,0,0)",
          {**base, "content_kind": "WEIL_INERTIA_CERTIFICATE",
-          "n_negative": 1, "n_zero": 0}, False),
-        ("definite inertia certificate",
+          "psd_claim": False, "n_positive": 2, "n_negative": 0, "n_zero": 0}, False),
+        ("definite inertia certificate claiming PSD anyway",
          {**base, "content_kind": "WEIL_INERTIA_CERTIFICATE",
-          "n_negative": 0, "n_zero": 0, "psd_claim": True}, False),
-        ("definite stratification",
+          "psd_claim": True, "n_positive": 2, "n_negative": 0, "n_zero": 0}, False),
+        ("stratification with a definite stratum",
          {**base, "content_kind": "WEIL_INERTIA_STRATIFICATION",
-          "n_negative": 0, "n_zero": 0, "psd_claim": True}, False),
-        ("positivity certificate",
+          "psd_claim": True, "n_negative": 0, "n_zero": 0}, False),
+        ("positivity certificate with an unresolved zero count",
          {**base, "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
-          "n_negative": 0, "n_zero": 0, "psd_claim": True}, True),
+          "psd_claim": True, "n_negative": 0, "n_zero": None}, False),
+        ("positivity certificate, definite and claimed",
+         {**base, "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+          "psd_claim": True, "n_negative": 0, "n_zero": 0}, True),
         ("positivity certificate without an explicit claim",
          {**base, "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+          "n_negative": 0, "n_zero": 0}, False),
+        ("formal certificate, which proves an implication and no number",
+         {**base, "content_kind": "FORMAL_THEOREM_CERTIFICATE",
+          "psd_claim": False}, False),
+        ("E3 preview dressed up as a result",
+         {**base, "content_kind": "WEIL_PILOT_CONDITIONING_PREVIEW",
+          "evidence_class": "E3", "psd_claim": True,
           "n_negative": 0, "n_zero": 0}, False),
     ]
     for label, body, want in cases:
@@ -130,8 +190,10 @@ def check_pir_kinds() -> int:
             print(f"  FAIL: {label} -> satisfies_psd={got}, expected {want}",
                   file=sys.stderr)
             return 1
-    print(f"  ok: {len(expected)} content kinds; PSD gate checked on "
-          f"{len(cases)} cases including a definite inertia certificate")
+    licensable = sum(1 for e in CK.REGISTRY.values() if e.psd_licensable)
+    print(f"  ok: {len(CK.REGISTRY)} declared content kinds "
+          f"({licensable} PSD-licensable); predicate agrees with every "
+          f"declaration; PSD gate checked on {len(cases)} cases")
     return 0
 
 
@@ -194,6 +256,14 @@ def gate_fast() -> int:
         ("exact congruence / Sylvester", "test_inertia_engine.py"),
         ("exact E0 degree-3 kernels", "test_degree3_exact.py"),
         ("rank-trace theorem runtime", "test_ranktrace.py"),
+        # ENG-008: the derived kernel/derivative algebra and the 3x3 block's
+        # exact half. Both run without python-flint.
+        ("exact kernel and derivative algebra", "test_kernel_algebra.py"),
+        ("3x3 even block, exact half", "test_even3.py"),
+        # ENG-008 also requires the small-|t| Taylor branch to be preserved
+        # across the kernel/derivative refactor; these pin it and the working
+        # precision the cutover assumes.
+        ("small-|t| Fourier branch", "test_fourier_forms.py"),
     ):
         rc = rc or _run(label, [sys.executable, str(ROOT / "tests" / test)])
     rc = rc or check_schemas()
@@ -214,6 +284,8 @@ def gate_rigorous() -> int:
         ("spectral moments + B1 adapter", "test_moments_adapter.py"),
         ("rank-trace theorem runtime", "test_ranktrace.py"),
         ("degree-3 exact identities", "test_degree3_exact.py"),
+        ("exact kernel and derivative algebra", "test_kernel_algebra.py"),
+        ("3x3 even block", "test_even3.py"),
     ):
         rc = rc or _run(label, [sys.executable, str(ROOT / "tests" / test)])
     rc = rc or _run("degree-3 E1 certificate checks",

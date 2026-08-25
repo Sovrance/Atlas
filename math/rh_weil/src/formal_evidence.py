@@ -69,6 +69,30 @@ FORMAL_BACKING: Dict[str, Tuple[str, ...]] = {
         "weil_basis_parity",
         "odd_degree3_cross_block",
     ),
+    # ENG-008: the 3x3 even block. Its certified numbers are bounds on the
+    # leading minors of the *preconditioned* matrix, so the implication it needs
+    # is the composed one -- rescale, read the minors, conclude about the
+    # original block -- and that is `preconditioned_certificate3`.
+    "e1_degree4_even3_positivity_log3_log4.json": (
+        "pd_three_by_three",
+        "pd_three_by_three_certificate",
+        "preconditioned_certificate3",
+        "diagonal_congruence_preserves_pd",
+        "weil_basis_parity",
+        "odd_degree3_cross_block",
+    ),
+    # The inertia artifact reads a signature rather than a yes/no, so what
+    # licenses it is index and rank invariance under the preconditioner, not
+    # definiteness.
+    "e1_degree4_even3_inertia_log3_log4.json": (
+        "inertia_congruence_positive",
+        "inertia_congruence_negative",
+        "inertia_congruence_rank",
+        "diagonal_congruence_preserves_index",
+        "diagonal_congruence_preserves_rank",
+        "weil_basis_parity",
+    ),
+    "e1_degree4_even3_moments_log3_log4.json": ("rank_trace_hs",),
     # Rank-trace: the runtime uses the Q = 0, b = 0 case, which is the case
     # that is proved. The general case is recorded in the manifest as unproved
     # and carries no warrant.

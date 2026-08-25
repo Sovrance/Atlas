@@ -164,13 +164,36 @@ class LegacyKernelsUnchanged(unittest.TestCase):
                     name,
                 )
 
-    def test_the_pilot_adds_b2_that_production_does_not_know(self):
-        # The separation is deliberate: extending pole.basis_coeffs would change
-        # pole.py's source hash, which every promoted E1 certificate binds.
+    def test_production_now_carries_b2_as_a_frozen_basis_element(self):
+        # ENG-007 kept b2 out of production deliberately: extending
+        # pole.basis_coeffs would have changed pole.py's source hash and staled
+        # every certificate that binds it, which a preparatory pilot must not do.
+        # ENG-008 §WO-RH-47 freezes b2 into the canonical basis on purpose, and
+        # regenerated the chain to pay for it. This test records that reversal
+        # rather than leaving the old prohibition standing.
         import pole
 
-        with self.assertRaises(KeyError):
-            pole.basis_coeffs("b2", F(2))
+        self.assertIn("b2", pole.BASIS_NAMES)
+        self.assertEqual(pole.basis_parity("b2"), "even")
+        for L in LS:
+            self.assertEqual(
+                tuple(F(c) for c in P.basis_coeffs("b2", L)),
+                tuple(F(c) for c in pole.basis_coeffs("b2", L)),
+                L)
+
+    def test_the_pilot_kernels_still_agree_with_production(self):
+        # The pilot keeps its own kernel table, and that is still useful: it is
+        # a second derivation of the same polynomials. What changed is only that
+        # production now has them too.
+        import weil_entries as WE
+
+        for i, j in (("one", "b2"), ("b", "b2"), ("b2", "b2")):
+            for L in LS:
+                for a in AS:
+                    if a >= L:
+                        continue
+                    self.assertEqual(F(P.kernel(i, j, a, L)),
+                                     F(WE.kernel(i, j, a, L)), (i, j, a, L))
 
 
 class ParityBlockStructure(unittest.TestCase):
