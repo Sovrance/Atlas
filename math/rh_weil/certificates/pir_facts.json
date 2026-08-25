@@ -9,7 +9,8 @@
     "WEIL_INERTIA_CERTIFICATE",
     "WEIL_INERTIA_STRATIFICATION",
     "WEIL_RANK_TRACE_CERTIFICATE",
-    "WEIL_SPECTRAL_MOMENT_CERTIFICATE"
+    "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+    "FORMAL_THEOREM_CERTIFICATE"
   ],
   "refused_promotions": [],
   "facts": [
@@ -154,7 +155,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_db78a0724692cc91",
+      "fact_id": "fct_sha256_b48637c7ed00c48e",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -170,7 +171,17 @@
         "claim_scope": "finite_dimensional_weil_compression",
         "rh_proof_claim": false,
         "evidence_class_declared": "E1",
-        "satisfies_psd_requirement": false
+        "satisfies_psd_requirement": false,
+        "formal_manifest_id": "formal:leanprover/lean4:v4.33.0+mathlib:db584cd6d46c",
+        "formal_theorem_ids": [
+          "pd_two_by_two"
+        ],
+        "formal_statement_hashes": {
+          "pd_two_by_two": "67a566cdc28b1f27484848f5fcd516e673d542327f8c41dcab9df01673c3cf69"
+        },
+        "numeric_warrant": "E1",
+        "logical_implication_warrant": "FORMAL",
+        "formal_scope_note": "Lean proves the implication from the certified enclosures to the finite conclusion. It does not verify the enclosures and does not upgrade the numerical evidence class, which remains E1."
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",
@@ -185,7 +196,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_9c02c5703d9c5ba0",
+      "fact_id": "fct_sha256_d46eb5c81353559d",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -201,7 +212,19 @@
         "claim_scope": "finite_dimensional_weil_compression",
         "rh_proof_claim": false,
         "evidence_class_declared": "E1",
-        "satisfies_psd_requirement": false
+        "satisfies_psd_requirement": false,
+        "formal_manifest_id": "formal:leanprover/lean4:v4.33.0+mathlib:db584cd6d46c",
+        "formal_theorem_ids": [
+          "certificate_even2_implies_pd",
+          "pd_two_by_two"
+        ],
+        "formal_statement_hashes": {
+          "certificate_even2_implies_pd": "a1beb218aa5cc60b632d245567aa1d76f268867683f61d28b698cfb45ded5eb9",
+          "pd_two_by_two": "67a566cdc28b1f27484848f5fcd516e673d542327f8c41dcab9df01673c3cf69"
+        },
+        "numeric_warrant": "E1",
+        "logical_implication_warrant": "FORMAL",
+        "formal_scope_note": "Lean proves the implication from the certified enclosures to the finite conclusion. It does not verify the enclosures and does not upgrade the numerical evidence class, which remains E1."
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",
@@ -278,7 +301,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_56d4078278954db0",
+      "fact_id": "fct_sha256_dd5a92324e08dc2f",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -294,7 +317,19 @@
         "claim_scope": "finite_dimensional_weil_compression",
         "rh_proof_claim": false,
         "evidence_class_declared": "E1",
-        "satisfies_psd_requirement": false
+        "satisfies_psd_requirement": false,
+        "formal_manifest_id": "formal:leanprover/lean4:v4.33.0+mathlib:db584cd6d46c",
+        "formal_theorem_ids": [
+          "certificate_even2_implies_pd",
+          "pd_two_by_two"
+        ],
+        "formal_statement_hashes": {
+          "certificate_even2_implies_pd": "a1beb218aa5cc60b632d245567aa1d76f268867683f61d28b698cfb45ded5eb9",
+          "pd_two_by_two": "67a566cdc28b1f27484848f5fcd516e673d542327f8c41dcab9df01673c3cf69"
+        },
+        "numeric_warrant": "E1",
+        "logical_implication_warrant": "FORMAL",
+        "formal_scope_note": "Lean proves the implication from the certified enclosures to the finite conclusion. It does not verify the enclosures and does not upgrade the numerical evidence class, which remains E1."
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",
@@ -340,7 +375,7 @@
       ]
     },
     {
-      "fact_id": "fct_sha256_8fd23199a49496f9",
+      "fact_id": "fct_sha256_c08ff47d573f8186",
       "pir_level": "L2",
       "evidence_level": "E1",
       "analyzer": {
@@ -357,7 +392,19 @@
         "rh_proof_claim": false,
         "evidence_class_declared": "E1",
         "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
-        "satisfies_psd_requirement": true
+        "satisfies_psd_requirement": true,
+        "formal_manifest_id": "formal:leanprover/lean4:v4.33.0+mathlib:db584cd6d46c",
+        "formal_theorem_ids": [
+          "pd_two_by_two",
+          "det_parity_factorization"
+        ],
+        "formal_statement_hashes": {
+          "pd_two_by_two": "67a566cdc28b1f27484848f5fcd516e673d542327f8c41dcab9df01673c3cf69",
+          "det_parity_factorization": "f9f1fc01e79166154621e357551601c20e17cff5d9f8dcde322885032d2c0ac1"
+        },
+        "numeric_warrant": "E1",
+        "logical_implication_warrant": "FORMAL",
+        "formal_scope_note": "Lean proves the implication from the certified enclosures to the finite conclusion. It does not verify the enclosures and does not upgrade the numerical evidence class, which remains E1."
       },
       "assumptions": [
         "asm:normalization:G=G0-Gp+Ginf",

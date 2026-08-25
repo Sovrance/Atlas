@@ -29,11 +29,21 @@ from inertia.certificate import (  # noqa: E402
     satisfies_psd_requirement,
 )
 
+# ENG-007 §12: the formal-theorem kind. A consumer requiring PSD is not satisfied by it
+# either -- a proved implication is not a measurement.
+from formal_evidence import (  # noqa: E402
+    KIND_FORMAL_THEOREM,
+    formal_dependency_for,
+    formal_theorem_facts_content,
+    load_manifest,
+)
+
 CONTENT_KINDS = (
     KIND_INERTIA,
     KIND_STRATIFICATION,
     "WEIL_RANK_TRACE_CERTIFICATE",
     "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+    KIND_FORMAL_THEOREM,
 )
 
 try:
@@ -44,6 +54,9 @@ try:
     _PIR = True
 except Exception:  # pragma: no cover
     _PIR = False
+
+
+_FORMAL_MANIFEST = load_manifest()
 
 
 def available() -> bool:
@@ -142,6 +155,11 @@ def certs_to_facts() -> List[Any]:
         # PSD-requiring consumer reads one field instead of inferring positivity
         # from a signature it may not understand.
         content["satisfies_psd_requirement"] = bool(satisfies_psd_requirement(cert))
+        # ENG-007 §12: attach the formally verified implication this certificate's
+        # conclusion rests on, WITHOUT touching evidence_class. The numerical warrant
+        # stays E1; only the implication is FORMAL, and the two are separate fields so a
+        # consumer cannot read one as the other.
+        content.update(formal_dependency_for(fname, _FORMAL_MANIFEST))
         if kind in (KIND_INERTIA, KIND_STRATIFICATION):
             content["inertia"] = {
                 "n_positive": cert.get("n_positive"),
