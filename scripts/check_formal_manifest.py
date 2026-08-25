@@ -46,6 +46,9 @@ EXPORTED = [
     "pd_two_by_two",
     "schur_pivot_implies_posDef",
     "certificate_even2_implies_pd",
+    "even_odd_cross_vanishes",
+    "det_parity_factorization",
+    "det_congruence_invariant",
 ]
 
 

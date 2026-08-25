@@ -48,4 +48,29 @@ def certificate_even2_implies_pd : Prop :=
         G L = !![a, b; b, c] ∧ g00Lower ≤ a ∧ detLower ≤ a * c - b * b) →
       ∀ L ∈ D, (G L).PosDef
 
+/-- Even/odd cross terms vanish for any reflection-invariant bilinear form.
+
+This is the structural fact that makes the parity basis worth using: it block-diagonalises
+the Gram matrix without any analytic input about how the form was assembled. -/
+def even_odd_cross_vanishes : Prop :=
+  ∀ {V : Type} [AddCommGroup V] [Module ℝ V]
+    (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ) (σ : V →ₗ[ℝ] V),
+    (∀ u v : V, B (σ u) (σ v) = B u v) →
+    ∀ f g : V, σ f = f → σ g = -g → B f g = 0
+
+/-- The parity factorization of the degree-≤2 Gram determinant: `det G = O1 · E2`.
+
+This is the `det_matches_O1_times_E2` invariant the E1 certifier asserts. -/
+def det_parity_factorization : Prop :=
+  ∀ g00 g02 g22 o1 : ℝ,
+    (!![g00, 0, g02; 0, o1, 0; g02, 0, g22] : Matrix (Fin 3) (Fin 3) ℝ).det
+      = o1 * (g00 * g22 - g02 * g02)
+
+/-- A congruence by a determinant-one matrix preserves the Gram determinant.
+
+Licenses computing a determinant in whichever basis is convenient. -/
+def det_congruence_invariant : Prop :=
+  ∀ {n : Type} [Fintype n] [DecidableEq n] (S G : Matrix n n ℝ),
+    S.det = 1 → (Sᵀ * G * S).det = G.det
+
 end Comparator.TrustedStatements

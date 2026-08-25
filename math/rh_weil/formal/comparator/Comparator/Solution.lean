@@ -42,4 +42,19 @@ theorem certificate_even2_implies_pd : TrustedStatements.certificate_even2_impli
     { g00Lower := g00Lower, detLower := detLower, h_g00 := hg, h_det := hd }
     hcov L hL
 
+/-- Discharges `even_odd_cross_vanishes`. -/
+theorem even_odd_cross_vanishes : TrustedStatements.even_odd_cross_vanishes := by
+  intro V _ _ B σ hinv f g hf hg
+  exact AtlasRH.WeilBasis.even_odd_orthogonal B σ hinv f g hf hg
+
+/-- Discharges `det_parity_factorization`. -/
+theorem det_parity_factorization : TrustedStatements.det_parity_factorization := by
+  intro g00 g02 g22 o1
+  exact AtlasRH.WeilBasis.det_parity_factorization g00 g02 g22 o1
+
+/-- Discharges `det_congruence_invariant`. -/
+theorem det_congruence_invariant : TrustedStatements.det_congruence_invariant := by
+  intro n _ _ S G hS
+  exact AtlasRH.WeilBasis.det_congruence_invariant S G hS
+
 end Comparator.Solution

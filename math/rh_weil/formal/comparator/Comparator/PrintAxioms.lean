@@ -18,9 +18,15 @@ import Comparator.Solution
 #print Comparator.TrustedStatements.pd_two_by_two
 #print Comparator.TrustedStatements.schur_pivot_implies_posDef
 #print Comparator.TrustedStatements.certificate_even2_implies_pd
+#print Comparator.TrustedStatements.even_odd_cross_vanishes
+#print Comparator.TrustedStatements.det_parity_factorization
+#print Comparator.TrustedStatements.det_congruence_invariant
 
 -- Axiom dependencies of every exported theorem.
 #print axioms Comparator.Solution.congruence_preserves_posDef
 #print axioms Comparator.Solution.pd_two_by_two
 #print axioms Comparator.Solution.schur_pivot_implies_posDef
 #print axioms Comparator.Solution.certificate_even2_implies_pd
+#print axioms Comparator.Solution.even_odd_cross_vanishes
+#print axioms Comparator.Solution.det_parity_factorization
+#print axioms Comparator.Solution.det_congruence_invariant

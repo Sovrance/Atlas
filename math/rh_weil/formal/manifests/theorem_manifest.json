@@ -59,6 +59,42 @@
         "Quot.sound",
         "propext"
       ]
+    },
+    {
+      "id": "even_odd_cross_vanishes",
+      "trusted_statement": "Comparator.TrustedStatements.even_odd_cross_vanishes",
+      "solution_theorem": "Comparator.Solution.even_odd_cross_vanishes",
+      "statement": "∀ {V : Type} [inst : AddCommGroup V] [inst_1 : Module ℝ V] (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ) (σ : V →ₗ[ℝ] V), (∀ (u v : V), (B (σ u)) (σ v) = (B u) v) → ∀ (f g : V), σ f = f → σ g = -g → (B f) g = 0",
+      "statement_hash": "bd922fb6173e15355bffea186ae482f0fab147df6705eb881c9c6afcc582baef",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "id": "det_parity_factorization",
+      "trusted_statement": "Comparator.TrustedStatements.det_parity_factorization",
+      "solution_theorem": "Comparator.Solution.det_parity_factorization",
+      "statement": "∀ (g00 g02 g22 o1 : ℝ), !![g00, 0, g02; 0, o1, 0; g02, 0, g22].det = o1 * (g00 * g22 - g02 * g02)",
+      "statement_hash": "f9f1fc01e79166154621e357551601c20e17cff5d9f8dcde322885032d2c0ac1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "id": "det_congruence_invariant",
+      "trusted_statement": "Comparator.TrustedStatements.det_congruence_invariant",
+      "solution_theorem": "Comparator.Solution.det_congruence_invariant",
+      "statement": "∀ {n : Type} [inst : Fintype n] [inst_1 : DecidableEq n] (S G : Matrix n n ℝ), S.det = 1 → (S.transpose * G * S).det = G.det",
+      "statement_hash": "c67cb481f84533d497e30ae726d38985fc5c9f04daf7b759753a65e289cd6247",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
     }
   ]
 }
