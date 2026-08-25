@@ -284,6 +284,57 @@ theorem posDef_sym3_iff {a b c d e f : ℝ} :
       0 < a ∧ 0 < minor2 a b c d e f ∧ 0 < minor3 a b c d e f :=
   ⟨sym3_minors_of_posDef, fun h => posDef_sym3 h.1 h.2.1 h.2.2⟩
 
+/-! ### Diagonal congruence, the preconditioner the runtime applies
+
+ENG-008 §WO-RH-47 rescales the block by an exact dyadic diagonal before reading
+its signature, because the raw block spans ten orders of magnitude and the
+elimination separates badly. That rescaling has to be a congruence, and it has
+to be *known* to be one -- otherwise the certified numbers describe a matrix
+nobody claimed anything about. -/
+
+/-- The diagonal 3×3 matrix, which is what the runtime's preconditioner is. -/
+def diag3 (x y z : ℝ) : SymMatrix 3 := !![x, 0, 0; 0, y, 0; 0, 0, z]
+
+@[simp] theorem det_diag3 (x y z : ℝ) : (diag3 x y z).det = x * y * z := by
+  simp [diag3, Matrix.det_fin_three]
+
+theorem isUnit_det_diag3 {x y z : ℝ} (hx : x ≠ 0) (hy : y ≠ 0) (hz : z ≠ 0) :
+    IsUnit (diag3 x y z).det := by
+  rw [det_diag3]
+  exact (isUnit_iff_ne_zero).mpr (by
+    simpa using mul_ne_zero (mul_ne_zero hx hy) hz)
+
+/-- **The preconditioner does not change the answer.**
+
+If the rescaled block is positive definite then so is the block itself. The
+runtime certifies bounds on `DᵀGD` and concludes about `G`; this is that step,
+and it needs nothing about `D` beyond its diagonal entries being nonzero. -/
+theorem posDef_of_diagonal_congruence {x y z : ℝ} {A : SymMatrix 3}
+    (hx : x ≠ 0) (hy : y ≠ 0) (hz : z ≠ 0)
+    (h : (congruence (diag3 x y z) A).PosDef) : A.PosDef :=
+  posDef_of_congruence (isUnit_det_diag3 hx hy hz) h
+
+/-- And back, so the transcript runs in either direction. -/
+theorem diagonal_congruence_posDef {x y z : ℝ} {A : SymMatrix 3}
+    (hx : x ≠ 0) (hy : y ≠ 0) (hz : z ≠ 0)
+    (h : A.PosDef) : (congruence (diag3 x y z) A).PosDef :=
+  posDef_congruence (isUnit_det_diag3 hx hy hz) h
+
+/-- The positive index is unchanged by the preconditioner. Stated separately
+from definiteness because the runtime reads a *signature*, not a yes/no: if the
+block had turned out indefinite, this is the theorem that would have carried the
+result across. -/
+theorem posIndexAtLeast_diagonal_congruence_iff {x y z : ℝ} {A : SymMatrix 3}
+    {k : ℕ} (hx : x ≠ 0) (hy : y ≠ 0) (hz : z ≠ 0) :
+    PosIndexAtLeast (congruence (diag3 x y z) A) k ↔ PosIndexAtLeast A k :=
+  posIndexAtLeast_congruence_iff (isUnit_det_diag3 hx hy hz)
+
+/-- Likewise the rank, hence the zero count. -/
+theorem rank_diagonal_congruence {x y z : ℝ} (A : SymMatrix 3)
+    (hx : x ≠ 0) (hy : y ≠ 0) (hz : z ≠ 0) :
+    (congruence (diag3 x y z) A).rank = A.rank :=
+  rank_congruence A (isUnit_det_diag3 hx hy hz)
+
 /-- A 3×3 block clearing the criterion has inertia `(3, 0, 0)`. -/
 theorem definiteInertia_sym3 {a b c d e f : ℝ} (h1 : 0 < a)
     (h2 : 0 < minor2 a b c d e f) (h3 : 0 < minor3 a b c d e f) :

@@ -127,6 +127,80 @@ def OddDegree3FactorizationStatement : Prop :=
         (!![o11, o1b; o1b, obb] : SymMatrix 2).det
       = (e00 * ebb - e0b ^ 2) * (o11 * obb - o1b ^ 2)
 
+/-! ## The 3×3 certificate and its preconditioner (ENG-008) -/
+
+/-- **The 3×3 certificate implication.**
+
+Certified positive lower bounds on the three leading principal minors imply the
+block is positive definite. This is what the ENG-008 degree-4 result rests on:
+the interval run establishes the three bounds, and this says they suffice.
+
+Stated on the bounds rather than on entry enclosures because that is where the
+runtime establishes them. At 2×2 the worst corner of a determinant is findable
+in closed form, so that certificate can carry enclosures; at 3×3 it is not, and
+encoding interval arithmetic here would be the wrong division of labour. -/
+def PdThreeByThreeCertificateStatement : Prop :=
+  ∀ a b c d e f d1Lower d2Lower d3Lower : ℝ,
+    0 < d1Lower →
+    0 < d2Lower →
+    0 < d3Lower →
+    d1Lower ≤ a →
+    d2Lower ≤ a * d - b * b →
+    d3Lower ≤ a * d * f - a * e ^ 2 - b ^ 2 * f + 2 * b * c * e - c ^ 2 * d →
+    (!![a, b, c; b, d, e; c, e, f] : SymMatrix 3).PosDef
+
+/-- **A diagonal preconditioner does not change the answer.**
+
+If the rescaled block is positive definite then so is the block itself. The
+ENG-008 runtime rescales by an exact dyadic diagonal before eliminating, because
+the raw block spans ten orders of magnitude; this is the step that carries the
+conclusion back. Nothing is needed of the preconditioner beyond its diagonal
+entries being nonzero. -/
+def DiagonalCongruencePreservesPdStatement : Prop :=
+  ∀ (x y z : ℝ) (A : SymMatrix 3),
+    x ≠ 0 → y ≠ 0 → z ≠ 0 →
+    (congruence (!![x, 0, 0; 0, y, 0; 0, 0, z] : SymMatrix 3) A).PosDef →
+    A.PosDef
+
+/-- **The composition the runtime actually performs.**
+
+Certified positive lower bounds on the three leading minors of the *rescaled*
+block imply the *original* block is positive definite. The two steps above,
+composed -- which is worth stating as one theorem because the composition is
+what a reader of the certificate has to trust. -/
+def PreconditionedCertificate3Statement : Prop :=
+  ∀ (x y z : ℝ) (A : SymMatrix 3) (a b c d e f d1Lower d2Lower d3Lower : ℝ),
+    x ≠ 0 → y ≠ 0 → z ≠ 0 →
+    congruence (!![x, 0, 0; 0, y, 0; 0, 0, z] : SymMatrix 3) A
+      = !![a, b, c; b, d, e; c, e, f] →
+    0 < d1Lower →
+    0 < d2Lower →
+    0 < d3Lower →
+    d1Lower ≤ a →
+    d2Lower ≤ a * d - b * b →
+    d3Lower ≤ a * d * f - a * e ^ 2 - b ^ 2 * f + 2 * b * c * e - c ^ 2 * d →
+    A.PosDef
+
+/-- **The preconditioner preserves the whole signature, not just definiteness.**
+
+Stated separately because the runtime reads a signature rather than a yes/no: had
+the block turned out indefinite, this is the theorem that would have carried
+*that* result across instead. -/
+def DiagonalCongruencePreservesIndexStatement : Prop :=
+  ∀ (x y z : ℝ) (A : SymMatrix 3) (k : ℕ),
+    x ≠ 0 → y ≠ 0 → z ≠ 0 →
+    ((∃ V : Submodule ℝ (Fin 3 → ℝ), Module.finrank ℝ V = k ∧
+        ∀ v ∈ V, v ≠ 0 → 0 < v ⬝ᵥ
+          (congruence (!![x, 0, 0; 0, y, 0; 0, 0, z] : SymMatrix 3) A).mulVec v)
+      ↔ (∃ V : Submodule ℝ (Fin 3 → ℝ), Module.finrank ℝ V = k ∧
+        ∀ v ∈ V, v ≠ 0 → 0 < v ⬝ᵥ A.mulVec v))
+
+/-- **And the rank, hence the zero count.** -/
+def DiagonalCongruencePreservesRankStatement : Prop :=
+  ∀ (x y z : ℝ) (A : SymMatrix 3),
+    x ≠ 0 → y ≠ 0 → z ≠ 0 →
+    (congruence (!![x, 0, 0; 0, y, 0; 0, 0, z] : SymMatrix 3) A).rank = A.rank
+
 /-! ## Rank–trace -/
 
 /-- **The rank–trace inequality, `Q = 0` case.**

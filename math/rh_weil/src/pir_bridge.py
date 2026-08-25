@@ -129,6 +129,18 @@ def certs_to_facts() -> List[Any]:
         # than being smuggled into the evidence level.
         ("formal_theorem_certificate.json", "E0", "SOUND",
          "machine-checked finite theorems only — proves implications, never a numeric bound"),
+        # ENG-008: the 3x3 even block -- the first block where inertia,
+        # moments and conditioning-by-congruence are exercised beyond what a
+        # 2x2 determinant already carries.
+        ("e0_degree4_even3_exact_identities.json", "E0", "SOUND", ""),
+        ("e1_degree4_even3_inertia_log3_log4.json", "E1", "SOUND",
+         "3x3 even block: certified whole-cell inertia over [log3, log4]"),
+        ("e1_degree4_even3_positivity_log3_log4.json", "E1", "SOUND",
+         "3x3 even block: uniform positive definiteness over [log3, log4]"),
+        ("e1_degree4_even3_moments_log3_log4.json", "E1", "SOUND",
+         "3x3 even block: spectral moments m1..m4 and rank-trace at sample points"),
+        ("e3_degree4_even3_crosscheck.json", "E3", "HEURISTIC",
+         "independent mpmath/SymPy assembly — E3 regression evidence, never a warrant"),
         ("e3_pilot3_even_conditioning_log3_log4.json", "E3", "HEURISTIC",
          "ENG-008 preparation: mpmath preview of the 3x3 even block, floating "
          "eigenvalue solver — E3 evidence, never a warrant"),

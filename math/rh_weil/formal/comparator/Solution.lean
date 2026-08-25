@@ -85,6 +85,46 @@ theorem atlas_odd_degree3_factorization : odd_degree3_factorization_statement :=
   have h := AtlasRH.parity_block_det e00 e0b ebb o11 o1b obb
   simpa [AtlasRH.sym2] using h
 
+/-! ## The 3×3 certificate and its preconditioner (ENG-008) -/
+
+theorem atlas_pd_three_by_three_certificate : pd_three_by_three_certificate_statement := by
+  intro a b c d e f d1 d2 d3 h1 h2 h3 hb1 hb2 hb3
+  -- The certificate is inlined rather than bound with `have`: `have` is
+  -- proof-irrelevant, so `cert.d1Lower` would stop reducing to `d1` and the
+  -- hypotheses would no longer typecheck against the fields.
+  have h := AtlasRH.posDef_of_certificate3
+    { d1Lower := d1, d2Lower := d2, d3Lower := d3
+      h_d1_pos := h1, h_d2_pos := h2, h_d3_pos := h3 }
+    (a := a) (b := b) (cc := c) (d := d) (e := e) (f := f) ⟨hb1, hb2, hb3⟩
+  simpa [AtlasRH.sym3] using h
+
+theorem atlas_diagonal_congruence_preserves_pd :
+    diagonal_congruence_preserves_pd_statement := by
+  intro x y z A hx hy hz h
+  refine AtlasRH.posDef_of_diagonal_congruence hx hy hz ?_
+  simpa [AtlasRH.diag3] using h
+
+theorem atlas_preconditioned_certificate3 : preconditioned_certificate3_statement := by
+  intro x y z A a b c d e f d1 d2 d3 hx hy hz hcong h1 h2 h3 hb1 hb2 hb3
+  refine AtlasRH.posDef_of_preconditioned_certificate3
+    { d1Lower := d1, d2Lower := d2, d3Lower := d3
+      h_d1_pos := h1, h_d2_pos := h2, h_d3_pos := h3 }
+    hx hy hz ?_ ⟨hb1, hb2, hb3⟩
+  simpa [AtlasRH.diag3, AtlasRH.sym3] using hcong
+
+theorem atlas_diagonal_congruence_preserves_index :
+    diagonal_congruence_preserves_index_statement := by
+  intro x y z A k hx hy hz
+  have h := AtlasRH.posIndexAtLeast_diagonal_congruence_iff
+    (x := x) (y := y) (z := z) (A := A) (k := k) hx hy hz
+  simpa [AtlasRH.PosIndexAtLeast, AtlasRH.qform, AtlasRH.diag3] using h
+
+theorem atlas_diagonal_congruence_preserves_rank :
+    diagonal_congruence_preserves_rank_statement := by
+  intro x y z A hx hy hz
+  have h := AtlasRH.rank_diagonal_congruence A hx hy hz
+  simpa [AtlasRH.diag3] using h
+
 /-! ## Rank–trace -/
 
 theorem atlas_rank_trace_hs : rank_trace_hs_statement := by
