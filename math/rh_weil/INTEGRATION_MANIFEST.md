@@ -1,3 +1,10 @@
+---
+status: HISTORICAL
+---
+
+> **HISTORICAL.** Record of the original notebook->Atlas import. Paths and contents have moved since;
+> the live inventory is the tree itself and `certificates/work_order_status.json`.
+
 # Integration Manifest
 
 ## Added paths

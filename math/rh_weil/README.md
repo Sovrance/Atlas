@@ -1,3 +1,9 @@
+---
+status: CURRENT
+work_order: ATLAS-RH-ENG-007
+latest_completed: ATLAS-RH-ENG-006
+---
+
 # RH / Weil Positivity Program (Research Notebook V2)
 
 This directory integrates the RH Research Notebook V2 into Atlas as the reproducible source behind the Constant Atlas positivity-verifier example (`G00 > 0`, Schur pivot positivity).
@@ -220,21 +226,56 @@ channels and the degree-3 pilot. Next is ENG-007: formalize the stabilized theor
 boundary in Lean — Sylvester inertia under congruence, the 2x2/3x3 criteria, the
 rank-trace theorem, certificate semantics, and selected degree-3 exact identities.
 Only after that should the program widen to additional prime-power cells or higher
-polynomial degree at scale.
+polynomial degree at scale. See [`formal/README.md`](formal/README.md) for what is proved
+and, importantly, what is not.
 
-**Executed in-repo so far (see `certificates/work_order_status.json`):**
-- WO-RH-01/03/04 — exact identities, f1 audit, bubble block (E0)
-- WO-RH-02 — scalar cell `[log 3, log 4]` algebraic `W00''>0` (E0)
-- WO-RH-05 — stable `H0`/`Hb` + L-jets; E3 energy-probe scan only (interval E1 **open**)
-- WO-RH-06/07 — regenerated E0 certificates + dedicated runner (does not expand root CI)
+### Current certified results
 
-Run:
+Generated from the certificates in `certificates/`; the machine-readable source of truth is
+[`certificates/work_order_status.json`](certificates/work_order_status.json), which
+`scripts/check_docs.py` checks this section against.
+
+| Object | Domain | Result | Warrant |
+|---|---|---|---|
+| scalar | `[log 3, log 4]` | uniform positive lower bound | E1, PROMOTED |
+| degree-1 odd | cell | positive | E1, PROMOTED |
+| degree-2 even (compact) | cell | positive | E1, PROMOTED |
+| `T=84` degree-2 | cell | positive, point + uniform | E1, PROMOTED |
+| degree-3 odd | cell | inertia `(2,0,0)`, positive | E1 |
+| rank-trace | degree-3 sample points | rank lower bound, nontrivial | E1 |
+| spectral moments | degree-3 points | `m1..m4`, mixed conclusive/insufficient | E1 |
+
+Normalization adjudication is COMPLETE (WO-RH-17); Candidate A is active. Inertia,
+rank-trace and moment channels are OPERATIONAL. **WO-RH-05 is closed** and **degree 3 is
+implemented and certified** -- both were open in pre-ENG-005 snapshots of this file.
+
+An inertia certificate is a distinct content kind from a positivity certificate: a consumer
+requiring PSD is not satisfied by a signature. ENG-006 keeps them separate deliberately.
+
+### Canonical commands
 
 ```bash
-python math/rh_weil/scripts/run_rh_weil_suite.py
+python3 math/rh_weil/scripts/run_rh_weil_suite.py
+python3 math/rh_weil/scripts/run_rigorous_chain.py --release
+python3 math/rh_weil/scripts/ci_inertia.py --gate fast
+python3 math/rh_weil/scripts/ci_inertia.py --gate rigorous
 ```
 
-See `AGENT_INSTRUCTIONS.md` and `notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md`.
+Formal layer (ENG-007):
+
+```bash
+cd math/rh_weil/formal && lake build
+python3 scripts/check_formal_manifest.py
+python3 scripts/check_docs.py
+```
+
+### History
+
+- Live agent entrypoint: [`AGENT_INSTRUCTIONS.md`](AGENT_INSTRUCTIONS.md).
+- Original integration work order (HISTORICAL):
+  [`docs/history/agent-instructions-initial-integration.md`](docs/history/agent-instructions-initial-integration.md).
+- Notebook import history and current-state split:
+  [`notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md`](notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md).
 
 Optional external oracle (not required at runtime): `external/` wraps
 `connes-cvs` for independent cross-checks of shared Weil ingredients. See

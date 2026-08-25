@@ -1,3 +1,7 @@
+---
+status: CURRENT
+---
+
 # Connes-CvS -> Atlas RH/Weil Technical Mapping v0.1
 
 ## Decision

@@ -1,3 +1,7 @@
+---
+status: CURRENT
+---
+
 # Connes-CvS provenance (WO-CVS-01)
 
 ## Reviewed package
