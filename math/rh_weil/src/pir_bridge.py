@@ -144,6 +144,25 @@ def certs_to_facts() -> List[Any]:
         ("e3_pilot3_even_conditioning_log3_log4.json", "E3", "HEURISTIC",
          "ENG-008 preparation: mpmath preview of the 3x3 even block, floating "
          "eigenvalue solver — E3 evidence, never a warrant"),
+        # ENG-009: the pencil. The reference metric is E0 (exact rational
+        # Sylvester + congruence); the gap enclosures are E1; the structural
+        # dataset quotes only certified numbers; the scaling models and the
+        # next-block artifacts are plans and say so.
+        ("e0_eng009_reference_metric.json", "E0", "SOUND",
+         "exact L2 reference metric: PD for every L > 0, exact rational proof"),
+        ("e1_eng009_generalized_gap_log3_log4.json", "E1", "SOUND",
+         "generalized gap lambda_min(G, M): uniform lower bounds by shifted "
+         "positivity, Rayleigh upper bounds at the bottleneck"),
+        ("eng009_structural_dataset.json", "E1", "SOUND",
+         "cross-block structural dataset regenerated from promoted certificates"),
+        ("e3_eng009_scaling_models.json", "E3", "HEURISTIC",
+         "exploratory finite scaling models — E3, never promotable to an "
+         "infinite claim"),
+        ("eng009_next_block_selection.json", "E3", "HEURISTIC",
+         "the ENG-010 target selection — a plan, not a numeric fact"),
+        ("e3_eng010_even4_preview.json", "E3", "HEURISTIC",
+         "ENG-010 preparation: float preview of the 4x4 even block — E3 "
+         "evidence, never a warrant"),
     ]
     for fname, ev, tag, warn in mapping:
         cert = _load(fname)

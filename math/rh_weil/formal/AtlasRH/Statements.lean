@@ -201,6 +201,53 @@ def DiagonalCongruencePreservesRankStatement : Prop :=
     x ≠ 0 → y ≠ 0 → z ≠ 0 →
     (congruence (!![x, 0, 0; 0, y, 0; 0, 0, z] : SymMatrix 3) A).rank = A.rank
 
+/-! ## The generalized gap (ENG-009) -/
+
+/-- **Shifted positivity is a generalized Rayleigh bound.**
+
+If `G - λM` is positive semidefinite, then `λ·vᵀMv ≤ vᵀGv` for every vector.
+With `M` positive definite this says every generalized eigenvalue of the pencil
+`(G, M)` is at least `λ` -- stated without eigenvalues, which is how the
+runtime certifies it. This is the implication the ENG-009 generalized-gap
+certificate rests on. -/
+def GeneralizedRayleighStatement : Prop :=
+  ∀ (n : ℕ) (G M : SymMatrix n) (lam : ℝ),
+    (G - lam • M).PosSemidef →
+    ∀ v : Fin n → ℝ, lam * (v ⬝ᵥ M.mulVec v) ≤ v ⬝ᵥ G.mulVec v
+
+/-- **The certified gap does not depend on the coordinates.**
+
+A shifted-definiteness certificate transports across any invertible change of
+basis applied to both forms at once, in either direction, with the same `λ`.
+This is the precise sense in which the generalized gap is basis-invariant while
+raw eigenvalues and raw determinants are not -- the load-bearing claim of
+ENG-009 §WO-RH-57. -/
+def GeneralizedPencilCongruenceStatement : Prop :=
+  ∀ (n : ℕ) (S G M : SymMatrix n) (lam : ℝ), IsUnit S.det →
+    ((congruence S G - lam • congruence S M).PosDef ↔ (G - lam • M).PosDef)
+
+/-- **The composition the ENG-009 runtime actually performs.**
+
+Certified positive lower bounds on the three leading minors of the exactly
+preconditioned *shifted* block `D(G - λM)D` imply the generalized Rayleigh
+bound for the original pencil at that `λ`. Three prior theorems composed --
+the minor criterion, the diagonal congruence, and the Rayleigh bound -- and
+stated as one because the composition is what a reader of the gap certificate
+has to trust. -/
+def PreconditionedGapCertificate3Statement : Prop :=
+  ∀ (x y z lam : ℝ) (G M : SymMatrix 3)
+    (a b c d e f d1Lower d2Lower d3Lower : ℝ),
+    x ≠ 0 → y ≠ 0 → z ≠ 0 →
+    congruence (!![x, 0, 0; 0, y, 0; 0, 0, z] : SymMatrix 3) (G - lam • M)
+      = !![a, b, c; b, d, e; c, e, f] →
+    0 < d1Lower →
+    0 < d2Lower →
+    0 < d3Lower →
+    d1Lower ≤ a →
+    d2Lower ≤ a * d - b * b →
+    d3Lower ≤ a * d * f - a * e ^ 2 - b ^ 2 * f + 2 * b * c * e - c ^ 2 * d →
+    ∀ v : Fin 3 → ℝ, lam * (v ⬝ᵥ M.mulVec v) ≤ v ⬝ᵥ G.mulVec v
+
 /-! ## Rank–trace -/
 
 /-- **The rank–trace inequality, `Q = 0` case.**

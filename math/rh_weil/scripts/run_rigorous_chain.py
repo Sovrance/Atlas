@@ -86,6 +86,16 @@ EVEN3_CERTS = [
 #: stratification is a successful outcome too, and does not produce this file).
 EVEN3_POSITIVITY = "e1_degree4_even3_positivity_log3_log4.json"
 
+#: ENG-009 artifacts. The reference metric, the generalized gap, and the
+#: structural dataset built on them. The E3 files (scaling models, next-block
+#: preview) are deliberately absent from the hash-gated list: they are plan
+#: inputs, and the PIR stage checks their promotion separately.
+ENG009_CERTS = [
+    ("e0_eng009_reference_metric.json", "reference metric (E0)"),
+    ("e1_eng009_generalized_gap_log3_log4.json", "generalized gap"),
+    ("eng009_structural_dataset.json", "structural dataset"),
+]
+
 #: ENG-007 artifact. Carries no numeric bound and no normalization binding: the
 #: theorems it reports are finite linear algebra over the reals, true whichever
 #: pole primitive Atlas adopted. It still has to reach PIR, because a formal
@@ -355,6 +365,76 @@ def stage_even3() -> int:
     return 0
 
 
+def stage_eng009() -> int:
+    """ENG-009: validate the generalized-gap artifacts as committed.
+
+    The dataset is required to quote the gap certificate it names, and the gap
+    certificate is required to name a reference metric whose E0 record exists
+    and passed. Anything E3 in the family must say it cannot promote.
+    """
+    print("\n=== generalized gap + structural dataset (ENG-009) ===")
+    gap_path = CERT_DIR / "e1_eng009_generalized_gap_log3_log4.json"
+    metric_path = CERT_DIR / "e0_eng009_reference_metric.json"
+    data_path = CERT_DIR / "eng009_structural_dataset.json"
+    for path, label in ((metric_path, "reference metric"), (gap_path, "gap"),
+                        (data_path, "dataset")):
+        if not path.exists():
+            print(f"  FAIL: missing {label} certificate; run "
+                  "scripts/certify_generalized_gap.py and scripts/report_eng009.py",
+                  file=sys.stderr)
+            return 1
+    metric = json.loads(metric_path.read_text(encoding="utf-8"))
+    if metric.get("evidence_class") != "E0" or metric.get("status") != "PASS":
+        print("  FAIL: reference metric certificate is not a passing E0 record",
+              file=sys.stderr)
+        return 1
+    gap = json.loads(gap_path.read_text(encoding="utf-8"))
+    if gap.get("status") != "PASS":
+        print(f"  FAIL: gap certificate status {gap.get('status')}", file=sys.stderr)
+        return 1
+    if gap.get("reference_metric_certificate") != metric_path.name:
+        print("  FAIL: gap certificate does not name the reference metric",
+              file=sys.stderr)
+        return 1
+    from inertia.certificate import satisfies_psd_requirement
+    for cert in (metric, gap):
+        if satisfies_psd_requirement(cert):
+            print("  FAIL: a generalized-gap artifact satisfied a PSD "
+                  "requirement; the kind is declared default-deny", file=sys.stderr)
+            return 1
+    data = json.loads(data_path.read_text(encoding="utf-8"))
+    verdict = (data.get("determinant_collapse_verdict") or {}).get("answer")
+    print(f"  determinant-collapse verdict: {verdict}")
+    for blk in gap.get("blocks", []):
+        print(f"  {blk['block']:15s} lambda_min in "
+              f"[{blk['certified_lambda_lower_float']}, "
+              f"{blk['upper_bound_at_bottleneck']['certified_upper_bound']}]")
+        if blk.get("status") != "PASS":
+            print(f"  FAIL: block {blk['block']} not certified", file=sys.stderr)
+            return 1
+    hashes = {b["block"]: b for b in data.get("cutoff_free_blocks", [])}
+    for blk in gap.get("blocks", []):
+        row = hashes.get(blk["block"])
+        if not row:
+            print(f"  FAIL: dataset is missing block {blk['block']}", file=sys.stderr)
+            return 1
+        if (row["generalized_gap"]["lambda_lower_uniform"]
+                != blk["certified_lambda_lower_float"]):
+            print(f"  FAIL: dataset quotes a different gap bound for "
+                  f"{blk['block']} than the certificate carries", file=sys.stderr)
+            return 1
+    models_path = CERT_DIR / "e3_eng009_scaling_models.json"
+    if models_path.exists():
+        models = json.loads(models_path.read_text(encoding="utf-8"))
+        if models.get("evidence_class") != "E3" or models.get("rigorous"):
+            print("  FAIL: scaling models must be E3 and non-rigorous",
+                  file=sys.stderr)
+            return 1
+        print(f"  scaling models: {len(models.get('models', []))} recorded, E3, "
+              "never promoted")
+    return 0
+
+
 def stage_formal() -> int:
     """ENG-007 §10/§12: the theorem manifest gate, then the formal certificate.
 
@@ -399,7 +479,7 @@ def stage_pir() -> int:
     print(f"  promoted: {len(promoted)}  refused: {len(refused)}")
     d3_name, _ = degree3_e1_certificate()
     expected = ([n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
-                + [n for n, _ in EVEN3_CERTS])
+                + [n for n, _ in EVEN3_CERTS] + [n for n, _ in ENG009_CERTS])
     if d3_name:
         expected.append(d3_name)
     if (CERT_DIR / EVEN3_POSITIVITY).exists():
@@ -424,7 +504,7 @@ def stage_hashes() -> int:
     bad = []
     d3_name, _ = degree3_e1_certificate()
     checked = ([n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
-               + [n for n, _ in EVEN3_CERTS])
+               + [n for n, _ in EVEN3_CERTS] + [n for n, _ in ENG009_CERTS])
     if d3_name:
         checked.append(d3_name)
     if (CERT_DIR / EVEN3_POSITIVITY).exists():
@@ -489,6 +569,10 @@ def main() -> int:
                 [sys.executable, str(ROOT / "scripts" / "certify_even3.py")]
                 + (["--quick"] if args.quick else [])):
             return 1
+        if _run("reference metric + generalized gap (ENG-009)",
+                [sys.executable, str(ROOT / "scripts" / "certify_generalized_gap.py")]
+                + (["--quick"] if args.quick else [])):
+            return 1
 
     if _run("degree-3 exact identities (ENG-006 §7)",
             [sys.executable, str(ROOT / "tests" / "test_degree3_exact.py")]):
@@ -501,8 +585,17 @@ def main() -> int:
             [sys.executable, str(ROOT / "tests" / "test_pilot3_exact.py")]):
         return 1
 
-    for stage in (stage_engines, stage_degree3, stage_even3, stage_policy,
-                  stage_formal, stage_pir, stage_hashes):
+    if not args.skip_regenerate:
+        if _run("ENG-009 dataset, models, selection, preview",
+                [sys.executable, str(ROOT / "scripts" / "report_eng009.py")]):
+            return 1
+
+    if _run("generalized gap + reference metric exact tests (ENG-009)",
+            [sys.executable, str(ROOT / "tests" / "test_generalized_gap.py")]):
+        return 1
+
+    for stage in (stage_engines, stage_degree3, stage_even3, stage_eng009,
+                  stage_policy, stage_formal, stage_pir, stage_hashes):
         if stage():
             return 1
 

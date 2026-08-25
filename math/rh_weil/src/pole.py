@@ -39,11 +39,11 @@ POLE_CANDIDATE = "A"
 POLE_STATUS = "ADOPTED_WO_RH_17"
 
 # Basis elements on [0, L], as monomial coefficient tuples (c0, c1, ...).
-BASIS_NAMES: Tuple[str, ...] = ("one", "q1", "b", "b3", "b2")
+BASIS_NAMES: Tuple[str, ...] = ("one", "q1", "b", "b3", "b2", "bcube")
 
 #: Parity about the cell midpoint x = L/2. Drives ``E^- = ± e^{-L/2} E^+``.
 BASIS_PARITY: Dict[str, str] = {"one": "even", "q1": "odd", "b": "even",
-                                "b3": "odd", "b2": "even"}
+                                "b3": "odd", "b2": "even", "bcube": "even"}
 
 # Below this |a*L| the endpoint closed form cancels and the series branch (with a
 # rigorously bounded remainder) is used instead.
@@ -82,6 +82,14 @@ def basis_coeffs(name: str, L: Any) -> Tuple[Any, ...]:
         # It is the first basis element that is *quadratic* in L, which is why
         # the second-derivative machinery below had to be generalized.
         return (0 * L, 0 * L, L * L, -2 * L, 0 * L + 1)
+    if name == "bcube":
+        # ENG-009 §WO-RH-62: bcube(x) = b(x)^3 = x^3(L-x)^3
+        #                             = L^3 x^3 - 3L^2 x^4 + 3L x^5 - x^6.
+        # Even about x = L/2; the fourth even-sector element (u^6 in
+        # u = x - L/2), cubic in L. E0-prepared for ENG-010; no production
+        # certificate uses it yet.
+        L2 = L * L
+        return (0 * L, 0 * L, 0 * L, L2 * L, -3 * L2, 3 * L, 0 * L - 1)
     raise KeyError(f"unknown basis element {name!r}")
 
 

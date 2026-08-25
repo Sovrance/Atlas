@@ -74,7 +74,16 @@ def atlasAudited : List (String × Name × Name) :=
       ``AtlasRH.DiagonalCongruencePreservesRankStatement)
   , ("rank_trace_hs",
       ``Comparator.atlas_rank_trace_hs,
-      ``AtlasRH.RankTraceZeroQStatement) ]
+      ``AtlasRH.RankTraceZeroQStatement)
+  , ("generalized_rayleigh",
+      ``Comparator.atlas_generalized_rayleigh,
+      ``AtlasRH.GeneralizedRayleighStatement)
+  , ("generalized_pencil_congruence",
+      ``Comparator.atlas_generalized_pencil_congruence,
+      ``AtlasRH.GeneralizedPencilCongruenceStatement)
+  , ("preconditioned_gap_certificate3",
+      ``Comparator.atlas_preconditioned_gap_certificate3,
+      ``AtlasRH.PreconditionedGapCertificate3Statement) ]
 
 run_cmd do
   let env ← getEnv

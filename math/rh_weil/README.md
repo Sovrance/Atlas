@@ -72,8 +72,17 @@ here that disagrees with its certificate fails the gate.
 | **3×3 even block `{1, b, b²}`** | cell | **positive definite, inertia `(3,0,0)`**, one stratum, no transition regions; `Δ1 ≥ 0.07537591825740127`, `Δ2 ≥ 3.4244304067666463e-06`, `Δ3 ≥ 6.451586222238981e-15` | E1 | `e1_degree4_even3_positivity_log3_log4.json` |
 | 3×3 even block, inertia route | cell | `(3,0,0)` by interval LDL* congruence, 2838 boxes, max depth 3 | E1 | `e1_degree4_even3_inertia_log3_log4.json` |
 | 3×3 even moments `m₁..m₄` | 5 sample points | moments do **not** force the inertia at `n = 3`; rank–trace `≥ 1` against a true rank of 3 | E1 | `e1_degree4_even3_moments_log3_log4.json` |
-| finite theorem boundary | — | 15 theorems proved in Lean 4 / Mathlib, no `sorry`, three standard axioms | FORMAL (implication only) | `formal_theorem_certificate.json` |
+| finite theorem boundary | — | 18 theorems proved in Lean 4 / Mathlib, no `sorry`, three standard axioms | FORMAL (implication only) | `formal_theorem_certificate.json` |
 | 3×3 even independent assembly | 5 points | agrees with the rigorous assembly to `1.5637e-13` | **E3 — regression only, never a warrant** | `e3_degree4_even3_crosscheck.json` |
+| **reference metric `M`** | every `L > 0` | the exact `L²` Gram of the basis is positive definite — exact rational Sylvester + diagonal congruence | **E0** | `e0_eng009_reference_metric.json` |
+| **generalized gap, scalar** | cell | `λmin(G, M) ∈ [0.052666425704956055, 0.058518285644676]` | E1 | `e1_eng009_generalized_gap_log3_log4.json` |
+| generalized gap, odd `{q1}` | cell | `λmin ∈ [0.12558043003082275, 0.1395338743236466]` | E1 | same file |
+| generalized gap, even `{1, b}` | cell | `λmin ∈ [0.0005867481231689453, 0.0006520075621795992]` | E1 | same file |
+| generalized gap, odd `{q1, b3}` | cell | `λmin ∈ [0.004970192909240723, 0.005522444641828629]` | E1 | same file |
+| **generalized gap, even `{1, b, b²}`** | cell | `λmin ∈ [3.606081008911133e-05, 4.007732435284577e-05]` | E1 | same file |
+| structural dataset + verdict | 5 blocks | determinant collapse is `MOSTLY_COORDINATE_DRIVEN_BUT_THE_GAP_ALSO_DECAYS` | E1 | `eng009_structural_dataset.json` |
+| scaling models | 2 families | exponential vs power-law fits with explicit n = 4 falsifiers | **E3 — plans, never promoted** | `e3_eng009_scaling_models.json` |
+| ENG-010 preview, even 4×4 | midpoint | `{1, b, b², b³}` float minors and scouted gap; `bcube` E0-prepared | **E3 — never a warrant** | `e3_eng010_even4_preview.json` |
 
 The 3×3 block is the first here where the determinant does not fix the spectrum:
 `det > 0` on a 3×3 is consistent with `(3,0,0)` and with `(1,2,0)`, so
@@ -82,6 +91,23 @@ with a two-dimensional negative subspace. Its preconditioner is a diagonal matri
 of exact powers of two, frozen for the cell, which is a congruence performed
 without rounding — and the ENG-007 congruence theorems are what say the inertia
 it reports is the block's own.
+
+**Why raw determinant magnitude is not a basis-invariant distance-to-RH
+signal.** A determinant moves by `det(S)²` under any change of basis `S`, so
+its size measures the coordinates as much as the matrix. Concretely: the
+certified 3×3 raw determinant bound is `6.45e-15`, which looks like a spectrum
+about to fail — but the determinant of the exact reference metric `M` (a Hankel
+moment matrix, positive definite for *every* `L > 0`, minors exactly `1`,
+`1/180`, `1/7938000`) collapses by seven orders of magnitude over the same
+ladder while being the healthiest object in the program. Of the thirteen orders
+the raw determinant loses from the scalar block to the 3×3, about seven are the
+coordinates. The object that does not move under simultaneous congruence is the
+generalized eigenvalue of the pencil `(G, M)` — `det(SᵀGS − λSᵀMS) =
+det(S)²·det(G − λM)`, checked exactly in the tests and proved in Lean — and
+*its* certified decay over the same span is about three orders, slow and so far
+unclassified. Margins in this program are therefore quoted against a named
+metric or not at all; see
+[`docs/GENERALIZED_GAP_ENG009_v0.1.md`](docs/GENERALIZED_GAP_ENG009_v0.1.md).
 
 Two of the older rows deserve their qualifiers. The rank–trace bound is *weak*: it
 proves `rank ≥ 1` where the rank is 2, and saying so is the point — a bound that
@@ -112,8 +138,12 @@ moments.
 | WO-RH-48 | six exact entries; independent assembly agrees to `1.56e-13` |
 | WO-RH-49 | derivative provider generalized; prior certified bounds unchanged |
 | WO-RH-51 | **3×3 even block certified positive definite, inertia `(3,0,0)`** |
-| WO-RH-53 | Lean 3×3 certificate replay — 15 theorems, no `sorry` |
+| WO-RH-53 | Lean 3×3 certificate replay |
 | WO-RH-55 | cross-block diagnostics prepared for ENG-009 |
+| WO-RH-58 | reference metric E0; **generalized gap certified for all five blocks** |
+| WO-RH-59 | determinant-collapse verdict: mostly coordinates, gap decays slowly |
+| WO-RH-62 | ENG-010 target selected: even 4×4; `bcube` E0-prepared |
+| WO-RH-63 | Lean generalized-gap implication — 18 theorems, no `sorry` |
 
 The authoritative per-order state, including the pre-quarantine values WO-RH-17
 forbids deleting, is
@@ -245,32 +275,32 @@ knowing: the general rank–trace inequality Atlas carries as *unproved* is prov
 upstream as `Zeta23.RHLinalg.rank_trace_ineq_two`. See
 [`external/zeta23/MAPPING.md`](external/zeta23/MAPPING.md).
 
-## 8. Current frontier — ATLAS-RH-ENG-008, the first higher-dimensional block
+## 8. Current frontier — ATLAS-RH-ENG-009, what the margins actually measure
 
-ENG-005 recovered the E1 chain; ENG-006 added the inertia, rank–trace and moment
-channels and the degree-3 pilot; ENG-007 made the finite theorem boundary
-formally replayable and the documentation mechanically truthful. **ENG-008 is the
-current work order**, and its result is the first rigorously certified
-higher-dimensional spectral statement in this program:
+ENG-008 proved `G[{1, b, b²}](L)` positive definite on `[log 3, log 4]` with
+inertia `(3, 0, 0)` — certified twice, by interval LDL* congruence and by
+Sylvester covers ([`docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md`](docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md)) —
+while its raw determinant margin fell to `1e-14` territory. **ENG-009 is the
+current work order**, and its result is a decision about what to measure:
 
-> `G[{1, b, b²}](L)` is positive definite for every `L ∈ [log 3, log 4]`,
-> with inertia `(3, 0, 0)`.
+> The determinant collapse is mostly the coordinate system. The
+> congruence-invariant generalized gap `λmin(G, M)` against the exact `L²`
+> reference metric is certified for all five blocks, and it decays ~3 orders
+> across the ladder where the raw determinant loses ~13.
 
-Certified twice, by routes that share the assembly and nothing after it —
-interval LDL* congruence stratified over the cell, and Sylvester's criterion as
-three separate adaptive covers.
+The gap is now the primary margin observable: basis-invariant (proved in Lean),
+graded, certifiable without an eigensolver, and meaningful even after a future
+block goes indefinite. Exploratory E3 scaling models (exponential vs power law)
+carry explicit falsifiers that the next block decides. See
+[`docs/GENERALIZED_GAP_ENG009_v0.1.md`](docs/GENERALIZED_GAP_ENG009_v0.1.md),
+and [`docs/BRIDGE_CANDIDATES_ENG009_v0.1.md`](docs/BRIDGE_CANDIDATES_ENG009_v0.1.md)
+for the conjectural note on what any finite-to-infinite bridge still requires.
 
-The scientific point is not "degree 4 is positive". It is that this is the first
-block where verified inertia, spectral moments, conditioning-by-congruence and
-3×3 certificate semantics are genuinely exercised beyond what a 2×2 determinant
-already carries — and where they give different answers. The moments no longer
-force the inertia; rank–trace got weaker rather than stronger; conditioning
-became necessary for the first time. See
-[`docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md`](docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md).
-
-**Next: ENG-009.** `certificates/eng009_structural_diagnostics.json` compares all
-five certified blocks and records candidate invariants with the falsifier that
-would kill each one. No infinite-dimensional theorem is inferred from any of it.
+**Next: ENG-010.** The even 4×4 block `{1, b, b², b³}` — selected because the
+even family is where the collapse lives and where the fitted models genuinely
+disagree at `n = 4` (predictions `7.8e-7` vs `6.1e-6`, against a float preview
+scouting `4.5e-5`). `bcube` is E0-prepared; `e3_eng010_even4_preview.json` is
+the E3 preview; no E1 certificate for it exists yet, deliberately.
 
 ## 9. History
 

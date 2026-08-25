@@ -68,6 +68,18 @@ abbrev diagonal_congruence_preserves_index_statement : Prop :=
 abbrev diagonal_congruence_preserves_rank_statement : Prop :=
   AtlasRH.DiagonalCongruencePreservesRankStatement
 
+/-- Shifted positivity implies the generalized Rayleigh bound. -/
+abbrev generalized_rayleigh_statement : Prop :=
+  AtlasRH.GeneralizedRayleighStatement
+
+/-- The pencil's certified gap is invariant under simultaneous congruence. -/
+abbrev generalized_pencil_congruence_statement : Prop :=
+  AtlasRH.GeneralizedPencilCongruenceStatement
+
+/-- Preconditioned 3×3 minor bounds imply the generalized Rayleigh bound. -/
+abbrev preconditioned_gap_certificate3_statement : Prop :=
+  AtlasRH.PreconditionedGapCertificate3Statement
+
 /-- The rank–trace inequality in the `Q = 0` case the runtime uses. -/
 abbrev rank_trace_hs_statement : Prop := AtlasRH.RankTraceZeroQStatement
 

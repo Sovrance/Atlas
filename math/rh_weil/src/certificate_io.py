@@ -155,10 +155,11 @@ def build_work_order_status() -> Dict[str, Any]:
         "certificate_version": "0.2",
         "program": "RH/Weil work-order status",
         "rh_proof_claim": False,
-        "eng_spec": ("ATLAS-RH-ENG-008 first higher-dimensional certified Weil "
-                     "block: the 3x3 even block {1, b, b^2} (baseline: ENG-007)"),
-        "current_work_order": "ATLAS-RH-ENG-008",
-        "latest_completed_work_order": "ATLAS-RH-ENG-007",
+        "eng_spec": ("ATLAS-RH-ENG-009 spectral scaling laws and margin "
+                     "diagnostics: the generalized gap against the exact L2 "
+                     "reference metric (baseline: ENG-008)"),
+        "current_work_order": "ATLAS-RH-ENG-009",
+        "latest_completed_work_order": "ATLAS-RH-ENG-008",
         "orders": {
             "WO-RH-01": "done",
             "WO-RH-02": "done_E0_scalar_cell",
@@ -211,6 +212,16 @@ def build_work_order_status() -> Dict[str, Any]:
             "WO-RH-53": "done_ENG-008_lean_3x3_certificate_replay",
             "WO-RH-54": "done_ENG-008_pir_runner_ci_and_docs",
             "WO-RH-55": "done_ENG-008_cross_block_diagnostics_for_ENG-009",
+            "ENG-008": "done_first_higher_dimensional_certified_weil_block",
+            "WO-RH-56": "done_ENG-009_structural_dataset_regenerated_from_certificates",
+            "WO-RH-57": "done_ENG-009_observables_classified_pencil_invariance_exact",
+            "WO-RH-58": "done_ENG-009_reference_metric_E0_and_generalized_gap_E1_all_blocks",
+            "WO-RH-59": "done_ENG-009_verdict_mostly_coordinate_driven_but_gap_decays",
+            "WO-RH-60": "done_ENG-009_E3_scaling_models_with_next_block_falsifiers",
+            "WO-RH-61": "done_ENG-009_channel_comparison_primary_diagnostic_vector",
+            "WO-RH-62": "done_ENG-009_even4_selected_bcube_E0_prepared_E3_previewed",
+            "WO-RH-63": "done_ENG-009_generalized_gap_theorems_content_kinds_ci_docs",
+            "WO-RH-64": "done_ENG-009_bridge_candidate_note_conjectural_E3",
         },
         # Historical values retained verbatim: WO-RH-17 forbids deleting contrary
         # evidence. These are what the tree claimed before the adjudication.

@@ -48,6 +48,17 @@ KIND_FORMAL = "FORMAL_THEOREM_CERTIFICATE"
 KIND_PILOT_PREVIEW = "WEIL_PILOT_CONDITIONING_PREVIEW"
 KIND_SCAN_PREVIEW = "WEIL_SCAN_PREVIEW"
 
+#: ENG-009 (§WO-RH-63). The generalized-gap kind is deliberately *not* PSD
+#: licensable even though its content implies positivity when the bound is
+#: positive: a consumer that needs PSD should consume the positivity
+#: certificate that says PSD, not infer it from a gap bound whose purpose is
+#: cross-dimension comparison. Default-deny until a work order justifies
+#: otherwise.
+KIND_GENERALIZED_GAP = "WEIL_GENERALIZED_GAP_CERTIFICATE"
+KIND_STRUCTURAL_DIAGNOSTIC = "WEIL_STRUCTURAL_DIAGNOSTIC"
+KIND_SCALING_MODEL = "WEIL_SCALING_MODEL"
+KIND_NEXT_BLOCK_SELECTION = "WEIL_NEXT_BLOCK_SELECTION"
+
 
 @dataclass(frozen=True)
 class ContentKind:
@@ -127,6 +138,35 @@ _KINDS: Tuple[ContentKind, ...] = (
         KIND_SCAN_PREVIEW, "WO-RH-48",
         "an independent non-interval assembly of a block, for regression against "
         "the rigorous one",
+        psd_licensable=False,
+        warrant_role="preview",
+    ),
+    ContentKind(
+        KIND_GENERALIZED_GAP, "WO-RH-58",
+        "a certified enclosure of lambda_min(G, M) for one block against the "
+        "named exact reference metric, by shifted positivity and a Rayleigh "
+        "witness -- basis-invariant by simultaneous congruence",
+        psd_licensable=False,
+        warrant_role="numeric",
+    ),
+    ContentKind(
+        KIND_STRUCTURAL_DIAGNOSTIC, "WO-RH-56",
+        "cross-block structural data regenerated from promoted certificates: "
+        "minors, traces, moments, conditioning, inertia, warrants",
+        psd_licensable=False,
+        warrant_role="numeric",
+    ),
+    ContentKind(
+        KIND_SCALING_MODEL, "WO-RH-60",
+        "exploratory finite scaling models fitted to certified per-block data, "
+        "each with an explicit next-block falsifier; E3, never promotable",
+        psd_licensable=False,
+        warrant_role="preview",
+    ),
+    ContentKind(
+        KIND_NEXT_BLOCK_SELECTION, "WO-RH-62",
+        "the scored selection of the next block to certify, with the criteria "
+        "and the losing candidates recorded",
         psd_licensable=False,
         warrant_role="preview",
     ),
