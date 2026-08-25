@@ -69,10 +69,21 @@ here that disagrees with its certificate fails the gate.
 | odd degree-3 block | cell | positive definite, inertia `(2,0,0)`, one stratum, no transition regions; `O1 ≥ 0.015331267702267608`, `det ≥ 1.073120529992708e-06` | E1 | `e1_degree3_odd_positivity_log3_log4.json` |
 | rank–trace | 3 degree-3 sample points | `rank ≥ 1` — nontrivial but weak, against a true rank of 2 | E1 | `e1_degree3_odd_moments_log3_log4.json` |
 | spectral moments `m₁..m₄` | 3 degree-3 sample points | dimension 2; mixed conclusive / insufficient B1 queries | E1 | `e1_degree3_odd_moments_log3_log4.json` |
-| finite theorem boundary | — | 10 theorems proved in Lean 4 / Mathlib, no `sorry`, three standard axioms | FORMAL (implication only) | `formal_theorem_certificate.json` |
-| 3×3 even pilot `{1, b, b²}` | cell, 9-point grid | inertia `(3,0,0)` on the grid; conditioning `1.3e5 → 2.4e1` under a Jacobi congruence | **E3 — preview, never a warrant** | `e3_pilot3_even_conditioning_log3_log4.json` |
+| **3×3 even block `{1, b, b²}`** | cell | **positive definite, inertia `(3,0,0)`**, one stratum, no transition regions; `Δ1 ≥ 0.07537591825740127`, `Δ2 ≥ 3.335516179674528e-06`, `Δ3 ≥ 2.4352136989119354e-14` | E1 | `e1_degree4_even3_positivity_log3_log4.json` |
+| 3×3 even block, inertia route | cell | `(3,0,0)` by interval LDL* congruence, 2920 boxes, max depth 3 | E1 | `e1_degree4_even3_inertia_log3_log4.json` |
+| 3×3 even moments `m₁..m₄` | 5 sample points | moments do **not** force the inertia at `n = 3`; rank–trace `≥ 1` against a true rank of 3 | E1 | `e1_degree4_even3_moments_log3_log4.json` |
+| finite theorem boundary | — | 15 theorems proved in Lean 4 / Mathlib, no `sorry`, three standard axioms | FORMAL (implication only) | `formal_theorem_certificate.json` |
+| 3×3 even independent assembly | 5 points | agrees with the rigorous assembly to `1.5637e-13` | **E3 — regression only, never a warrant** | `e3_degree4_even3_crosscheck.json` |
 
-Two of those rows deserve their qualifiers. The rank–trace bound is *weak*: it
+The 3×3 block is the first here where the determinant does not fix the spectrum:
+`det > 0` on a 3×3 is consistent with `(3,0,0)` and with `(1,2,0)`, so
+determinant-only reporting could not have told a positive definite block from one
+with a two-dimensional negative subspace. Its preconditioner is a diagonal matrix
+of exact powers of two, frozen for the cell, which is a congruence performed
+without rounding — and the ENG-007 congruence theorems are what say the inertia
+it reports is the block's own.
+
+Two of the older rows deserve their qualifiers. The rank–trace bound is *weak*: it
 proves `rank ≥ 1` where the rank is 2, and saying so is the point — a bound that
 is true and uninformative is still a result, and pretending otherwise is how a
 program starts believing its own machinery. And the B1 moment queries come back
@@ -97,6 +108,12 @@ moments.
 | WO-RH-38 | pinned Lean project and theorem boundary |
 | WO-RH-43 | statement comparator, axiom audit, theorem manifest |
 | WO-RH-46 | 3×3 even pilot prepared — E0 identities and an E3 preview only |
+| WO-RH-47 | basis `{1, b, b²}` frozen; dyadic preconditioner congruence certified |
+| WO-RH-48 | six exact entries; independent assembly agrees to `1.56e-13` |
+| WO-RH-49 | derivative provider generalized; prior certified bounds unchanged |
+| WO-RH-51 | **3×3 even block certified positive definite, inertia `(3,0,0)`** |
+| WO-RH-53 | Lean 3×3 certificate replay — 15 theorems, no `sorry` |
+| WO-RH-55 | cross-block diagnostics prepared for ENG-009 |
 
 The authoritative per-order state, including the pre-quarantine values WO-RH-17
 forbids deleting, is
@@ -116,7 +133,12 @@ ranktrace/             the rank-trace / Hilbert-Schmidt theorem with enforced hy
 moments/               m1..m4 as traces of powers, fed to the Atlas B1 solver
 formal/                the Lean 4 project: definitions, statements, proofs, comparator
 src/formal_evidence.py the FORMAL warrant and the boundary it may not cross
-src/pilot3.py          the 3x3 even pilot prepared for ENG-008
+src/content_kinds.py   the one registry of content kinds and what each licenses
+src/basis_algebra.py   exact overlap kernels, derived from the basis coefficients
+src/even3.py           the rigorous 3x3 even block and its dyadic preconditioner
+src/independent_even3.py
+                       a second assembly that imports none of the above
+src/pilot3.py          the ENG-007 pilot, superseded by src/even3.py
 ```
 
 Four facts about this architecture are load-bearing:
@@ -143,6 +165,8 @@ python3 math/rh_weil/scripts/ci_inertia.py --gate fast
 python3 math/rh_weil/scripts/ci_inertia.py --gate rigorous
 python3 math/rh_weil/scripts/check_docs.py               # rh-docs gate
 python3 math/rh_weil/scripts/ci_formal.py                # rh-formal gate
+python3 math/rh_weil/scripts/certify_even3.py            # the 3x3 even block
+python3 math/rh_weil/scripts/report_even3_information.py # §WO-RH-52/55 reports
 ```
 
 Passing the fast suite does **not** mean the rigorous certificates are current —
@@ -221,38 +245,32 @@ knowing: the general rank–trace inequality Atlas carries as *unproved* is prov
 upstream as `Zeta23.RHLinalg.rank_trace_ineq_two`. See
 [`external/zeta23/MAPPING.md`](external/zeta23/MAPPING.md).
 
-## 8. Current frontier — ATLAS-RH-ENG-007, formal replay
+## 8. Current frontier — ATLAS-RH-ENG-008, the first higher-dimensional block
 
 ENG-005 recovered the E1 chain; ENG-006 added the inertia, rank–trace and moment
-channels and the degree-3 pilot. **ENG-007 is the current work order**: make the
-finite theorem boundary formally replayable, and make the documentation
-mechanically unable to fall behind the implementation.
+channels and the degree-3 pilot; ENG-007 made the finite theorem boundary
+formally replayable and the documentation mechanically truthful. **ENG-008 is the
+current work order**, and its result is the first rigorously certified
+higher-dimensional spectral statement in this program:
 
-What that means concretely:
+> `G[{1, b, b²}](L)` is positive definite for every `L ∈ [log 3, log 4]`,
+> with inertia `(3, 0, 0)`.
 
-* ten finite theorems proved in Lean 4 against a pinned Mathlib commit — the
-  congruence-invariance of the positive index, the negative index and the rank
-  (Sylvester's law in the formulation the runtime uses); the 2×2 and 3×3
-  leading-principal-minor criteria, both directions; the certificate implication;
-  the Weil parity and determinant identities; and the rank–trace inequality in
-  the `Q = 0` case;
-* a **statement comparator**: each proof is typed against a trusted statement, so
-  a drifted proposition fails to elaborate, and the statement's elaborated form
-  is hashed into `formal/manifests/theorem_manifest.json`;
-* an **axiom audit**: no `sorry` in the proof library, no project-local `axiom`,
-  and every theorem's axiom set contained in `{propext, Classical.choice,
-  Quot.sound}`, enumerated rather than hidden;
-* what is **not** proved, recorded rather than omitted: the general rank–trace
-  inequality is carried as a `def … : Prop` with no inhabitant, marked
-  `EXTERNAL_THEOREM_PENDING_FORMAL_PROOF` with a null warrant;
-* documentation as a merge gate — `scripts/check_docs.py`.
+Certified twice, by routes that share the assembly and nothing after it —
+interval LDL* congruence stratified over the cell, and Sylvester's criterion as
+three separate adaptive covers.
 
-See [`docs/FORMAL_BOUNDARY_ENG007_v0.1.md`](docs/FORMAL_BOUNDARY_ENG007_v0.1.md)
-and [`formal/README.md`](formal/README.md).
+The scientific point is not "degree 4 is positive". It is that this is the first
+block where verified inertia, spectral moments, conditioning-by-congruence and
+3×3 certificate semantics are genuinely exercised beyond what a 2×2 determinant
+already carries — and where they give different answers. The moments no longer
+force the inertia; rank–trace got weaker rather than stronger; conditioning
+became necessary for the first time. See
+[`docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md`](docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md).
 
-**Next: ENG-008** takes the 3×3 even parity block `{1, b, b²}` that WO-RH-46
-prepared, where the determinant is no longer the whole story and inertia and
-moments have room to add information a 2×2 does not have.
+**Next: ENG-009.** `certificates/eng009_structural_diagnostics.json` compares all
+five certified blocks and records candidate invariants with the falsifier that
+would kill each one. No infinite-dimensional theorem is inferred from any of it.
 
 ## 9. History
 
@@ -263,6 +281,7 @@ Work-order records, each accurate for the work it describes:
 * [`docs/CORE_E1_RECOVERY_ENG005_v0.1.md`](docs/CORE_E1_RECOVERY_ENG005_v0.1.md) — ENG-005
 * [`docs/INERTIA_RANKTRACE_MOMENTS_ENG006_v0.1.md`](docs/INERTIA_RANKTRACE_MOMENTS_ENG006_v0.1.md) — ENG-006
 * [`docs/FORMAL_BOUNDARY_ENG007_v0.1.md`](docs/FORMAL_BOUNDARY_ENG007_v0.1.md) — ENG-007
+* [`docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md`](docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md) — ENG-008
 
 Superseded instructions, preserved and labelled rather than deleted:
 

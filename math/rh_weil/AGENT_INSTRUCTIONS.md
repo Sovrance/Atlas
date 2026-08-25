@@ -1,6 +1,6 @@
 ---
 status: CURRENT
-work_order: ATLAS-RH-ENG-007
+work_order: ATLAS-RH-ENG-008
 supersedes: docs/history/agent-instructions-initial-integration.md
 ---
 
@@ -56,7 +56,8 @@ that finds them inconvenient.
 | WO-RH-08 | **done by ENG-006** — odd degree-3 implemented and certified |
 | WO-RH-17/18 | normalization adjudicated, Candidate A adopted |
 | WO-RH-28…36 | inertia, rank–trace, moments, degree-3 pilot — ENG-006 |
-| WO-RH-37…46 | **current work** — formal boundary and documentation truth pass |
+| WO-RH-37…46 | **done by ENG-007** — formal boundary and documentation truth pass |
+| WO-RH-47…55 | **current work** — the 3×3 even block `{1, b, b²}`, certified positive definite |
 
 See the README's *Current certified results* table for the numbers, and
 `work_order_status.json` for the authoritative per-order state.
@@ -89,9 +90,28 @@ the rigorous chain's exit code before believing any E1 claim is fresh.
 
 ## Current frontier
 
-ENG-007: make the finite theorem boundary formally replayable in Lean, and make
-the documentation mechanically unable to fall behind the implementation. See
-[`docs/FORMAL_BOUNDARY_ENG007_v0.1.md`](docs/FORMAL_BOUNDARY_ENG007_v0.1.md).
+ENG-008: the 3×3 even Weil block `G[{1, b, b²}]` is certified **positive
+definite** on `[log 3, log 4]`, inertia `(3, 0, 0)`, by two independent routes.
+This is the first block in the program where the determinant does not fix the
+spectrum, and the first where the four channels give genuinely different answers:
+the moments no longer force the inertia, rank–trace got weaker rather than
+stronger, and conditioning became necessary. See
+[`docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md`](docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md).
 
-After that, ENG-008 attacks the first genuinely >2-dimensional parity block,
-where inertia and moments add information that a 2x2 determinant does not.
+Two working rules this block added, both worth keeping:
+
+* **Derive, do not tabulate.** The overlap kernels and the `L`-derivative
+  machinery are now computed from the basis coefficients. Both replaced
+  hand-written per-element tables that raised `KeyError` for anything new, and
+  both were verified to reproduce every retired entry exactly *and* to agree with
+  independent symbolic integration. Reproducing a table is not the same as being
+  right; check both.
+* **A preconditioner is a claim about a congruence.** If you rescale, the
+  rescaling has to be exactly invertible, exactly applied, and covered by a
+  theorem that says the inertia is unchanged. Powers of two give all three for
+  free; a general Jacobi scaling gives none of them.
+
+After that, ENG-009 takes the cross-block diagnostics in
+`certificates/eng009_structural_diagnostics.json`. Those record candidate
+invariants with falsifiers, and infer nothing about an infinite-dimensional
+limit.

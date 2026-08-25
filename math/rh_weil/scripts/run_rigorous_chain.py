@@ -15,6 +15,8 @@
       -> degree-3 E3 scan
       -> degree-3 E1 positivity or inertia stratification
       -> degree-3 moments
+      -> 3x3 even block: exact identities, cross-check, inertia, positivity,
+         moments (ENG-008)
       -> formal theorem boundary (ENG-007 §12)
       -> PIR
       -> clean-tree / hash validation
@@ -72,6 +74,17 @@ DEGREE3_E1_ALTERNATIVES = (
 ENG006_CERTS = [
     ("e1_degree3_odd_moments_log3_log4.json", "degree3 moments"),
 ]
+
+#: ENG-008 artifacts. The 3x3 even block -- the first block in this program
+#: where the determinant is not the whole story.
+EVEN3_CERTS = [
+    ("e0_degree4_even3_exact_identities.json", "even3 exact identities"),
+    ("e1_degree4_even3_inertia_log3_log4.json", "even3 inertia"),
+    ("e1_degree4_even3_moments_log3_log4.json", "even3 moments"),
+]
+#: Emitted only when positivity was actually proved (§Mission: a rigorous
+#: stratification is a successful outcome too, and does not produce this file).
+EVEN3_POSITIVITY = "e1_degree4_even3_positivity_log3_log4.json"
 
 #: ENG-007 artifact. Carries no numeric bound and no normalization binding: the
 #: theorems it reports are finite linear algebra over the reals, true whichever
@@ -289,6 +302,59 @@ def stage_degree3() -> int:
     return 0
 
 
+def stage_even3() -> int:
+    """ENG-008: validate the 3x3 even block's artifacts as committed.
+
+    Reads what is on disk rather than recomputing: the certification itself is
+    a regeneration stage above. What this checks is that the two independent
+    routes still agree with each other and that neither over-claims.
+    """
+    print("\n=== 3x3 even block (ENG-008) ===")
+    from inertia.certificate import satisfies_psd_requirement
+
+    inertia_path = CERT_DIR / "e1_degree4_even3_inertia_log3_log4.json"
+    if not inertia_path.exists():
+        print("  FAIL: no even3 inertia certificate; run scripts/certify_even3.py",
+              file=sys.stderr)
+        return 1
+    inertia = json.loads(inertia_path.read_text(encoding="utf-8"))
+    sigs = inertia.get("signatures_seen") or []
+    print(f"  inertia: {sigs}  constant on cell: {inertia.get('constant_on_cell')}")
+    for t in (inertia.get("stratification") or {}).get("transition_regions") or []:
+        print(f"  transition region: {t}")
+    if satisfies_psd_requirement(inertia):
+        print("  FAIL: an inertia certificate satisfied a PSD requirement (§11)",
+              file=sys.stderr)
+        return 1
+
+    pos_path = CERT_DIR / EVEN3_POSITIVITY
+    if pos_path.exists():
+        pos = json.loads(pos_path.read_text(encoding="utf-8"))
+        if not satisfies_psd_requirement(pos):
+            print("  FAIL: a certified positive definite block does not satisfy "
+                  "a PSD requirement", file=sys.stderr)
+            return 1
+        got = [pos["n_positive"], pos["n_negative"], pos["n_zero"]]
+        if sigs and got != list(sigs[0]):
+            print(f"  FAIL: positivity says {got} but the inertia route says "
+                  f"{sigs[0]} -- the two routes disagree (§Stop conditions)",
+                  file=sys.stderr)
+            return 1
+        for cover in pos["leading_minors"]:
+            print(f"  {cover['minor']} >= {cover['implied_raw_lower_bound']} (raw), "
+                  f"{cover['certified_lower_bound']} preconditioned")
+        print("  both routes agree: inertia (3, 0, 0) and all three minors positive")
+    else:
+        print("  positivity not claimed; the stratification is the result")
+
+    cross = CERT_DIR / "e3_degree4_even3_crosscheck.json"
+    if cross.exists():
+        c = json.loads(cross.read_text(encoding="utf-8"))
+        print(f"  independent assembly: worst relative difference "
+              f"{c['worst_relative_difference']} (E3, never a warrant)")
+    return 0
+
+
 def stage_formal() -> int:
     """ENG-007 §10/§12: the theorem manifest gate, then the formal certificate.
 
@@ -332,9 +398,12 @@ def stage_pir() -> int:
     refused = [r["certificate_file"] for r in payload["refused_promotions"]]
     print(f"  promoted: {len(promoted)}  refused: {len(refused)}")
     d3_name, _ = degree3_e1_certificate()
-    expected = [n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
+    expected = ([n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
+                + [n for n, _ in EVEN3_CERTS])
     if d3_name:
         expected.append(d3_name)
+    if (CERT_DIR / EVEN3_POSITIVITY).exists():
+        expected.append(EVEN3_POSITIVITY)
     if (CERT_DIR / FORMAL_CERT).exists():
         expected.append(FORMAL_CERT)
     missing = [n for n in expected if n not in promoted]
@@ -354,9 +423,12 @@ def stage_hashes() -> int:
 
     bad = []
     d3_name, _ = degree3_e1_certificate()
-    checked = [n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
+    checked = ([n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
+               + [n for n, _ in EVEN3_CERTS])
     if d3_name:
         checked.append(d3_name)
+    if (CERT_DIR / EVEN3_POSITIVITY).exists():
+        checked.append(EVEN3_POSITIVITY)
     if (CERT_DIR / FORMAL_CERT).exists():
         checked.append(FORMAL_CERT)
     for name in checked:
@@ -413,6 +485,10 @@ def main() -> int:
         if _run("degree-3 scan, E1, moments",
                 [sys.executable, str(ROOT / "scripts" / "certify_degree3.py")] + common):
             return 1
+        if _run("3x3 even block: identities, cross-check, inertia, positivity, moments",
+                [sys.executable, str(ROOT / "scripts" / "certify_even3.py")]
+                + (["--quick"] if args.quick else [])):
+            return 1
 
     if _run("degree-3 exact identities (ENG-006 §7)",
             [sys.executable, str(ROOT / "tests" / "test_degree3_exact.py")]):
@@ -425,8 +501,8 @@ def main() -> int:
             [sys.executable, str(ROOT / "tests" / "test_pilot3_exact.py")]):
         return 1
 
-    for stage in (stage_engines, stage_degree3, stage_policy, stage_formal,
-                  stage_pir, stage_hashes):
+    for stage in (stage_engines, stage_degree3, stage_even3, stage_policy,
+                  stage_formal, stage_pir, stage_hashes):
         if stage():
             return 1
 

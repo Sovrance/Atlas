@@ -155,10 +155,10 @@ def build_work_order_status() -> Dict[str, Any]:
         "certificate_version": "0.2",
         "program": "RH/Weil work-order status",
         "rh_proof_claim": False,
-        "eng_spec": ("ATLAS-RH-ENG-007 formal theorem boundary, statement comparator "
-                     "and documentation truth pass (baseline: ENG-006)"),
-        "current_work_order": "ATLAS-RH-ENG-007",
-        "latest_completed_work_order": "ATLAS-RH-ENG-006",
+        "eng_spec": ("ATLAS-RH-ENG-008 first higher-dimensional certified Weil "
+                     "block: the 3x3 even block {1, b, b^2} (baseline: ENG-007)"),
+        "current_work_order": "ATLAS-RH-ENG-008",
+        "latest_completed_work_order": "ATLAS-RH-ENG-007",
         "orders": {
             "WO-RH-01": "done",
             "WO-RH-02": "done_E0_scalar_cell",
@@ -201,6 +201,16 @@ def build_work_order_status() -> Dict[str, Any]:
             "WO-RH-44": "done_ENG-007_formal_evidence_in_pir",
             "WO-RH-45": "done_ENG-007_readme_refresh_and_docs_gate",
             "WO-RH-46": "done_ENG-007_3x3_even_pilot_prepared_E0_and_E3_only",
+            "ENG-007": "done_formal_theorem_boundary_and_documentation_gate",
+            "WO-RH-47": "done_ENG-008_basis_frozen_and_dyadic_preconditioner_certified",
+            "WO-RH-48": "done_ENG-008_six_exact_entries_and_independent_crosscheck",
+            "WO-RH-49": "done_ENG-008_derivative_provider_generalized_prior_results_identical",
+            "WO-RH-50": "done_ENG-008_rigorous_arb_3x3_assembly",
+            "WO-RH-51": "done_ENG-008_uniform_E1_inertia_3_0_0_and_positivity",
+            "WO-RH-52": "done_ENG-008_moments_ranktrace_information_comparison",
+            "WO-RH-53": "done_ENG-008_lean_3x3_certificate_replay",
+            "WO-RH-54": "done_ENG-008_pir_runner_ci_and_docs",
+            "WO-RH-55": "done_ENG-008_cross_block_diagnostics_for_ENG-009",
         },
         # Historical values retained verbatim: WO-RH-17 forbids deleting contrary
         # evidence. These are what the tree claimed before the adjudication.
@@ -263,5 +273,21 @@ def build_work_order_status() -> Dict[str, Any]:
             "ENG-007: the 3x3 even pilot block {1, b, b2} is prepared, not certified "
             "-- E0 kernel identities and an E3 conditioning preview only, per the "
             "work order's instruction not to promote a new E1 degree result",
+            "ENG-008: the 3x3 even block G[{1, b, b2}] is certified positive "
+            "definite with inertia (3,0,0) uniformly on [log 3, log 4], by two "
+            "independent routes -- interval LDL* congruence stratified over the "
+            "cell, and Sylvester's criterion as three separate adaptive covers",
+            "ENG-008: the preconditioner is a diagonal matrix of exact powers of "
+            "two, frozen for the cell. Scaling an Arb ball by a power of two is "
+            "exact, so the congruence adds no width; invertibility is exact; and "
+            "the inertia is unchanged by the ENG-007 congruence theorems",
+            "ENG-008: the overlap kernels and the L-derivative machinery are now "
+            "derived from the basis coefficients rather than hand-tabulated. The "
+            "prior certified bounds were required to come back unchanged and did",
+            "ENG-008: at n = 3 the moments no longer force the inertia. The "
+            "ENG-006 finding that they did was an artefact of n = 2, where the "
+            "map from a spectrum to (m1, m2) is injective",
+            "ENG-008: rank-trace gives rank >= 1 against a true rank of 3 -- "
+            "weaker than at 2x2, and preserved as a weak result",
         ],
     }

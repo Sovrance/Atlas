@@ -28,6 +28,8 @@ No RH proof claim is made by this module.
 from __future__ import annotations
 
 from math import factorial
+
+import basis_algebra
 from typing import Any, Dict, List, Sequence, Tuple
 
 POLE_FORMULA = (
@@ -313,68 +315,48 @@ def _derivative_coeffs(coeffs: Sequence[Any]) -> Tuple[Any, ...]:
 def basis_at_right_endpoint(name: str, L: Any) -> Any:
     """``h_name(L; L)`` -- the integrand at the moving upper limit.
 
-    Derived from the coefficient table rather than tabulated. ENG-008
-    §WO-RH-49: every boundary quantity the derivative machinery needs is a
-    polynomial evaluation or a coefficient differentiation, and hand-tabulating
-    them is how a wrong coefficient gets in. ENG-005 already caught one --
-    ``d^2/dL^2 (L^3/6)`` written as ``L/2`` instead of ``L``, which threw
-    ``d^2 O1`` off by 0.70. ``tests/test_pole_primitive.py`` pins these against
-    the hand values that were verified then, so the generalization is checked
-    rather than trusted.
+    Evaluated from an exact ``L``-polynomial that :mod:`basis_algebra` has
+    already simplified, not by substituting ``x = L`` on the carrier.
+
+    That distinction is not cosmetic. ``b``, ``b3`` and ``b2`` all vanish
+    identically at ``x = L``, and letting the cancellation happen on an ``L``-ball
+    turns an exact zero into a ball of radius comparable to the box: on a box of
+    radius 1e-2, ``b(L; L) = L*L - L*L`` came back with radius 2.2e-2. The width
+    propagates through every derivative bound built on it, and it moved the
+    degree-1 and degree-2 certified bounds when it was first tried. Doing the
+    cancellation in exact rational arithmetic instead costs nothing and returns
+    exact zero.
     """
-    return _horner(basis_coeffs(name, L), L)
-
-
-def basis_coeffs_dL(name: str, L: Any) -> Tuple[Any, ...]:
-    """Monomial coefficients of ``(d/dL) h_name(x; L)``."""
-    if name == "one":
-        return (0 * L,)
-    if name == "q1":
-        return (0 * L - 0.5 if not hasattr(L, "mid") else -(0 * L + 1) / 2,)
-    if name == "b":  # d/dL [L x - x^2] = x
-        return (0 * L, 0 * L + 1)
-    if name == "b3":  # d/dL [-x^3 + (3L/2)x^2 - (L^2/2)x] = (3/2)x^2 - L x
-        return (0 * L, -L, (0 * L + 3) / 2, 0 * L)
-    if name == "b2":  # d/dL [L^2 x^2 - 2L x^3 + x^4] = 2L x^2 - 2 x^3
-        return (0 * L, 0 * L, 2 * L, 0 * L - 2, 0 * L)
-    raise KeyError(f"unknown basis element {name!r}")
-
-
-def basis_coeffs_d2L(name: str, L: Any) -> Tuple[Any, ...]:
-    """Monomial coefficients of ``(d^2/dL^2) h_name(x; L)``.
-
-    ENG-008 §WO-RH-49. ``one``, ``q1`` and ``b`` are linear in ``L`` so this
-    vanishes; ``b3`` is quadratic in ``L`` through its ``-(L^2/2) x`` term, and
-    ``b2`` is quadratic through ``L^2 x^2``. Both survivors are constants in
-    ``L``, so a third derivative would vanish for every element currently in the
-    basis -- but nothing here assumes that.
-    """
-    if name == "one":
-        return (0 * L,)
-    if name == "q1":
-        return (0 * L,)
-    if name == "b":
-        return (0 * L, 0 * L)
-    if name == "b3":  # d^2/dL^2 [-(L^2/2) x + (3L/2) x^2] = -x
-        return (0 * L, 0 * L - 1, 0 * L, 0 * L)
-    if name == "b2":  # d^2/dL^2 [L^2 x^2 - 2L x^3] = 2 x^2
-        return (0 * L, 0 * L, 0 * L + 2, 0 * L, 0 * L)
-    raise KeyError(f"unknown basis element {name!r}")
+    return basis_algebra.evaluate_l_poly(basis_algebra.endpoint_poly(name), L)
 
 
 def basis_endpoint_dL(name: str, L: Any) -> Any:
     """``(d/dL)[h_name(L; L)]`` -- the *total* derivative at the moving limit.
 
-    By the chain rule this is ``(d_x h + d_L h)(L; L)``, and both pieces come
-    from coefficient tables, so neither is hand-derived. For every element in
-    the current basis it is zero, because ``one`` is constant and the other four
-    all vanish at ``x = L``; the general form is kept because that is an
-    accident of this basis, not a fact about the construction.
+    By the chain rule this is ``(d_x h + d_L h)(L; L)``. Exact, and identically
+    zero for every element of the current basis -- ``one`` is constant and the
+    other four vanish at ``x = L`` for every ``L``. The general form is computed
+    anyway, since that is an accident of this basis rather than a fact about the
+    construction.
     """
-    coeffs = basis_coeffs(name, L)
-    dx = _horner(_derivative_coeffs(coeffs), L) if len(coeffs) > 1 else 0 * L
-    dl = _horner(basis_coeffs_dL(name, L), L)
-    return dx + dl
+    return basis_algebra.evaluate_l_poly(
+        basis_algebra.endpoint_total_dL_poly(name), L)
+
+
+def basis_coeffs_dL(name: str, L: Any) -> Tuple[Any, ...]:
+    """Monomial coefficients of ``(d/dL) h_name(x; L)``, exactly."""
+    return basis_algebra.basis_coeffs_dL_on(name, L)
+
+
+def basis_coeffs_d2L(name: str, L: Any) -> Tuple[Any, ...]:
+    """Monomial coefficients of ``(d^2/dL^2) h_name(x; L)``, exactly.
+
+    ENG-008 §WO-RH-49. ``one``, ``q1`` and ``b`` are linear in ``L`` so this
+    vanishes; ``b3`` is quadratic in ``L`` through its ``-(L^2/2) x`` term, and
+    ``b2`` is quadratic through ``L^2 x^2``. Nothing here assumes a third
+    derivative would vanish, even though for this basis it does.
+    """
+    return basis_algebra.basis_coeffs_d2L_on(name, L)
 
 
 def _laplace_dL(name: str, L: Any, sign: int) -> Any:

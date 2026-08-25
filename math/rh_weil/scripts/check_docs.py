@@ -94,8 +94,15 @@ def strip_code(text: str) -> str:
 # checks                                                                       #
 # --------------------------------------------------------------------------- #
 def check_links(doc: str, path: Path) -> List[str]:
+    """Every local Markdown link target exists.
+
+    Code spans are stripped first. Mathematical notation collides with link
+    syntax more often than one would guess -- ``G[{1, b, b^2}](L)`` reads as a
+    link to ``L`` -- and a gate that fires on a formula is a gate people learn
+    to route around.
+    """
     problems = []
-    text = path.read_text(encoding="utf-8")
+    text = strip_code(path.read_text(encoding="utf-8"))
     for target in LINK.findall(text):
         target = target.strip()
         if target.startswith(("http://", "https://", "mailto:", "#")):

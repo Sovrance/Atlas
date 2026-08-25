@@ -107,6 +107,8 @@ def main() -> int:
         TESTS / "test_production_imports.py",
         TESTS / "test_promotion_and_canary.py",
         TESTS / "test_eng005_recovery.py",
+        TESTS / "test_kernel_algebra.py",
+        TESTS / "test_even3.py",
     ]
     failed = 0
     for tf in test_files:

@@ -33,6 +33,7 @@ No RH proof claim is made by this module.
 from __future__ import annotations
 
 from fractions import Fraction
+from functools import lru_cache
 from math import comb
 from typing import Any, Dict, List, Sequence, Tuple
 
@@ -94,6 +95,127 @@ def _bp_pow(p: BiPoly, n: int) -> BiPoly:
 
 def _l_poly_to_bipoly(coeffs: Dict[int, Fraction]) -> BiPoly:
     return {(0, k): Fraction(v) for k, v in coeffs.items() if v}
+
+
+# --------------------------------------------------------------------------- #
+# Exact L-polynomials for the boundary quantities                              #
+# --------------------------------------------------------------------------- #
+# The derivative machinery needs `h(L; L)`, `(d_L h)(L; L)` and the total
+# derivative `(d/dL)[h(L; L)]`. Each is a polynomial in `L`, and for most of the
+# basis it is *identically zero*: `b`, `b3` and `b2` all vanish at `x = L`.
+#
+# Evaluating them on the carrier and letting the cancellation happen there is
+# sound but catastrophically loose. On an `L`-ball of radius 1e-2, computing
+# `b(L; L) = L*L - L*L` gives a ball of radius 2.2e-2 around zero instead of
+# exact zero, and that width propagates through every derivative bound built on
+# it -- measurably, when it was first tried: the degree-1 certified bound fell
+# and the degree-2 one moved by 6%.
+#
+# So the cancellation happens here, in exact rational arithmetic, and the
+# carrier only ever sees the simplified polynomial. An identically zero quantity
+# comes back as an empty polynomial and evaluates to exact zero.
+LPoly = Dict[int, Fraction]
+
+
+def _lp_add(p: LPoly, k: int, c: Fraction) -> None:
+    if not c:
+        return
+    got = p.get(k, Fraction(0)) + c
+    if got:
+        p[k] = got
+    else:
+        p.pop(k, None)
+
+
+def differentiate_l(coeffs: Sequence[LPoly]) -> Tuple[LPoly, ...]:
+    """``d/dL`` of each ``x``-coefficient, exactly."""
+    out: List[LPoly] = []
+    for lc in coeffs:
+        d: LPoly = {}
+        for k, c in lc.items():
+            if k:
+                _lp_add(d, k - 1, c * k)
+        out.append(d)
+    return tuple(out)
+
+
+@lru_cache(maxsize=None)
+def basis_dL_coeffs(name: str) -> Tuple[LPoly, ...]:
+    """``d_L h`` as ``x``-coefficients, each an exact polynomial in ``L``."""
+    return differentiate_l(BASIS_L_POLY[name])
+
+
+@lru_cache(maxsize=None)
+def basis_d2L_coeffs(name: str) -> Tuple[LPoly, ...]:
+    """``d^2_L h``, likewise."""
+    return differentiate_l(basis_dL_coeffs(name))
+
+
+def _collapse_at_x_equals_L(coeffs: Sequence[LPoly]) -> LPoly:
+    """``p(L; L)`` -- substitute ``x = L`` and collect, exactly."""
+    out: LPoly = {}
+    for n, lc in enumerate(coeffs):
+        for k, c in lc.items():
+            _lp_add(out, k + n, c)
+    return out
+
+
+@lru_cache(maxsize=None)
+def endpoint_poly(name: str) -> LPoly:
+    """``h(L; L)`` as an exact polynomial in ``L``. Empty means identically 0."""
+    return _collapse_at_x_equals_L(BASIS_L_POLY[name])
+
+
+@lru_cache(maxsize=None)
+def endpoint_dL_inner_poly(name: str) -> LPoly:
+    """``(d_L h)(L; L)`` -- the moving-integrand term, exactly."""
+    return _collapse_at_x_equals_L(basis_dL_coeffs(name))
+
+
+@lru_cache(maxsize=None)
+def endpoint_total_dL_poly(name: str) -> LPoly:
+    """``(d/dL)[h(L; L)] = (d_x h + d_L h)(L; L)``, exactly.
+
+    Every element of the current basis makes this identically zero -- ``one`` is
+    constant and the other four vanish at ``x = L`` for every ``L``, so their
+    endpoint value is the zero polynomial and its derivative with it. The general
+    form is computed anyway, because that is an accident of this basis rather
+    than a fact about the construction.
+    """
+    src = BASIS_L_POLY[name]
+    dx: List[LPoly] = []
+    for n, lc in enumerate(src):
+        if n == 0:
+            continue
+        dx.append({k: c * n for k, c in lc.items()})
+    out = _collapse_at_x_equals_L(tuple(dx)) if dx else {}
+    for k, c in endpoint_dL_inner_poly(name).items():
+        _lp_add(out, k, c)
+    return out
+
+
+def evaluate_l_poly(poly: LPoly, L: Any) -> Any:
+    """Evaluate an exact ``L``-polynomial on the caller's carrier.
+
+    An empty polynomial is exactly zero, and returns the carrier's zero rather
+    than a ball that merely happens to contain it.
+    """
+    zero = L * 0
+    if not poly:
+        return zero
+    out = zero
+    for k, c in sorted(poly.items()):
+        term = (zero + 1) if k == 0 else L ** k
+        out = out + term * c.numerator / c.denominator
+    return out
+
+
+def basis_coeffs_dL_on(name: str, L: Any) -> Tuple[Any, ...]:
+    return tuple(evaluate_l_poly(lc, L) for lc in basis_dL_coeffs(name))
+
+
+def basis_coeffs_d2L_on(name: str, L: Any) -> Tuple[Any, ...]:
+    return tuple(evaluate_l_poly(lc, L) for lc in basis_d2L_coeffs(name))
 
 
 # --------------------------------------------------------------------------- #

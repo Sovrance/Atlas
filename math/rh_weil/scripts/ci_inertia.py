@@ -45,6 +45,7 @@ SCHEMA_DIR = ROOT / "inertia" / "schemas"
 #: eigenvalue solver.
 RIGOROUS_MODULES = (
     "src/degree3.py", "src/pole.py", "src/core.py", "src/weil_entries.py",
+    "src/basis_algebra.py", "src/even3.py",
     "src/archimedean_realspace.py", "src/interval_cover.py",
     "src/interval_backend.py",
     "inertia/ldl.py", "inertia/stratify.py", "inertia/congruence.py",
@@ -255,6 +256,10 @@ def gate_fast() -> int:
         ("exact congruence / Sylvester", "test_inertia_engine.py"),
         ("exact E0 degree-3 kernels", "test_degree3_exact.py"),
         ("rank-trace theorem runtime", "test_ranktrace.py"),
+        # ENG-008: the derived kernel/derivative algebra and the 3x3 block's
+        # exact half. Both run without python-flint.
+        ("exact kernel and derivative algebra", "test_kernel_algebra.py"),
+        ("3x3 even block, exact half", "test_even3.py"),
     ):
         rc = rc or _run(label, [sys.executable, str(ROOT / "tests" / test)])
     rc = rc or check_schemas()
@@ -275,6 +280,8 @@ def gate_rigorous() -> int:
         ("spectral moments + B1 adapter", "test_moments_adapter.py"),
         ("rank-trace theorem runtime", "test_ranktrace.py"),
         ("degree-3 exact identities", "test_degree3_exact.py"),
+        ("exact kernel and derivative algebra", "test_kernel_algebra.py"),
+        ("3x3 even block", "test_even3.py"),
     ):
         rc = rc or _run(label, [sys.executable, str(ROOT / "tests" / test)])
     rc = rc or _run("degree-3 E1 certificate checks",
