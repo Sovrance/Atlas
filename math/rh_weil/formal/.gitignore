@@ -1,0 +1,3 @@
+# Build output and fetched dependencies. `lake-manifest.json` is NOT ignored: it records
+# the exact resolved Mathlib revision, which is what makes the formal layer replayable.
+/.lake/

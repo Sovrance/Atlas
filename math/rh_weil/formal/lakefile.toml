@@ -1,0 +1,21 @@
+name = "AtlasRH"
+defaultTargets = ["AtlasRH", "Comparator"]
+
+# Pinned, not floating (ENG-007 §4). A formal layer whose dependency resolves to
+# "whatever is newest" cannot be replayed, and a theorem that cannot be replayed is
+# not evidence. `lake-manifest.json` records the exact resolved revision.
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.33.0"
+
+[[lean_lib]]
+name = "AtlasRH"
+
+# The comparator is a SEPARATE library that imports AtlasRH. TrustedStatements may not
+# import the implementation: if the trusted statement were phrased in terms of Atlas
+# definitions, a change to those definitions would silently change the statement, which is
+# precisely the drift ENG-007 §0 exists to prevent.
+[[lean_lib]]
+name = "Comparator"
+srcDir = "comparator"

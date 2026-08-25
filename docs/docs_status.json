@@ -1,0 +1,37 @@
+{
+  "$comment": [
+    "ENG-007 §14. The registry that makes documentation freshness a testable invariant.",
+    "Canonical docs are LIVE: an agent may act on their instructions. Historical roots may",
+    "contain superseded statements, because history is evidence and WO-RH-17 forbids deleting",
+    "contrary evidence -- what it may not do is present them as current instructions.",
+    "scripts/check_docs.py is the enforcement; this file is the declaration."
+  ],
+  "schema_version": "1.0",
+  "current_work_order": "ATLAS-RH-ENG-007",
+  "latest_completed_work_order": "ATLAS-RH-ENG-006",
+  "baseline_merge": "28ec6980699525b38e95243587651cf0ac8213ff",
+  "rh_proof_claim": false,
+  "canonical_docs": [
+    "README.md",
+    "math/rh_weil/README.md",
+    "math/rh_weil/AGENT_INSTRUCTIONS.md",
+    "math/rh_weil/INTEGRATION_MANIFEST.md",
+    "math/rh_weil/notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md",
+    "math/rh_weil/external/CONNES_CVS_MAPPING.md",
+    "math/rh_weil/external/PROVENANCE.md",
+    "math/rh_weil/formal/README.md"
+  ],
+  "historical_roots": [
+    "math/rh_weil/docs/history/",
+    "math/rh_weil/certificates/history/",
+    "archive/"
+  ],
+  "rh_live_docs": [
+    "math/rh_weil/README.md",
+    "math/rh_weil/AGENT_INSTRUCTIONS.md",
+    "math/rh_weil/notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md",
+    "math/rh_weil/formal/README.md"
+  ],
+  "work_order_status_source": "math/rh_weil/certificates/work_order_status.json",
+  "atlas_doc_glob": "docs/constant-atlas-v*.md"
+}

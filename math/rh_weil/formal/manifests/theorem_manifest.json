@@ -1,0 +1,64 @@
+{
+  "formal_project": "AtlasRH",
+  "work_order": "ATLAS-RH-ENG-007",
+  "lean_toolchain": "leanprover/lean4:v4.33.0",
+  "mathlib_rev": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "mathlib_inputRev": "v4.33.0",
+  "rh_proof_claim": false,
+  "claim_scope": "finite_dimensional_linear_algebra_and_certificate_semantics",
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "theorems": [
+    {
+      "id": "congruence_preserves_posDef",
+      "trusted_statement": "Comparator.TrustedStatements.congruence_preserves_posDef",
+      "solution_theorem": "Comparator.Solution.congruence_preserves_posDef",
+      "statement": "∀ {n : Type} [inst : Fintype n] [inst_1 : DecidableEq n] (S A : Matrix n n ℝ), IsUnit S → ((S.conjTranspose * A * S).PosDef ↔ A.PosDef)",
+      "statement_hash": "ac8312ebb98bd0debbb77ec8981ae455c700107dadc03499c0baf58d4e48e100",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "id": "pd_two_by_two",
+      "trusted_statement": "Comparator.TrustedStatements.pd_two_by_two",
+      "solution_theorem": "Comparator.Solution.pd_two_by_two",
+      "statement": "∀ (a b c : ℝ), !![a, b; b, c].PosDef ↔ 0 < a ∧ 0 < a * c - b * b",
+      "statement_hash": "67a566cdc28b1f27484848f5fcd516e673d542327f8c41dcab9df01673c3cf69",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "id": "schur_pivot_implies_posDef",
+      "trusted_statement": "Comparator.TrustedStatements.schur_pivot_implies_posDef",
+      "solution_theorem": "Comparator.Solution.schur_pivot_implies_posDef",
+      "statement": "∀ (a b c : ℝ), 0 < a → 0 < c - b * b / a → !![a, b; b, c].PosDef",
+      "statement_hash": "0620d37675a0280309ea08b93ab77412dbafe94020b4cfe2380562460bd1032f",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "id": "certificate_even2_implies_pd",
+      "trusted_statement": "Comparator.TrustedStatements.certificate_even2_implies_pd",
+      "solution_theorem": "Comparator.Solution.certificate_even2_implies_pd",
+      "statement": "∀ (g00Lower detLower : ℝ), 0 < g00Lower → 0 < detLower → ∀ (G : ℝ → Matrix (Fin 2) (Fin 2) ℝ) (D : Set ℝ), (∀ L ∈ D, ∃ a b c, G L = !![a, b; b, c] ∧ g00Lower ≤ a ∧ detLower ≤ a * c - b * b) → ∀ L ∈ D, (G L).PosDef",
+      "statement_hash": "a1beb218aa5cc60b632d245567aa1d76f268867683f61d28b698cfb45ded5eb9",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    }
+  ]
+}
