@@ -66,10 +66,10 @@
         "1.1060498114329873"
       ],
       "window_halfwidth": "0.0001",
-      "E2_d2_certified_lower_bound": "0.0011970651493288088",
+      "E2_d2_certified_lower_bound": "0.0011970651493288804",
       "cover": {
         "quantity": "E2_d2",
-        "certified_lower_bound": "0.0011970651493288088",
+        "certified_lower_bound": "0.0011970651493288804",
         "target": "0.0",
         "cell": [
           "1.1058498108971377",
@@ -83,8 +83,8 @@
           "1.1058529359055105"
         ],
         "binding_box_enclosure": [
-          "0.0011970651493288088",
-          "0.001669876941280053"
+          "0.0011970651493288804",
+          "0.0016698769412801246"
         ],
         "max_box_enclosure_width": "0.0004729194756691868",
         "initial_boxes": 64,
@@ -118,7 +118,7 @@
           "3.4251152511218656e-06",
           "3.428345478745445e-06"
         ],
-        "max_box_enclosure_width": "3.2333118821226137e-09",
+        "max_box_enclosure_width": "3.2333118751837198e-09",
         "initial_boxes": 8,
         "method": "adaptive_interval_branch_and_bound",
         "topology_proved": "uniform lower bound over an exhaustive box cover of the closed cell; no convexity or monotonicity assumed"
@@ -183,7 +183,7 @@
             "3.92988131631062e-09",
             "6.203492573035312e-07"
           ],
-          "max_box_enclosure_width": "1.2034358576329396e-05",
+          "max_box_enclosure_width": "1.2034358562118541e-05",
           "initial_boxes": 96,
           "method": "adaptive_interval_branch_and_bound",
           "topology_proved": "uniform lower bound over an exhaustive box cover of the closed cell; no convexity or monotonicity assumed"
@@ -254,18 +254,18 @@
   "dependencies": {
     "source_hashes": {
       "scripts/certify_t84_e1.py": "91167ad7d85008e10e40179e5c053c0e3b0cde9d7348efd44e5a754186410b88",
-      "src/e1_t84.py": "16a966a36d9da1fc1a07753525ac55bd63058d429bd48628dd4c35e36cea61b3",
+      "src/e1_t84.py": "b6dea4a0614d8447d68409a9a0317bddd07a89b453c553afe186903e786093d5",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "69ebe3e80b4600a780b657b2568090fe778ee683fc4ace5df41d514b514cb640",
+      "src/pole.py": "b33886a1ac351198a3cce1e91a461bc89bdaf9c97eaa421a6be751bd2840fa2f",
       "src/rigorous_integration.py": "17c49303df67f590d3543699cfa7735ba100ccdb3fdcce7fb32d41955a175ae2",
       "src/t84.py": "7940e80bf737069f6c53bfcd6f3b48e837c2cfd45fcda2496aaa6117ac2df68f",
-      "src/weil_entries.py": "67fd54c3f0956fde310de321ecbc9d0c0b86fcd7323e86c204c0881963216e5f"
+      "src/weil_entries.py": "1ed480a115c62f5da8f42f427d0492b30a6c24f171856c5021534de9891b15db"
     }
   },
   "precision_bits": 110,
   "mpmath_used": false,
   "quick_mode": false,
-  "generated_utc": "2026-08-24T18:15:06Z",
-  "content_hash": "797198be594f63913cce661e81938812a588474e2ec5e31de71c3d39d4c8b4d4"
+  "generated_utc": "2026-08-24T22:22:14Z",
+  "content_hash": "702c20ba833553bdd865ed402ba9cb09b40d975809035128d15b8e76ddb029a8"
 }

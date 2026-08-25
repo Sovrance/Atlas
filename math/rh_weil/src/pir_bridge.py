@@ -15,6 +15,27 @@ import promotion
 
 CERT_DIR = Path(__file__).resolve().parents[1] / "certificates"
 
+_PROGRAM = Path(__file__).resolve().parents[1]
+if str(_PROGRAM) not in sys.path:
+    sys.path.insert(0, str(_PROGRAM))
+
+# ENG-006 §11: the new content kinds. A consumer that requires PSD must never be
+# satisfied by an inertia certificate, so the fact is *tagged* with what it
+# actually establishes and the decision is delegated to the one predicate that
+# owns it rather than re-implemented from the fact's fields.
+from inertia.certificate import (  # noqa: E402
+    KIND_INERTIA,
+    KIND_STRATIFICATION,
+    satisfies_psd_requirement,
+)
+
+CONTENT_KINDS = (
+    KIND_INERTIA,
+    KIND_STRATIFICATION,
+    "WEIL_RANK_TRACE_CERTIFICATE",
+    "WEIL_SPECTRAL_MOMENT_CERTIFICATE",
+)
+
 try:
     import pir
     from pir import AnalyzerRef, Fact, Warning_
@@ -81,6 +102,17 @@ def certs_to_facts() -> List[Any]:
          "direct-Fourier T=84 uniform degree-2 lower bound on [log3, log4]"),
         ("e3_fourier_T84_scan.json", "E3", "HEURISTIC",
          "fresh Candidate-A T=84 topology scan — E3 evidence, never a warrant"),
+        # ENG-006: the inertia / moment channels. The degree-3 result is emitted
+        # under whichever filename the certification actually reached, so both
+        # are listed and the absent one is simply skipped.
+        ("e1_degree3_odd_positivity_log3_log4.json", "E1", "SOUND",
+         "odd degree-3 block: certified inertia over [log3, log4]"),
+        ("e1_degree3_odd_inertia_log3_log4.json", "E1", "SOUND",
+         "odd degree-3 block: certified inertia stratification over [log3, log4]"),
+        ("e1_degree3_odd_moments_log3_log4.json", "E1", "SOUND",
+         "odd degree-3 spectral moments m1..m4 and rank-trace, via the Atlas B1 adapter"),
+        ("e3_degree3_odd_scan_log3_log4.json", "E3", "HEURISTIC",
+         "fresh Candidate-A degree-3 scan — E3 evidence, never a warrant"),
         ("external/connes_cvs_crossvalidation_v0.1.json", "E3", "HEURISTIC", "external cross-check only"),
     ]
     for fname, ev, tag, warn in mapping:
@@ -102,6 +134,20 @@ def certs_to_facts() -> List[Any]:
             "rh_proof_claim": False,
             "evidence_class_declared": cert.get("evidence_class", ev),
         }
+        kind = cert.get("content_kind")
+        if kind:
+            content["content_kind"] = kind
+        # §11: what this fact does and does not license. ``satisfies_psd`` is
+        # answered by the inertia module's predicate for every certificate, so a
+        # PSD-requiring consumer reads one field instead of inferring positivity
+        # from a signature it may not understand.
+        content["satisfies_psd_requirement"] = bool(satisfies_psd_requirement(cert))
+        if kind in (KIND_INERTIA, KIND_STRATIFICATION):
+            content["inertia"] = {
+                "n_positive": cert.get("n_positive"),
+                "n_negative": cert.get("n_negative"),
+                "n_zero": cert.get("n_zero"),
+            }
         analyzer = AnalyzerRef(id=f"rh_weil.{Path(fname).stem}", version="0.2.0", tag=tag)
         _nid = _active_normalization_id()
         assumptions = (
@@ -154,6 +200,7 @@ def export_pir_facts(path: Path | None = None) -> Path:
             "rh_proof_claim": False,
             "active_normalization_id": _active_normalization_id(),
             "n_facts": len(facts),
+            "content_kinds": list(CONTENT_KINDS),
             "refused_promotions": refused_promotions(),
             "facts": [
                 {

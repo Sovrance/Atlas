@@ -443,11 +443,11 @@
   "dependencies": {
     "source_hashes": {
       "scripts/certify_scalar_canary.py": "a18eceab1ba44c07fd16ac8fb731f31dc47f93b1df93765d643267f9e6160972",
-      "src/interval_backend.py": "16a88ee30a863d3bd517e46ff3afed4e6ed44fa6fe3162f7762b7ee8bf6253a8",
+      "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "69ebe3e80b4600a780b657b2568090fe778ee683fc4ace5df41d514b514cb640",
+      "src/pole.py": "b33886a1ac351198a3cce1e91a461bc89bdaf9c97eaa421a6be751bd2840fa2f",
       "src/scalar.py": "7fda1299cdf5a69f14a00ff23b5b199fff8359897297c3f06f39f896053eed23",
-      "src/scalar_canary.py": "d2be2201a3ed8adde59824db3dc7969e5089e16536fe90112abb0281d74cb794"
+      "src/scalar_canary.py": "30261d2429bc374781252cf0ea0c039eabba6c7f169fefa0d73023a16c557508"
     }
   },
   "quick_mode": false,
@@ -456,6 +456,6 @@
     "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
     "authorised_because": "rigorous Candidate-A regeneration passed"
   },
-  "generated_utc": "2026-08-24T17:32:51Z",
-  "content_hash": "2c80cb4230525fe1c373b6052bc360589e60f63545db710d5624e4394744e592"
+  "generated_utc": "2026-08-24T21:40:32Z",
+  "content_hash": "6d5cd23ce2cd98e5908ffe0be8c45059b35dc003fab1709147d54cf96ea2206d"
 }

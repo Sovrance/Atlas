@@ -10,6 +10,11 @@
       -> T=84 point E1
       -> T=84 interior minimum (locate the minimiser)
       -> T=84 uniform E1
+      -> inertia / rank-trace / moment self-tests   (ENG-006 §12)
+      -> degree-3 exact identities
+      -> degree-3 E3 scan
+      -> degree-3 E1 positivity or inertia stratification
+      -> degree-3 moments
       -> PIR
       -> clean-tree / hash validation
 
@@ -40,6 +45,11 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 CERT_DIR = ROOT / "certificates"
 sys.path.insert(0, str(SRC))
+# ENG-006 packages (inertia/, moments/, ranktrace/) live beside src/, not
+# inside it, so the program root has to be importable too -- the stages that
+# ask the inertia module about PSD licensing run in *this* process, not a
+# subprocess, and would otherwise fail on "No module named inertia".
+sys.path.insert(0, str(ROOT))
 
 #: (certificate, human label) for every rigorous artifact the chain produces.
 RIGOROUS_CERTS = [
@@ -51,10 +61,33 @@ RIGOROUS_CERTS = [
     ("e1_fourier_T84_uniform_degree2.json", "T84 uniform degree2"),
 ]
 
+#: ENG-006 artifacts. The degree-3 E1 result lands under whichever filename the
+#: certification reached, so the pair is given as alternatives: exactly one must
+#: exist, and which one it is *is* the outcome (§9).
+DEGREE3_E1_ALTERNATIVES = (
+    "e1_degree3_odd_positivity_log3_log4.json",
+    "e1_degree3_odd_inertia_log3_log4.json",
+)
+ENG006_CERTS = [
+    ("e1_degree3_odd_moments_log3_log4.json", "degree3 moments"),
+]
+
+
+def degree3_e1_certificate():
+    """The degree-3 E1 artifact that exists, with its filename."""
+    for name in DEGREE3_E1_ALTERNATIVES:
+        path = CERT_DIR / name
+        if path.exists():
+            return name, json.loads(path.read_text(encoding="utf-8"))
+    return None, None
+
 
 def _env() -> dict:
     e = dict(os.environ)
-    e["PYTHONPATH"] = str(SRC) + ((":" + e["PYTHONPATH"]) if e.get("PYTHONPATH") else "")
+    parts = [str(SRC), str(ROOT)]
+    if e.get("PYTHONPATH"):
+        parts.append(e["PYTHONPATH"])
+    e["PYTHONPATH"] = ":".join(parts)
     return e
 
 
@@ -154,6 +187,14 @@ def _headline(cert: dict) -> str:
     if bound:
         gov = interior.get("governed_interval", ["?", "?"])
         return f"{bound} on [{gov[0]}, {gov[1]}]"
+    bounds = cert.get("uniform_bounds")
+    if bounds:
+        return ", ".join(f"{k} >= {v['certified_lower_bound']}"
+                         for k, v in sorted(bounds.items()))
+    if cert.get("content_kind") == "WEIL_SPECTRAL_MOMENT_CERTIFICATE":
+        pts = cert.get("points", [])
+        return (f"m1..m4 at {len(pts)} points, dimension {cert.get('dimension')}"
+                if pts else "spectral moments")
     if cert.get("point_scoped"):
         return "point-scoped"
     return "no bound field"
@@ -164,7 +205,11 @@ def stage_policy() -> int:
     import promotion
 
     bad = 0
-    for name, label in RIGOROUS_CERTS:
+    d3_name, _ = degree3_e1_certificate()
+    to_check = list(RIGOROUS_CERTS) + list(ENG006_CERTS)
+    if d3_name:
+        to_check.append((d3_name, "degree3 E1"))
+    for name, label in to_check:
         path = CERT_DIR / name
         if not path.exists():
             print(f"  FAIL: {name} absent", file=sys.stderr)
@@ -185,6 +230,58 @@ def stage_policy() -> int:
     return 1 if bad else 0
 
 
+def stage_engines() -> int:
+    """ENG-006 §12: the three new engines must pass their own self-tests."""
+    print("\n=== inertia / rank-trace / moment engines (ENG-006) ===")
+    for label, test in (
+        ("inertia + congruence", "test_inertia_engine.py"),
+        ("rank-trace theorem", "test_ranktrace.py"),
+        ("spectral moments + B1", "test_moments_adapter.py"),
+    ):
+        if _run(label, [sys.executable, str(ROOT / "tests" / test)]):
+            return 1
+    return 0
+
+
+def stage_degree3() -> int:
+    """ENG-006 §9: report which outcome the degree-3 certification reached."""
+    print("\n=== degree-3 odd block (ENG-006) ===")
+    import promotion
+    from inertia.certificate import satisfies_psd_requirement
+
+    name, cert = degree3_e1_certificate()
+    if cert is None:
+        print(f"  FAIL: neither of {DEGREE3_E1_ALTERNATIVES} exists", file=sys.stderr)
+        return 1
+    inertia = cert.get("inertia", {})
+    sig = tuple(inertia.get(k) for k in ("n_positive", "n_negative", "n_zero"))
+    print(f"  artifact: {name}")
+    print(f"  outcome : {cert.get('outcome')}  inertia {sig}")
+    for k, v in cert.get("uniform_bounds", {}).items():
+        print(f"    {k} >= {v['certified_lower_bound']}")
+    refusal = promotion.promotion_refusal(cert)
+    if refusal or cert.get("quick_mode"):
+        print(f"  FAIL: {refusal or 'quick mode'}", file=sys.stderr)
+        return 1
+    # §11: an inertia certificate may never satisfy a PSD consumer, and the
+    # nested inertia object here does not. The outer artifact is a positivity
+    # certificate when the block was proved definite, and that one may. Report
+    # both so the distinction is visible rather than implied.
+    outer = satisfies_psd_requirement(cert)
+    inner = satisfies_psd_requirement(cert.get("inertia_stratification", {}))
+    print(f"  content kind: {cert.get('content_kind')}")
+    print(f"  satisfies a PSD requirement: {outer} "
+          f"(nested inertia object: {inner}, which §11 requires to stay False)")
+    if inner:
+        print("  FAIL: an inertia certificate satisfied a PSD requirement",
+              file=sys.stderr)
+        return 1
+    if cert.get("outcome") == "C_INCONCLUSIVE":
+        print("  FAIL: degree-3 certification is inconclusive", file=sys.stderr)
+        return 1
+    return 0
+
+
 def stage_pir() -> int:
     print("\n=== PIR ===")
     import pir_bridge
@@ -196,7 +293,11 @@ def stage_pir() -> int:
     promoted = [f["content"]["certificate_file"] for f in payload["facts"]]
     refused = [r["certificate_file"] for r in payload["refused_promotions"]]
     print(f"  promoted: {len(promoted)}  refused: {len(refused)}")
-    missing = [n for n, _ in RIGOROUS_CERTS if n not in promoted]
+    d3_name, _ = degree3_e1_certificate()
+    expected = [n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
+    if d3_name:
+        expected.append(d3_name)
+    missing = [n for n in expected if n not in promoted]
     if missing:
         print(f"  FAIL: recovered certificates did not reach PIR: {missing}", file=sys.stderr)
         return 1
@@ -212,7 +313,11 @@ def stage_hashes() -> int:
     import promotion
 
     bad = []
-    for name, _ in RIGOROUS_CERTS:
+    d3_name, _ = degree3_e1_certificate()
+    checked = [n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
+    if d3_name:
+        checked.append(d3_name)
+    for name in checked:
         cert = json.loads((CERT_DIR / name).read_text(encoding="utf-8"))
         stale = promotion.stale_dependencies(cert)
         if stale:
@@ -221,7 +326,7 @@ def stage_hashes() -> int:
         for name, stale in bad:
             print(f"  FAIL {name}: stale {stale}", file=sys.stderr)
         return 1
-    print(f"  all {len(RIGOROUS_CERTS)} rigorous certificates have current source hashes")
+    print(f"  all {len(checked)} rigorous certificates have current source hashes")
 
     proc = subprocess.run(["git", "status", "--porcelain", "math/rh_weil/certificates"],
                           cwd=str(ROOT.parents[1]), capture_output=True, text=True)
@@ -263,8 +368,15 @@ def main() -> int:
         if _run("T=84 scan, points, uniform",
                 [sys.executable, str(ROOT / "scripts" / "certify_t84_e1.py")] + common):
             return 1
+        if _run("degree-3 scan, E1, moments",
+                [sys.executable, str(ROOT / "scripts" / "certify_degree3.py")] + common):
+            return 1
 
-    for stage in (stage_policy, stage_pir, stage_hashes):
+    if _run("degree-3 exact identities (ENG-006 §7)",
+            [sys.executable, str(ROOT / "tests" / "test_degree3_exact.py")]):
+        return 1
+
+    for stage in (stage_engines, stage_degree3, stage_policy, stage_pir, stage_hashes):
         if stage():
             return 1
 
@@ -273,6 +385,12 @@ def main() -> int:
         return 1
     if _run("ENG-005 recovery tests",
             [sys.executable, str(ROOT / "tests" / "test_eng005_recovery.py")]):
+        return 1
+    if _run("ENG-006 degree-3 certificate semantics",
+            [sys.executable, str(ROOT / "tests" / "test_degree3_certificates.py")]):
+        return 1
+    if _run("ENG-006 information comparison report (§10)",
+            [sys.executable, str(ROOT / "scripts" / "report_information_comparison.py")]):
         return 1
 
     print("\nrigorous chain: OK")

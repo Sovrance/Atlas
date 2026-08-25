@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Atlas Weil Spectral Moment Certificate",
+  "type": "object",
+  "required": ["status", "dimension", "moments", "normalization_certificate_id", "rh_proof_claim"],
+  "properties": {
+    "status": {"enum": ["PASS", "INCONCLUSIVE", "FAIL"]},
+    "dimension": {"type": "integer", "minimum": 1},
+    "moments": {"type": "object"},
+    "inertia_dependency": {"type": ["string", "null"]},
+    "b1_queries": {"type": "array"},
+    "normalization_certificate_id": {"type": "string"},
+    "source_hashes": {"type": "object"},
+    "claim_scope": {"const": "finite_dimensional_weil_compression"},
+    "rh_proof_claim": {"const": false}
+  }
+}

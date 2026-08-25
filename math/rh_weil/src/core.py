@@ -44,6 +44,20 @@ def kernel_q1q1(a, L):
     return d * (L * L - 2 * L * a - 2 * a * a) / 6
 
 
+def kernel_q1b3(a, L):
+    """``K_q1b3(a; L)``, ENG-006 §7 -- verified against SymPy in the test suite."""
+    d = L - a
+    return d * d * (L**3 + 2 * L**2 * a - 12 * L * a**2 - 6 * a**3) / 60
+
+
+def kernel_b3b3(a, L):
+    """``K_b3b3(a; L)``, ENG-006 §7 -- verified against SymPy in the test suite."""
+    d = L - a
+    return (d * d * d
+            * (L**4 + 3 * L**3 * a - 15 * L**2 * a**2 - 18 * L * a**3 - 6 * a**4)
+            / 420)
+
+
 def kernel_0b(a, L):
     d = L - a
     return d * d * (L + 2 * a) / 3

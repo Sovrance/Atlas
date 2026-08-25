@@ -49,6 +49,9 @@ _KERNELS = {
     ("one", "b"): core.kernel_0b,
     ("b", "b"): core.kernel_bb,
     ("q1", "q1"): core.kernel_q1q1,
+    # ENG-006 §7: the odd degree-3 partner b3(x) = x(L-x)(x-L/2).
+    ("q1", "b3"): core.kernel_q1b3,
+    ("b3", "b3"): core.kernel_b3b3,
 }
 
 

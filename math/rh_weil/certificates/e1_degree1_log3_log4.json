@@ -23,7 +23,7 @@
   "prime_kernel": "K_q1q1(a;L) = (L-a)(L^2-2La-2a^2)/6",
   "pole_candidate": "A",
   "claim": "O1(L) = G[q1,q1] >= certified_lower_bound > 0 on [log 3, log 4]",
-  "certified_lower_bound": "0.01502678694687029",
+  "certified_lower_bound": "0.015026786946870317",
   "cutoff_free": true,
   "archimedean_route": {
     "method": "exact real-space kernel transform (no frequency cutoff)",
@@ -33,7 +33,7 @@
   },
   "subdivision_statistics": {
     "quantity": "O1",
-    "certified_lower_bound": "0.01502678694687029",
+    "certified_lower_bound": "0.015026786946870317",
     "boxes_examined": 24,
     "boxes_accepted": 24,
     "max_subdivision_depth": 0,
@@ -42,10 +42,10 @@
       "1.110599041686934"
     ],
     "argmin_box_enclosure": [
-      "0.01502678694687029",
-      "0.018968336917347645"
+      "0.015026786946870317",
+      "0.018968336917347672"
     ],
-    "max_box_enclosure_width": "0.003941549970477354",
+    "max_box_enclosure_width": "0.0039415499704773555",
     "initial_boxes": 24,
     "precision_bits": 220,
     "method": "adaptive_interval_branch_and_bound",
@@ -92,12 +92,12 @@
   "dependencies": {
     "source_hashes": {
       "scripts/certify_cutoff_free_e1.py": "543a3f1a5f7bb8297486a83a9087117f9688e188378166b334728fb70853cfdc",
-      "src/archimedean_realspace.py": "7f7ad450a566408970b3c7d4f4599bae213da332f3ae4cd3da7367be073c8224",
+      "src/archimedean_realspace.py": "6d7170233bdda52006c2753f4063b39e91360c4c526a2a0f6e4bd468992cbdf7",
       "src/curvature_derivation.py": "3531ccedf688aad63bbe238d8c9bc6e87e6681a50bdd2f763701431ba74fd691",
-      "src/e1_cutoff_free.py": "4ac37a92964d7eca888ce868ebeeaaa5f4a54efc2002c7069e937f96fd1c3a2e",
+      "src/e1_cutoff_free.py": "1e74ff1c16fdd0c6eb33c840dce014f01479fb58028f724801df6f0390f43840",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
-      "src/pole.py": "69ebe3e80b4600a780b657b2568090fe778ee683fc4ace5df41d514b514cb640",
-      "src/weil_entries.py": "67fd54c3f0956fde310de321ecbc9d0c0b86fcd7323e86c204c0881963216e5f"
+      "src/pole.py": "b33886a1ac351198a3cce1e91a461bc89bdaf9c97eaa421a6be751bd2840fa2f",
+      "src/weil_entries.py": "1ed480a115c62f5da8f42f427d0492b30a6c24f171856c5021534de9891b15db"
     }
   },
   "backend": 220,
@@ -110,6 +110,6 @@
     "previous_state": "QUARANTINED_NORMALIZATION_ADJUDICATION",
     "authorised_because": "rigorous cutoff-free Candidate-A regeneration passed"
   },
-  "generated_utc": "2026-08-24T17:32:52Z",
-  "content_hash": "ec9bb3753bcda0febe81fa79ce44dabe446d7b040176c504172f0eb7a8252952"
+  "generated_utc": "2026-08-24T21:40:34Z",
+  "content_hash": "7af6371d7d76d7046c6624b0ad1e2a55dfd70d41460072270f71986e4ae04ab0"
 }

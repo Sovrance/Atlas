@@ -54,6 +54,35 @@ def arb_ball(mid: Any, rad: Any):
     return arb(mid, rad)
 
 
+def interval_box(lo: float, hi: float):
+    """An Arb ball provably containing every real in ``[lo, hi]``.
+
+    The obvious construction -- ``arb(repr((lo+hi)/2), repr((hi-lo)/2))`` -- is
+    **not** sound. ``(lo + hi) / 2`` is a floating-point operation and rounds, so
+    the midpoint can land below the true centre while the radius does not grow to
+    compensate, leaving the ball short of ``hi``. The gap is tiny (~2e-16 near 1)
+    but it is a gap: the ball then fails to enclose part of the interval it is
+    supposed to represent, and a cover built from such balls has pinholes at its
+    box boundaries.
+
+    It only bites once repeated bisection makes ``hi - lo`` small enough that the
+    midpoint rounding is comparable to the radius -- around depth 10 on a narrow
+    cell. Every cover ENG-005 actually ran was checked and is clear of it (0 of
+    3.18M boxes over the cell, and 0 in each of its six covers as run, which
+    reach depth 3 at most). This constructor removes the hazard rather than
+    relying on the depths that happen to be in use.
+
+    ``arb(x)`` for a Python float is exact -- a float is dyadic -- so the
+    endpoints go in without error, and ``a + (b - a) * [0, 1]`` rounds outward to
+    an enclosure of ``[a, b]``. The width overhead is under 1e-8 relative.
+    """
+    _, arb, _, _ = require_flint()
+    a, b = arb(lo), arb(hi)
+    if not (hi > lo):
+        return a
+    return a + (b - a) * arb(0.5, 0.5)
+
+
 @dataclass(frozen=True)
 class BackendInfo:
     name: str

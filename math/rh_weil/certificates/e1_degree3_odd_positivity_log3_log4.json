@@ -1,0 +1,183 @@
+{
+  "certificate_version": "1.0",
+  "program": "RH/Weil odd degree-3 block \u2014 Candidate A",
+  "work_order": "ATLAS-RH-ENG-006 \u00a79",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "rh_proof_claim": false,
+  "pole_candidate": "A",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "domain": {
+    "L_interval": [
+      "log(3)",
+      "log(4)"
+    ],
+    "L_left": "1.0986122886681098",
+    "L_right": "1.3862943611198906",
+    "closed": true
+  },
+  "dependencies": {
+    "source_hashes": {
+      "inertia/certificate.py": "4acd4f716f94245974b06bef726d3592534dd3ea9c4b46e7845c68cae97fe742",
+      "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
+      "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
+      "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
+      "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
+      "ranktrace/theorem.py": "b6f2d310c778a2411ce0a44cafb69f5ee3487e473823127b5b8440f120004681",
+      "scripts/certify_degree3.py": "cb0538391c4d937f7e4345fbf5a6d42165de22fce40b6bd287b4c9f2b2a3a47e",
+      "src/archimedean_realspace.py": "6d7170233bdda52006c2753f4063b39e91360c4c526a2a0f6e4bd468992cbdf7",
+      "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
+      "src/degree3.py": "54b316a68786136155cae7c9ee1b9810749793fcdf1855317c79accd30af310d",
+      "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "b33886a1ac351198a3cce1e91a461bc89bdaf9c97eaa421a6be751bd2840fa2f",
+      "src/weil_entries.py": "1ed480a115c62f5da8f42f427d0492b30a6c24f171856c5021534de9891b15db"
+    }
+  },
+  "precision_bits": 160,
+  "mpmath_used": false,
+  "quick_mode": false,
+  "certified_cell": [
+    "1.0986122886681098",
+    "1.3862943611198906"
+  ],
+  "evidence_class": "E1",
+  "rigorous": true,
+  "status": "PASS",
+  "hard_constraints_certified": true,
+  "promotion_state": "PROMOTED",
+  "outcome": "A_POSITIVE_DEFINITE",
+  "content_kind": "WEIL_DEGREE3_POSITIVITY_CERTIFICATE",
+  "psd_claim": true,
+  "n_positive": 2,
+  "n_negative": 0,
+  "n_zero": 0,
+  "inertia": {
+    "n_positive": 2,
+    "n_negative": 0,
+    "n_zero": 0,
+    "constant_on_cell": true
+  },
+  "inertia_stratification": {
+    "certificate_version": "1.0",
+    "content_kind": "WEIL_INERTIA_STRATIFICATION",
+    "program": "RH/Weil odd degree-3 block \u2014 Candidate A",
+    "work_order": "ATLAS-RH-ENG-006 \u00a79",
+    "status": "PASS",
+    "claim_scope": "finite_dimensional_weil_compression",
+    "dimension": 2,
+    "n_positive": 2,
+    "n_negative": 0,
+    "n_zero": 0,
+    "constant_inertia": true,
+    "method": "interval_ldl_congruence_with_adaptive_subdivision",
+    "parameter_domain": {
+      "cell": [
+        "1.0986122886681098",
+        "1.3862943611198906"
+      ]
+    },
+    "strata": [
+      {
+        "interval": [
+          "1.0986122886681098",
+          "1.3862943611198906"
+        ],
+        "n_positive": 2,
+        "n_negative": 0,
+        "n_zero": 0,
+        "cells_merged": 9608
+      }
+    ],
+    "transition_regions": [],
+    "coverage": "the strata and transition regions together tile the cell exactly; every point of the cell lies in one of them",
+    "boxes_examined": 11024,
+    "max_subdivision_depth": 1,
+    "subdivision_policy": {
+      "initial_cells": 8192,
+      "max_depth": 20,
+      "min_width": 1e-12
+    },
+    "pivot_intervals": [],
+    "evidence_class": "E1",
+    "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+    "rh_proof_claim": false,
+    "psd_claim": false,
+    "note": "A stratification never satisfies a PSD requirement, even when every stratum is PSD: the transition regions between strata are unresolved by construction, and a negative direction could live in one."
+  },
+  "uniform_bounds": {
+    "O1": {
+      "certified_lower_bound": "0.015331267702267608",
+      "grid_minimum_for_scale": null,
+      "cover": {
+        "quantity": "degree3_O1",
+        "certified_lower_bound": "0.015331267702267608",
+        "target": "0.0",
+        "cell": [
+          "1.0986122886681098",
+          "1.3862943611198906"
+        ],
+        "boxes_examined": 8192,
+        "boxes_accepted": 8192,
+        "max_subdivision_depth": 0,
+        "binding_box": [
+          "1.0986122886681098",
+          "1.0986474061085947"
+        ],
+        "binding_box_enclosure": [
+          "0.015331267702267608",
+          "0.015514348929800574"
+        ],
+        "max_box_enclosure_width": "0.00031333780270870193",
+        "initial_boxes": 8192,
+        "method": "adaptive_interval_branch_and_bound",
+        "topology_proved": "uniform lower bound over an exhaustive box cover of the closed cell; no convexity or monotonicity assumed"
+      }
+    },
+    "det_odd3": {
+      "certified_lower_bound": "1.073120529992708e-06",
+      "grid_minimum_for_scale": "1.407410532078317e-06",
+      "cover": {
+        "quantity": "degree3_det_odd3",
+        "certified_lower_bound": "1.073120529992708e-06",
+        "target": "0.0",
+        "cell": [
+          "1.0986122886681098",
+          "1.3862943611198906"
+        ],
+        "boxes_examined": 32768,
+        "boxes_accepted": 32768,
+        "max_subdivision_depth": 0,
+        "binding_box": [
+          "1.2483003787347255",
+          "1.2483091580948467"
+        ],
+        "binding_box_enclosure": [
+          "1.073120529992708e-06",
+          "1.7584368412479432e-06"
+        ],
+        "max_box_enclosure_width": "1.4623115571765766e-06",
+        "initial_boxes": 32768,
+        "method": "adaptive_interval_branch_and_bound",
+        "topology_proved": "uniform lower bound over an exhaustive box cover of the closed cell; no convexity or monotonicity assumed"
+      }
+    }
+  },
+  "claim": "The odd degree-3 Weil block [[G_q1q1, G_q1b3], [G_q1b3, G_b3b3]] is positive definite for every L in [log 3, log 4]: inertia (2, 0, 0), with O1 and det(G_odd,3) both uniformly bounded below by the certified constants above.",
+  "strategy_chosen_from": "the fresh Candidate-A E3 scan (\u00a78); the scan is a clue, this cover is the warrant",
+  "scan_said": [
+    [
+      2,
+      0,
+      0
+    ]
+  ],
+  "method": "interval Hermitian LDL congruence on the assembled block, with adaptive subdivision of the L cell; no eigenvalue solver, no termwise PSD domination of the prime block",
+  "backend": {
+    "name": "python-flint/Arb",
+    "version": "0.9.0",
+    "precision_bits": 160
+  },
+  "generated_utc": "2026-08-24T23:51:32Z",
+  "content_hash": "30ad80c6c7017d4ff8e35a9690fb2ce8fba923f1eceecf684ee3ecb3cc0a4ed2"
+}

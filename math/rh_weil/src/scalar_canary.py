@@ -63,7 +63,7 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import pole
-from interval_backend import backend_info, require_flint, set_precision_bits
+from interval_backend import backend_info, interval_box, require_flint, set_precision_bits
 from rigorous_integration import panel_schedule, rigorous_panel_integral
 
 CELL_LABEL = ("log(3)", "log(4)")
@@ -382,7 +382,7 @@ def certify_scalar_canary(
     for k in range(panels):
         lo = a + (b - a) * k / panels
         hi = a + (b - a) * (k + 1) / panels
-        ball = arb((lo + hi) / 2, (hi - lo) / 2)
+        ball = interval_box(lo, hi)
         assembled = curvature_from_assembly(ball)
         e0 = curvature_e0_formula(ball)
         if not (assembled - e0).contains(0):
