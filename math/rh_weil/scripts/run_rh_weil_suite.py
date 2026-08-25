@@ -123,6 +123,19 @@ def main() -> int:
     except Exception as exc:
         print(f"certificate regeneration failed: {exc}", file=sys.stderr)
         failed += 1
+    # ENG-007 §3.3: the documentation gate runs in the fast gate. It is cheap,
+    # it needs no rigorous dependency, and a stale instruction is the one defect
+    # class that propagates into *future* mathematics rather than staying put.
+    print("=== rh-docs ===")
+    import subprocess as _sp
+
+    rc = _sp.run([sys.executable, str(ROOT / "scripts" / "check_docs.py")],
+                 cwd=str(ROOT))
+    if rc.returncode != 0:
+        failed += 1
+    if run_unittest_file(TESTS / "test_docs_freshness.py") != 0:
+        failed += 1
+
     print("NOTE (ENG-004 §10 / ENG-005 §12): this fast suite does not re-derive any "
           "rigorous certificate — not the scalar canary, not degree-1/degree-2, not "
           "the T=84 chain. Run scripts/run_rigorous_chain.py for that and read its "

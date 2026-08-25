@@ -1,5 +1,9 @@
 # `zeta-23-lean` — theorem mapping
 
+
+**No RH proof claim is made** by Atlas here or anywhere. Every row below is
+reference material; none of it warrants an Atlas result.
+
 Which upstream declarations correspond to which Atlas objects, at upstream commit
 `cec57f919ccf34e5fa5372b4ba332f7c848bbb6e`. See `PROVENANCE.md` for the pin, the
 license chain, and the toolchain incompatibility that keeps every row below at

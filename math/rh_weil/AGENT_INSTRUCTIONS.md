@@ -10,8 +10,16 @@ supersedes: docs/history/agent-instructions-initial-integration.md
 is now, not as it was at integration. The original integration work order is
 preserved at
 [`docs/history/agent-instructions-initial-integration.md`](docs/history/agent-instructions-initial-integration.md)
-and is **historical**: it says WO-RH-05 is open and degree 3 must not start, and
-both of those are false today.
+and is **historical**:
+
+<!-- docs-check: superseded-quote start -->
+it says WO-RH-05 is open and degree 3 must not start, and both of those are
+false today.
+<!-- docs-check: superseded-quote end -->
+
+**No RH proof claim is made** by this program. Every artifact is scoped to
+`finite_dimensional_weil_compression`; a finite block certificate is evidence for
+that block, interval, normalization and cutoff, and for nothing else.
 
 Machine-readable status is
 [`certificates/work_order_status.json`](certificates/work_order_status.json).

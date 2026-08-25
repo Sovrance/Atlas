@@ -1,3 +1,14 @@
+---
+status: HISTORICAL
+superseded_by: ATLAS-RH-ENG-007
+---
+
+> **HISTORICAL / SUPERSEDED.** This is external Connes-CvS oracle: the work order that added the external cross-check layer. The layer exists; see external/PROVENANCE.md and external/CONNES_CVS_MAPPING.md for its live description.
+> It is kept as the record of what was asked and when, not as instruction. For
+> the live state read [`../AGENT_INSTRUCTIONS.md`](../AGENT_INSTRUCTIONS.md) and
+> [`../certificates/work_order_status.json`](../certificates/work_order_status.json).
+> No RH proof claim is made here or anywhere in this program.
+
 # Agent Work Order — Connes-CvS Cross-Validation Layer
 
 ## Mission

@@ -1,0 +1,163 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil documentation freshness",
+  "work_order": "ATLAS-RH-ENG-007",
+  "rh_proof_claim": false,
+  "note": "ENG-007 §14: documentation freshness as a testable invariant. `scripts/check_docs.py` reads this file. Stale instructions are a correctness problem, not a tidiness problem -- an agent that believes a superseded status will regenerate or reinterpret the wrong mathematics, so a docs-only failure blocks merge.",
+  "current_work_order": "ATLAS-RH-ENG-007",
+  "latest_completed_work_order": "ATLAS-RH-ENG-006",
+  "status_source": "certificates/work_order_status.json",
+  "canonical_docs": [
+    "README.md",
+    "AGENT_INSTRUCTIONS.md",
+    "INTEGRATION_MANIFEST.md",
+    "notebook/RH_RESEARCH_NOTEBOOK_V2_INTEGRATION.md",
+    "formal/README.md",
+    "external/PROVENANCE.md",
+    "external/CONNES_CVS_MAPPING.md",
+    "external/zeta23/PROVENANCE.md",
+    "external/zeta23/MAPPING.md",
+    "docs/NORMALIZATION_ADJUDICATION_v0.1.md",
+    "docs/SCALAR_E1_CANARY_ENG004_v0.1.md",
+    "docs/CORE_E1_RECOVERY_ENG005_v0.1.md",
+    "docs/INERTIA_RANKTRACE_MOMENTS_ENG006_v0.1.md",
+    "docs/FORMAL_BOUNDARY_ENG007_v0.1.md"
+  ],
+  "root_docs": [
+    "../../README.md"
+  ],
+  "historical_roots": [
+    "docs/history/",
+    "certificates/history/"
+  ],
+  "historical_docs": [
+    "docs/README.md",
+    "docs/AGENT_EXECUTION_CHECKLIST.md",
+    "docs/ATLAS_RH_ENG_002_Mathematical_Parity_Run18.md",
+    "external/AGENT_WORK_ORDER_CONNES_CVS.md"
+  ],
+  "boundary_phrases": [
+    "does not prove the Riemann Hypothesis",
+    "no RH proof",
+    "No RH proof claim",
+    "makes no RH proof claim",
+    "No RH proof claim is made",
+    "finite-dimensional certificates; no RH proof"
+  ],
+  "superseded_claims": [
+    {
+      "id": "wo_rh_05_open",
+      "pattern": "WO-RH-05[^\\n]{0,80}(open|partial|still open|not closed)",
+      "why": "WO-RH-05 was recovered by ENG-005 as a cutoff-free uniform E1 result. A live doc saying it is open would send an agent to redo a closed result under the rejected normalization."
+    },
+    {
+      "id": "degree3_blocked",
+      "pattern": "(?i)(do not start degree.?3|degree.?3 (must not|has not) start|WO-RH-08[^\\n]{0,60}blocked)",
+      "why": "ENG-006 implemented and certified the odd degree-3 block; ENG-007 prepared the 3x3 even pilot. A live doc forbidding degree 3 contradicts a promoted certificate."
+    },
+    {
+      "id": "uniform_fourier_missing",
+      "pattern": "(?i)(missing uniform independent check|direct-Fourier next target|reduced the missing uniform)",
+      "why": "The T=84 uniform E1 certificate exists and is promoted. Describing it as a future target is a stale instruction, not history, unless the file says so."
+    },
+    {
+      "id": "suite_is_the_integration_state",
+      "pattern": "(?i)run_rh_weil_suite\\.py[^\\n]{0,40}(is the|primary|canonical) (integration|entry ?point|runner)",
+      "why": "The fast suite does not re-derive the rigorous chain. Pointing an agent at it as the canonical entry point invites an E1 claim being believed stale-fresh."
+    },
+    {
+      "id": "eng007_is_next",
+      "pattern": "(?i)next is ENG-007",
+      "why": "ENG-007 is the current work order, not the next one."
+    }
+  ],
+  "required_phrases": [
+    {
+      "doc": "README.md",
+      "phrases": [
+        "Current certified results",
+        "Current frontier",
+        "ATLAS-RH-ENG-007"
+      ]
+    },
+    {
+      "doc": "../../README.md",
+      "phrases": [
+        "Mathematical research programs",
+        "finite-dimensional certificates; no RH proof"
+      ]
+    }
+  ],
+  "certified_values": [
+    {
+      "doc": "README.md",
+      "certificate": "e1_scalar_log3_log4.json",
+      "path": [
+        "certified_lower_bound"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_degree1_log3_log4.json",
+      "path": [
+        "certified_lower_bound"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_degree2_compact_log3_log4.json",
+      "path": [
+        "certified_lower_bound"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_fourier_T84_uniform_degree2.json",
+      "path": [
+        "certified_lower_bound"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_degree3_odd_positivity_log3_log4.json",
+      "path": [
+        "uniform_bounds",
+        "O1",
+        "certified_lower_bound"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_degree3_odd_positivity_log3_log4.json",
+      "path": [
+        "uniform_bounds",
+        "det_odd3",
+        "certified_lower_bound"
+      ]
+    },
+    {
+      "doc": "README.md",
+      "certificate": "e1_fourier_T84_interior_minimum.json",
+      "path": [
+        "interior_minimum",
+        "stationary_point",
+        "rigorous_interval",
+        0
+      ]
+    }
+  ],
+  "status_table_orders": [
+    "WO-RH-05",
+    "WO-RH-08",
+    "WO-RH-09",
+    "WO-RH-15",
+    "WO-RH-34",
+    "WO-RH-36",
+    "WO-RH-38",
+    "WO-RH-43",
+    "WO-RH-46"
+  ],
+  "root_atlas_doc_glob": "docs/constant-atlas-v*.md",
+  "canonical_docs_note": "Live documents and completed work-order records. Both must carry the claim boundary and neither may repeat a superseded status: a record describes what a work order did, which is never the same as instructing a future agent to act on a state that has since closed.",
+  "historical_docs_note": "Superseded instructions, preserved rather than deleted (WO-RH-17 forbids deleting contrary evidence) and required to say so in their first lines. Exempt from the live-status checks precisely because they are labelled."
+}

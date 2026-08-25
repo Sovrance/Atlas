@@ -1,5 +1,10 @@
 # `zeta-23-lean` — provenance
 
+
+**No RH proof claim is made** by Atlas here or anywhere. Upstream proves
+zero-proportion theorems about the zeta function; Atlas takes none of them, and
+nothing in this directory carries a warrant.
+
 **Status in Atlas: reference only. Nothing from this project is imported, vendored,
 or depended on by any Atlas build, and no Atlas certificate derives any warrant
 from it.** This directory records the pin and the mapping so that if that ever

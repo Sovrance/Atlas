@@ -1,3 +1,15 @@
+# HISTORICAL DELIVERY MANIFEST -- the ENG-002 handoff package as delivered.
+#
+# Three of the four entries below no longer match: ATLAS-RH-ENG-007 prepended
+# HISTORICAL/SUPERSEDED banners to `README.md`,
+# `AGENT_EXECUTION_CHECKLIST.md` and
+# `ATLAS_RH_ENG_002_Mathematical_Parity_Run18.md`, because those documents were
+# still being read as live instruction long after the work order they describe
+# had been executed and, in places, reversed by the WO-RH-17 normalization
+# adjudication.
+#
+# Kept as the record of what was delivered, not as a check to run.
+#
 9f6cd50f69e83e390f717ca53d35eafb92c547e1cb0e014cf614208903e94856  AGENT_EXECUTION_CHECKLIST.md
 6a7d7cbed5c0a8576b11e782342b4f546fd3c80a702c4ca74db8d747aa501b42  ATLAS_RH_ENG_002_Mathematical_Parity_Run18.md
 9c7a837d4415c0bce82d4d5e6cca5ddc017213463a107473c7c015f1f316b867  CERTIFICATE_TEMPLATE_e1_fourier_T84_uniform_degree2.json

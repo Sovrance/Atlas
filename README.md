@@ -3,8 +3,11 @@
 **Observational decompilation of physics.** Treat physical law as an unknown rule system; recover its grammar — types, invariants, operators, composition rules — one certified constraint at a time. Constants are conjectured to be invariants of a positive, compositional operator structure 𝕽, not primitive numbers.
 
 Core documents:
-- [`docs/constant-atlas-v0.5.md`](docs/constant-atlas-v0.5.md) — constant atlas, restraint matrix, bridge formula, discipline formula, decoding chain (the base algorithm). *(Prior: [v0.4](docs/constant-atlas-v0.4.md), [v0.3](docs/constant-atlas-v0.3.md), [v0.2](docs/constant-atlas-v0.2.md).)*
+- [`docs/constant-atlas-v0.6.md`](docs/constant-atlas-v0.6.md) — constant atlas, restraint matrix, bridge formula, discipline formula, decoding chain (the base algorithm). *(Prior: [v0.5](docs/constant-atlas-v0.5.md), [v0.4](docs/constant-atlas-v0.4.md), [v0.3](docs/constant-atlas-v0.3.md), [v0.2](docs/constant-atlas-v0.2.md).)*
 - [`docs/conjectures-v0.1.md`](docs/conjectures-v0.1.md) — the ten blank-filling conjectures ?₁–?₁₀, each with formalization, test protocol, and falsifier.
+
+Mathematical research programs:
+- [`math/rh_weil/README.md`](math/rh_weil/README.md) — RH / Weil finite-compression verifier — finite-dimensional certificates; no RH proof. It studies polynomial compressions of the localized Weil quadratic form on one cell, and is a research program alongside the benchmarks below, not the mission of this repository.
 
 ## B1 — Truncated moment solver (implemented ✅)
 

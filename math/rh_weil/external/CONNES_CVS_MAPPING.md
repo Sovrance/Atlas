@@ -1,5 +1,9 @@
 # Connes-CvS -> Atlas RH/Weil Technical Mapping v0.1
 
+
+**No RH proof claim is made** by this mapping or by the oracle it describes.
+Atlas's claim scope throughout is `finite_dimensional_weil_compression`.
+
 ## Decision
 
 Use `connes-cvs` as an **optional external cross-validation oracle**, not as the
