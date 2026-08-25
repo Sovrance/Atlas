@@ -47,19 +47,19 @@
       "L_label": "log3",
       "L": 1.0986122886681098,
       "checks": {
-        "pole_closed_form_vs_realspace_kernel_max_rel": 1.7208456881689926e-15,
+        "pole_closed_form_vs_realspace_kernel_max_rel": 3.6534819421676135e-16,
         "pole_routes_agree": true,
         "even_odd_cross_entries_vanish": true,
-        "legacy_over_adopted_ratio": 1.0,
+        "legacy_over_adopted_ratio": 1.0000000000000002,
         "matches_sqrt3_over_2_cosh": true,
-        "legacy_relative_error": 0.0
+        "legacy_relative_error": 2.220446049250313e-16
       }
     },
     {
       "L_label": "1.1059498113",
       "L": 1.1059498113,
       "checks": {
-        "pole_closed_form_vs_realspace_kernel_max_rel": 9.992007221626409e-16,
+        "pole_closed_form_vs_realspace_kernel_max_rel": 2.2688445049210547e-16,
         "pole_routes_agree": true,
         "even_odd_cross_entries_vanish": true,
         "legacy_over_adopted_ratio": 1.0018411146853896,
@@ -71,19 +71,19 @@
       "L_label": "1.20",
       "L": 1.2,
       "checks": {
-        "pole_closed_form_vs_realspace_kernel_max_rel": 4.440892098500626e-15,
+        "pole_closed_form_vs_realspace_kernel_max_rel": 4.440892098500626e-16,
         "pole_routes_agree": true,
         "even_odd_cross_entries_vanish": true,
-        "legacy_over_adopted_ratio": 1.0266429943006674,
+        "legacy_over_adopted_ratio": 1.0266429943006676,
         "matches_sqrt3_over_2_cosh": true,
-        "legacy_relative_error": 0.02664299430066741
+        "legacy_relative_error": 0.026642994300667633
       }
     },
     {
       "L_label": "log4",
       "L": 1.3862943611198906,
       "checks": {
-        "pole_closed_form_vs_realspace_kernel_max_rel": 5.240754716371632e-16,
+        "pole_closed_form_vs_realspace_kernel_max_rel": 3.4938364775810873e-16,
         "pole_routes_agree": true,
         "even_odd_cross_entries_vanish": true,
         "legacy_over_adopted_ratio": 1.0825317547305482,
@@ -159,7 +159,7 @@
     ]
   },
   "source_hashes": {
-    "normalization.py": "4e99fa28ff0c819803bd10a0e6f4414973ea6848a8d8b6771217d47f15d28a50",
+    "normalization.py": "c0eccfdcd96a8f60e8d38ba3f2ec7f6eedeaf41c36583d75523e3b46c6fbc7a9",
     "providers.py": "8ce7f927b1dc224876769fe23d50908eb1615aa6881cadfd38812fd3f3c4b5e1",
     "cross_validation.py": "c64120c26a7e7a4faa1ee356b7d1910e6dbc0997e49f5fd755046cae6404cb93",
     "finite_weil.py(audited)": "1e37554a26467c50239a4cea903da469c27230ea2f4d5dfdef182c695ac4eca5"
@@ -181,6 +181,6 @@
   "hard_constraints_certified": false,
   "claim_boundary": "finite_block_only_no_rh_proof",
   "rh_proof_claim": false,
-  "generated_utc": "2026-08-24T10:28:27Z",
-  "content_hash": "0cd865ee96529d78161a2a780e50e3c6030168cb9e0288e02c45e2e35aaf1abd"
+  "generated_utc": "2026-08-25T05:20:01Z",
+  "content_hash": "0a5a61dec27aef63de7c3263f538cb145adcd93fbb96b4c854c44efbbb38f608"
 }

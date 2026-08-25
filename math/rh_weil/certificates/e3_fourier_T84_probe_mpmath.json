@@ -1,0 +1,57 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil direct-Fourier T=84 probe scan",
+  "work_order": "WO-RH-05",
+  "evidence_class": "E3",
+  "status": "HEURISTIC_SCAN_PENDING_INTERVAL_COVERAGE",
+  "hard_constraints_certified": false,
+  "normalization": "G = G0 - Gp + Ginf",
+  "claim_boundary": "finite_block_only_no_rh_proof",
+  "rh_proof_claim": false,
+  "domain": {
+    "fourier_cutoff_T": 84,
+    "L_interval": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "targets_pending_E1": [
+    "E2,84'' > 0 on [log(3), 1.20]",
+    "E2,84' > 0 on [1.20, log(4)]",
+    "interval point ball near L=1.1059498113"
+  ],
+  "scan": {
+    "T": 84,
+    "rows": [
+      {
+        "L": "1.09861228866811",
+        "E2_probe": "0.09244883412236724224",
+        "sign": 1
+      },
+      {
+        "L": "1.1059498113",
+        "E2_probe": "0.096243099440520124918",
+        "sign": 1
+      },
+      {
+        "L": "1.2",
+        "E2_probe": "0.1575003945531281799",
+        "sign": 1
+      },
+      {
+        "L": "1.38629436111989",
+        "E2_probe": "0.3764435921200267305",
+        "sign": 1
+      }
+    ],
+    "forms_implemented": [
+      "H0",
+      "Hb",
+      "H0_L_jet",
+      "Hb_L_jet"
+    ]
+  },
+  "note": "Stable H0/Hb forms and L-jets are implemented. Uniform interval coverage of the true Weil E2,84 Gram is NOT closed; this scan is heuristic energy-probe only and must not be promoted to E1.",
+  "generated_utc": "2026-08-25T05:19:58Z",
+  "content_hash": "30d7be4d696800cb519c849353e088277032e989aefe7beaad8bb410c2c96700"
+}
