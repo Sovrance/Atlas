@@ -96,6 +96,18 @@ ENG009_CERTS = [
     ("eng009_structural_dataset.json", "structural dataset"),
 ]
 
+#: ENG-010 artifacts. The 4x4 even block and the model adjudication.
+EVEN4_CERTS = [
+    ("e0_degree6_even4_exact_identities.json", "even4 exact identities"),
+    ("e0_eng010_even4_reference_metric.json", "even4 reference metric"),
+    ("e1_degree6_even4_inertia_log3_log4.json", "even4 inertia"),
+    ("e1_degree6_even4_moments_log3_log4.json", "even4 moments"),
+    ("e1_eng010_even4_generalized_gap_log3_log4.json", "even4 generalized gap"),
+    ("eng010_scaling_model_adjudication.json", "scaling adjudication"),
+    ("eng010_information_comparison_report.json", "even4 information comparison"),
+]
+EVEN4_POSITIVITY = "e1_degree6_even4_positivity_log3_log4.json"
+
 #: ENG-007 artifact. Carries no numeric bound and no normalization binding: the
 #: theorems it reports are finite linear algebra over the reals, true whichever
 #: pole primitive Atlas adopted. It still has to reach PIR, because a formal
@@ -435,6 +447,65 @@ def stage_eng009() -> int:
     return 0
 
 
+def stage_even4() -> int:
+    """ENG-010: validate the 4x4 block's artifacts as committed."""
+    print("\n=== 4x4 even block + adjudication (ENG-010) ===")
+    from inertia.certificate import satisfies_psd_requirement
+
+    for name, label in EVEN4_CERTS:
+        if not (CERT_DIR / name).exists():
+            print(f"  FAIL: missing {label} ({name}); run "
+                  "scripts/certify_even4.py and scripts/report_eng010.py",
+                  file=sys.stderr)
+            return 1
+    inertia = json.loads((CERT_DIR / EVEN4_CERTS[2][0]).read_text(encoding="utf-8"))
+    sigs = inertia.get("signatures_seen") or []
+    print(f"  inertia: {sigs}  constant on cell: {inertia.get('constant_on_cell')}")
+    if satisfies_psd_requirement(inertia):
+        print("  FAIL: an inertia certificate satisfied a PSD requirement",
+              file=sys.stderr)
+        return 1
+    pos_path = CERT_DIR / EVEN4_POSITIVITY
+    if pos_path.exists():
+        pos = json.loads(pos_path.read_text(encoding="utf-8"))
+        if not satisfies_psd_requirement(pos):
+            print("  FAIL: the 4x4 positivity certificate does not satisfy a "
+                  "PSD requirement", file=sys.stderr)
+            return 1
+        got = [pos["n_positive"], pos["n_negative"], pos["n_zero"]]
+        if sigs and got != list(sigs[0]):
+            print(f"  FAIL: positivity says {got} but inertia says {sigs[0]} "
+                  "(§Stop conditions)", file=sys.stderr)
+            return 1
+        for cover in pos["leading_minors"]:
+            print(f"  {cover['minor']} >= {cover['implied_raw_lower_bound']} (raw)")
+    else:
+        print("  positivity not claimed; the stratification is the result")
+    gap = json.loads((CERT_DIR / EVEN4_CERTS[4][0]).read_text(encoding="utf-8"))
+    print(f"  generalized gap in [{gap['certified_lambda_lower_float']}, "
+          f"{gap['upper_bound_at_bottleneck']['certified_upper_bound']}]")
+    if gap.get("reference_metric_certificate") != EVEN4_CERTS[1][0]:
+        print("  FAIL: gap certificate does not name the even4 reference metric",
+              file=sys.stderr)
+        return 1
+    adj = json.loads((CERT_DIR / EVEN4_CERTS[5][0]).read_text(encoding="utf-8"))
+    print(f"  adjudication verdict: {adj.get('verdict')}")
+    if not adj.get("recorded_before_any_refit"):
+        print("  FAIL: adjudication was not recorded before refitting",
+              file=sys.stderr)
+        return 1
+    if not (adj.get("preregistered_models_artifact") or {}).get("verified_unchanged"):
+        print("  FAIL: adjudication did not verify the preregistered artifact",
+              file=sys.stderr)
+        return 1
+    cross = CERT_DIR / "e3_degree6_even4_crosscheck.json"
+    if cross.exists():
+        c = json.loads(cross.read_text(encoding="utf-8"))
+        print(f"  independent assembly: worst relative difference "
+              f"{c['worst_relative_difference']} (E3, never a warrant)")
+    return 0
+
+
 def stage_formal() -> int:
     """ENG-007 §10/§12: the theorem manifest gate, then the formal certificate.
 
@@ -479,7 +550,10 @@ def stage_pir() -> int:
     print(f"  promoted: {len(promoted)}  refused: {len(refused)}")
     d3_name, _ = degree3_e1_certificate()
     expected = ([n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
-                + [n for n, _ in EVEN3_CERTS] + [n for n, _ in ENG009_CERTS])
+                + [n for n, _ in EVEN3_CERTS] + [n for n, _ in ENG009_CERTS]
+                + [n for n, _ in EVEN4_CERTS])
+    if (CERT_DIR / EVEN4_POSITIVITY).exists():
+        expected.append(EVEN4_POSITIVITY)
     if d3_name:
         expected.append(d3_name)
     if (CERT_DIR / EVEN3_POSITIVITY).exists():
@@ -504,7 +578,10 @@ def stage_hashes() -> int:
     bad = []
     d3_name, _ = degree3_e1_certificate()
     checked = ([n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
-               + [n for n, _ in EVEN3_CERTS] + [n for n, _ in ENG009_CERTS])
+               + [n for n, _ in EVEN3_CERTS] + [n for n, _ in ENG009_CERTS]
+               + [n for n, _ in EVEN4_CERTS])
+    if (CERT_DIR / EVEN4_POSITIVITY).exists():
+        checked.append(EVEN4_POSITIVITY)
     if d3_name:
         checked.append(d3_name)
     if (CERT_DIR / EVEN3_POSITIVITY).exists():
@@ -573,6 +650,25 @@ def main() -> int:
                 [sys.executable, str(ROOT / "scripts" / "certify_generalized_gap.py")]
                 + (["--quick"] if args.quick else [])):
             return 1
+        if _run("4x4 even block: identities, cross-check, metric, moments (ENG-010)",
+                [sys.executable, str(ROOT / "scripts" / "certify_even4.py"),
+                 "--stage", "e0"]):
+            return 1
+        if _run("4x4 even block: cross-check",
+                [sys.executable, str(ROOT / "scripts" / "certify_even4.py"),
+                 "--stage", "crosscheck"]):
+            return 1
+        if _run("4x4 even block: moments",
+                [sys.executable, str(ROOT / "scripts" / "certify_even4.py"),
+                 "--stage", "moments"]):
+            return 1
+        # The inertia, positivity and gap stages take hours of covers and are
+        # regenerated by scripts/certify_even4.py --stage {inertia,positivity,
+        # gap} explicitly, not on every chain run; stage_even4 validates the
+        # committed artifacts and the hash gate catches staleness.
+        if _run("ENG-010 adjudication, info comparison, ENG-011 selection",
+                [sys.executable, str(ROOT / "scripts" / "report_eng010.py")]):
+            return 1
 
     if _run("degree-3 exact identities (ENG-006 §7)",
             [sys.executable, str(ROOT / "tests" / "test_degree3_exact.py")]):
@@ -594,8 +690,13 @@ def main() -> int:
             [sys.executable, str(ROOT / "tests" / "test_generalized_gap.py")]):
         return 1
 
+    if _run("4x4 even block exact tests (ENG-010)",
+            [sys.executable, str(ROOT / "tests" / "test_even4.py")]):
+        return 1
+
     for stage in (stage_engines, stage_degree3, stage_even3, stage_eng009,
-                  stage_policy, stage_formal, stage_pir, stage_hashes):
+                  stage_even4, stage_policy, stage_formal, stage_pir,
+                  stage_hashes):
         if stage():
             return 1
 

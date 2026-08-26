@@ -1,0 +1,42 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil ENG-011 selection \u2014 Candidate A",
+  "work_order": "WO-RH-75",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_NEXT_BLOCK_SELECTION",
+  "evidence_class": "E3",
+  "numeric_warrant": "NONE \u2014 a plan, informed by E1 data",
+  "rigorous": false,
+  "psd_claim": false,
+  "status": "SELECTED",
+  "selection": "even5_one_b_b2_b3_b4",
+  "based_on": {
+    "adjudication": "eng010_scaling_model_adjudication.json",
+    "verdict": "NEITHER_FALSIFIED",
+    "refit": "e3_eng010_scaling_models_refit.json",
+    "refit_predictions_at_n5": {
+      "exponential_decay_refit": "5.6567446216777036e-08",
+      "power_law_decay_refit": "6.712974227067119e-07"
+    }
+  },
+  "rationale": "the certified n = 4 enclosure landed inside both preregistered x5 window(s) -- expected outcome E: the models were not separated at n = 4 because their windows overlap exactly where the result fell. The refitted models diverge by ~12x at n = 5, so the next even element (b^4, even, homogeneous degree 8, deriving from the same primitive table) is the maximally discriminating block. The n = 4 bottleneck's location at the right cell edge also makes the n = 5 edge behaviour the thing to watch",
+  "candidate_questions_for_eng011": [
+    "does the certified n = 5 gap fall in the refitted exponential's window, the power law's, neither, or both again?",
+    "does the bottleneck stay pinned at the right cell edge, and why -- what about L -> log 4 weakens the pencil?",
+    "does generalized Cauchy interlacing (M_n is exactly the leading block of M_{n+1}) quantitatively account for the decrements?",
+    "what is the Schur complement of each new direction against the previous span, as a function of L?"
+  ],
+  "explicitly_not_launched": "no E1 certification of any n = 5 block is started here; \u00a7WO-RH-75 forbids launching another expensive E1 block before interpreting ENG-010",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_eng010.py": "a10a85cbf293700518464e583725a6ffb7f0caae38ca1ca4bae248679c6d749a",
+      "src/even4.py": "a646e506769b8fa4b8b8242101d82508605dd21d7e25eeccaebae4b6103150c3",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b"
+    }
+  },
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-26T04:02:21Z",
+  "content_hash": "ebb1c2e57d06b38c51c0226cc1f5f8b7604919bd58466f5b6d5eeab38c5f21d6"
+}

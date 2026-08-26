@@ -248,6 +248,67 @@ def PreconditionedGapCertificate3Statement : Prop :=
     d3Lower ≤ a * d * f - a * e ^ 2 - b ^ 2 * f + 2 * b * c * e - c ^ 2 * d →
     ∀ v : Fin 3 → ℝ, lam * (v ⬝ᵥ M.mulVec v) ≤ v ⬝ᵥ G.mulVec v
 
+/-! ## The 4×4 block (ENG-010) -/
+
+/-- **A rigorous 4×4 minor certificate implies positive definiteness.**
+
+The minors are spelled out: `Δ₂`, `Δ₃`, `Δ₄` of the symmetric matrix
+`[[a,b,c,d],[b,e,f,g],[c,f,h,i],[d,g,i,j]]`, each as its polynomial
+expansion. -/
+def PdFourByFourCertificateStatement : Prop :=
+  ∀ (a b c d e f g h i j d1 d2 d3 d4 : ℝ),
+    0 < d1 → 0 < d2 → 0 < d3 → 0 < d4 →
+    d1 ≤ a →
+    d2 ≤ a * e - b * b →
+    d3 ≤ a * e * h - a * f ^ 2 - b ^ 2 * h + 2 * b * c * f - c ^ 2 * e →
+    d4 ≤ a * e * h * j - a * e * i ^ 2 - a * f ^ 2 * j + 2 * a * f * g * i
+        - a * g ^ 2 * h - b ^ 2 * h * j + b ^ 2 * i ^ 2 + 2 * b * c * f * j
+        - 2 * b * c * g * i - 2 * b * d * f * i + 2 * b * d * g * h
+        - c ^ 2 * e * j + c ^ 2 * g ^ 2 + 2 * c * d * e * i
+        - 2 * c * d * f * g - d ^ 2 * e * h + d ^ 2 * f ^ 2 →
+    (!![a, b, c, d; b, e, f, g; c, f, h, i; d, g, i, j] : SymMatrix 4).PosDef
+
+/-- **The composition the ENG-010 runtime performs for the block:** certified
+minor bounds on the exactly preconditioned block imply the original block is
+positive definite. -/
+def PreconditionedCertificate4Statement : Prop :=
+  ∀ (w x y z : ℝ) (A : SymMatrix 4)
+    (a b c d e f g h i j d1 d2 d3 d4 : ℝ),
+    w ≠ 0 → x ≠ 0 → y ≠ 0 → z ≠ 0 →
+    congruence (!![w, 0, 0, 0; 0, x, 0, 0; 0, 0, y, 0; 0, 0, 0, z] : SymMatrix 4) A
+      = !![a, b, c, d; b, e, f, g; c, f, h, i; d, g, i, j] →
+    0 < d1 → 0 < d2 → 0 < d3 → 0 < d4 →
+    d1 ≤ a →
+    d2 ≤ a * e - b * b →
+    d3 ≤ a * e * h - a * f ^ 2 - b ^ 2 * h + 2 * b * c * f - c ^ 2 * e →
+    d4 ≤ a * e * h * j - a * e * i ^ 2 - a * f ^ 2 * j + 2 * a * f * g * i
+        - a * g ^ 2 * h - b ^ 2 * h * j + b ^ 2 * i ^ 2 + 2 * b * c * f * j
+        - 2 * b * c * g * i - 2 * b * d * f * i + 2 * b * d * g * h
+        - c ^ 2 * e * j + c ^ 2 * g ^ 2 + 2 * c * d * e * i
+        - 2 * c * d * f * g - d ^ 2 * e * h + d ^ 2 * f ^ 2 →
+    A.PosDef
+
+/-- **The composed 4×4 gap implication** (ENG-010 §WO-RH-70): the same minor
+bounds applied to the preconditioned *shifted* pencil `D(G − λM)D` force the
+generalized Rayleigh bound for the original pencil at that `λ`. -/
+def PreconditionedGapCertificate4Statement : Prop :=
+  ∀ (w x y z lam : ℝ) (G M : SymMatrix 4)
+    (a b c d e f g h i j d1 d2 d3 d4 : ℝ),
+    w ≠ 0 → x ≠ 0 → y ≠ 0 → z ≠ 0 →
+    congruence (!![w, 0, 0, 0; 0, x, 0, 0; 0, 0, y, 0; 0, 0, 0, z] : SymMatrix 4)
+        (G - lam • M)
+      = !![a, b, c, d; b, e, f, g; c, f, h, i; d, g, i, j] →
+    0 < d1 → 0 < d2 → 0 < d3 → 0 < d4 →
+    d1 ≤ a →
+    d2 ≤ a * e - b * b →
+    d3 ≤ a * e * h - a * f ^ 2 - b ^ 2 * h + 2 * b * c * f - c ^ 2 * e →
+    d4 ≤ a * e * h * j - a * e * i ^ 2 - a * f ^ 2 * j + 2 * a * f * g * i
+        - a * g ^ 2 * h - b ^ 2 * h * j + b ^ 2 * i ^ 2 + 2 * b * c * f * j
+        - 2 * b * c * g * i - 2 * b * d * f * i + 2 * b * d * g * h
+        - c ^ 2 * e * j + c ^ 2 * g ^ 2 + 2 * c * d * e * i
+        - 2 * c * d * f * g - d ^ 2 * e * h + d ^ 2 * f ^ 2 →
+    ∀ v : Fin 4 → ℝ, lam * (v ⬝ᵥ M.mulVec v) ≤ v ⬝ᵥ G.mulVec v
+
 /-! ## Rank–trace -/
 
 /-- **The rank–trace inequality, `Q = 0` case.**

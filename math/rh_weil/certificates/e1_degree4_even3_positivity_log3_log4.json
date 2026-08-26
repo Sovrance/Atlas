@@ -117,7 +117,7 @@
       "minor": "Delta1",
       "scale_factor_from_preconditioner": "16.0",
       "implied_raw_lower_bound": "0.07537591825740127",
-      "elapsed_seconds": "11.414782047271729"
+      "elapsed_seconds": "14.229808330535889"
     },
     {
       "quantity": "even3_Delta2_preconditioned",
@@ -145,7 +145,7 @@
       "minor": "Delta2",
       "scale_factor_from_preconditioner": "65536.0",
       "implied_raw_lower_bound": "3.4244304067666463e-06",
-      "elapsed_seconds": "11.196097135543823"
+      "elapsed_seconds": "14.141947507858276"
     },
     {
       "quantity": "even3_Delta3_preconditioned",
@@ -173,7 +173,7 @@
       "minor": "Delta3",
       "scale_factor_from_preconditioner": "17179869184.0",
       "implied_raw_lower_bound": "6.451586222238981e-15",
-      "elapsed_seconds": "156.9435043334961"
+      "elapsed_seconds": "191.2367000579834"
     }
   ],
   "warrants": [
@@ -197,7 +197,7 @@
   "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
   "dependencies": {
     "source_hashes": {
-      "inertia/certificate.py": "82ea60b71081bfd1c2005c6440996b4828c622aced3658253a33c9ba48f1d420",
+      "inertia/certificate.py": "eb1120ed09c129eea74f5cc6ccdf7420149ea30b7268086ae25ad62e0002e01c",
       "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
       "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
       "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
@@ -215,6 +215,6 @@
       "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
-  "generated_utc": "2026-08-25T21:24:46Z",
-  "content_hash": "b8dae231d6ec04f98197b4653661d7bb9d3f0542cfea9d86aa2b64c131a37cf2"
+  "generated_utc": "2026-08-26T03:59:36Z",
+  "content_hash": "3a5e3104ea074407dc5b17658c6a59498b9f2bc73e1380318cb6af873a5b6cd0"
 }

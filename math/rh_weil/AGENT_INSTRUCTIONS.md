@@ -1,6 +1,6 @@
 ---
 status: CURRENT
-work_order: ATLAS-RH-ENG-009
+work_order: ATLAS-RH-ENG-010
 supersedes: docs/history/agent-instructions-initial-integration.md
 ---
 
@@ -128,8 +128,23 @@ One working rule ENG-009 added:
   and the implication is proved in Lean (`generalized_rayleigh`,
   `generalized_pencil_congruence`).
 
-Next, ENG-010 certifies the even 4×4 block `{1, b, b², b³}` — selected in
-`certificates/eng009_next_block_selection.json` because the fitted E3 scaling
-models genuinely disagree there. `bcube` is E0-prepared; the E3 preview is
-`certificates/e3_eng010_even4_preview.json`; no infinite-dimensional limit is
-inferred from any of it.
+ENG-010 certified that block — positive definite, inertia `(4, 0, 0)`, two
+routes — and enclosed its gap: `[1.907e-06, 2.416e-06]`, bottleneck at the
+right cell edge, twenty times below the E3 midpoint scout. The preregistered
+models were adjudicated `NEITHER_FALSIFIED` against the pinned artifact,
+before any refit. Two working rules this order added:
+
+* **A scout is a place to look, never a number to quote.** The E3 preview's
+  midpoint gap was off by 20× because the bottleneck sits at the cell edge.
+  Certified covers are the only source of quoted numbers, and the docs gate
+  holds every quoted number to a certificate path.
+* **Preregister, pin, adjudicate, then refit.** The adjudication script
+  verifies the ENG-009 artifact's content hash and refuses to run against
+  anything else; the verdict lands in its own certificate before any model
+  is refitted. The tests pin the hash too.
+
+Next, ENG-011 targets the even 5×5 `{1, b, b², b³, b⁴}` (refits diverge
+11.9× at n = 5, `certificates/eng011_target_selection.json`), plus the
+structural question of the edge bottleneck. No E1 work on n = 5 is launched
+before ENG-010 is interpreted; no infinite-dimensional limit is inferred from
+any of it.

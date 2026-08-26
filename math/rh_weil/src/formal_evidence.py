@@ -108,6 +108,21 @@ FORMAL_BACKING: Dict[str, Tuple[str, ...]] = {
         "pd_three_by_three",
         "diagonal_congruence_preserves_pd",
     ),
+    # ENG-010: the 4x4 block. Positivity rests on the 4x4 minor criterion
+    # composed with the frozen dyadic congruence; the gap adds the Rayleigh
+    # implication for the shifted pencil.
+    "e1_degree6_even4_positivity_log3_log4.json": (
+        "pd_four_by_four_certificate",
+        "preconditioned_certificate4",
+        "weil_basis_parity",
+    ),
+    "e1_eng010_even4_generalized_gap_log3_log4.json": (
+        "generalized_rayleigh",
+        "generalized_pencil_congruence",
+        "preconditioned_gap_certificate4",
+        "preconditioned_certificate4",
+    ),
+    "e1_degree6_even4_moments_log3_log4.json": ("rank_trace_hs",),
 }
 
 

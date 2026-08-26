@@ -6,3 +6,4 @@ import AtlasRH.WeilBasis
 import AtlasRH.RankTrace
 import AtlasRH.CertificateSemantics
 import AtlasRH.GeneralizedGap
+import AtlasRH.Sylvester4

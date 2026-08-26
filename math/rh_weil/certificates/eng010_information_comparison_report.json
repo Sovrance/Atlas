@@ -1,0 +1,87 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil information comparison at n = 4 \u2014 Candidate A",
+  "work_order": "WO-RH-72",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_STRUCTURAL_DIAGNOSTIC",
+  "evidence_class": "E1",
+  "numeric_warrant": "E1 \u2014 every number quoted is a certified enclosure",
+  "rigorous": true,
+  "hard_constraints_certified": true,
+  "psd_claim": false,
+  "status": "PASS",
+  "mpmath_used": false,
+  "subject": "4x4 even Weil block {1, b, b^2, b^3} on [log 3, log 4]",
+  "channels": {
+    "inertia": {
+      "value": [
+        [
+          4,
+          0,
+          0
+        ]
+      ],
+      "constant_on_cell": true
+    },
+    "generalized_gap": {
+      "enclosure": [
+        "1.9073486328125e-06",
+        "2.415977410246834e-06"
+      ],
+      "reference_metric": "l2_gram_on_support"
+    },
+    "trace_over_n": "0.021844045471070925",
+    "raw_determinant": {
+      "uniform_lower_bound": "5.2788569975917046e-24",
+      "note": "~1e-19 pointwise against O(1e-1) entries: five to six more orders of collapse beyond n = 3, of which the invariant gap accounts for barely one -- the rest is the coordinate system again"
+    },
+    "moments_m1_m4": {
+      "at": "L=1.200000",
+      "values": {
+        "m1": {
+          "lo": "6.031771557600094",
+          "hi": "6.031771557601747",
+          "width": "1.652900039061933e-12"
+        },
+        "m2": {
+          "lo": "24.25096664952017",
+          "hi": "24.250966649533247",
+          "width": "1.3077539051664644e-11"
+        },
+        "m3": {
+          "lo": "114.5891551288036",
+          "hi": "114.58915512889635",
+          "width": "9.275424872612348e-11"
+        },
+        "m4": {
+          "lo": "553.8336429978392",
+          "hi": "553.8336429984372",
+          "width": "5.979927664157003e-10"
+        }
+      }
+    },
+    "rank_trace": null,
+    "conditioning": {
+      "raw_diag_span": "~1e5 (G00 ~ 8e-2 vs G33 ~ 7e-7)",
+      "preconditioned": "O(1) diagonal under the frozen dyadic congruence"
+    }
+  },
+  "questions": {
+    "do_the_moments_force_the_inertia": "NO -- already false at n = 3 (ENG-008), and the moment map is even less injective at n = 4",
+    "do_the_moments_constrain_the_generalized_gap": "only trivially: m1..m4 are basis-dependent traces of G alone and carry no information about the pencil (G, M) beyond crude bounds; nothing here improves on the shifted covers",
+    "is_the_generalized_gap_still_the_best_cross_dimensional_margin": "YES, and more clearly than at n = 3: the raw determinant lost another five-plus orders to coordinates, while the gap both measured the real decay (~15x) and located a bottleneck at the right cell edge that no raw quantity showed",
+    "did_rank_trace_become_more_or_less_informative": "less: the bound weakens with dimension (rank >= 1 against a true rank of 4)"
+  },
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_eng010.py": "a10a85cbf293700518464e583725a6ffb7f0caae38ca1ca4bae248679c6d749a",
+      "src/even4.py": "a646e506769b8fa4b8b8242101d82508605dd21d7e25eeccaebae4b6103150c3",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b"
+    }
+  },
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-26T04:02:21Z",
+  "content_hash": "613b5960d0926764262efd79f418be2f469f6bd3aea2d4d0259a96c00f387b42"
+}

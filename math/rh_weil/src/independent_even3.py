@@ -65,6 +65,8 @@ def _basis_expr(name: str, sp, x, L):
         return x * (L - x)
     if name == "b2":
         return (x * (L - x)) ** 2
+    if name == "bcube":  # ENG-010 §WO-RH-66: same definition route as the rest
+        return (x * (L - x)) ** 3
     raise KeyError(f"unknown basis element {name!r}")
 
 

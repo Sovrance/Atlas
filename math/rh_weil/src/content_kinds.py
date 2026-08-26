@@ -55,6 +55,13 @@ KIND_SCAN_PREVIEW = "WEIL_SCAN_PREVIEW"
 #: cross-dimension comparison. Default-deny until a work order justifies
 #: otherwise.
 KIND_GENERALIZED_GAP = "WEIL_GENERALIZED_GAP_CERTIFICATE"
+
+#: ENG-010 (§WO-RH-74). The 4x4 positivity kind is PSD-licensable for the same
+#: reason the degree-3/4 kinds are: it *claims* PSD and carries the certified
+#: minors to back it. The adjudication kind records a verdict about E3 models
+#: and licenses nothing.
+KIND_DEGREE6_POSITIVITY = "WEIL_DEGREE6_POSITIVITY_CERTIFICATE"
+KIND_SCALING_ADJUDICATION = "WEIL_SCALING_ADJUDICATION"
 KIND_STRUCTURAL_DIAGNOSTIC = "WEIL_STRUCTURAL_DIAGNOSTIC"
 KIND_SCALING_MODEL = "WEIL_SCALING_MODEL"
 KIND_NEXT_BLOCK_SELECTION = "WEIL_NEXT_BLOCK_SELECTION"
@@ -138,6 +145,21 @@ _KINDS: Tuple[ContentKind, ...] = (
         KIND_SCAN_PREVIEW, "WO-RH-48",
         "an independent non-interval assembly of a block, for regression against "
         "the rigorous one",
+        psd_licensable=False,
+        warrant_role="preview",
+    ),
+    ContentKind(
+        KIND_DEGREE6_POSITIVITY, "WO-RH-69",
+        "the 4x4 even block {1, b, b^2, b^3} is positive definite on the cell, "
+        "with certified lower bounds on all four leading principal minors",
+        psd_licensable=True,
+        warrant_role="numeric",
+    ),
+    ContentKind(
+        KIND_SCALING_ADJUDICATION, "WO-RH-71",
+        "the verdict of a certified result against preregistered E3 scaling "
+        "models, recorded before any refit; adjudicates plans, asserts no new "
+        "numeric fact",
         psd_licensable=False,
         warrant_role="preview",
     ),

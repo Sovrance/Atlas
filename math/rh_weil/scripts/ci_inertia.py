@@ -46,7 +46,7 @@ SCHEMA_DIR = ROOT / "inertia" / "schemas"
 RIGOROUS_MODULES = (
     "src/degree3.py", "src/pole.py", "src/core.py", "src/weil_entries.py",
     "src/basis_algebra.py", "src/even3.py",
-    "src/reference_metric.py", "src/generalized_gap.py",
+    "src/reference_metric.py", "src/generalized_gap.py", "src/even4.py",
     "src/archimedean_realspace.py", "src/interval_cover.py",
     "src/interval_backend.py",
     "inertia/ldl.py", "inertia/stratify.py", "inertia/congruence.py",
@@ -263,6 +263,7 @@ def gate_fast() -> int:
         ("3x3 even block, exact half", "test_even3.py"),
         # ENG-009: reference metric + pencil invariance, all exact.
         ("generalized gap, exact half", "test_generalized_gap.py"),
+        ("4x4 even block, exact half", "test_even4.py"),
         # ENG-008 also requires the small-|t| Taylor branch to be preserved
         # across the kernel/derivative refactor; these pin it and the working
         # precision the cutover assumes.
@@ -290,6 +291,7 @@ def gate_rigorous() -> int:
         ("exact kernel and derivative algebra", "test_kernel_algebra.py"),
         ("3x3 even block", "test_even3.py"),
         ("generalized gap + reference metric", "test_generalized_gap.py"),
+        ("4x4 even block", "test_even4.py"),
     ):
         rc = rc or _run(label, [sys.executable, str(ROOT / "tests" / test)])
     rc = rc or _run("degree-3 E1 certificate checks",

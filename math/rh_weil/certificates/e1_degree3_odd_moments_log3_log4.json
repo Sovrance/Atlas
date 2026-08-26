@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "source_hashes": {
-      "inertia/certificate.py": "82ea60b71081bfd1c2005c6440996b4828c622aced3658253a33c9ba48f1d420",
+      "inertia/certificate.py": "eb1120ed09c129eea74f5cc6ccdf7420149ea30b7268086ae25ad62e0002e01c",
       "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
       "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
       "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
@@ -1042,6 +1042,6 @@
     }
   ],
   "note": "Moments are enclosures of traces of matrix powers. INSUFFICIENT_INFORMATION answers are certified results (\u00a76), not failures to compute.",
-  "generated_utc": "2026-08-25T21:19:34Z",
-  "content_hash": "a37071138f2e6c4a8474e37bbe18150dcdda5d085578dde4ddd743523eacca53"
+  "generated_utc": "2026-08-26T03:53:07Z",
+  "content_hash": "07e88e426d7bc63fb98131186bdee29565e3bb7ff99586ea60799e55f53c8bfa"
 }

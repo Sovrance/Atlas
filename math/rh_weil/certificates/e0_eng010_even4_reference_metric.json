@@ -1,0 +1,207 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil 4x4 even block \u2014 Candidate A",
+  "work_order": "WO-RH-65",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_GENERALIZED_GAP_CERTIFICATE",
+  "evidence_class": "E0",
+  "basis": {
+    "basis_id": "weil_even4_one_b_b2_bcube_v1",
+    "elements": [
+      "one",
+      "b",
+      "b2",
+      "bcube"
+    ],
+    "definitions": {
+      "one": "1",
+      "b": "x(L - x)",
+      "b2": "x^2 (L - x)^2 = b(x)^2",
+      "bcube": "x^3 (L - x)^3 = b(x)^3"
+    },
+    "parity_about_midpoint": {
+      "one": "even",
+      "b": "even",
+      "b2": "even",
+      "bcube": "even"
+    },
+    "spans_in_u": "span{1, u^2, u^4, u^6} with u = x - L/2",
+    "kernel_degrees_in_a": {
+      "one_one": 1,
+      "one_b": 3,
+      "one_b2": 5,
+      "one_bcube": 7,
+      "b_b": 5,
+      "b_b2": 7,
+      "b_bcube": 9,
+      "b2_b2": 9,
+      "b2_bcube": 11,
+      "bcube_bcube": 13
+    },
+    "reference_metric_id": "l2_gram_on_support"
+  },
+  "domain": {
+    "cell": [
+      "1.0986122886681098",
+      "1.3862943611198906"
+    ],
+    "label": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "inertia/certificate.py": "eb1120ed09c129eea74f5cc6ccdf7420149ea30b7268086ae25ad62e0002e01c",
+      "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
+      "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
+      "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
+      "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
+      "ranktrace/theorem.py": "b6f2d310c778a2411ce0a44cafb69f5ee3487e473823127b5b8440f120004681",
+      "scripts/certify_even4.py": "a7af506936acac96ff32220e3c8c2566cf02e6cb2ea8345e50927af9865612e3",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
+      "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
+      "src/even4.py": "a646e506769b8fa4b8b8242101d82508605dd21d7e25eeccaebae4b6103150c3",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "8c9f152a1f933c772d6db18cae68122a8e9d369088370c211c08e767ff51f0af",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "role": "reference_metric",
+  "rigorous": true,
+  "hard_constraints_certified": true,
+  "numeric_warrant": "E0",
+  "psd_claim": false,
+  "status": "PASS",
+  "mpmath_used": false,
+  "arithmetic": "exact_rational",
+  "reference_metric_id": "l2_gram_on_support",
+  "metric": {
+    "reference_metric": "l2_gram_on_support",
+    "definition": "M_ij(L) = int_0^L h_i(x; L) h_j(x; L) dx",
+    "basis": [
+      "one",
+      "b",
+      "b2",
+      "bcube"
+    ],
+    "homogeneity_degrees": {
+      "one": 0,
+      "b": 2,
+      "b2": 4,
+      "bcube": 6
+    },
+    "monomial_form": {
+      "one_one": {
+        "coefficient": "1",
+        "l_power": 1
+      },
+      "one_b": {
+        "coefficient": "1/6",
+        "l_power": 3
+      },
+      "one_b2": {
+        "coefficient": "1/30",
+        "l_power": 5
+      },
+      "one_bcube": {
+        "coefficient": "1/140",
+        "l_power": 7
+      },
+      "b_one": {
+        "coefficient": "1/6",
+        "l_power": 3
+      },
+      "b_b": {
+        "coefficient": "1/30",
+        "l_power": 5
+      },
+      "b_b2": {
+        "coefficient": "1/140",
+        "l_power": 7
+      },
+      "b_bcube": {
+        "coefficient": "1/630",
+        "l_power": 9
+      },
+      "b2_one": {
+        "coefficient": "1/30",
+        "l_power": 5
+      },
+      "b2_b": {
+        "coefficient": "1/140",
+        "l_power": 7
+      },
+      "b2_b2": {
+        "coefficient": "1/630",
+        "l_power": 9
+      },
+      "b2_bcube": {
+        "coefficient": "1/2772",
+        "l_power": 11
+      },
+      "bcube_one": {
+        "coefficient": "1/140",
+        "l_power": 7
+      },
+      "bcube_b": {
+        "coefficient": "1/630",
+        "l_power": 9
+      },
+      "bcube_b2": {
+        "coefficient": "1/2772",
+        "l_power": 11
+      },
+      "bcube_bcube": {
+        "coefficient": "1/12012",
+        "l_power": 13
+      }
+    },
+    "congruence": "M(L) = D(L)^T M(1) D(L), D(L) = diag(L^(d_i + 1/2))",
+    "unit_matrix": [
+      [
+        "1",
+        "1/6",
+        "1/30",
+        "1/140"
+      ],
+      [
+        "1/6",
+        "1/30",
+        "1/140",
+        "1/630"
+      ],
+      [
+        "1/30",
+        "1/140",
+        "1/630",
+        "1/2772"
+      ],
+      [
+        "1/140",
+        "1/630",
+        "1/2772",
+        "1/12012"
+      ]
+    ],
+    "unit_leading_minors": [
+      "1",
+      "1/180",
+      "1/7938000",
+      "1/88104560544000"
+    ],
+    "conclusion": "M(L) positive definite for every L > 0",
+    "evidence_class": "E0",
+    "arithmetic": "exact_rational"
+  },
+  "statement": "The exact L2 reference metric on {1, b, b^2, b^3} is positive definite for every L > 0, by exact Sylvester minors of M(1) and the diagonal congruence M(L) = D^T M(1) D.",
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-26T04:02:14Z",
+  "content_hash": "1fb04269e10393ee0bb02bc7e19133f5e91b88e4d1ebef60f703f4d13bcfe102"
+}
