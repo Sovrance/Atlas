@@ -1,0 +1,132 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil scaling models, post-adjudication refit \u2014 Candidate A",
+  "work_order": "WO-RH-71",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_SCALING_MODEL",
+  "evidence_class": "E3",
+  "numeric_warrant": "NONE \u2014 E3 exploratory fits over E1 enclosures",
+  "rigorous": false,
+  "psd_claim": false,
+  "status": "EXPLORATORY",
+  "adjudication_first": {
+    "file": "eng010_scaling_model_adjudication.json",
+    "verdict": "NEITHER_FALSIFIED"
+  },
+  "bottleneck_note": "the n = 4 bottleneck sits at the right cell edge (L -> log 4), twenty times below the midpoint E3 scout the ENG-009 preview recorded -- the work order's instruction not to present the scout as the certified result was the right one",
+  "models": [
+    {
+      "model": "exponential_decay_refit",
+      "formula": "lambda_min(n) = C * rho^n",
+      "family": "even",
+      "fitted": {
+        "C": "0.9410201284564619",
+        "rho": "0.03595783472401324"
+      },
+      "fit_method": "least squares on log lambda vs n, four points",
+      "max_log_residual": "0.675187744874326",
+      "data_points": [
+        {
+          "n": 1,
+          "enclosure": [
+            "0.052666425704956055",
+            "0.058518285644676"
+          ]
+        },
+        {
+          "n": 2,
+          "enclosure": [
+            "0.0005867481231689453",
+            "0.0006520075621795992"
+          ]
+        },
+        {
+          "n": 3,
+          "enclosure": [
+            "3.606081008911133e-05",
+            "4.007732435284577e-05"
+          ]
+        },
+        {
+          "n": 4,
+          "enclosure": [
+            "1.9073486328125e-06",
+            "2.415977410246834e-06"
+          ]
+        }
+      ],
+      "input_warrant": "E1 enclosures; the fit itself is E3",
+      "extrapolation_status": "EXPLORATORY_NEVER_PROMOTED",
+      "next_block_prediction": {
+        "n": 5,
+        "value": "5.6567446216777036e-08"
+      },
+      "falsifier": "certified even-family n = 5 gap enclosure outside [1.131e-08, 2.828e-07] rejects this refit"
+    },
+    {
+      "model": "power_law_decay_refit",
+      "formula": "lambda_min(n) = C * n^(-p)",
+      "family": "even",
+      "fitted": {
+        "C": "0.0685059676634086",
+        "p": "7.165991951493589"
+      },
+      "fit_method": "least squares on log lambda vs log n, four points",
+      "max_log_residual": "0.42962406260684993",
+      "data_points": [
+        {
+          "n": 1,
+          "enclosure": [
+            "0.052666425704956055",
+            "0.058518285644676"
+          ]
+        },
+        {
+          "n": 2,
+          "enclosure": [
+            "0.0005867481231689453",
+            "0.0006520075621795992"
+          ]
+        },
+        {
+          "n": 3,
+          "enclosure": [
+            "3.606081008911133e-05",
+            "4.007732435284577e-05"
+          ]
+        },
+        {
+          "n": 4,
+          "enclosure": [
+            "1.9073486328125e-06",
+            "2.415977410246834e-06"
+          ]
+        }
+      ],
+      "input_warrant": "E1 enclosures; the fit itself is E3",
+      "extrapolation_status": "EXPLORATORY_NEVER_PROMOTED",
+      "next_block_prediction": {
+        "n": 5,
+        "value": "6.712974227067119e-07"
+      },
+      "falsifier": "certified even-family n = 5 gap enclosure outside [1.343e-07, 3.356e-06] rejects this refit"
+    }
+  ],
+  "refit_separation_at_n5": "11.867203976898207",
+  "anti_overclaim": [
+    "four finite blocks do not establish asymptotics",
+    "surviving a x5 falsifier window is not confirmation"
+  ],
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_eng010.py": "a10a85cbf293700518464e583725a6ffb7f0caae38ca1ca4bae248679c6d749a",
+      "src/even4.py": "a646e506769b8fa4b8b8242101d82508605dd21d7e25eeccaebae4b6103150c3",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b"
+    }
+  },
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-26T02:44:00Z",
+  "content_hash": "110d87a6f25eb196a949e71b116429f9f29c9f46ced74938daede6804e97fe60"
+}

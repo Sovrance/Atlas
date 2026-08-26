@@ -1,0 +1,76 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil scaling-model adjudication \u2014 Candidate A",
+  "work_order": "WO-RH-71",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_SCALING_ADJUDICATION",
+  "evidence_class": "E1_ADJUDICATING_E3",
+  "numeric_warrant": "the certified enclosure is E1 (from the named gap certificate); the models being judged are E3 and stay E3",
+  "rigorous": true,
+  "hard_constraints_certified": true,
+  "psd_claim": false,
+  "status": "ADJUDICATED",
+  "mpmath_used": false,
+  "preregistered_models_artifact": {
+    "file": "e3_eng009_scaling_models.json",
+    "content_hash": "2719ade96da77279ea6350fdfb19f49c1a22434e970fafc302036480a85d6a23",
+    "verified_unchanged": true
+  },
+  "certified_result": {
+    "file": "e1_eng010_even4_generalized_gap_log3_log4.json",
+    "enclosure": [
+      "1.9073486328125e-06",
+      "2.415977410246834e-06"
+    ],
+    "content_hash": "1fdd92eface2f26a6032d78d7ce2331ef15f3de00a4254d8e4e46ec12d06ae55"
+  },
+  "adjudications": [
+    {
+      "label": "MODEL_A",
+      "model": "exponential_decay",
+      "formula": "lambda_min(n) = C * rho^n",
+      "fitted": {
+        "C": "1.5981731652537126",
+        "rho": "0.0261684849365411"
+      },
+      "preregistered_prediction_at_n4": "7.494422124752805e-07",
+      "falsifier_window": [
+        "1.498884424950561e-07",
+        "3.7472110623764024e-06"
+      ],
+      "verdict": "NOT_FALSIFIED",
+      "direction": "certified enclosure intersects the window"
+    },
+    {
+      "label": "MODEL_B",
+      "model": "power_law_decay",
+      "formula": "lambda_min(n) = C * n^(-p)",
+      "fitted": {
+        "C": "0.05694748502469613",
+        "p": "6.616812177071395"
+      },
+      "preregistered_prediction_at_n4": "5.912302781842369e-06",
+      "falsifier_window": [
+        "1.182460556368474e-06",
+        "2.9561513909211847e-05"
+      ],
+      "verdict": "NOT_FALSIFIED",
+      "direction": "certified enclosure intersects the window"
+    }
+  ],
+  "verdict": "NEITHER_FALSIFIED",
+  "reading": "see the per-model rows",
+  "recorded_before_any_refit": true,
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_eng010.py": "a10a85cbf293700518464e583725a6ffb7f0caae38ca1ca4bae248679c6d749a",
+      "src/even4.py": "a646e506769b8fa4b8b8242101d82508605dd21d7e25eeccaebae4b6103150c3",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b"
+    }
+  },
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-26T02:44:00Z",
+  "content_hash": "ef192cfdf92bd9dc04c1ff12d9502a7accad847f86c5af6e17b80101d0975857"
+}

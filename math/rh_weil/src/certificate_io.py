@@ -155,11 +155,10 @@ def build_work_order_status() -> Dict[str, Any]:
         "certificate_version": "0.2",
         "program": "RH/Weil work-order status",
         "rh_proof_claim": False,
-        "eng_spec": ("ATLAS-RH-ENG-009 spectral scaling laws and margin "
-                     "diagnostics: the generalized gap against the exact L2 "
-                     "reference metric (baseline: ENG-008)"),
-        "current_work_order": "ATLAS-RH-ENG-009",
-        "latest_completed_work_order": "ATLAS-RH-ENG-008",
+        "eng_spec": ("ATLAS-RH-ENG-010 the 4x4 even block and generalized-gap "
+                     "model falsification (baseline: ENG-009)"),
+        "current_work_order": "ATLAS-RH-ENG-010",
+        "latest_completed_work_order": "ATLAS-RH-ENG-009",
         "orders": {
             "WO-RH-01": "done",
             "WO-RH-02": "done_E0_scalar_cell",
@@ -222,6 +221,18 @@ def build_work_order_status() -> Dict[str, Any]:
             "WO-RH-62": "done_ENG-009_even4_selected_bcube_E0_prepared_E3_previewed",
             "WO-RH-63": "done_ENG-009_generalized_gap_theorems_content_kinds_ci_docs",
             "WO-RH-64": "done_ENG-009_bridge_candidate_note_conjectural_E3",
+            "ENG-009": "done_generalized_gap_and_margin_diagnostics",
+            "WO-RH-65": "done_ENG-010_even4_basis_and_reference_metric_frozen",
+            "WO-RH-66": "done_ENG-010_ten_exact_kernels_and_independent_crosscheck",
+            "WO-RH-67": "done_ENG-010_frozen_dyadic_preconditioner_minus2_6_10_10",
+            "WO-RH-68": "done_ENG-010_rigorous_arb_4x4_assembly_with_pencil",
+            "WO-RH-69": "done_ENG-010_uniform_inertia_4_0_0_and_sylvester_positivity",
+            "WO-RH-70": "done_ENG-010_generalized_gap_enclosure_bottleneck_at_log4",
+            "WO-RH-71": "done_ENG-010_adjudication_NEITHER_FALSIFIED_before_refit",
+            "WO-RH-72": "done_ENG-010_information_comparison_at_n4",
+            "WO-RH-73": "done_ENG-010_lean_sylvester4_and_gap_replay_21_theorems",
+            "WO-RH-74": "done_ENG-010_pir_runner_ci_docs",
+            "WO-RH-75": "done_ENG-010_eng011_even5_selected_not_launched",
         },
         # Historical values retained verbatim: WO-RH-17 forbids deleting contrary
         # evidence. These are what the tree claimed before the adjudication.

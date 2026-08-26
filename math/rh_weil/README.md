@@ -72,7 +72,7 @@ here that disagrees with its certificate fails the gate.
 | **3×3 even block `{1, b, b²}`** | cell | **positive definite, inertia `(3,0,0)`**, one stratum, no transition regions; `Δ1 ≥ 0.07537591825740127`, `Δ2 ≥ 3.4244304067666463e-06`, `Δ3 ≥ 6.451586222238981e-15` | E1 | `e1_degree4_even3_positivity_log3_log4.json` |
 | 3×3 even block, inertia route | cell | `(3,0,0)` by interval LDL* congruence, 2838 boxes, max depth 3 | E1 | `e1_degree4_even3_inertia_log3_log4.json` |
 | 3×3 even moments `m₁..m₄` | 5 sample points | moments do **not** force the inertia at `n = 3`; rank–trace `≥ 1` against a true rank of 3 | E1 | `e1_degree4_even3_moments_log3_log4.json` |
-| finite theorem boundary | — | 18 theorems proved in Lean 4 / Mathlib, no `sorry`, three standard axioms | FORMAL (implication only) | `formal_theorem_certificate.json` |
+| finite theorem boundary | — | 21 theorems proved in Lean 4 / Mathlib, no `sorry`, three standard axioms | FORMAL (implication only) | `formal_theorem_certificate.json` |
 | 3×3 even independent assembly | 5 points | agrees with the rigorous assembly to `1.5637e-13` | **E3 — regression only, never a warrant** | `e3_degree4_even3_crosscheck.json` |
 | **reference metric `M`** | every `L > 0` | the exact `L²` Gram of the basis is positive definite — exact rational Sylvester + diagonal congruence | **E0** | `e0_eng009_reference_metric.json` |
 | **generalized gap, scalar** | cell | `λmin(G, M) ∈ [0.052666425704956055, 0.058518285644676]` | E1 | `e1_eng009_generalized_gap_log3_log4.json` |
@@ -82,7 +82,11 @@ here that disagrees with its certificate fails the gate.
 | **generalized gap, even `{1, b, b²}`** | cell | `λmin ∈ [3.606081008911133e-05, 4.007732435284577e-05]` | E1 | same file |
 | structural dataset + verdict | 5 blocks | determinant collapse is `MOSTLY_COORDINATE_DRIVEN_BUT_THE_GAP_ALSO_DECAYS` | E1 | `eng009_structural_dataset.json` |
 | scaling models | 2 families | exponential vs power-law fits with explicit n = 4 falsifiers | **E3 — plans, never promoted** | `e3_eng009_scaling_models.json` |
-| ENG-010 preview, even 4×4 | midpoint | `{1, b, b², b³}` float minors and scouted gap; `bcube` E0-prepared | **E3 — never a warrant** | `e3_eng010_even4_preview.json` |
+| ENG-010 preview, even 4×4 | midpoint | `{1, b, b², b³}` float minors and scouted gap — superseded by the certified row below, and off by 20× at the bottleneck, which is why previews never promote | **E3 — never a warrant** | `e3_eng010_even4_preview.json` |
+| **4×4 even block `{1, b, b², b³}`** | cell | **positive definite, inertia `(4,0,0)`**, one stratum, by LDL* (26,854 boxes) *and* Sylvester; `Δ4 ≥ 5.2788569975917046e-24` raw | E1 | `e1_degree6_even4_positivity_log3_log4.json` |
+| **generalized gap, even 4×4** | cell | `λmin(G, M) ∈ [1.9073486328125e-06, 2.415977410246834e-06]`, bottleneck at `L → log 4` | E1 | `e1_eng010_even4_generalized_gap_log3_log4.json` |
+| scaling-model adjudication | n = 4 | **`NEITHER_FALSIFIED`** — the enclosure lands in the overlap of both preregistered ×5 windows, between the two point predictions | E1 adjudicating E3 | `eng010_scaling_model_adjudication.json` |
+| 4×4 independent assembly | 7 points | agrees with the rigorous assembly to `1.243e-13` | **E3 — regression only, never a warrant** | `e3_degree6_even4_crosscheck.json` |
 
 The 3×3 block is the first here where the determinant does not fix the spectrum:
 `det > 0` on a 3×3 is consistent with `(3,0,0)` and with `(1,2,0)`, so
@@ -143,7 +147,11 @@ moments.
 | WO-RH-58 | reference metric E0; **generalized gap certified for all five blocks** |
 | WO-RH-59 | determinant-collapse verdict: mostly coordinates, gap decays slowly |
 | WO-RH-62 | ENG-010 target selected: even 4×4; `bcube` E0-prepared |
-| WO-RH-63 | Lean generalized-gap implication — 18 theorems, no `sorry` |
+| WO-RH-63 | Lean generalized-gap implication |
+| WO-RH-69 | **4×4 even block certified positive definite, inertia `(4,0,0)`, two routes** |
+| WO-RH-70 | 4×4 generalized gap enclosed; bottleneck found at the right cell edge |
+| WO-RH-71 | preregistered models adjudicated `NEITHER_FALSIFIED`, before any refit |
+| WO-RH-75 | ENG-011 target selected: even 5×5, refits diverge 11.9× there — 21 Lean theorems, no `sorry` |
 
 The authoritative per-order state, including the pre-quarantine values WO-RH-17
 forbids deleting, is
@@ -275,32 +283,31 @@ knowing: the general rank–trace inequality Atlas carries as *unproved* is prov
 upstream as `Zeta23.RHLinalg.rank_trace_ineq_two`. See
 [`external/zeta23/MAPPING.md`](external/zeta23/MAPPING.md).
 
-## 8. Current frontier — ATLAS-RH-ENG-009, what the margins actually measure
+## 8. Current frontier — ATLAS-RH-ENG-010, the first prediction test
 
-ENG-008 proved `G[{1, b, b²}](L)` positive definite on `[log 3, log 4]` with
-inertia `(3, 0, 0)` — certified twice, by interval LDL* congruence and by
-Sylvester covers ([`docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md`](docs/HIGHER_DIMENSIONAL_BLOCK_ENG008_v0.1.md)) —
-while its raw determinant margin fell to `1e-14` territory. **ENG-009 is the
-current work order**, and its result is a decision about what to measure:
+ENG-009 made the generalized gap the primary margin and preregistered two
+decay models that disagreed by ~8× about dimension 4. **ENG-010 certified the
+4×4 even block and adjudicated them**:
 
-> The determinant collapse is mostly the coordinate system. The
-> congruence-invariant generalized gap `λmin(G, M)` against the exact `L²`
-> reference metric is certified for all five blocks, and it decays ~3 orders
-> across the ladder where the raw determinant loses ~13.
+> `G[{1, b, b², b³}](L)` is positive definite for every `L ∈ [log 3, log 4]`,
+> inertia `(4, 0, 0)` by two independent routes, and its generalized gap
+> satisfies `λmin(G, M) ∈ [1.9073486328125e-06, 2.415977410246834e-06]` —
+> with the bottleneck at the right cell edge, twenty times below the E3
+> midpoint scout.
 
-The gap is now the primary margin observable: basis-invariant (proved in Lean),
-graded, certifiable without an eigensolver, and meaningful even after a future
-block goes indefinite. Exploratory E3 scaling models (exponential vs power law)
-carry explicit falsifiers that the next block decides. See
-[`docs/GENERALIZED_GAP_ENG009_v0.1.md`](docs/GENERALIZED_GAP_ENG009_v0.1.md),
-and [`docs/BRIDGE_CANDIDATES_ENG009_v0.1.md`](docs/BRIDGE_CANDIDATES_ENG009_v0.1.md)
-for the conjectural note on what any finite-to-infinite bridge still requires.
+The adjudication verdict, recorded against the preregistered artifact before
+any refit, is **`NEITHER_FALSIFIED`**: the certified enclosure is tight, but
+it lands in the overlap of both models' ×5 falsifier windows, between the two
+point predictions. The experiment was decisive about the number and
+indecisive between the models — expected outcome E of the work order, and a
+statement about the preregistered tolerance rather than about the block. See
+[`docs/EVEN4_GAP_ADJUDICATION_ENG010_v0.1.md`](docs/EVEN4_GAP_ADJUDICATION_ENG010_v0.1.md).
 
-**Next: ENG-010.** The even 4×4 block `{1, b, b², b³}` — selected because the
-even family is where the collapse lives and where the fitted models genuinely
-disagree at `n = 4` (predictions `7.8e-7` vs `6.1e-6`, against a float preview
-scouting `4.5e-5`). `bcube` is E0-prepared; `e3_eng010_even4_preview.json` is
-the E3 preview; no E1 certificate for it exists yet, deliberately.
+**Next: ENG-011.** The refitted models (four certified points) diverge by
+11.9× at n = 5, so `eng011_target_selection.json` selects the even 5×5
+`{1, b, b², b³, b⁴}` — plus the new structural question the certification
+surfaced: why does the pencil weaken toward `log 4`? No E1 work on n = 5 is
+launched before ENG-010 is interpreted.
 
 ## 9. History
 
