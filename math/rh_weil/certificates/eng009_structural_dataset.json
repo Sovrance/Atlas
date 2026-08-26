@@ -147,7 +147,7 @@
         },
         "generalized_gap": {
           "file": "e1_eng009_generalized_gap_log3_log4.json",
-          "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+          "content_hash": "f272f2cbff0d7ebbf3c651ba056b004d73ac77e06efee1e64d391c8a56ca8f10"
         },
         "reference_metric": {
           "file": "e0_eng009_reference_metric.json",
@@ -287,7 +287,7 @@
         },
         "generalized_gap": {
           "file": "e1_eng009_generalized_gap_log3_log4.json",
-          "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+          "content_hash": "f272f2cbff0d7ebbf3c651ba056b004d73ac77e06efee1e64d391c8a56ca8f10"
         },
         "reference_metric": {
           "file": "e0_eng009_reference_metric.json",
@@ -428,7 +428,7 @@
         },
         "generalized_gap": {
           "file": "e1_eng009_generalized_gap_log3_log4.json",
-          "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+          "content_hash": "f272f2cbff0d7ebbf3c651ba056b004d73ac77e06efee1e64d391c8a56ca8f10"
         },
         "reference_metric": {
           "file": "e0_eng009_reference_metric.json",
@@ -565,11 +565,11 @@
       "certificates": {
         "positivity": {
           "file": "e1_degree3_odd_positivity_log3_log4.json",
-          "content_hash": "91b13024a30285d5743275bb68fe909553e1738faabfd8d83ed8f93618ff64eb"
+          "content_hash": "5cf375db1a92838682294c98bee9710c5d0458734dc7d504abe47cfef42db4d8"
         },
         "generalized_gap": {
           "file": "e1_eng009_generalized_gap_log3_log4.json",
-          "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+          "content_hash": "f272f2cbff0d7ebbf3c651ba056b004d73ac77e06efee1e64d391c8a56ca8f10"
         },
         "reference_metric": {
           "file": "e0_eng009_reference_metric.json",
@@ -577,7 +577,7 @@
         },
         "moments": {
           "file": "e1_degree3_odd_moments_log3_log4.json",
-          "content_hash": "a37071138f2e6c4a8474e37bbe18150dcdda5d085578dde4ddd743523eacca53"
+          "content_hash": "07e88e426d7bc63fb98131186bdee29565e3bb7ff99586ea60799e55f53c8bfa"
         },
         "inertia": {
           "file": "e1_degree3_odd_positivity_log3_log4.json"
@@ -718,11 +718,11 @@
       "certificates": {
         "positivity": {
           "file": "e1_degree4_even3_positivity_log3_log4.json",
-          "content_hash": "b8dae231d6ec04f98197b4653661d7bb9d3f0542cfea9d86aa2b64c131a37cf2"
+          "content_hash": "3a5e3104ea074407dc5b17658c6a59498b9f2bc73e1380318cb6af873a5b6cd0"
         },
         "generalized_gap": {
           "file": "e1_eng009_generalized_gap_log3_log4.json",
-          "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+          "content_hash": "f272f2cbff0d7ebbf3c651ba056b004d73ac77e06efee1e64d391c8a56ca8f10"
         },
         "reference_metric": {
           "file": "e0_eng009_reference_metric.json",
@@ -730,7 +730,7 @@
         },
         "moments": {
           "file": "e1_degree4_even3_moments_log3_log4.json",
-          "content_hash": "4d0b316dfd8bc32591d998f2fc2f282cb63fab92beb72b38ee65d1b99e1173c7"
+          "content_hash": "9b4cd9928668c9dba87a289ce80b5f7fb5a501cf6f4518d5387edb72d6866111"
         },
         "inertia": {
           "file": "e1_degree4_even3_inertia_log3_log4.json"
@@ -861,6 +861,6 @@
     }
   },
   "rh_proof_claim": false,
-  "generated_utc": "2026-08-25T21:28:28Z",
-  "content_hash": "fb3d1eba6f6cb51c721f9ef833013630c29a11617b1cc9e0451bc2a2cf48585d"
+  "generated_utc": "2026-08-26T04:02:22Z",
+  "content_hash": "7adec006f58ef105a8cc0036cb7c297d76edafe2d2814900c6fc3166afe54fea"
 }

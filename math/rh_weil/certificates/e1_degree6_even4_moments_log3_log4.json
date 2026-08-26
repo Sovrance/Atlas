@@ -53,7 +53,7 @@
   "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
   "dependencies": {
     "source_hashes": {
-      "inertia/certificate.py": "82ea60b71081bfd1c2005c6440996b4828c622aced3658253a33c9ba48f1d420",
+      "inertia/certificate.py": "eb1120ed09c129eea74f5cc6ccdf7420149ea30b7268086ae25ad62e0002e01c",
       "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
       "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
       "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
@@ -714,6 +714,6 @@
   ],
   "note": "moments of the preconditioned block; the raw trace and determinant are recorded alongside for the information comparison",
   "rh_proof_claim": false,
-  "generated_utc": "2026-08-25T22:58:14Z",
-  "content_hash": "1356de3dd6866262d0cc1f00cb69d8908d606ebe03290ac5aaa8bbd232046b7f"
+  "generated_utc": "2026-08-26T04:02:21Z",
+  "content_hash": "bc2cedd3c9ab73be54a488e5375707ae8a29ca11296c953fa74bc005015c180f"
 }

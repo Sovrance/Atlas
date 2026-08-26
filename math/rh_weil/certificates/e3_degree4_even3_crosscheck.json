@@ -373,7 +373,7 @@
   "note": "E3. mpmath never certifies in this program; this is regression evidence that the rigorous assembly computes what it claims.",
   "dependencies": {
     "source_hashes": {
-      "inertia/certificate.py": "82ea60b71081bfd1c2005c6440996b4828c622aced3658253a33c9ba48f1d420",
+      "inertia/certificate.py": "eb1120ed09c129eea74f5cc6ccdf7420149ea30b7268086ae25ad62e0002e01c",
       "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
       "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
       "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
@@ -384,7 +384,7 @@
       "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
       "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
       "src/even3.py": "91079176c5480f2bf100a69c85fb62cc3d77cfcc4340f8c40d54151df48eebf3",
-      "src/independent_even3.py": "72cef0a99aa987d86957dbf915b1401c1ec1ea6310a58eacc85135a6f208a1c2",
+      "src/independent_even3.py": "b98ad84992474ba8aa1f26df51fe0d967512c0c7a999bb268607f4f4d6579dfd",
       "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
       "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
       "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
@@ -392,6 +392,6 @@
       "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
     }
   },
-  "generated_utc": "2026-08-25T21:19:36Z",
-  "content_hash": "6d721fe5ff25f0295c6b6a41a9c4a4946261e1f102cb8247d1a1deed0c541fea"
+  "generated_utc": "2026-08-26T03:53:09Z",
+  "content_hash": "92a678efe6c43ec81375f9ca8fc3c9106ed971f409bf2568b442703e0891d4fc"
 }

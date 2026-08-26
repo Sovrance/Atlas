@@ -53,13 +53,13 @@
   "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
   "dependencies": {
     "source_hashes": {
-      "inertia/certificate.py": "82ea60b71081bfd1c2005c6440996b4828c622aced3658253a33c9ba48f1d420",
+      "inertia/certificate.py": "eb1120ed09c129eea74f5cc6ccdf7420149ea30b7268086ae25ad62e0002e01c",
       "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
       "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
       "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
       "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
       "ranktrace/theorem.py": "b6f2d310c778a2411ce0a44cafb69f5ee3487e473823127b5b8440f120004681",
-      "scripts/certify_even4.py": "861649303379ce44b3e592bb046b56c6160e3bcdf2a7e931cd85f00b9c9ea44c",
+      "scripts/certify_even4.py": "a7af506936acac96ff32220e3c8c2566cf02e6cb2ea8345e50927af9865612e3",
       "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
       "src/basis_algebra.py": "6dadce05101e64cd2995244d068f7b8901e64b3417c57dadd01e7717593ea0ea",
       "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
@@ -202,6 +202,6 @@
   },
   "statement": "The exact L2 reference metric on {1, b, b^2, b^3} is positive definite for every L > 0, by exact Sylvester minors of M(1) and the diagonal congruence M(L) = D^T M(1) D.",
   "rh_proof_claim": false,
-  "generated_utc": "2026-08-25T22:46:08Z",
-  "content_hash": "213ee135fb1ad1f163aec789cf483e61c541ea34ee1488f0dd46be55f707d58b"
+  "generated_utc": "2026-08-26T04:02:14Z",
+  "content_hash": "1fb04269e10393ee0bb02bc7e19133f5e91b88e4d1ebef60f703f4d13bcfe102"
 }

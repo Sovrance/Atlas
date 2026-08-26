@@ -104,7 +104,7 @@
         "evidence_class": "E3",
         "warrant_note": "scouting only; the covers below are the warrant"
       },
-      "elapsed_seconds": "0.14826536178588867"
+      "elapsed_seconds": "0.1835923194885254"
     },
     {
       "block": "degree1_odd",
@@ -181,7 +181,7 @@
         "evidence_class": "E3",
         "warrant_note": "scouting only; the covers below are the warrant"
       },
-      "elapsed_seconds": "0.26230669021606445"
+      "elapsed_seconds": "0.310164213180542"
     },
     {
       "block": "degree2_even",
@@ -267,7 +267,7 @@
         "evidence_class": "E3",
         "warrant_note": "scouting only; the covers below are the warrant"
       },
-      "elapsed_seconds": "1.629481315612793"
+      "elapsed_seconds": "2.5220022201538086"
     },
     {
       "block": "degree3_odd",
@@ -353,7 +353,7 @@
         "evidence_class": "E3",
         "warrant_note": "scouting only; the covers below are the warrant"
       },
-      "elapsed_seconds": "3.042060375213623"
+      "elapsed_seconds": "4.583557367324829"
     },
     {
       "block": "degree4_even3",
@@ -452,7 +452,7 @@
         "evidence_class": "E3",
         "warrant_note": "scouting only; the covers below are the warrant"
       },
-      "elapsed_seconds": "124.37022018432617"
+      "elapsed_seconds": "149.5446376800537"
     }
   ],
   "reference_metric_certificate": "e0_eng009_reference_metric.json",
@@ -474,6 +474,6 @@
     }
   },
   "rh_proof_claim": false,
-  "generated_utc": "2026-08-25T21:26:55Z",
-  "content_hash": "fd541f05a97315e19fec20d59dfaaea37d7e1028aca83269943a31b3dd7da5ed"
+  "generated_utc": "2026-08-26T04:02:14Z",
+  "content_hash": "f272f2cbff0d7ebbf3c651ba056b004d73ac77e06efee1e64d391c8a56ca8f10"
 }
