@@ -153,6 +153,9 @@ class TheFactorizationIsRecoveredAndUsed(unittest.TestCase):
         # endpoints, and m = 1 + ord_i + ord_j throughout this table.
         ("one", "bcube"): 4, ("b", "bcube"): 5, ("b2", "bcube"): 6,
         ("bcube", "bcube"): 7,
+        # ENG-011 §WO-RH-77: bquart vanishes to order 4 at both endpoints.
+        ("one", "bquart"): 5, ("b", "bquart"): 6, ("b2", "bquart"): 7,
+        ("bcube", "bquart"): 8, ("bquart", "bquart"): 9,
     }
 
     def test_the_multiplicities_match_the_retired_closed_forms(self):

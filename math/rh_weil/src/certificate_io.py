@@ -155,10 +155,10 @@ def build_work_order_status() -> Dict[str, Any]:
         "certificate_version": "0.2",
         "program": "RH/Weil work-order status",
         "rh_proof_claim": False,
-        "eng_spec": ("ATLAS-RH-ENG-010 the 4x4 even block and generalized-gap "
-                     "model falsification (baseline: ENG-009)"),
-        "current_work_order": "ATLAS-RH-ENG-010",
-        "latest_completed_work_order": "ATLAS-RH-ENG-009",
+        "eng_spec": ("ATLAS-RH-ENG-011 the 5x5 even block, boundary bottleneck "
+                     "and scaling discrimination (baseline: ENG-010)"),
+        "current_work_order": "ATLAS-RH-ENG-011",
+        "latest_completed_work_order": "ATLAS-RH-ENG-010",
         "orders": {
             "WO-RH-01": "done",
             "WO-RH-02": "done_E0_scalar_cell",
@@ -233,6 +233,19 @@ def build_work_order_status() -> Dict[str, Any]:
             "WO-RH-73": "done_ENG-010_lean_sylvester4_and_gap_replay_21_theorems",
             "WO-RH-74": "done_ENG-010_pir_runner_ci_docs",
             "WO-RH-75": "done_ENG-010_eng011_even5_selected_not_launched",
+            "ENG-010": "done_4x4_even_block_and_model_adjudication",
+            "WO-RH-76": "done_ENG-011_even5_basis_and_reference_metric_frozen",
+            "WO-RH-77": "done_ENG-011_fifteen_exact_kernels_and_independent_crosscheck",
+            "WO-RH-78": "done_ENG-011_boundary_verdict_INTERIOR_MINIMUM_RETURNS",
+            "WO-RH-79": "done_ENG-011_schur_b4_coupling_98_to_99_percent",
+            "WO-RH-80": "done_ENG-011_frozen_dyadic_preconditioner_and_arb_assembly",
+            "WO-RH-81": "done_ENG-011_uniform_inertia_5_0_0_and_positivity_two_routes",
+            "WO-RH-82": "done_ENG-011_gap_enclosure_interior_bottleneck_certified",
+            "WO-RH-83": "done_ENG-011_adjudication_TOLERANCE_TOO_WIDE_before_refit",
+            "WO-RH-84": "done_ENG-011_nested_regression_theorem_and_info_comparison",
+            "WO-RH-85": "done_ENG-011_lean_25_theorems_no_sorry",
+            "WO-RH-86": "done_ENG-011_pir_runner_ci_docs",
+            "WO-RH-87": "done_ENG-011_eng012_adjudication_reform_and_bottleneck_dynamics",
         },
         # Historical values retained verbatim: WO-RH-17 forbids deleting contrary
         # evidence. These are what the tree claimed before the adjudication.

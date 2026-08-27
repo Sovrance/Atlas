@@ -61,6 +61,7 @@ KIND_GENERALIZED_GAP = "WEIL_GENERALIZED_GAP_CERTIFICATE"
 #: minors to back it. The adjudication kind records a verdict about E3 models
 #: and licenses nothing.
 KIND_DEGREE6_POSITIVITY = "WEIL_DEGREE6_POSITIVITY_CERTIFICATE"
+KIND_DEGREE8_POSITIVITY = "WEIL_DEGREE8_POSITIVITY_CERTIFICATE"
 KIND_SCALING_ADJUDICATION = "WEIL_SCALING_ADJUDICATION"
 KIND_STRUCTURAL_DIAGNOSTIC = "WEIL_STRUCTURAL_DIAGNOSTIC"
 KIND_SCALING_MODEL = "WEIL_SCALING_MODEL"
@@ -152,6 +153,13 @@ _KINDS: Tuple[ContentKind, ...] = (
         KIND_DEGREE6_POSITIVITY, "WO-RH-69",
         "the 4x4 even block {1, b, b^2, b^3} is positive definite on the cell, "
         "with certified lower bounds on all four leading principal minors",
+        psd_licensable=True,
+        warrant_role="numeric",
+    ),
+    ContentKind(
+        KIND_DEGREE8_POSITIVITY, "WO-RH-81",
+        "the 5x5 even block {1, b, b^2, b^3, b^4} is positive definite on the "
+        "cell, with certified lower bounds on all five leading principal minors",
         psd_licensable=True,
         warrant_role="numeric",
     ),

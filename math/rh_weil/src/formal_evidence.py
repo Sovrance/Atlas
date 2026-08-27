@@ -123,6 +123,32 @@ FORMAL_BACKING: Dict[str, Tuple[str, ...]] = {
         "preconditioned_certificate4",
     ),
     "e1_degree6_even4_moments_log3_log4.json": ("rank_trace_hs",),
+    # ENG-011: the 5x5 block. Its warrants are LDL transcripts (generic
+    # congruence theorems), the shifted composition, and the Schur witness
+    # theorem; the nesting regression backs the interlacing claim in the
+    # information comparison.
+    "e1_degree8_even5_positivity_log3_log4.json": (
+        "shifted_positivity_transfer",
+        "inertia_congruence_positive",
+        "inertia_congruence_negative",
+        "inertia_congruence_rank",
+        "weil_basis_parity",
+    ),
+    "e1_eng011_even5_generalized_gap_log3_log4.json": (
+        "generalized_rayleigh",
+        "generalized_pencil_congruence",
+        "shifted_positivity_transfer",
+        "shifted_shift_monotone",
+        "nested_gap_regression",
+    ),
+    "e1_degree8_even5_moments_log3_log4.json": ("rank_trace_hs",),
+    "eng011_even5_schur_analysis.json": ("schur_witness_block",),
+    "e1_degree8_even5_inertia_log3_log4.json": (
+        "inertia_congruence_positive",
+        "inertia_congruence_negative",
+        "inertia_congruence_rank",
+        "weil_basis_parity",
+    ),
 }
 
 

@@ -191,6 +191,25 @@ theorem atlas_preconditioned_gap_certificate4 :
   · simpa [AtlasRH.qform] using hq
   · simpa [AtlasRH.diag4, AtlasRH.sym4] using hcong
 
+/-! ## The 5×5 block (ENG-011) -/
+
+theorem atlas_shifted_positivity_transfer : shifted_positivity_transfer_statement := by
+  intro n G M lam hlam hM h
+  exact AtlasRH.posDef_of_shifted_posDef_add hlam hM h
+
+theorem atlas_shifted_shift_monotone : shifted_shift_monotone_statement := by
+  intro n G M a b hba hM h
+  exact AtlasRH.shifted_posDef_of_le hba hM h
+
+theorem atlas_nested_gap_regression : nested_gap_regression_statement := by
+  intro n m G M lam h e x
+  simpa [AtlasRH.qform] using AtlasRH.rayleigh_lower_restricts h e x
+
+theorem atlas_schur_witness_block : schur_witness_block_statement := by
+  intro n A c d y hA hy hd x t hxt
+  simpa [AtlasRH.borderedForm, AtlasRH.qform] using
+    AtlasRH.borderedForm_pos A hA hy hd x t hxt
+
 /-! ## Rank–trace -/
 
 theorem atlas_rank_trace_hs : rank_trace_hs_statement := by

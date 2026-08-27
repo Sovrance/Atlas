@@ -72,7 +72,7 @@ here that disagrees with its certificate fails the gate.
 | **3×3 even block `{1, b, b²}`** | cell | **positive definite, inertia `(3,0,0)`**, one stratum, no transition regions; `Δ1 ≥ 0.07537591825740127`, `Δ2 ≥ 3.4244304067666463e-06`, `Δ3 ≥ 6.451586222238981e-15` | E1 | `e1_degree4_even3_positivity_log3_log4.json` |
 | 3×3 even block, inertia route | cell | `(3,0,0)` by interval LDL* congruence, 2838 boxes, max depth 3 | E1 | `e1_degree4_even3_inertia_log3_log4.json` |
 | 3×3 even moments `m₁..m₄` | 5 sample points | moments do **not** force the inertia at `n = 3`; rank–trace `≥ 1` against a true rank of 3 | E1 | `e1_degree4_even3_moments_log3_log4.json` |
-| finite theorem boundary | — | 21 theorems proved in Lean 4 / Mathlib, no `sorry`, three standard axioms | FORMAL (implication only) | `formal_theorem_certificate.json` |
+| finite theorem boundary | — | 25 theorems proved in Lean 4 / Mathlib, no `sorry`, three standard axioms | FORMAL (implication only) | `formal_theorem_certificate.json` |
 | 3×3 even independent assembly | 5 points | agrees with the rigorous assembly to `1.5637e-13` | **E3 — regression only, never a warrant** | `e3_degree4_even3_crosscheck.json` |
 | **reference metric `M`** | every `L > 0` | the exact `L²` Gram of the basis is positive definite — exact rational Sylvester + diagonal congruence | **E0** | `e0_eng009_reference_metric.json` |
 | **generalized gap, scalar** | cell | `λmin(G, M) ∈ [0.052666425704956055, 0.058518285644676]` | E1 | `e1_eng009_generalized_gap_log3_log4.json` |
@@ -87,6 +87,12 @@ here that disagrees with its certificate fails the gate.
 | **generalized gap, even 4×4** | cell | `λmin(G, M) ∈ [1.9073486328125e-06, 2.415977410246834e-06]`, bottleneck at `L → log 4` | E1 | `e1_eng010_even4_generalized_gap_log3_log4.json` |
 | scaling-model adjudication | n = 4 | **`NEITHER_FALSIFIED`** — the enclosure lands in the overlap of both preregistered ×5 windows, between the two point predictions | E1 adjudicating E3 | `eng010_scaling_model_adjudication.json` |
 | 4×4 independent assembly | 7 points | agrees with the rigorous assembly to `1.243e-13` | **E3 — regression only, never a warrant** | `e3_degree6_even4_crosscheck.json` |
+| **5×5 even block `{1, b, b², b³, b⁴}`** | cell | **positive definite, inertia `(5,0,0)`**, one stratum, by parallel LDL* sweeps and the shifted route | E1 | `e1_degree8_even5_positivity_log3_log4.json` |
+| **generalized gap, even 5×5** | cell | `λmin(G, M) ≥ 1.9033905118703842e-07`; **bottleneck returned to the interior**, certified inside `[1.11, 1.30]` | E1 | `e1_eng011_even5_generalized_gap_log3_log4.json` |
+| boundary bottleneck analysis | n=4 witness | `d/dL` of the shifted form certified negative into `log 4`; n=5 verdict `INTERIOR_MINIMUM_RETURNS` | E1 | `eng011_boundary_bottleneck_analysis.json` |
+| Schur channel of `b⁴` | 5 points | coupling to the previous span consumes 98.4–99.8% of the new diagonal; the n=5 loss is introduced, not inherited | E1 | `eng011_even5_schur_analysis.json` |
+| n=5 scaling adjudication | n = 5 | **`TOLERANCE_TOO_WIDE`** — a second consecutive tight enclosure inside both frozen ×5 windows | E1 adjudicating E3 | `eng011_scaling_model_adjudication.json` |
+| 5×5 independent assembly | 8 points | agrees with the rigorous assembly to `1.688e-12` | **E3 — regression only, never a warrant** | `e3_degree8_even5_crosscheck.json` |
 
 The 3×3 block is the first here where the determinant does not fix the spectrum:
 `det > 0` on a 3×3 is consistent with `(3,0,0)` and with `(1,2,0)`, so
@@ -151,7 +157,11 @@ moments.
 | WO-RH-69 | **4×4 even block certified positive definite, inertia `(4,0,0)`, two routes** |
 | WO-RH-70 | 4×4 generalized gap enclosed; bottleneck found at the right cell edge |
 | WO-RH-71 | preregistered models adjudicated `NEITHER_FALSIFIED`, before any refit |
-| WO-RH-75 | ENG-011 target selected: even 5×5, refits diverge 11.9× there — 21 Lean theorems, no `sorry` |
+| WO-RH-75 | ENG-011 target selected: even 5×5 |
+| WO-RH-78 | boundary verdict: the n=4 edge fall is certified; the n=5 minimum is interior |
+| WO-RH-81 | **5×5 even block certified positive definite, inertia `(5,0,0)`, two routes** |
+| WO-RH-83 | second preregistered adjudication: `TOLERANCE_TOO_WIDE`, recorded before refit |
+| WO-RH-87 | ENG-012: adjudication reform + bottleneck dynamics — 25 Lean theorems, no `sorry` |
 
 The authoritative per-order state, including the pre-quarantine values WO-RH-17
 forbids deleting, is
@@ -283,31 +293,30 @@ knowing: the general rank–trace inequality Atlas carries as *unproved* is prov
 upstream as `Zeta23.RHLinalg.rank_trace_ineq_two`. See
 [`external/zeta23/MAPPING.md`](external/zeta23/MAPPING.md).
 
-## 8. Current frontier — ATLAS-RH-ENG-010, the first prediction test
+## 8. Current frontier — ATLAS-RH-ENG-011, the bottleneck migrates
 
-ENG-009 made the generalized gap the primary margin and preregistered two
-decay models that disagreed by ~8× about dimension 4. **ENG-010 certified the
-4×4 even block and adjudicated them**:
+ENG-010's prediction test ended `NEITHER_FALSIFIED` with the gap's bottleneck
+at the right cell edge. **ENG-011 certified the 5×5 block and explained both.**
 
-> `G[{1, b, b², b³}](L)` is positive definite for every `L ∈ [log 3, log 4]`,
-> inertia `(4, 0, 0)` by two independent routes, and its generalized gap
-> satisfies `λmin(G, M) ∈ [1.9073486328125e-06, 2.415977410246834e-06]` —
-> with the bottleneck at the right cell edge, twenty times below the E3
-> midpoint scout.
+> `G[{1, b, b², b³, b⁴}](L)` is positive definite for every
+> `L ∈ [log 3, log 4]`, inertia `(5, 0, 0)`, with
+> `λmin(G, M) ∈ [1.9033905118703842e-07, 2.5221165652583946e-07]` — and the
+> bottleneck **returned to the interior**, certified inside `[1.11, 1.30]`.
 
-The adjudication verdict, recorded against the preregistered artifact before
-any refit, is **`NEITHER_FALSIFIED`**: the certified enclosure is tight, but
-it lands in the overlap of both models' ×5 falsifier windows, between the two
-point predictions. The experiment was decisive about the number and
-indecisive between the models — expected outcome E of the work order, and a
-statement about the preregistered tolerance rather than about the block. See
-[`docs/EVEN4_GAP_ADJUDICATION_ENG010_v0.1.md`](docs/EVEN4_GAP_ADJUDICATION_ENG010_v0.1.md).
+The n = 4 edge fall was real (derivative-sign certificates on the frozen
+witness) but not structural; the new `b⁴` direction's Schur coupling — which
+consumes up to 99.8% of its diagonal — introduces the n = 5 loss and pins the
+new interior bottleneck. The second preregistered adjudication returned
+**`TOLERANCE_TOO_WIDE`**: for the second consecutive dimension, a tight
+certified enclosure fell inside both frozen ×5 windows. Nested-gap
+monotonicity is now a comparator-audited theorem (`nested_gap_regression`),
+and the certified ladder confirms it strictly at every step. See
+[`docs/EVEN5_BOUNDARY_ENG011_v0.1.md`](docs/EVEN5_BOUNDARY_ENG011_v0.1.md).
 
-**Next: ENG-011.** The refitted models (four certified points) diverge by
-11.9× at n = 5, so `eng011_target_selection.json` selects the even 5×5
-`{1, b, b², b³, b⁴}` — plus the new structural question the certification
-surfaced: why does the pencil weaken toward `log 4`? No E1 work on n = 5 is
-launched before ENG-010 is interpreted.
+**Next: ENG-012.** Adjudication reform (preregister n = 6 at a tolerance a
+power analysis can defend) and bottleneck dynamics (`L*(n)` as a first-class
+certified observable). `eng012_target_selection.json` records the plan; no
+n = 6 E1 work is launched.
 
 ## 9. History
 

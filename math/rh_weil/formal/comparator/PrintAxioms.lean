@@ -92,7 +92,19 @@ def atlasAudited : List (String × Name × Name) :=
       ``AtlasRH.PreconditionedCertificate4Statement)
   , ("preconditioned_gap_certificate4",
       ``Comparator.atlas_preconditioned_gap_certificate4,
-      ``AtlasRH.PreconditionedGapCertificate4Statement) ]
+      ``AtlasRH.PreconditionedGapCertificate4Statement)
+  , ("shifted_positivity_transfer",
+      ``Comparator.atlas_shifted_positivity_transfer,
+      ``AtlasRH.ShiftedPositivityTransferStatement)
+  , ("shifted_shift_monotone",
+      ``Comparator.atlas_shifted_shift_monotone,
+      ``AtlasRH.ShiftedShiftMonotoneStatement)
+  , ("nested_gap_regression",
+      ``Comparator.atlas_nested_gap_regression,
+      ``AtlasRH.NestedGapRegressionStatement)
+  , ("schur_witness_block",
+      ``Comparator.atlas_schur_witness_block,
+      ``AtlasRH.SchurWitnessBlockStatement) ]
 
 run_cmd do
   let env ← getEnv
