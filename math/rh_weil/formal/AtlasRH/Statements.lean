@@ -309,6 +309,42 @@ def PreconditionedGapCertificate4Statement : Prop :=
         - 2 * c * d * f * g - d ^ 2 * e * h + d ^ 2 * f ^ 2 →
     ∀ v : Fin 4 → ℝ, lam * (v ⬝ᵥ M.mulVec v) ≤ v ⬝ᵥ G.mulVec v
 
+/-! ## The 5×5 block: shifted composition, nesting, Schur (ENG-011) -/
+
+/-- **Shifted positivity composes back.** A certified shifted sweep, a
+positive `λ`, and a positive definite reference metric force `G` itself
+positive definite: `G = (G − λM) + λM`. -/
+def ShiftedPositivityTransferStatement : Prop :=
+  ∀ (n : ℕ) (G M : SymMatrix n) (lam : ℝ),
+    0 < lam → M.PosDef → (G - lam • M).PosDef → G.PosDef
+
+/-- **A smaller shift stays positive definite** — how a certified gap at a
+larger `λ` licenses every smaller shift with no new computation. -/
+def ShiftedShiftMonotoneStatement : Prop :=
+  ∀ (n : ℕ) (G M : SymMatrix n) (a b : ℝ),
+    b ≤ a → M.PosSemidef → (G - a • M).PosDef → (G - b • M).PosDef
+
+/-- **Certified gap lower bounds regress upward through nesting.** A
+shifted-PSD certificate restricts along any index map, so the certified `λ`
+bounds every sub-pencil's Rayleigh quotients — the formal direction of
+generalized Cauchy interlacing the ENG-011 runtime uses. -/
+def NestedGapRegressionStatement : Prop :=
+  ∀ (n m : ℕ) (G M : SymMatrix n) (lam : ℝ),
+    (G - lam • M).PosSemidef →
+    ∀ (e : Fin m → Fin n) (x : Fin m → ℝ),
+      lam * (x ⬝ᵥ (M.submatrix e e).mulVec x)
+        ≤ x ⬝ᵥ (G.submatrix e e).mulVec x
+
+/-- **The Schur witness theorem.** `A ≻ 0`, an exact witness `A y = c`, and a
+positive residual `d − c ⬝ᵥ y` make the bordered quadratic form
+`xᵀAx + 2t(c ⬝ᵥ x) + d t²` positive away from zero — the semantic payload of
+the ENG-011 verified-solve Schur analysis of the `b⁴` direction. -/
+def SchurWitnessBlockStatement : Prop :=
+  ∀ (n : ℕ) (A : SymMatrix n) (c : Fin n → ℝ) (d : ℝ) (y : Fin n → ℝ),
+    A.PosDef → A.mulVec y = c → 0 < d - c ⬝ᵥ y →
+    ∀ (x : Fin n → ℝ) (t : ℝ), x ≠ 0 ∨ t ≠ 0 →
+      0 < x ⬝ᵥ A.mulVec x + 2 * t * (c ⬝ᵥ x) + d * t ^ 2
+
 /-! ## Rank–trace -/
 
 /-- **The rank–trace inequality, `Q = 0` case.**

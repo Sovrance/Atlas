@@ -71,6 +71,7 @@ HASHED_SOURCES = (
     "formal/AtlasRH/CertificateSemantics.lean",
     "formal/AtlasRH/GeneralizedGap.lean",
     "formal/AtlasRH/Sylvester4.lean",
+    "formal/AtlasRH/NestedSchur.lean",
     "formal/comparator/TrustedStatements.lean",
     "formal/comparator/Solution.lean",
     "formal/comparator/PrintAxioms.lean",

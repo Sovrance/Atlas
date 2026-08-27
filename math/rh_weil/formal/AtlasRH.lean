@@ -7,3 +7,4 @@ import AtlasRH.RankTrace
 import AtlasRH.CertificateSemantics
 import AtlasRH.GeneralizedGap
 import AtlasRH.Sylvester4
+import AtlasRH.NestedSchur

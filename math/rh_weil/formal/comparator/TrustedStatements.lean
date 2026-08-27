@@ -92,6 +92,22 @@ abbrev preconditioned_certificate4_statement : Prop :=
 abbrev preconditioned_gap_certificate4_statement : Prop :=
   AtlasRH.PreconditionedGapCertificate4Statement
 
+/-- Shifted positivity composes back to positivity of `G` itself. -/
+abbrev shifted_positivity_transfer_statement : Prop :=
+  AtlasRH.ShiftedPositivityTransferStatement
+
+/-- A smaller shift stays positive definite. -/
+abbrev shifted_shift_monotone_statement : Prop :=
+  AtlasRH.ShiftedShiftMonotoneStatement
+
+/-- Certified gap lower bounds regress upward through nesting. -/
+abbrev nested_gap_regression_statement : Prop :=
+  AtlasRH.NestedGapRegressionStatement
+
+/-- The Schur witness theorem for bordered blocks. -/
+abbrev schur_witness_block_statement : Prop :=
+  AtlasRH.SchurWitnessBlockStatement
+
 /-- The rank–trace inequality in the `Q = 0` case the runtime uses. -/
 abbrev rank_trace_hs_statement : Prop := AtlasRH.RankTraceZeroQStatement
 

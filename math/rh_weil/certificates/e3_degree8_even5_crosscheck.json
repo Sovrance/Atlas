@@ -1,0 +1,129 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil 5x5 even block \u2014 Candidate A",
+  "work_order": "WO-RH-77",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_SCAN_PREVIEW",
+  "evidence_class": "E3",
+  "basis": {
+    "basis_id": "weil_even5_one_b_b2_bcube_bquart_v1",
+    "elements": [
+      "one",
+      "b",
+      "b2",
+      "bcube",
+      "bquart"
+    ],
+    "definitions": {
+      "one": "1",
+      "b": "x(L - x)",
+      "b2": "x^2 (L - x)^2 = b(x)^2",
+      "bcube": "x^3 (L - x)^3 = b(x)^3",
+      "bquart": "x^4 (L - x)^4 = b(x)^4"
+    },
+    "parity_about_midpoint": {
+      "one": "even",
+      "b": "even",
+      "b2": "even",
+      "bcube": "even",
+      "bquart": "even"
+    },
+    "spans_in_u": "span{1, u^2, u^4, u^6, u^8} with u = x - L/2",
+    "kernel_degrees_in_a": {
+      "one_one": 1,
+      "one_b": 3,
+      "one_b2": 5,
+      "one_bcube": 7,
+      "one_bquart": 9,
+      "b_b": 5,
+      "b_b2": 7,
+      "b_bcube": 9,
+      "b_bquart": 11,
+      "b2_b2": 9,
+      "b2_bcube": 11,
+      "b2_bquart": 13,
+      "bcube_bcube": 13,
+      "bcube_bquart": 15,
+      "bquart_bquart": 17
+    },
+    "reference_metric_id": "l2_gram_on_support"
+  },
+  "domain": {
+    "cell": [
+      "1.0986122886681098",
+      "1.3862943611198906"
+    ],
+    "label": [
+      "log(3)",
+      "log(4)"
+    ]
+  },
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "inertia/certificate.py": "bf952895bcfb7ac031f90982b732cc0ba7d71ca83ae63658c5d3212a8f87f94c",
+      "inertia/ldl.py": "df0fb8d6807eaab7560a70d27604144138f5b76b9fcc0d4c94c3a9dc3296b965",
+      "inertia/stratify.py": "6e1c34642f2b5157dcccdb462a34fe2ba615feb613ab9eca4b751d0beba50334",
+      "moments/adapter.py": "160ec4ae7a7ed14f00646bd48417ca89b9c9804912b55aa177347257e3b84771",
+      "moments/spectral_moments.py": "e7f40f893ff59e846c58d447b578dd73f19de417c372df263bf402806efb14f2",
+      "ranktrace/theorem.py": "b6f2d310c778a2411ce0a44cafb69f5ee3487e473823127b5b8440f120004681",
+      "scripts/certify_even5.py": "0466b7960ca55f0cc24c7796b60178f53ba12d88fb8b1b28eacda5890cca1973",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/basis_algebra.py": "c03163bb90b680c7868c23fdcc8d962d596bec6bcaee95e09e20bbdd3625ff69",
+      "src/core.py": "7cb6ca5af9b3b3e71b4b44f40fc43cf72bdc0372982833fcf17be80a116261eb",
+      "src/even5.py": "f13f8449b87aa0c6d233992d7554f070401fe2b6c6abc0e84094fbba04fc5192",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/interval_backend.py": "f44cc018f7ad223b8af1f8568de4d7c0604422e72ed42a792e09525c63a936ac",
+      "src/interval_cover.py": "4960fc8a8a72836a93f95b650f90ad6f227972e76e2d04549dc3f03d8add0a44",
+      "src/normalization.py": "4a6ecca89e7fdd355b538e107471975f7e0b31c812c156eb45a2d9c25cbd4335",
+      "src/pole.py": "db8d4838e656e07790b27653ba9c76f4730947efa8572512d9358e68e027325e",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "rigorous": false,
+  "hard_constraints_certified": false,
+  "psd_claim": false,
+  "status": "AGREES",
+  "mpmath_used": true,
+  "numeric_warrant": "NONE \u2014 E3 regression evidence, never a warrant",
+  "independence": "independent_even5 imports independent_even3 only; neither imports any production assembly module (asserted by test_even5)",
+  "points": [
+    {
+      "L": "1.0986122886681098",
+      "worst_so_far": "1.5480853821498994e-13"
+    },
+    {
+      "L": "1.1",
+      "worst_so_far": "1.5480853821498994e-13"
+    },
+    {
+      "L": "1.1547",
+      "worst_so_far": "1.6881385402540262e-12"
+    },
+    {
+      "L": "1.2",
+      "worst_so_far": "1.6881385402540262e-12"
+    },
+    {
+      "L": "1.3",
+      "worst_so_far": "1.6881385402540262e-12"
+    },
+    {
+      "L": "1.3266",
+      "worst_so_far": "1.6881385402540262e-12"
+    },
+    {
+      "L": "1.36",
+      "worst_so_far": "1.6881385402540262e-12"
+    },
+    {
+      "L": "1.3862943611198906",
+      "worst_so_far": "1.6881385402540262e-12"
+    }
+  ],
+  "worst_relative_difference": "1.6881385402540262e-12",
+  "rh_proof_claim": false,
+  "generated_utc": "2026-08-27T12:39:45Z",
+  "content_hash": "81583b6dc896bfed40775a0308fcca67da68b40c2e5e505c7688fc5eb6ee3fa9"
+}

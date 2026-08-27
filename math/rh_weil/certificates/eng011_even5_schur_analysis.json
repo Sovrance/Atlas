@@ -1,0 +1,126 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil 5x5 boundary and structure \u2014 Candidate A",
+  "work_order": "WO-RH-79",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_STRUCTURAL_DIAGNOSTIC",
+  "evidence_class": "E1",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_eng011.py": "650c2f2f08a766569feae4ac80947d1a1e50731d35138f18d31352f9c2663fcf",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/even4.py": "a646e506769b8fa4b8b8242101d82508605dd21d7e25eeccaebae4b6103150c3",
+      "src/even5.py": "f13f8449b87aa0c6d233992d7554f070401fe2b6c6abc0e84094fbba04fc5192",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/pole.py": "db8d4838e656e07790b27653ba9c76f4730947efa8572512d9358e68e027325e",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "rigorous": true,
+  "hard_constraints_certified": true,
+  "numeric_warrant": "E1 \u2014 Arb certified solves; every quoted value is an enclosure",
+  "rh_proof_claim": false,
+  "psd_claim": false,
+  "status": "PASS",
+  "mpmath_used": false,
+  "method": "S5 = d - c^T A4^{-1} c with A4 the leading 4x4 of the frozen-preconditioned block and the solve Arb's certified interval solve (verified LU; no floating inversion)",
+  "points": [
+    {
+      "L": "1.0986122886681098",
+      "form": "unshifted",
+      "d_diag": [
+        "0.3008186737615469",
+        "0.30081867376187515"
+      ],
+      "coupling_cT_A4inv_c": [
+        "0.2978350019164427",
+        "0.29783500204204205"
+      ],
+      "schur_S5": [
+        "0.0029836717195048995",
+        "0.0029836718454325025"
+      ],
+      "coupling_fraction_of_d": "0.9900814941268168"
+    },
+    {
+      "L": "1.173",
+      "form": "unshifted",
+      "d_diag": [
+        "0.05742955824600416",
+        "0.05742955824709862"
+      ],
+      "coupling_cT_A4inv_c": [
+        "0.056488096447046686",
+        "0.05648809672151851"
+      ],
+      "schur_S5": [
+        "0.0009414615244856447",
+        "0.0009414618000519341"
+      ],
+      "coupling_fraction_of_d": "0.9836066706585659"
+    },
+    {
+      "L": "1.2424533248940002",
+      "form": "unshifted",
+      "d_diag": [
+        "1.634288973267464",
+        "1.634288973270373"
+      ],
+      "coupling_cT_A4inv_c": [
+        "1.6305728195341647",
+        "1.6305728199926874"
+      ],
+      "schur_S5": [
+        "0.0037161532747766344",
+        "0.003716153736208292"
+      ],
+      "coupling_fraction_of_d": "0.9977261343824285"
+    },
+    {
+      "L": "1.31",
+      "form": "unshifted",
+      "d_diag": [
+        "6.316849964012401",
+        "6.316849964018167"
+      ],
+      "coupling_cT_A4inv_c": [
+        "6.302019608833899",
+        "6.30201960932028"
+      ],
+      "schur_S5": [
+        "0.014830354692120894",
+        "0.014830355184268167"
+      ],
+      "coupling_fraction_of_d": "0.997652254680311"
+    },
+    {
+      "L": "1.3862943611198906",
+      "form": "unshifted",
+      "d_diag": [
+        "14.531660933862394",
+        "14.531660933878934"
+      ],
+      "coupling_cT_A4inv_c": [
+        "14.472974903346744",
+        "14.472974915547123"
+      ],
+      "schur_S5": [
+        "0.05868601831527006",
+        "0.05868603053219006"
+      ],
+      "coupling_fraction_of_d": "0.9959615060734769"
+    }
+  ],
+  "reading": {
+    "coupling": "the b^4 column's coupling to span{1, b, b^2, b^3} consumes 97-99.5% of its preconditioned diagonal across the cell -- the same near-dependence pattern each previous extension showed, now stronger",
+    "inherited_vs_introduced": "the n=5 gap loss is INTRODUCED by the new direction, not inherited: the leading-4x4 pencil keeps its certified gap >= 1.9073486328125e-06 (ENG-010, reused by theorem since lam5 < lam4), while the pencil's new Rayleigh minimum lives on directions with a large b^4 component -- the Schur channel"
+  },
+  "even4_gap_certificate": {
+    "file": "e1_eng010_even4_generalized_gap_log3_log4.json",
+    "content_hash": "1fdd92eface2f26a6032d78d7ce2331ef15f3de00a4254d8e4e46ec12d06ae55"
+  },
+  "generated_utc": "2026-08-27T12:59:16Z",
+  "content_hash": "4e67532b097ce3ddb638de01a2dd13563d7618e54efed0c495c6af9eea966d99"
+}

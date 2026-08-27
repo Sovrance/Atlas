@@ -1,0 +1,159 @@
+{
+  "certificate_version": "0.1",
+  "program": "RH/Weil 5x5 boundary and structure \u2014 Candidate A",
+  "work_order": "WO-RH-78",
+  "claim_scope": "finite_dimensional_weil_compression",
+  "content_kind": "WEIL_STRUCTURAL_DIAGNOSTIC",
+  "evidence_class": "E1",
+  "normalization_certificate_id": "norm_sha256_f84b2fae2e13c777b1f829ef2567699c",
+  "dependencies": {
+    "source_hashes": {
+      "scripts/report_eng011.py": "650c2f2f08a766569feae4ac80947d1a1e50731d35138f18d31352f9c2663fcf",
+      "src/archimedean_realspace.py": "405c0ee80fe948f3c3a425d949d2e4b1228c644bfeb2c46850df187bc55f1cc2",
+      "src/even4.py": "a646e506769b8fa4b8b8242101d82508605dd21d7e25eeccaebae4b6103150c3",
+      "src/even5.py": "f13f8449b87aa0c6d233992d7554f070401fe2b6c6abc0e84094fbba04fc5192",
+      "src/generalized_gap.py": "bf152384d2f6936a8baf9f56db35e3904cfe93e20528b7d11d27bf5e281de77c",
+      "src/pole.py": "db8d4838e656e07790b27653ba9c76f4730947efa8572512d9358e68e027325e",
+      "src/reference_metric.py": "f0b108388558a9bf3e6358ef67057dfb6b62322a74261c59ef0fec738ef0e72b",
+      "src/weil_entries.py": "c7f4ef05130417e9b3fb6b5c876a9d6156922d3e08df057d5b4b0bf6fc712f86"
+    }
+  },
+  "rigorous": true,
+  "hard_constraints_certified": true,
+  "numeric_warrant": "E1 for every enclosure; the derivative signs are certified at the listed points, not inferred from a grid",
+  "rh_proof_claim": false,
+  "psd_claim": false,
+  "status": "PASS",
+  "mpmath_used": false,
+  "question": "is the ENG-010 right-edge bottleneck (L -> log 4 at n = 4) structural?",
+  "n4_witness_derivative_decomposition": [
+    {
+      "L": "1.3",
+      "pole_dL": [
+        "0.07300459917383446",
+        "0.07300459917383446"
+      ],
+      "minus_prime_dL": [
+        "-0.006438154870724589",
+        "-0.006438154870724589"
+      ],
+      "arch_dL": [
+        "-0.06656794847295036",
+        "-0.06656794847295035"
+      ],
+      "minus_lam_metric_dL": [
+        "-7.429702736944874e-08",
+        "-7.429702736944874e-08"
+      ],
+      "total_dL": [
+        "-1.5784668678566173e-06",
+        "-1.5784668678500954e-06"
+      ],
+      "total_sign": -1
+    },
+    {
+      "L": "1.34",
+      "pole_dL": [
+        "0.10388837760227286",
+        "0.10388837760227286"
+      ],
+      "minus_prime_dL": [
+        "-0.00990798553330019",
+        "-0.00990798553330019"
+      ],
+      "arch_dL": [
+        "-0.09398194799505862",
+        "-0.09398194799505862"
+      ],
+      "minus_lam_metric_dL": [
+        "-1.0312449655718922e-07",
+        "-1.0312449655718922e-07"
+      ],
+      "total_dL": [
+        "-1.6590505825046455e-06",
+        "-1.6590505824961716e-06"
+      ],
+      "total_sign": -1
+    },
+    {
+      "L": "1.36",
+      "pole_dL": [
+        "0.12360250821463714",
+        "0.12360250821463714"
+      ],
+      "minus_prime_dL": [
+        "-0.012236075295722668",
+        "-0.012236075295722668"
+      ],
+      "arch_dL": [
+        "-0.1113676771827727",
+        "-0.11136767718277268"
+      ],
+      "minus_lam_metric_dL": [
+        "-1.2118502608271946e-07",
+        "-1.2118502608271946e-07"
+      ],
+      "total_dL": [
+        "-1.365448884302411e-06",
+        "-1.3654488842929232e-06"
+      ],
+      "total_sign": -1
+    },
+    {
+      "L": "1.375",
+      "pole_dL": [
+        "0.1406448971668785",
+        "0.1406448971668785"
+      ],
+      "minus_prime_dL": [
+        "-0.014307178158761261",
+        "-0.014307178158761261"
+      ],
+      "arch_dL": [
+        "-0.12633848068261566",
+        "-0.12633848068261566"
+      ],
+      "minus_lam_metric_dL": [
+        "-1.3662615887653784e-07",
+        "-1.3662615887653784e-07"
+      ],
+      "total_dL": [
+        "-8.983006573060349e-07",
+        "-8.983006572966161e-07"
+      ],
+      "total_sign": -1
+    },
+    {
+      "L": "1.3862943611198906",
+      "pole_dL": [
+        "0.1549108774383906",
+        "0.1549108774383906"
+      ],
+      "minus_prime_dL": [
+        "-0.016077812179445528",
+        "-0.016077812179445528"
+      ],
+      "arch_dL": [
+        "-0.13883327112582766",
+        "-0.13883327112582763"
+      ],
+      "minus_lam_metric_dL": [
+        "-1.4944504638712588e-07",
+        "-1.4944504638712588e-07"
+      ],
+      "total_dL": [
+        "-3.553119289747812e-07",
+        "-3.553119289627274e-07"
+      ],
+      "total_sign": -1
+    }
+  ],
+  "n4_one_sided_decrease_certified_at_points": true,
+  "n4_reading": "for the frozen n=4 bottleneck witness, d/dL of the shifted quadratic form is certified negative at every sampled point in [1.34, log 4] -- the pole term drives the decrease and the prime term partially cancels it; the witness quotient genuinely falls into the right edge at n = 4",
+  "n5_verdict": "INTERIOR_MINIMUM_RETURNS",
+  "n5_evidence": "the n=5 gap certificate proves lambda* >= 4e-07-scale bounds on [log 3, 1.11] and [1.30, log 4] and endpoint bounds 6.4e-07 / 1.28e-06, all far above the certified interior upper witness at L = 1.173 -- the infimum moved strictly inside [1.11, 1.30]; the right edge was not structural but a property of the n = 4 pencil's weakest direction",
+  "prime_power_note": "the prime set on the open cell is constant (breakpoints at the endpoints); q = 4 enters exactly at L = log 4, so the n=4 edge weakness sits at the boundary where the next prime power would join -- recorded as an observation, with the neighboring cell explicitly out of scope (\u00a7Anti-overclaim)",
+  "verdict": "INTERIOR_MINIMUM_RETURNS",
+  "generated_utc": "2026-08-27T12:59:17Z",
+  "content_hash": "3d91164e402862644cd0ac9ddc569fca06ad6ac05e6d412de41385960c7cda6b"
+}

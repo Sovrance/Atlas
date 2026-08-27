@@ -60,6 +60,11 @@ BASIS_L_POLY: Dict[str, Tuple[Dict[int, Fraction], ...]] = {
     "b2": ({}, {}, {2: Fraction(1)}, {1: Fraction(-2)}, {0: Fraction(1)}),
     "bcube": ({}, {}, {}, {3: Fraction(1)}, {2: Fraction(-3)},
               {1: Fraction(3)}, {0: Fraction(-1)}),
+    # ENG-011 §WO-RH-76: bquart = b^4 = x^4 (L - x)^4, the fifth even-sector
+    # direction (u^8 in u = x - L/2), homogeneous degree 8. E0-prepared like
+    # bcube before it; everything derives from this row.
+    "bquart": ({}, {}, {}, {}, {4: Fraction(1)}, {3: Fraction(-4)},
+               {2: Fraction(6)}, {1: Fraction(-4)}, {0: Fraction(1)}),
 }
 
 BASIS_NAMES: Tuple[str, ...] = tuple(BASIS_L_POLY)
@@ -67,7 +72,7 @@ BASIS_NAMES: Tuple[str, ...] = tuple(BASIS_L_POLY)
 #: Parity about ``x = L/2``, checked exactly in the tests rather than asserted.
 BASIS_PARITY: Dict[str, str] = {
     "one": "even", "q1": "odd", "b": "even", "b3": "odd", "b2": "even",
-    "bcube": "even",
+    "bcube": "even", "bquart": "even",
 }
 
 

@@ -1,6 +1,6 @@
 ---
 status: CURRENT
-work_order: ATLAS-RH-ENG-010
+work_order: ATLAS-RH-ENG-011
 supersedes: docs/history/agent-instructions-initial-integration.md
 ---
 
@@ -143,8 +143,22 @@ before any refit. Two working rules this order added:
   anything else; the verdict lands in its own certificate before any model
   is refitted. The tests pin the hash too.
 
-Next, ENG-011 targets the even 5×5 `{1, b, b², b³, b⁴}` (refits diverge
-11.9× at n = 5, `certificates/eng011_target_selection.json`), plus the
-structural question of the edge bottleneck. No E1 work on n = 5 is launched
-before ENG-010 is interpreted; no infinite-dimensional limit is inferred from
-any of it.
+ENG-011 certified that block — positive definite, inertia `(5, 0, 0)`, gap
+`[1.90e-07, 2.52e-07]` — and resolved the bottleneck question: the n = 4 edge
+fall was certified real but the n = 5 minimum returned to the interior; the
+`b⁴` Schur coupling introduces the loss. The second preregistered adjudication
+returned `TOLERANCE_TOO_WIDE`. Two working rules this order added:
+
+* **When the sweep is the wall, make the sweep the warrant.** Direct minor
+  covers were infeasible at n = 5; the interval LDL* sweep of the *shifted*
+  pencil delivers the gap bound, positivity (`shifted_positivity_transfer`)
+  and, by `nested_gap_regression`, every smaller block's bound — one compute,
+  three theorem-backed conclusions.
+* **A verdict vocabulary needs a word for "the test was too easy".**
+  `TOLERANCE_TOO_WIDE` exists so that two models surviving twice is reported
+  as a property of the preregistered windows, not of the models.
+
+Next, ENG-012: preregister the n = 6 test at a defensible tolerance and treat
+the bottleneck location `L*(n)` as a certified observable
+(`certificates/eng012_target_selection.json`). No n = 6 E1 work is launched;
+no infinite-dimensional limit is inferred from any of it.

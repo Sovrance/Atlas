@@ -108,6 +108,21 @@ EVEN4_CERTS = [
 ]
 EVEN4_POSITIVITY = "e1_degree6_even4_positivity_log3_log4.json"
 
+#: ENG-011 artifacts. The 5x5 even block, the boundary/Schur analyses, and
+#: the n=5 adjudication.
+EVEN5_CERTS = [
+    ("e0_degree8_even5_exact_identities.json", "even5 exact identities"),
+    ("e0_eng011_even5_reference_metric.json", "even5 reference metric"),
+    ("e1_degree8_even5_inertia_log3_log4.json", "even5 inertia"),
+    ("e1_degree8_even5_moments_log3_log4.json", "even5 moments"),
+    ("e1_eng011_even5_generalized_gap_log3_log4.json", "even5 generalized gap"),
+    ("eng011_boundary_bottleneck_analysis.json", "boundary bottleneck analysis"),
+    ("eng011_even5_schur_analysis.json", "even5 Schur analysis"),
+    ("eng011_scaling_model_adjudication.json", "n=5 scaling adjudication"),
+    ("eng011_information_comparison_report.json", "even5 information comparison"),
+]
+EVEN5_POSITIVITY = "e1_degree8_even5_positivity_log3_log4.json"
+
 #: ENG-007 artifact. Carries no numeric bound and no normalization binding: the
 #: theorems it reports are finite linear algebra over the reals, true whichever
 #: pole primitive Atlas adopted. It still has to reach PIR, because a formal
@@ -506,6 +521,64 @@ def stage_even4() -> int:
     return 0
 
 
+def stage_even5() -> int:
+    """ENG-011: validate the 5x5 block's artifacts as committed."""
+    print("\n=== 5x5 even block + boundary/Schur + adjudication (ENG-011) ===")
+    from inertia.certificate import satisfies_psd_requirement
+
+    for name, label in EVEN5_CERTS:
+        if not (CERT_DIR / name).exists():
+            print(f"  FAIL: missing {label} ({name})", file=sys.stderr)
+            return 1
+    inertia = json.loads((CERT_DIR / EVEN5_CERTS[2][0]).read_text(encoding="utf-8"))
+    sigs = inertia.get("signatures_seen") or []
+    print(f"  inertia: {sigs}  constant on cell: {inertia.get('constant_on_cell')}")
+    if satisfies_psd_requirement(inertia):
+        print("  FAIL: an inertia certificate satisfied a PSD requirement",
+              file=sys.stderr)
+        return 1
+    gap = json.loads((CERT_DIR / EVEN5_CERTS[4][0]).read_text(encoding="utf-8"))
+    print(f"  generalized gap >= {gap['certified_lambda_lower_float']}; "
+          f"bottleneck {gap['bottleneck']['classification']} in "
+          f"{gap['bottleneck']['certified_interval']}")
+    if gap.get("reference_metric_certificate") != EVEN5_CERTS[1][0]:
+        print("  FAIL: gap does not name the even5 reference metric",
+              file=sys.stderr)
+        return 1
+    pos_path = CERT_DIR / EVEN5_POSITIVITY
+    if pos_path.exists():
+        pos = json.loads(pos_path.read_text(encoding="utf-8"))
+        if not satisfies_psd_requirement(pos):
+            print("  FAIL: the 5x5 positivity certificate does not satisfy a "
+                  "PSD requirement", file=sys.stderr)
+            return 1
+        got = [pos["n_positive"], pos["n_negative"], pos["n_zero"]]
+        if sigs and got != list(sigs[0]):
+            print(f"  FAIL: positivity says {got} but inertia says {sigs[0]}",
+                  file=sys.stderr)
+            return 1
+        print("  positivity: PASS by the shifted route; consistent with inertia")
+    else:
+        print("  positivity not claimed; the stratification is the result")
+    adj = json.loads((CERT_DIR / EVEN5_CERTS[7][0]).read_text(encoding="utf-8"))
+    print(f"  adjudication verdict: {adj.get('verdict')}")
+    if not adj.get("recorded_before_any_refit"):
+        print("  FAIL: adjudication not recorded before refit", file=sys.stderr)
+        return 1
+    if not (adj.get("frozen_models_artifact") or {}).get("verified_unchanged"):
+        print("  FAIL: adjudication did not verify the frozen artifact",
+              file=sys.stderr)
+        return 1
+    boundary = json.loads((CERT_DIR / EVEN5_CERTS[5][0]).read_text(encoding="utf-8"))
+    print(f"  boundary verdict: {boundary.get('verdict')}")
+    cross = CERT_DIR / "e3_degree8_even5_crosscheck.json"
+    if cross.exists():
+        c = json.loads(cross.read_text(encoding="utf-8"))
+        print(f"  independent assembly: worst relative difference "
+              f"{c['worst_relative_difference']} (E3, never a warrant)")
+    return 0
+
+
 def stage_formal() -> int:
     """ENG-007 §10/§12: the theorem manifest gate, then the formal certificate.
 
@@ -551,9 +624,12 @@ def stage_pir() -> int:
     d3_name, _ = degree3_e1_certificate()
     expected = ([n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
                 + [n for n, _ in EVEN3_CERTS] + [n for n, _ in ENG009_CERTS]
-                + [n for n, _ in EVEN4_CERTS])
+                + [n for n, _ in EVEN4_CERTS] + [n for n, _ in EVEN5_CERTS])
     if (CERT_DIR / EVEN4_POSITIVITY).exists():
         expected.append(EVEN4_POSITIVITY)
+    if (CERT_DIR / EVEN5_POSITIVITY).exists():
+        expected.append(EVEN5_POSITIVITY)
+    expected.append("eng012_target_selection.json")
     if d3_name:
         expected.append(d3_name)
     if (CERT_DIR / EVEN3_POSITIVITY).exists():
@@ -579,9 +655,11 @@ def stage_hashes() -> int:
     d3_name, _ = degree3_e1_certificate()
     checked = ([n for n, _ in RIGOROUS_CERTS] + [n for n, _ in ENG006_CERTS]
                + [n for n, _ in EVEN3_CERTS] + [n for n, _ in ENG009_CERTS]
-               + [n for n, _ in EVEN4_CERTS])
+               + [n for n, _ in EVEN4_CERTS] + [n for n, _ in EVEN5_CERTS])
     if (CERT_DIR / EVEN4_POSITIVITY).exists():
         checked.append(EVEN4_POSITIVITY)
+    if (CERT_DIR / EVEN5_POSITIVITY).exists():
+        checked.append(EVEN5_POSITIVITY)
     if d3_name:
         checked.append(d3_name)
     if (CERT_DIR / EVEN3_POSITIVITY).exists():
@@ -669,6 +747,30 @@ def main() -> int:
         if _run("ENG-010 adjudication, info comparison, ENG-011 selection",
                 [sys.executable, str(ROOT / "scripts" / "report_eng010.py")]):
             return 1
+        if _run("5x5 even block: identities, metric, cross-check, moments (ENG-011)",
+                [sys.executable, str(ROOT / "scripts" / "certify_even5.py"),
+                 "--stage", "e0"]):
+            return 1
+        if _run("5x5 even block: cross-check",
+                [sys.executable, str(ROOT / "scripts" / "certify_even5.py"),
+                 "--stage", "crosscheck"]):
+            return 1
+        if _run("5x5 even block: moments",
+                [sys.executable, str(ROOT / "scripts" / "certify_even5.py"),
+                 "--stage", "moments"]):
+            return 1
+        # The even5 inertia and gap sweeps take tens of core-hours and are run
+        # explicitly via --stage {inertia,gap}-chunk / -merge; stage_even5
+        # validates the committed artifacts and the hash gate catches
+        # staleness.
+        if _run("ENG-011 boundary + Schur analyses",
+                [sys.executable, str(ROOT / "scripts" / "report_eng011.py"),
+                 "--stage", "analysis"]):
+            return 1
+        if _run("ENG-011 adjudication, info comparison, ENG-012 selection",
+                [sys.executable, str(ROOT / "scripts" / "report_eng011.py"),
+                 "--stage", "post"]):
+            return 1
 
     if _run("degree-3 exact identities (ENG-006 §7)",
             [sys.executable, str(ROOT / "tests" / "test_degree3_exact.py")]):
@@ -694,9 +796,13 @@ def main() -> int:
             [sys.executable, str(ROOT / "tests" / "test_even4.py")]):
         return 1
 
+    if _run("5x5 even block exact tests (ENG-011)",
+            [sys.executable, str(ROOT / "tests" / "test_even5.py")]):
+        return 1
+
     for stage in (stage_engines, stage_degree3, stage_even3, stage_eng009,
-                  stage_even4, stage_policy, stage_formal, stage_pir,
-                  stage_hashes):
+                  stage_even4, stage_even5, stage_policy, stage_formal,
+                  stage_pir, stage_hashes):
         if stage():
             return 1
 

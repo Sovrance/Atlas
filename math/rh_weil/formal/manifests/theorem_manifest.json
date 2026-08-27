@@ -244,6 +244,50 @@
         "Quot.sound",
         "propext"
       ]
+    },
+    {
+      "id": "shifted_positivity_transfer",
+      "trusted_statement": "AtlasRH.ShiftedPositivityTransferStatement",
+      "solution_theorem": "Comparator.atlas_shifted_positivity_transfer",
+      "statement_hash": "sha256:564e92dc748911a2c1dbf7570f7355839430065372007164cdb2e3c71ea3d791",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "id": "shifted_shift_monotone",
+      "trusted_statement": "AtlasRH.ShiftedShiftMonotoneStatement",
+      "solution_theorem": "Comparator.atlas_shifted_shift_monotone",
+      "statement_hash": "sha256:f08bd58b20c6e172dcb9d368938470defe3fa76f1fff3ce354f78f6e5deff86c",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "id": "nested_gap_regression",
+      "trusted_statement": "AtlasRH.NestedGapRegressionStatement",
+      "solution_theorem": "Comparator.atlas_nested_gap_regression",
+      "statement_hash": "sha256:ad4d92c40bc7a68c5c2b70355961d94a6913a3d70c81cb85b7085adc2489aca9",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "id": "schur_witness_block",
+      "trusted_statement": "AtlasRH.SchurWitnessBlockStatement",
+      "solution_theorem": "Comparator.atlas_schur_witness_block",
+      "statement_hash": "sha256:9065201c0fdbb3ff7aa941f25577f4b52429c00f113de42926b0c2d7b114e1d6",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
     }
   ],
   "unproved_statements": [
@@ -258,9 +302,9 @@
   "sources": {
     "formal/lean-toolchain": "8190e75a201741065fe508b28955dd64dd72d090babe5f70ce6848879d68ae88",
     "formal/lakefile.toml": "3fb605fd1290fcca3ca0e0d80fcd83ad66b7fa8e60fb4197ffd165e10ce1ef27",
-    "formal/AtlasRH.lean": "b07d7488b30b9fed470fca6c298a919f1175be5ee4fea08b67367522924e7dfd",
+    "formal/AtlasRH.lean": "ce6021472a56b0e81f531d2c7bd53e855680bbb4fa50f475323fc5fcb39976b6",
     "formal/AtlasRH/Definitions.lean": "0a5e23b599fe52adc0002d024fefaec64ec9adae1b44ac3f20aa5592182f9688",
-    "formal/AtlasRH/Statements.lean": "8829e0ff231a1e898c3f8af43b362f38a7b97e52d0685641184d179cc1660322",
+    "formal/AtlasRH/Statements.lean": "7dd3eb21308c86cfa5721231d33c963eadf91b8c4b6b344df425bab50bc39539",
     "formal/AtlasRH/Positivity.lean": "4d33dcd7cccaca0b9fd2d236be726c00a5d3cba363d876ebe431e332da4bb0a1",
     "formal/AtlasRH/MatrixInertia.lean": "23accbf303407561e500b2158dd4742703efe350ecf79c8c8c0fd6002c2cf2c6",
     "formal/AtlasRH/WeilBasis.lean": "cf74fffabe96a46b85a9099c0d3de1aec941ac8b1193ee3df05704e1fb6e8339",
@@ -268,11 +312,12 @@
     "formal/AtlasRH/CertificateSemantics.lean": "89cb59d5a5ec02d8276ef62f41b645824c6906ee06192922572f76194398b057",
     "formal/AtlasRH/GeneralizedGap.lean": "ed07339e7dd5db976d66d15e3821f86fe5a24d4fc5dea570117e9e8dea2f8e72",
     "formal/AtlasRH/Sylvester4.lean": "0898709f2f5a4c1fe6eb14175272dbf31261463560ed8f6ce2b8bcdf61d36a8d",
-    "formal/comparator/TrustedStatements.lean": "b7e201e8f0fe985329a389bbbf2c09542b4e85c1fd9f36c0419c42c6b830d84b",
-    "formal/comparator/Solution.lean": "1d33bd99d2586bc14263231f30741afc34d93e1a70035e63b1ff0d3b3ba2a50c",
-    "formal/comparator/PrintAxioms.lean": "a24da69b419a3b5dcc663cb3609a029d72dbc520ef00be6fa2dec41b7f5cf4ed"
+    "formal/AtlasRH/NestedSchur.lean": "2c80f30b1793c275735d3e13b388969b74e3bd085c493582b5f5d05fc3f103c6",
+    "formal/comparator/TrustedStatements.lean": "d41422eebca8c8b29e1b76b7c1540641d7b19fea3e2378388e8ff9899aea8612",
+    "formal/comparator/Solution.lean": "bcd76c1aa2d779c4b881857f511a37f9aa277445e4bb0085bd4f12db0af1f407",
+    "formal/comparator/PrintAxioms.lean": "644065a22bd2981074bd491da2294e7541328725855b28ba7ed862de3709cf55"
   },
   "note": "Every theorem listed here is finite linear algebra over the reals. A formal theorem may strengthen an exact theorem dependency; it never converts interval numerical evidence to FORMAL.",
-  "manifest_id": "formal_sha256_84f17d56b96c45a16e77dc30421bf45cb3ddb8e623e93d2ad48735051da6815b",
-  "generated_utc": "2026-08-25T22:56:46Z"
+  "manifest_id": "formal_sha256_1747b4aa28964919e6df6aaccfbed174b79e2f19a4bbf9c51804ed02e7513c1c",
+  "generated_utc": "2026-08-27T13:06:40Z"
 }
