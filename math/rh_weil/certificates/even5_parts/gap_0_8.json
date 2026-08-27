@@ -1,0 +1,19 @@
+{
+ "interval": [
+  "1.0986122886681098",
+  "1.1345725477245825"
+ ],
+ "status": "PASS",
+ "signatures": [
+  [
+   5,
+   0,
+   0
+  ]
+ ],
+ "boxes_examined": 37744,
+ "max_depth": 2,
+ "transitions": [],
+ "lam": "1635/8589934592",
+ "elapsed_seconds": "10381.158905267715"
+}
