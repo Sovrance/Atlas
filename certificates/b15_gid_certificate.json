@@ -1,0 +1,510 @@
+{
+  "certificate_version": "0.3",
+  "certificate_class": "EXACT-RATIONAL fingerprints; framework-capability benchmark",
+  "benchmark": "B15-GID",
+  "problem": "B15-GID: blind identification of {TrPhi3, NLSM, TrPhi3_shifted} from pole / zero / split fingerprints of the label-stripped dataset (B8 -> KnownGrammarDB -> pir.candidates)",
+  "timestamp_utc": "2026-09-23T21:33:49Z",
+  "headline": "primary correlator: Outcome A at held-out n=8 (FORCED); zeros-only correlator: Outcome B (OBSERVATIONALLY_EQUIVALENT) \u2014 zeros are shared by construction",
+  "arithmetic": "exact rational (Fraction) on every certified path; no floats",
+  "hard_constraints_certified": true,
+  "score": "finite",
+  "m_layer_stipulations": [
+    "Input is the exact label-stripped dataset; class ids are opaque; registered delta withheld",
+    "Grammar menu = {TrPhi3, NLSM, TrPhi3_shifted}: AMBIGUOUS/NONIDENTIFIABLE are menu-relative",
+    "Similarity and confidence are separate exact ratios; correlator named per field",
+    "Thresholds (9/10) are proposals pending \u00a79-OI-2 \u2014 carried as asm:"
+  ],
+  "calibration_route": "registered thresholds 9/10 (proposal); no data-fitted parameter \u2014 the pass has no tunable numeric tolerance (all detection exact)",
+  "inputs": {
+    "dataset_path": "data/b15/zero_dataset_v1.json",
+    "dataset_sha256": "6c6aca37149d05e1d6c929b33e14b59337442caf0b1fe30f23b388d8d9c2fa1c",
+    "known_grammars": "data/b15/known_grammars_v1.json",
+    "threshold": "9/10",
+    "fit_n": [
+      5,
+      6
+    ],
+    "held_out_n": 8,
+    "poly_degree": 3
+  },
+  "results": {
+    "T0_invariant_keys_regression": {
+      "status": "PASS",
+      "legacy_full_hash": "fpf_095a0449a18f5a6b"
+    },
+    "T1_fingerprint_build": {
+      "status": "PASS",
+      "summary": {
+        "C0:n5": {
+          "poles": 5,
+          "vanishing_loci": 5,
+          "split_ranks": [
+            1,
+            1
+          ],
+          "split_control_ranks": [
+            3,
+            3
+          ],
+          "redundancy_metric": "5/12"
+        },
+        "C0:n6": {
+          "poles": 9,
+          "vanishing_loci": 9,
+          "split_ranks": [
+            1,
+            1,
+            1
+          ],
+          "split_control_ranks": [
+            3,
+            3,
+            3
+          ],
+          "redundancy_metric": "2/3"
+        },
+        "C0:n8": {
+          "poles": 20,
+          "vanishing_loci": 20,
+          "split_ranks": [
+            1,
+            1,
+            1
+          ],
+          "split_control_ranks": [
+            3,
+            3,
+            3
+          ],
+          "redundancy_metric": "132/43"
+        },
+        "C1:n6": {
+          "poles": 3,
+          "vanishing_loci": 9,
+          "split_ranks": [
+            1,
+            1,
+            1
+          ],
+          "split_control_ranks": [
+            3,
+            3,
+            3
+          ],
+          "redundancy_metric": "14/15"
+        },
+        "C1:n8": {
+          "poles": 8,
+          "vanishing_loci": 20,
+          "split_ranks": [
+            1,
+            1,
+            1
+          ],
+          "split_control_ranks": [
+            3,
+            3,
+            3
+          ],
+          "redundancy_metric": "132/31"
+        },
+        "C2:n6": {
+          "poles": 9,
+          "vanishing_loci": 9,
+          "split_ranks": [
+            1,
+            1,
+            1
+          ],
+          "split_control_ranks": [
+            3,
+            3,
+            3
+          ],
+          "redundancy_metric": "2/3"
+        },
+        "C2:n8": {
+          "poles": 20,
+          "vanishing_loci": 20,
+          "split_ranks": [
+            1,
+            1,
+            1
+          ],
+          "split_control_ranks": [
+            3,
+            3,
+            3
+          ],
+          "redundancy_metric": "132/43"
+        }
+      },
+      "soundness": "pole/zero/rank detection SOUND (exact overdetermined fits, exact rank)"
+    },
+    "T2_quotient": {
+      "status": "PASS",
+      "relabelling": "reflection \u2218 rotation (D_6)",
+      "full_hashes": {
+        "C0": "fpf_8dca5c2c3c6beed6",
+        "C1": "fpf_4d5320f77ff9aba3",
+        "C2": "fpf_8dca5c2c3c6beed6"
+      }
+    },
+    "T3_db_identify": {
+      "status": "PASS",
+      "two_hash": "TrPhi3 / TrPhi3_shifted share full (delta-insensitive) hash, differ in specific",
+      "lookups": {
+        "C0:n5": {
+          "status": "IDENTIFIED",
+          "grammar_id": "TrPhi3",
+          "full": "fpf_08b07594f7e5cb33",
+          "specific": "fps_226b129215510a7d",
+          "note": "full-hash bucket also holds other specifics"
+        },
+        "C0:n6": {
+          "status": "IDENTIFIED",
+          "grammar_id": "TrPhi3",
+          "full": "fpf_8dca5c2c3c6beed6",
+          "specific": "fps_af216c2cdce1964a",
+          "note": "full-hash bucket also holds other specifics"
+        },
+        "C0:n8": {
+          "status": "IDENTIFIED",
+          "grammar_id": "TrPhi3",
+          "full": "fpf_d38d475e6694b542",
+          "specific": "fps_eca2d0a9f98ae6d9",
+          "note": "full-hash bucket also holds other specifics"
+        },
+        "C1:n6": {
+          "status": "IDENTIFIED",
+          "grammar_id": "NLSM",
+          "full": "fpf_4d5320f77ff9aba3",
+          "specific": "fps_8c5ea765120e683f"
+        },
+        "C1:n8": {
+          "status": "IDENTIFIED",
+          "grammar_id": "NLSM",
+          "full": "fpf_8f8c147c1a0f692a",
+          "specific": "fps_c480e2aae9dbfad6"
+        },
+        "C2:n6": {
+          "status": "IDENTIFIED",
+          "grammar_id": "TrPhi3_shifted",
+          "full": "fpf_8dca5c2c3c6beed6",
+          "specific": "fps_c56f20ca3cd63065",
+          "note": "full-hash bucket also holds other specifics"
+        },
+        "C2:n8": {
+          "status": "IDENTIFIED",
+          "grammar_id": "TrPhi3_shifted",
+          "full": "fpf_d38d475e6694b542",
+          "specific": "fps_089448314ec49474",
+          "note": "full-hash bucket also holds other specifics"
+        }
+      }
+    },
+    "T4_delta_recovery": {
+      "status": "PASS",
+      "per_class": {
+        "C0:n5": {
+          "verdict": "FORCED",
+          "value": "0/1",
+          "n_constraints": 3
+        },
+        "C0:n6": {
+          "verdict": "FORCED",
+          "value": "0/1",
+          "n_constraints": 6
+        },
+        "C0:n8": {
+          "verdict": "FORCED",
+          "value": "0/1",
+          "n_constraints": 12
+        },
+        "C1:n6": {
+          "verdict": "NONIDENTIFIABLE",
+          "cause": "delta-underdetermined",
+          "detail": "no X_{e,e} / X_{o,o} pole present"
+        },
+        "C1:n8": {
+          "verdict": "NONIDENTIFIABLE",
+          "cause": "delta-underdetermined",
+          "detail": "no X_{e,e} / X_{o,o} pole present"
+        },
+        "C2:n6": {
+          "verdict": "FORCED",
+          "value": "7/3",
+          "n_constraints": 6
+        },
+        "C2:n8": {
+          "verdict": "FORCED",
+          "value": "7/3",
+          "n_constraints": 12
+        }
+      }
+    },
+    "T5_held_out": {
+      "status": "PASS",
+      "separable_fit": {
+        "5": true,
+        "6": true
+      },
+      "separable_held_out": true,
+      "falsifier_F4": "not triggered"
+    },
+    "T6_adjudication": {
+      "status": "PASS",
+      "held_out_n": 8,
+      "threshold": "9/10",
+      "primary": {
+        "outcome": "A",
+        "verdict": "FORCED",
+        "note": "classes distinguished and delta recovered at n=8",
+        "correlator": "b15.gid.jaccard_atoms_v1",
+        "per_class": {
+          "C0": {
+            "selected": "TrPhi3",
+            "similarity": "1/1",
+            "confidence": "1/1"
+          },
+          "C1": {
+            "selected": "NLSM",
+            "similarity": "1/1",
+            "confidence": "1/1"
+          },
+          "C2": {
+            "selected": "TrPhi3_shifted",
+            "similarity": "1/1",
+            "confidence": "1/1"
+          }
+        }
+      },
+      "invariants_only": {
+        "correlator": "b15.gid.invariants_only_v1",
+        "ties": {
+          "C0": [
+            "TrPhi3",
+            "TrPhi3_shifted"
+          ],
+          "C1": [
+            "NLSM"
+          ],
+          "C2": [
+            "TrPhi3",
+            "TrPhi3_shifted"
+          ]
+        },
+        "verdict": "AMBIGUOUS",
+        "note": "delta-insensitive invariants cannot separate a base grammar from its deformation (by construction); NLSM still separated by its pole set"
+      },
+      "secondary": {
+        "outcome": "B",
+        "verdict": "OBSERVATIONALLY_EQUIVALENT",
+        "class": [
+          "NLSM",
+          "TrPhi3",
+          "TrPhi3_shifted"
+        ],
+        "note": "fingerprint-only (zeros + splits) identification is structurally limited for deformation-related grammars: the theories share zeros by construction",
+        "correlator": "b15.gid.zeros_only_v1",
+        "ties": {
+          "C0": [
+            "NLSM",
+            "TrPhi3",
+            "TrPhi3_shifted"
+          ],
+          "C1": [
+            "NLSM",
+            "TrPhi3",
+            "TrPhi3_shifted"
+          ],
+          "C2": [
+            "NLSM",
+            "TrPhi3",
+            "TrPhi3_shifted"
+          ]
+        }
+      }
+    }
+  },
+  "soundness": "SOUND",
+  "warnings": [],
+  "ground_truth_route": "planar-feynman-sum (dataset data/b15/zero_dataset_v1.json, label-stripped)",
+  "verdict": "FORCED",
+  "verdict_cause": null,
+  "verdict_class": null,
+  "verdict_display": "FORCED",
+  "witness": {
+    "selected_at_n8": {
+      "C0": "TrPhi3",
+      "C1": "NLSM",
+      "C2": "TrPhi3_shifted"
+    },
+    "delta_recovered": {
+      "verdict": "FORCED",
+      "value": "7/3",
+      "n_constraints": 12
+    },
+    "predicates": {
+      "C0": [
+        "delta:zero",
+        "poles:ee",
+        "poles:oe",
+        "poles:oo",
+        "splits:rank1",
+        "zeros:all_registered"
+      ],
+      "C1": [
+        "delta:absent",
+        "poles:oe",
+        "splits:rank1",
+        "zeros:all_registered"
+      ],
+      "C2": [
+        "delta:nonzero",
+        "poles:ee",
+        "poles:oe",
+        "poles:oo",
+        "splits:rank1",
+        "zeros:all_registered"
+      ]
+    }
+  },
+  "impossibility_certificate": null,
+  "similarity": "1/1",
+  "confidence": "1/1",
+  "correlator": "b15.gid.jaccard_atoms_v1",
+  "evidence_level": "E0",
+  "pir_level": "L3",
+  "layer": "DOMAIN",
+  "assumptions": [
+    "asm:B15-OI-2-thresholds-pending"
+  ],
+  "prereg_ref": "prereg-002@ed177ebf62cc6453c887d2829200dfb9c2e21b45",
+  "prereg_sha256": "9bf477eec119e2ce10932e644d41bbb733bbdf1fce30e30a2246cdeafe617427",
+  "falsifier_direction": "F4: separable at n<=6 but not at n=8 -> fingerprint_v1 REJECTED (over-fit); a wrong selected grammar at any n -> REJECTED",
+  "seed": 20260923,
+  "ci_seed_env": "",
+  "python_version": "3.11.15",
+  "generator_sha256": "a49129f3a8c30ce945bdcc02f31f8006e8b8c85e2bb0e50aad3c4910da175995",
+  "pir_facts": [
+    {
+      "fact_id": "fct_sha256_bfe8dfaaf92924ad",
+      "pir_level": "L3",
+      "evidence_level": "E1",
+      "layer": "DOMAIN",
+      "namespace": "analyst",
+      "status": "SUPPORTED",
+      "verdict": "PERMITTED",
+      "analyzer": {
+        "id": "pir.candidates",
+        "version": "0.1.0",
+        "tag": "SOUND"
+      },
+      "warnings": [],
+      "depends_on_facts": [],
+      "assumptions": [],
+      "source_spans": [
+        {
+          "artifact_id": "pir.candidates",
+          "span": "b15-gid-n8"
+        }
+      ],
+      "measurement_interface": [
+        "label-stripped exact dataset data/b15/zero_dataset_v1.json"
+      ],
+      "content": {
+        "subject": "equivalence_class:b15-gid-n8",
+        "compatible_families": [
+          "TrPhi3"
+        ],
+        "identified_family": "TrPhi3"
+      },
+      "witness": null,
+      "impossibility_certificate": null,
+      "similarity": null,
+      "confidence": null,
+      "correlator": null,
+      "created_at": "1970-01-01T00:00:00Z"
+    },
+    {
+      "fact_id": "fct_sha256_ad32e5f86f64e040",
+      "pir_level": "L3",
+      "evidence_level": "E1",
+      "layer": "DOMAIN",
+      "namespace": "analyst",
+      "status": "SUPPORTED",
+      "verdict": "PERMITTED",
+      "analyzer": {
+        "id": "pir.candidates",
+        "version": "0.1.0",
+        "tag": "SOUND"
+      },
+      "warnings": [],
+      "depends_on_facts": [],
+      "assumptions": [],
+      "source_spans": [
+        {
+          "artifact_id": "pir.candidates",
+          "span": "b15-gid-n8"
+        }
+      ],
+      "measurement_interface": [
+        "label-stripped exact dataset data/b15/zero_dataset_v1.json"
+      ],
+      "content": {
+        "subject": "equivalence_class:b15-gid-n8",
+        "compatible_families": [
+          "NLSM"
+        ],
+        "identified_family": "NLSM"
+      },
+      "witness": null,
+      "impossibility_certificate": null,
+      "similarity": null,
+      "confidence": null,
+      "correlator": null,
+      "created_at": "1970-01-01T00:00:00Z"
+    },
+    {
+      "fact_id": "fct_sha256_3202d67c5536299d",
+      "pir_level": "L3",
+      "evidence_level": "E1",
+      "layer": "DOMAIN",
+      "namespace": "analyst",
+      "status": "SUPPORTED",
+      "verdict": "PERMITTED",
+      "analyzer": {
+        "id": "pir.candidates",
+        "version": "0.1.0",
+        "tag": "SOUND"
+      },
+      "warnings": [],
+      "depends_on_facts": [],
+      "assumptions": [],
+      "source_spans": [
+        {
+          "artifact_id": "pir.candidates",
+          "span": "b15-gid-n8"
+        }
+      ],
+      "measurement_interface": [
+        "label-stripped exact dataset data/b15/zero_dataset_v1.json"
+      ],
+      "content": {
+        "subject": "equivalence_class:b15-gid-n8",
+        "compatible_families": [
+          "TrPhi3_shifted"
+        ],
+        "identified_family": "TrPhi3_shifted"
+      },
+      "witness": null,
+      "impossibility_certificate": null,
+      "similarity": null,
+      "confidence": null,
+      "correlator": null,
+      "created_at": "1970-01-01T00:00:00Z"
+    }
+  ],
+  "certificate_id": "b15-gid-ed3d495ce5b5"
+}

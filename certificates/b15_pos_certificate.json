@@ -1,0 +1,543 @@
+{
+  "certificate_version": "0.3",
+  "certificate_class": "EXACT-RATIONAL (same class as B1/B2/B7); published-bound reproduction",
+  "benchmark": "B15-POS",
+  "problem": "B15-POS: exact-PSD verifier (SCHUR_PIVOT_EXACT + dual exclusion functional) scored against the published EFT-hedron forward-limit bound (R26)",
+  "timestamp_utc": "2026-09-23T21:33:11Z",
+  "headline": "published two-sided bound reproduced: interior PERMITTED (primal pivots), exterior REJECTED (negative pivot + exact dual functional), both walls bracketed to <= 2^-20; negative control flips",
+  "arithmetic": "exact rational (Fraction) on every certified path; no floats",
+  "hard_constraints_certified": true,
+  "score": "finite",
+  "m_layer_stipulations": [
+    "Bound is a theorem-level statement about EFT coefficients; no apparatus, no data",
+    "Moments truncated at a_{4,0} (HEURISTIC truncation, see warnings)",
+    "Units a_{2,0} = 1, M_Gap = 1; slice mu1 = 1/2 registered in prereg-002",
+    "Target bound awaiting confirmation (\u00a79-OI-1) \u2014 carried as asm:B15-OI-1-pending"
+  ],
+  "calibration_route": "none required (exact rational arithmetic; bracket width registered)",
+  "inputs": {
+    "interior_point": [
+      "1/2",
+      "3/8"
+    ],
+    "exterior_points": {
+      "hankel_wall": [
+        "1/2",
+        "1/5"
+      ],
+      "gap_wall": [
+        "1/2",
+        "3/5"
+      ]
+    },
+    "bracket_width_threshold": "1/1048576",
+    "perturbation": "-1/4"
+  },
+  "results": {
+    "T1_primal_permitted": {
+      "status": "PASS",
+      "point": {
+        "mu1": "1/2",
+        "mu2": "3/8"
+      },
+      "primal": {
+        "feasible": true,
+        "chains": {
+          "hankel": {
+            "status": "PD_CERTIFIED",
+            "pivots": [
+              "1/1",
+              "1/8"
+            ],
+            "rank": 2
+          },
+          "gap_0": {
+            "status": "PD_CERTIFIED",
+            "pivots": [
+              "1/2"
+            ],
+            "rank": 1
+          },
+          "gap_1": {
+            "status": "PD_CERTIFIED",
+            "pivots": [
+              "1/8"
+            ],
+            "rank": 1
+          }
+        },
+        "mu": [
+          "1/1",
+          "1/2",
+          "3/8"
+        ]
+      },
+      "verdict": "PERMITTED",
+      "witness": {
+        "pivots": {
+          "hankel": [
+            "1/1",
+            "1/8"
+          ],
+          "gap_0": [
+            "1/2"
+          ],
+          "gap_1": [
+            "1/8"
+          ]
+        }
+      },
+      "impossibility_certificate": null
+    },
+    "T2_dual_rejected": {
+      "hankel_wall": {
+        "status": "PASS",
+        "point": {
+          "mu1": "1/2",
+          "mu2": "1/5"
+        },
+        "primal": {
+          "feasible": false,
+          "chains": {
+            "hankel": {
+              "status": "NOT_PSD_CERTIFIED",
+              "pivots": [
+                "1/1",
+                "-1/20"
+              ],
+              "rank": 1
+            },
+            "gap_0": {
+              "status": "PD_CERTIFIED",
+              "pivots": [
+                "1/2"
+              ],
+              "rank": 1
+            },
+            "gap_1": {
+              "status": "PD_CERTIFIED",
+              "pivots": [
+                "3/10"
+              ],
+              "rank": 1
+            }
+          },
+          "mu": [
+            "1/1",
+            "1/2",
+            "1/5"
+          ]
+        },
+        "verdict": "REJECTED",
+        "witness": {
+          "pivots": {
+            "hankel": [
+              "1/1",
+              "-1/20"
+            ],
+            "gap_0": [
+              "1/2"
+            ],
+            "gap_1": [
+              "3/10"
+            ]
+          }
+        },
+        "impossibility_certificate": {
+          "dual_functional": {
+            "y": [
+              "1/4",
+              "-1/1",
+              "1/1"
+            ],
+            "evaluation": "-1/20",
+            "wall": "hankel (eq. 7.19)",
+            "nonnegativity_witness": {
+              "form": "square",
+              "v": [
+                "-1/2",
+                "1/1"
+              ],
+              "s0": "1/1",
+              "s1": "0/1"
+            },
+            "identity_verified": true
+          },
+          "farkas_atom": {
+            "system": "single-atom moment equations at x*=mu1/mu0",
+            "A": [
+              [
+                "1/1"
+              ],
+              [
+                "1/2"
+              ],
+              [
+                "1/4"
+              ]
+            ],
+            "b": [
+              "1/1",
+              "1/2",
+              "1/5"
+            ],
+            "farkas_y": [
+              "-1/4",
+              "0/1",
+              "1/1"
+            ],
+            "verify_farkas": true
+          }
+        }
+      },
+      "gap_wall": {
+        "status": "PASS",
+        "point": {
+          "mu1": "1/2",
+          "mu2": "3/5"
+        },
+        "primal": {
+          "feasible": false,
+          "chains": {
+            "hankel": {
+              "status": "PD_CERTIFIED",
+              "pivots": [
+                "1/1",
+                "7/20"
+              ],
+              "rank": 2
+            },
+            "gap_0": {
+              "status": "PD_CERTIFIED",
+              "pivots": [
+                "1/2"
+              ],
+              "rank": 1
+            },
+            "gap_1": {
+              "status": "NOT_PSD_CERTIFIED",
+              "pivots": [
+                "-1/10"
+              ],
+              "rank": 0
+            }
+          },
+          "mu": [
+            "1/1",
+            "1/2",
+            "3/5"
+          ]
+        },
+        "verdict": "REJECTED",
+        "witness": {
+          "pivots": {
+            "hankel": [
+              "1/1",
+              "7/20"
+            ],
+            "gap_0": [
+              "1/2"
+            ],
+            "gap_1": [
+              "-1/10"
+            ]
+          }
+        },
+        "impossibility_certificate": {
+          "dual_functional": {
+            "y": [
+              "0/1",
+              "1/1",
+              "-1/1"
+            ],
+            "evaluation": "-1/10",
+            "wall": "gap chain (eq. 7.35)",
+            "nonnegativity_witness": {
+              "form": "interval",
+              "v": [
+                "0/1",
+                "0/1"
+              ],
+              "s0": "0/1",
+              "s1": "1/1",
+              "x_power": 1
+            },
+            "identity_verified": true
+          },
+          "farkas_atom": null
+        }
+      }
+    },
+    "T3_bracket": {
+      "status": "PASS",
+      "lower_wall": {
+        "mu1": "1/2",
+        "certified_inner_interval": [
+          "1048575/4194304",
+          "524289/2097152"
+        ],
+        "inner_feasible": "524289/2097152",
+        "outer_infeasible": "1048575/4194304",
+        "width": "3/4194304",
+        "steps": 19,
+        "published_wall": "1/4",
+        "contains_published": true
+      },
+      "upper_wall": {
+        "mu1": "1/2",
+        "certified_inner_interval": [
+          "4194303/8388608",
+          "1048577/2097152"
+        ],
+        "inner_feasible": "4194303/8388608",
+        "outer_infeasible": "1048577/2097152",
+        "width": "5/8388608",
+        "steps": 20,
+        "published_wall": "1/2",
+        "contains_published": true
+      },
+      "width_threshold": "1/1048576"
+    },
+    "T4_negative_control": {
+      "status": "PASS",
+      "perturbation": "-1/4",
+      "point": {
+        "mu1": "1/2",
+        "mu2": "1/8"
+      },
+      "primal": {
+        "feasible": false,
+        "chains": {
+          "hankel": {
+            "status": "NOT_PSD_CERTIFIED",
+            "pivots": [
+              "1/1",
+              "-1/8"
+            ],
+            "rank": 1
+          },
+          "gap_0": {
+            "status": "PD_CERTIFIED",
+            "pivots": [
+              "1/2"
+            ],
+            "rank": 1
+          },
+          "gap_1": {
+            "status": "PD_CERTIFIED",
+            "pivots": [
+              "3/8"
+            ],
+            "rank": 1
+          }
+        },
+        "mu": [
+          "1/1",
+          "1/2",
+          "1/8"
+        ]
+      },
+      "verdict": "REJECTED",
+      "witness": {
+        "pivots": {
+          "hankel": [
+            "1/1",
+            "-1/8"
+          ],
+          "gap_0": [
+            "1/2"
+          ],
+          "gap_1": [
+            "3/8"
+          ]
+        }
+      },
+      "impossibility_certificate": {
+        "dual_functional": {
+          "y": [
+            "1/4",
+            "-1/1",
+            "1/1"
+          ],
+          "evaluation": "-1/8",
+          "wall": "hankel (eq. 7.19)",
+          "nonnegativity_witness": {
+            "form": "square",
+            "v": [
+              "-1/2",
+              "1/1"
+            ],
+            "s0": "1/1",
+            "s1": "0/1"
+          },
+          "identity_verified": true
+        },
+        "farkas_atom": {
+          "system": "single-atom moment equations at x*=mu1/mu0",
+          "A": [
+            [
+              "1/1"
+            ],
+            [
+              "1/2"
+            ],
+            [
+              "1/4"
+            ]
+          ],
+          "b": [
+            "1/1",
+            "1/2",
+            "1/8"
+          ],
+          "farkas_y": [
+            "-1/4",
+            "0/1",
+            "1/1"
+          ],
+          "verify_farkas": true
+        }
+      }
+    },
+    "T5_standalone_reverify": {
+      "status": "PASS",
+      "tool": "tools/verify_b15_certificate.py",
+      "stdout_tail": [
+        "VERIFIED b15-pos-e426861e55a5 (B15-POS, verdict PERMITTED)"
+      ]
+    },
+    "T6_schema_negatives": {
+      "status": "PASS",
+      "cases": [
+        {
+          "case": "non-SPEC verdict",
+          "rejected_with": "schema: verdict: 'CONDITIONAL(X)' not in enum ['FORCED', 'PERMITTED', 'REJECTED'"
+        },
+        {
+          "case": "HEURISTIC asserting E0",
+          "rejected_with": "a HEURISTIC certificate may not assert E0 (hard constraint 4)"
+        },
+        {
+          "case": "POS REJECTED without impossibility certificate",
+          "rejected_with": "POS REJECTED requires impossibility_certificate (\u00a75)"
+        },
+        {
+          "case": "assumption without asm: prefix",
+          "rejected_with": "assumption 'GRH' must be asm:-prefixed (ADR-0002)"
+        },
+        {
+          "case": "tampered pivot -> standalone tool FAIL",
+          "rejected_with": "FAIL (Score = infinity):"
+        }
+      ]
+    }
+  },
+  "soundness": "SOUND",
+  "warnings": [
+    {
+      "location": "b15_surf/pos/dispersive.py::TRUNCATION_ORDER",
+      "text": "moment sequence truncated at a_{4,0} (Hankel order t=1); higher-order EFT-hedron walls are not tested (HEURISTIC choice)"
+    }
+  ],
+  "ground_truth_route": "published-bound:arXiv:2012.15849 eq.7.19 (Hankel) + eq.7.35 (gap)",
+  "verdict": "PERMITTED",
+  "verdict_cause": null,
+  "verdict_class": null,
+  "verdict_display": "PERMITTED",
+  "witness": {
+    "pivots": {
+      "hankel": [
+        "1/1",
+        "1/8"
+      ],
+      "gap_0": [
+        "1/2"
+      ],
+      "gap_1": [
+        "1/8"
+      ]
+    }
+  },
+  "impossibility_certificate": null,
+  "similarity": null,
+  "confidence": null,
+  "correlator": null,
+  "evidence_level": "E0",
+  "pir_level": "L2",
+  "layer": "DOMAIN",
+  "assumptions": [
+    "asm:B15-OI-1-pending"
+  ],
+  "prereg_ref": "prereg-002@ed177ebf62cc6453c887d2829200dfb9c2e21b45",
+  "prereg_sha256": "9bf477eec119e2ce10932e644d41bbb733bbdf1fce30e30a2246cdeafe617427",
+  "falsifier_direction": "F1: a bracket that excludes a published wall, or a REJECTED point without a verified dual functional, files the verifier REJECTED for external bounds and taints all B15 facts asm:B15-POS-unverified",
+  "seed": 20260923,
+  "ci_seed_env": "",
+  "python_version": "3.11.15",
+  "generator_sha256": "c0107e1bda9d",
+  "pir_facts": [
+    {
+      "fact_id": "fct_sha256_b3531998c41f6eeb",
+      "pir_level": "L2",
+      "evidence_level": "E0",
+      "layer": "DOMAIN",
+      "namespace": "domain",
+      "status": "SUPPORTED",
+      "verdict": "PERMITTED",
+      "analyzer": {
+        "id": "b15_surf.pos",
+        "version": "0.1.0",
+        "tag": "SOUND"
+      },
+      "warnings": [],
+      "depends_on_facts": [],
+      "assumptions": [
+        "asm:B15-OI-1-pending"
+      ],
+      "source_spans": [
+        {
+          "artifact_id": "certificates/b15-pos_certificate.json",
+          "span": "results"
+        }
+      ],
+      "measurement_interface": [
+        "published bound arXiv:2012.15849 eqs. 7.19/7.35 (no apparatus)"
+      ],
+      "content": {
+        "subject": "EFT-hedron forward-limit two-sided bound, slice mu1=1/2",
+        "bracket_lower": [
+          "1048575/4194304",
+          "524289/2097152"
+        ],
+        "bracket_upper": [
+          "4194303/8388608",
+          "1048577/2097152"
+        ],
+        "published_walls": [
+          "1/4",
+          "1/2"
+        ]
+      },
+      "witness": {
+        "pivots": {
+          "hankel": [
+            "1/1",
+            "1/8"
+          ],
+          "gap_0": [
+            "1/2"
+          ],
+          "gap_1": [
+            "1/8"
+          ]
+        }
+      },
+      "impossibility_certificate": null,
+      "similarity": null,
+      "confidence": null,
+      "correlator": null,
+      "created_at": "1970-01-01T00:00:00Z"
+    }
+  ],
+  "certificate_id": "b15-pos-bacf743c2a02"
+}

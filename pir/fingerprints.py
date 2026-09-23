@@ -24,8 +24,13 @@ from typing import Dict, List, Optional
 from .canonical import sha256_hex
 
 # The invariant feature keys that define the *full* (similarity-invariant) hash.
+# B15-SURF (additive): amplitude fingerprints — pole set, hidden-zero loci and
+# split (factorization) structure are basis-independent invariants (R37/P3).
+# ``_project`` skips absent keys, so every pre-B15 full-fingerprint hash is
+# unchanged (regression test: tests/test_b15_gid.py::T0).
 INVARIANT_KEYS = ("psd_signature", "rank_sequence", "symmetry_group",
-                  "factorization_poset", "flow_exponents", "spectral_class")
+                  "factorization_poset", "flow_exponents", "spectral_class",
+                  "pole_set", "zero_loci", "split_structure")
 
 
 def _project(features: Dict, keys) -> Dict:
