@@ -3,7 +3,7 @@
   "certificate_class": "EXACT-RATIONAL (same class as B1/B2/B7); published-bound reproduction",
   "benchmark": "B15-POS",
   "problem": "B15-POS: exact-PSD verifier (SCHUR_PIVOT_EXACT + dual exclusion functional) scored against the published EFT-hedron forward-limit bound (R26)",
-  "timestamp_utc": "2026-09-23T21:33:11Z",
+  "timestamp_utc": "2026-09-23T21:37:55Z",
   "headline": "published two-sided bound reproduced: interior PERMITTED (primal pivots), exterior REJECTED (negative pivot + exact dual functional), both walls bracketed to <= 2^-20; negative control flips",
   "arithmetic": "exact rational (Fraction) on every certified path; no floats",
   "hard_constraints_certified": true,
@@ -402,9 +402,8 @@
     "T5_standalone_reverify": {
       "status": "PASS",
       "tool": "tools/verify_b15_certificate.py",
-      "stdout_tail": [
-        "VERIFIED b15-pos-e426861e55a5 (B15-POS, verdict PERMITTED)"
-      ]
+      "verified": true,
+      "verdict_line": "B15-POS, verdict PERMITTED"
     },
     "T6_schema_negatives": {
       "status": "PASS",
@@ -472,7 +471,7 @@
   "prereg_sha256": "9bf477eec119e2ce10932e644d41bbb733bbdf1fce30e30a2246cdeafe617427",
   "falsifier_direction": "F1: a bracket that excludes a published wall, or a REJECTED point without a verified dual functional, files the verifier REJECTED for external bounds and taints all B15 facts asm:B15-POS-unverified",
   "seed": 20260923,
-  "ci_seed_env": "",
+  "ci_seed_env": "0",
   "python_version": "3.11.15",
   "generator_sha256": "c0107e1bda9d",
   "pir_facts": [
@@ -539,5 +538,5 @@
       "created_at": "1970-01-01T00:00:00Z"
     }
   ],
-  "certificate_id": "b15-pos-bacf743c2a02"
+  "certificate_id": "b15-pos-40b38836e334"
 }

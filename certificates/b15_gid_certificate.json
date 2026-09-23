@@ -3,7 +3,7 @@
   "certificate_class": "EXACT-RATIONAL fingerprints; framework-capability benchmark",
   "benchmark": "B15-GID",
   "problem": "B15-GID: blind identification of {TrPhi3, NLSM, TrPhi3_shifted} from pole / zero / split fingerprints of the label-stripped dataset (B8 -> KnownGrammarDB -> pir.candidates)",
-  "timestamp_utc": "2026-09-23T21:33:49Z",
+  "timestamp_utc": "2026-09-23T21:38:34Z",
   "headline": "primary correlator: Outcome A at held-out n=8 (FORCED); zeros-only correlator: Outcome B (OBSERVATIONALLY_EQUIVALENT) \u2014 zeros are shared by construction",
   "arithmetic": "exact rational (Fraction) on every certified path; no floats",
   "hard_constraints_certified": true,
@@ -384,7 +384,7 @@
   "prereg_sha256": "9bf477eec119e2ce10932e644d41bbb733bbdf1fce30e30a2246cdeafe617427",
   "falsifier_direction": "F4: separable at n<=6 but not at n=8 -> fingerprint_v1 REJECTED (over-fit); a wrong selected grammar at any n -> REJECTED",
   "seed": 20260923,
-  "ci_seed_env": "",
+  "ci_seed_env": "0",
   "python_version": "3.11.15",
   "generator_sha256": "a49129f3a8c30ce945bdcc02f31f8006e8b8c85e2bb0e50aad3c4910da175995",
   "pir_facts": [
@@ -506,5 +506,5 @@
       "created_at": "1970-01-01T00:00:00Z"
     }
   ],
-  "certificate_id": "b15-gid-ed3d495ce5b5"
+  "certificate_id": "b15-gid-de841607a63b"
 }

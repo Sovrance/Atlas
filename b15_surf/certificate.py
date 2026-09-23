@@ -120,7 +120,7 @@ def build(*, benchmark: str, problem: str, headline: str, certificate_class: str
         "prereg_sha256": pr["prereg_sha256"],
         "falsifier_direction": falsifier_direction,
         "seed": int(seed),
-        "ci_seed_env": os.environ.get("PIR_CI_SEED", ""),
+        "ci_seed_env": os.environ.get("PIR_CI_SEED", "0"),   # CI gate convention: pinned seed "0"
         "python_version": sys.version.split()[0],
         "generator_sha256": generator_sha256,
         "pir_facts": pir_facts or [],

@@ -20,3 +20,4 @@ Extracted trees (`*-extract/`) are ephemeral and gitignored; use these zips if y
 | `gv-rh-weil-integrated.zip` | (this PR) | RH/Weil positivity scaffold ? `math/rh_weil/` + `docs/rh-weil-integration-v0.1.md` (additive only; rest of zip was line-ending noise vs main) |
 | `gv-rh-connes-cvs-crossvalidation-v0.1.zip` | (this PR) | Optional Connes–CvS external oracle ? `math/rh_weil/external/` + contract tests |
 | `gv-rh-eng-002-math-parity-run18.zip` | (this PR) | ENG-002 Run-18 parity work order ? `math/rh_weil/docs/` + WO-RH-09..16 execution |
+| `gv-b15-surf.zip` | (this branch, `feature/b15-surf`) | B15-SURF work order + research report -> `b15_surf/`, `tests/test_b15_*.py`, `schemas/b15_certificate.schema.json`, `tools/verify_b15_certificate.py`, `data/b15/`, three certificates, prereg-002, edit-011, R36-R40, WP4 design note |

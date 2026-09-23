@@ -95,9 +95,13 @@ def t5_standalone(cert_path):
     proc = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "verify_b15_certificate.py"),
                            cert_path], capture_output=True, text=True, cwd=ROOT)
     assert proc.returncode == 0, proc.stdout + proc.stderr
-    print("T5 standalone re-verify: " + proc.stdout.strip().splitlines()[-1])
-    return {"status": "PASS", "tool": "tools/verify_b15_certificate.py",
-            "stdout_tail": proc.stdout.strip().splitlines()[-3:]}
+    line = proc.stdout.strip().splitlines()[-1]
+    assert line.startswith("VERIFIED "), line
+    print("T5 standalone re-verify: " + line)
+    # The intermediate certificate id is not stored (it changes once T5/T6 results are
+    # appended and the final id is recomputed); the verification outcome is.
+    return {"status": "PASS", "tool": "tools/verify_b15_certificate.py", "verified": True,
+            "verdict_line": line.split("(", 1)[1].rstrip(")")}
 
 
 def t6_schema_negatives(cert):
