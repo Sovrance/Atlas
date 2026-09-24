@@ -3,7 +3,7 @@
   "certificate_class": "EXACT-RATIONAL (same class as B1/B2/B7); published-bound reproduction",
   "benchmark": "B15-POS",
   "problem": "B15-POS: exact-PSD verifier (SCHUR_PIVOT_EXACT + dual exclusion functional) scored against the published EFT-hedron forward-limit bound (R26)",
-  "timestamp_utc": "2026-09-24T03:01:01Z",
+  "timestamp_utc": "2026-09-24T03:37:56Z",
   "headline": "published two-sided bound reproduced: interior PERMITTED (primal pivots), exterior REJECTED (negative pivot + exact dual functional), both walls bracketed to <= 2^-20; negative control flips",
   "arithmetic": "exact rational (Fraction) on every certified path; no floats",
   "hard_constraints_certified": true,
@@ -12,7 +12,7 @@
     "Bound is a theorem-level statement about EFT coefficients; no apparatus, no data",
     "Moments truncated at a_{4,0} (HEURISTIC truncation, see warnings)",
     "Units a_{2,0} = 1, M_Gap = 1; slice mu1 = 1/2 registered in prereg-002",
-    "Target bound awaiting confirmation (\u00a79-OI-1) \u2014 carried as asm:B15-OI-1-pending"
+    "Target bound confirmed as registered (\u00a79-OI-1, prereg-003 A3); bracket width 2^-20 accepted (\u00a79-OI-2)"
   ],
   "calibration_route": "none required (exact rational arithmetic; bracket width registered)",
   "inputs": {
@@ -31,7 +31,11 @@
       ]
     },
     "bracket_width_threshold": "1/1048576",
-    "perturbation": "-1/4"
+    "perturbation": "-1/4",
+    "prereg_amendment": {
+      "ref": "prereg-003",
+      "sha256": "78671fe5c46ce5b38614fdf56fb043000069a37e03b5d28c5a872bb6cafebfb1"
+    }
   },
   "results": {
     "T1_primal_permitted": {
@@ -145,6 +149,7 @@
         },
         "impossibility_certificate": {
           "dual_functional": {
+            "op": "DUAL_EXCLUSION_FUNCTIONAL",
             "y": [
               "1/4",
               "-1/1",
@@ -245,6 +250,7 @@
         },
         "impossibility_certificate": {
           "dual_functional": {
+            "op": "DUAL_EXCLUSION_FUNCTIONAL",
             "y": [
               "0/1",
               "1/1",
@@ -354,6 +360,7 @@
       },
       "impossibility_certificate": {
         "dual_functional": {
+          "op": "DUAL_EXCLUSION_FUNCTIONAL",
           "y": [
             "1/4",
             "-1/1",
@@ -464,9 +471,7 @@
   "evidence_level": "E0",
   "pir_level": "L2",
   "layer": "DOMAIN",
-  "assumptions": [
-    "asm:B15-OI-1-pending"
-  ],
+  "assumptions": [],
   "prereg_ref": "prereg-002@6406cac770c8bd5326fa52f8148b748a1fb22485",
   "prereg_sha256": "9bf477eec119e2ce10932e644d41bbb733bbdf1fce30e30a2246cdeafe617427",
   "falsifier_direction": "F1: a bracket that excludes a published wall, or a REJECTED point without a verified dual functional, files the verifier REJECTED for external bounds and taints all B15 facts asm:B15-POS-unverified",
@@ -476,7 +481,7 @@
   "generator_sha256": "c0107e1bda9d",
   "pir_facts": [
     {
-      "fact_id": "fct_sha256_b3531998c41f6eeb",
+      "fact_id": "fct_sha256_13e1b13767b7c463",
       "pir_level": "L2",
       "evidence_level": "E0",
       "layer": "DOMAIN",
@@ -490,9 +495,7 @@
       },
       "warnings": [],
       "depends_on_facts": [],
-      "assumptions": [
-        "asm:B15-OI-1-pending"
-      ],
+      "assumptions": [],
       "source_spans": [
         {
           "artifact_id": "certificates/b15-pos_certificate.json",
@@ -538,5 +541,5 @@
       "created_at": "1970-01-01T00:00:00Z"
     }
   ],
-  "certificate_id": "b15-pos-9cf9888f6a8e"
+  "certificate_id": "b15-pos-5f11efd0aca5"
 }

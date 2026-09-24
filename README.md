@@ -323,9 +323,9 @@ python3 tests/test_b15_gid.py     # B15-GID  7/7  blind identification from pole
 python3 tools/verify_b15_certificate.py certificates/b15_pos_certificate.json   # standalone re-verify
 ```
 
-- **B15-POS** (`certificates/b15_pos_certificate.json`): the exact-PSD verifier (`SCHUR_PIVOT_EXACT`) scored for the first time against a bound the program did not build — `μ₁² ≤ μ₂ ≤ μ₁` (arXiv:2012.15849 eqs. 7.19/7.35, slice μ₁ = ½). Interior PERMITTED (pivots); exterior REJECTED with a negative pivot **and** an exact dual exclusion functional; both walls bracketed to ≤ 2⁻²⁰; negative control flips. Taint `asm:B15-OI-1-pending` (target bound awaiting sign-off).
+- **B15-POS** (`certificates/b15_pos_certificate.json`): the exact-PSD verifier (`SCHUR_PIVOT_EXACT`) scored for the first time against a bound the program did not build — `μ₁² ≤ μ₂ ≤ μ₁` (arXiv:2012.15849 eqs. 7.19/7.35, slice μ₁ = ½). Interior PERMITTED (pivots); exterior REJECTED with a negative pivot **and** an exact dual exclusion functional; both walls bracketed to ≤ 2⁻²⁰; negative control flips. The dual is verifier op 7, `DUAL_EXCLUSION_FUNCTIONAL`; target bound confirmed (prereg-003).
 - **B15-ZERO** (`certificates/b15_zero_certificate.json`, `data/b15/zero_dataset_v1.json`): Route A (Catalan triangulation sum) == Route B (recursion) on 200 pts/n; all n(n−3)/2 hidden-zero loci vanish exactly; 2-splits factorize exactly; **lim δⁿ⁻² A^δ = NLSM Feynman-rule amplitude exactly at 4, 6, 8 points**. 3,664-record exact dataset, hash-stable.
-- **B15-GID** (`certificates/b15_gid_certificate.json`): from the label-stripped dataset only — exact pole sets, zero loci, split ranks (RANK_TEST), δ recovered exactly (7/3). **Outcome A** (FORCED at held-out n=8) on the primary correlator; **Outcome B** (`OBSERVATIONALLY_EQUIVALENT` mod δ-shift) on the zeros-only correlator — zeros are shared by construction; poles + δ-class separate. Both filed.
+- **B15-GID** (`certificates/b15_gid_certificate.json`): from the label-stripped dataset only — exact pole sets, zero loci, split ranks (RANK_TEST), δ recovered exactly (7/3). **Outcome A** (PERMITTED, menu-relative identification, at held-out n=8) on the primary correlator; **Outcome B** (`OBSERVATIONALLY_EQUIVALENT` mod δ-shift) on the zeros-only correlator — zeros are shared by construction; poles + δ-class separate. Both filed.
 
 ```
 b15_surf/

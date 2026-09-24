@@ -154,7 +154,7 @@ if __name__ == "__main__":
                  "bracket_upper": r3["upper_wall"]["certified_inner_interval"],
                  "published_walls": ["1/4", "1/2"]},
         verdict="PERMITTED", evidence_level="E0", soundness="SOUND",
-        witness=r1["witness"], impossibility_certificate=None, assumptions=["asm:B15-OI-1-pending"],
+        witness=r1["witness"], impossibility_certificate=None, assumptions=[],
         warnings=[], measurement_interface="published bound arXiv:2012.15849 eqs. 7.19/7.35 (no apparatus)")
     cert = C.build(
         benchmark="B15-POS",
@@ -167,7 +167,7 @@ if __name__ == "__main__":
         results=results, soundness="SOUND", warnings=warnings,
         ground_truth_route="published-bound:arXiv:2012.15849 eq.7.19 (Hankel) + eq.7.35 (gap)",
         evidence_level="E0", pir_level="L2",
-        assumptions=["asm:B15-OI-1-pending"],
+        assumptions=[],
         falsifier_direction="F1: a bracket that excludes a published wall, or a REJECTED point "
                             "without a verified dual functional, files the verifier REJECTED "
                             "for external bounds and taints all B15 facts asm:B15-POS-unverified",
@@ -179,14 +179,15 @@ if __name__ == "__main__":
             "Bound is a theorem-level statement about EFT coefficients; no apparatus, no data",
             "Moments truncated at a_{4,0} (HEURISTIC truncation, see warnings)",
             "Units a_{2,0} = 1, M_Gap = 1; slice mu1 = 1/2 registered in prereg-002",
-            "Target bound awaiting confirmation (§9-OI-1) — carried as asm:B15-OI-1-pending",
+            "Target bound confirmed as registered (§9-OI-1, prereg-003 A3); bracket width 2^-20 accepted (§9-OI-2)",
         ],
         calibration_route="none required (exact rational arithmetic; bracket width registered)",
         verdict="PERMITTED", witness=r1["witness"], impossibility_certificate=None,
         inputs={"interior_point": [fmt(x) for x in INTERIOR_POINT],
                 "exterior_points": {"hankel_wall": [fmt(x) for x in EXTERIOR_POINT_HANKEL],
                                     "gap_wall": [fmt(x) for x in EXTERIOR_POINT_GAP]},
-                "bracket_width_threshold": fmt(WIDTH), "perturbation": fmt(PERTURBATION)},
+                "bracket_width_threshold": fmt(WIDTH), "perturbation": fmt(PERTURBATION),
+                "prereg_amendment": C.amendment_ref()},
         pir_facts=[fact.to_dict()],
     )
     # T5 is scored on the saved certificate itself (standalone tool).

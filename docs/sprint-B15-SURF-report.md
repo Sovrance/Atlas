@@ -107,15 +107,15 @@ All §12 arXiv IDs re-verified; R39's first entry title recorded.
 ## 6. Open items (§9) — status
 | ID | Item | Status |
 |---|---|---|
-| OI-1 | Confirm the EFT-hedron target bound (eqs. 7.19 + 7.35 at μ₁ = ½) | **OPEN** — carried as `asm:B15-OI-1-pending` on the POS certificate and fact |
-| OI-2 | Thresholds: bracket width 2⁻²⁰; GID similarity/confidence 9/10 | **OPEN** — proposals; GID carries `asm:B15-OI-2-thresholds-pending`; no calibration route exists (the pass has no numeric tolerance) |
-| OI-3 | WP2.8 YM-scaffolded rows | **OPEN** — skipped; prereg records the three-class scope |
-| OI-4 | Open B16 on constraint-manifest representation | **OPEN** — proposal in `docs/notes/constraint-manifest-representation-v0.md` §5 |
-| OI-5 | Approve the three claims-table rows | **OPEN** — rows in §5 above; `docs/claims-table.md` untouched |
-| OI-6 | Annotate pre-existing certificates `ground_truth_route: null` | **OPEN** — recommendation unchanged: yes, separate sprint |
-| OI-7 | Pre-flight results differing from assumptions | **NONE** — B15, §4 vocabulary without `ENTAILMENT_*`, edit-011, R36 all as assumed; one environment gap (mpmath) recorded |
-| OI-8 (new) | `verify_farkas` is not the dual of a conic constraint (reconciliation D1) — accept the dual-functional + Farkas-companion form as the verifier-layer dual, or require an SDP-dual primitive? | **OPEN** |
-| OI-9 (new) | Ratify the D3 convention (certificate `FORCED` for a single lattice-compatible family at held-out n; lattice fact keeps `PERMITTED`) | **OPEN** |
+| OI-1 | Confirm the EFT-hedron target bound (eqs. 7.19 + 7.35 at μ₁ = ½) | **DECIDED** — confirmed as registered (prereg-003 A3); taint removed; t = 2 → prereg-004 |
+| OI-2 | Thresholds: bracket width 2⁻²⁰; GID similarity/confidence 9/10 | **DECIDED** — 2⁻²⁰ accepted; GID threshold = exact agreement (prereg-003 A1); taint removed |
+| OI-3 | WP2.8 YM-scaffolded rows | **DECIDED** — separate sprint (stringy integrand, α′δ = 1) |
+| OI-4 | Open B16 on constraint-manifest representation | **DECIDED** — open B16 narrowly (design-note §4 legs; `constraint_manifest` schema field) |
+| OI-5 | Approve the three claims-table rows | **DECIDED** — ZERO and GID approved; POS held on OI-1, released by A3; all three appended |
+| OI-6 | Annotate pre-existing certificates `ground_truth_route: null` | **DECIDED** — yes, separate schema-only sprint; added keys non-degrading |
+| OI-7 | Pre-flight results differing from assumptions | **NONE** — environment gap recorded in `ci/requirements.txt` (mpmath, numpy, scipy) |
+| OI-8 (new) | `verify_farkas` is not the dual of a conic constraint (reconciliation D1) — accept the dual-functional + Farkas-companion form as the verifier-layer dual, or require an SDP-dual primitive? | **DECIDED** — accepted; named as seventh verifier op `DUAL_EXCLUSION_FUNCTIONAL` |
+| OI-9 (new) | Ratify the D3 convention (certificate `FORCED` for a single lattice-compatible family at held-out n; lattice fact keeps `PERMITTED`) | **DECIDED** — reversed: certificate uses `PERMITTED` too (prereg-003 A2) |
 
 ## 7. Not done / backlog
 WP2.3 Route C (ABHY, R38) not attempted; WP2.8 skipped (OI-3); backlog items of work-order §10
@@ -144,3 +144,23 @@ unchanged. The IDs and hashes in §1–§2 above are the sprint-time values; cur
 
 `python3 ci/run_all_certified.py`: **PASS** — 16 suites, 0 failures, 0 degradations
 (requires `mpmath`, `numpy`, `scipy`); `tools/verify_b15_certificate.py` VERIFIED on all three.
+
+## 10. Open-item decisions (2026-09-24)
+Erick's rulings on §6 are recorded in `docs/preregistrations/prereg-003-b15-open-item-amendments.md`.
+That is a new preregistration, not an edit, because prereg-002 is frozen. Effects on the artifacts:
+
+- **B15-GID verdict is now `PERMITTED`** (was `FORCED`). A single surviving menu member is
+  identification relative to the menu, so the certificate and the lattice fact now share one
+  vocabulary; δ recovery stays `FORCED`. Threshold is exact agreement (was 9/10); every score
+  was already exactly 1, so the outcome is the same. Outcome labels A (primary) and B
+  (zeros-only) are unchanged.
+- **Taints removed:** `asm:B15-OI-1-pending` (POS), `asm:B15-OI-2-thresholds-pending` (GID).
+- **Verifier op 7:** `DUAL_EXCLUSION_FUNCTIONAL` (`docs/verifier-ops-v0.1.md` rev. 1,
+  `pir/types.py`, `architecture.yaml`); the POS dual object carries `"op"`.
+- **Claims table:** the three §5 rows are appended to `docs/claims-table.md`.
+- **Backlog:** prereg-004 (POS at Hankel order t = 2); YM-scaffolded rows (OI-3); B16
+  constraint-manifest (OI-4); legacy `ground_truth_route: null` schema sprint (OI-6).
+
+Certificates now in the tree: `b15-pos-5f11efd0aca5`, `b15-zero-2dfc3874eb85`,
+`b15-gid-05ec3aab69c4`. Each carries `inputs.prereg_amendment` (prereg-003 sha256), except
+ZERO, whose rules did not change. Gate: PASS, 16 suites.

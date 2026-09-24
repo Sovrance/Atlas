@@ -69,6 +69,8 @@ No `*_explore.py` files were needed: there is no float anywhere in `b15_surf/`.
   single-atom equality system `[1, x*, x*²] w = μ` is inconsistent → Farkas vector
   (`impossibility_certificate.farkas_atom`). Both (a) negative pivot and (b) dual are required
   and produced; the standalone tool re-checks all three objects.
+  *Resolved (§9-OI-8, prereg-003):* accepted as the verifier-layer dual and named as verifier
+  op 7, `DUAL_EXCLUSION_FUNCTIONAL` (`docs/verifier-ops-v0.1.md` rev. 1).
 - **D2 — `canon.engine.canonicalize` (WP3.2).** Its kinds are `generator`, `choi_qubit`,
   `covariance`, `metric_pair`, all numpy/float based; none applies to amplitude fingerprints
   and floats are barred from the certified path. The R15 rule is implemented as code in
@@ -81,6 +83,8 @@ No `*_explore.py` files were needed: there is no float anywhere in `b15_surf/`.
   lattice singles out one family, the DB lookup agrees, δ is recovered and the registered
   thresholds are met at the held-out n); the PIR lattice fact keeps the lattice's own
   vocabulary (`PERMITTED`). Both are stored; no verdict outside SPEC §4 is emitted.
+  *Resolved (§9-OI-9, prereg-003 A2) — reversed:* the certificate now also emits `PERMITTED`
+  (menu-relative identification); `FORCED` is kept only for δ, which the constraints fix uniquely.
 - **D4 — `lattice_fact` hard-codes namespace `invariant` / layer `UNIVERSAL` / E1.** The GID
   forest is re-homed with `dataclasses.replace` to namespace `analyst`, layer `DOMAIN`, with a
   declared measurement interface (work-order §6). No `global:` promotion anywhere.

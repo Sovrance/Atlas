@@ -8,7 +8,9 @@ behavior and promotes no atlas cell.
 A **verifier op** is a primitive that turns a domain representation into a
 *certified* structural fact with an exact or interval witness. These are the
 operations PIR SOUND passes are allowed to invoke to assert E0/E1 facts. The
-six ops below (architecture.yaml `verifier_ops`) cover every B1–B12 benchmark.
+six ops below (architecture.yaml `verifier_ops`) cover every B1–B12 benchmark;
+revision 1 (2026-09-24, B15-SURF §9-OI-8) adds a seventh,
+`DUAL_EXCLUSION_FUNCTIONAL`, documented after `SYMPLECTIC_GATE`.
 
 Legend — certificate format is what the op returns and what a PIR
 `fact.witness` / `fact.impossibility_certificate` stores.
@@ -84,6 +86,29 @@ Legend — certificate format is what the op returns and what a PIR
 
 ---
 
+## DUAL_EXCLUSION_FUNCTIONAL — exact dual certificate for a conic (moment-cone) exclusion
+*(Added in revision 1, B15-SURF §9-OI-8; import of R26's bootstrap dual.)*
+- **Implementation:** `b15_surf/pos/certify.py::dual_functional(mu1, mu2)` with
+  `verify_nonnegativity_identity(y, witness)`; standalone re-check in
+  `tools/verify_b15_certificate.py`.
+- **Signature:** a point μ outside a truncated moment cone → a rational linear
+  functional `y` with `y·μ < 0`, plus a nonnegativity witness proving `y·ν ≥ 0`
+  on the whole cone: an exact polynomial identity
+  `Σ_j y_j x^j = s0 (v0 + v1 x)² + s1 x^p (1 − x)`, `s0, s1 ≥ 0` (Markov–Lukács
+  form on [0, 1]: SOS + interval multiplier), checked by coefficient matching
+  through `pir.symbolic.linear.verify_solution`.
+- **Certificate format:** `impossibility_certificate.dual_functional =
+  {op, y, evaluation, wall, nonnegativity_witness, identity_verified}`. On a flat
+  (rank-1) boundary an optional **Farkas companion** (`farkas_atom`: the
+  single-atom equality system is inconsistent, `pir.symbolic.linear.verify_farkas`)
+  is stored alongside; it is not the conic dual itself.
+- **Why not `verify_farkas` alone:** Farkas' lemma certifies inconsistency of a
+  *linear-equality* system; moment-cone membership is conic, whose dual is a
+  nonnegative polynomial. No rational-SDP primitive is needed at the truncation
+  orders in use (Hankel order t = 1).
+- **Used by:** B15-POS (EFT-hedron forward-limit walls, eqs. 7.19 / 7.35 of
+  arXiv:2012.15849). Always paired with a negative SCHUR_PIVOT_EXACT pivot.
+
 ## Benchmark → op coverage map (DoD: every B1–B12 maps to documented ops)
 
 | Benchmark | Verifier ops used |
@@ -100,6 +125,8 @@ Legend — certificate format is what the op returns and what a PIR
 | B10 CV channel | SYMPLECTIC_GATE, RANK_TEST |
 | B12 RGRC / B12-b | CPTP_GATE, RANK_TEST (shared-latent discrimination) |
 | M1 canon / M2 generator | RANK_TEST, SCHUR_PIVOT_EXACT (canonical invariants) |
+| B15-POS EFT-hedron bound | SCHUR_PIVOT_EXACT, DUAL_EXCLUSION_FUNCTIONAL |
+| B15-ZERO / B15-GID | RANK_TEST (exact split / grid ranks) + fingerprinting |
 
 Notes: statistical (E2) and simulation (E3) results still pass through a
 verifier op for their structural claims; only the exact/interval structural
