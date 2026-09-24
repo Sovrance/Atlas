@@ -3,7 +3,7 @@
   "certificate_class": "EXACT-RATIONAL (same class as B1/B2/B7); perturbative-amplitude identities",
   "benchmark": "B15-ZERO",
   "problem": "B15-ZERO: exact ground-truth Tr(phi^3) amplitude dataset \u2014 two routes, hidden zeros, 2-splits, delta-shift to NLSM vs independent Feynman rules (R37)",
-  "timestamp_utc": "2026-09-23T21:38:33Z",
+  "timestamp_utc": "2026-09-24T03:01:45Z",
   "headline": "Route A == Route B on 200 pts/n; all n(n-3)/2 zero loci vanish exactly; splits factorize exactly (eq. 1.7); lim delta^(n-2) A^delta == NLSM Feynman at 4/6/8 pts; dataset hash-stable",
   "arithmetic": "exact rational (Fraction) on every certified path; no floats",
   "hard_constraints_certified": true,
@@ -343,7 +343,7 @@
   "pir_level": "L2",
   "layer": "DOMAIN",
   "assumptions": [],
-  "prereg_ref": "prereg-002@ed177ebf62cc6453c887d2829200dfb9c2e21b45",
+  "prereg_ref": "prereg-002@6406cac770c8bd5326fa52f8148b748a1fb22485",
   "prereg_sha256": "9bf477eec119e2ce10932e644d41bbb733bbdf1fce30e30a2246cdeafe617427",
   "falsifier_direction": "F2: Route A != Route B anywhere -> generator REJECTED, no dataset; F3: a registered zero not vanishing exactly -> erratum/open item, never a patch",
   "seed": 20260923,
@@ -440,5 +440,5 @@
       "created_at": "1970-01-01T00:00:00Z"
     }
   ],
-  "certificate_id": "b15-zero-d5ae4554d8bb"
+  "certificate_id": "b15-zero-2dfc3874eb85"
 }

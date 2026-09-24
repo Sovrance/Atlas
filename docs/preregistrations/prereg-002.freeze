@@ -1,3 +1,3 @@
-commit=ed177ebf62cc6453c887d2829200dfb9c2e21b45
+commit=6406cac770c8bd5326fa52f8148b748a1fb22485
 file=docs/preregistrations/prereg-002-surfaceology-benchmarks.md
 note=commit hash of the prereg-002 commit on feature/b15-surf; if history is rewritten on integration, update this line (certificates also bind the prereg by content sha256)

@@ -126,3 +126,21 @@ candidate-forest pattern).
 ## 8. Package
 `gv-b15-surf.zip` (< 25 MB, work order at root) with the live tree of this branch; original
 drop archived at `archive/sprint-drops/gv-b15-surf.zip`.
+
+## 9. Integration note (post-sprint)
+On integration into `Sovrance/Atlas` the four `B15-SURF:` commits were re-authored (GitHub
+e-mail privacy; no content change), which changed the prereg-002 commit hash. Per
+INTEGRATION.md step 4, `docs/preregistrations/prereg-002.freeze` now reads
+`commit=6406cac770c8bd5326fa52f8148b748a1fb22485` and the three B15 certificates were
+regenerated under the gate's pinned seed. Only `prereg_ref`, `certificate_id` and
+`timestamp_utc` changed; `prereg_sha256`, verdicts, witnesses and all numeric content are
+unchanged. The IDs and hashes in §1–§2 above are the sprint-time values; current ones:
+
+| Certificate | certificate_id | regenerated sha256 (manifest) |
+|---|---|---|
+| B15-POS | `b15-pos-9cf9888f6a8e` | `8c28bd6e…` |
+| B15-ZERO | `b15-zero-2dfc3874eb85` | `3f11413a…` |
+| B15-GID | `b15-gid-ed8a9ca18639` | `ba60837e…` |
+
+`python3 ci/run_all_certified.py`: **PASS** — 16 suites, 0 failures, 0 degradations
+(requires `mpmath`, `numpy`, `scipy`); `tools/verify_b15_certificate.py` VERIFIED on all three.
