@@ -6,6 +6,10 @@ Recomputes, from the certificate JSON alone and with NO import of ``b15_surf``
 the dual exclusion functional's evaluation and its polynomial nonnegativity
 identity, the Farkas companion (y^T A = 0, y^T b != 0), the bracket
 containment of the published walls, and the content-addressed certificate id.
+For B15-POS2 (prereg-004, Hankel order t = 2) it recomputes the 3x3 Hankel and
+2x2 localizing pivot chains, the Gram-form dual (DUAL_EXCLUSION_FUNCTIONAL rev. 2:
+coefficient identity and Q0, Q1 >= 0), the brackets against the registered walls,
+and the quadrature values of the S1 walls.
 For B15-ZERO / B15-GID certificates it checks the schema-level invariants
 (SPEC verdict, soundness/E-level honesty, content hash, dataset hash binding).
 
@@ -129,6 +133,103 @@ def verify_pos(cert, fails):
             fails.append(f"bracket {k} endpoints not certified")
 
 
+def _poly_gram(Q0, Q1):
+    """Coefficients (degree 4) of z2^T Q0 z2 + x(1-x) z1^T Q1 z1."""
+    poly = [F(0)] * 5
+    for i in range(3):
+        for j in range(3):
+            poly[i + j] += F(Q0[i][j])
+    for i in range(2):
+        for j in range(2):
+            poly[i + j + 1] += F(Q1[i][j])
+            poly[i + j + 2] -= F(Q1[i][j])
+    return poly
+
+
+def chains_t2(mu):
+    mu = [F(x) for x in mu]
+    H = [[mu[i + j] for j in range(3)] for i in range(3)]
+    B = [[mu[i + j + 1] - mu[i + j + 2] for j in range(2)] for i in range(2)]
+    return {"hankel": pivots(H), "gap": pivots(B)}
+
+
+def check_point_t2(r, fails, tag):
+    mu = r["primal"]["mu"]
+    ch = chains_t2(mu)
+    feasible = all(ok for _, ok in ch.values())
+    for name, (piv, _) in ch.items():
+        stored = [F(x) for x in r["primal"]["chains"][name]["pivots"]]
+        if stored != piv:
+            fails.append(f"{tag}: pivot mismatch {name}: {stored} vs {piv}")
+    expected = "PERMITTED" if feasible else "REJECTED"
+    if r["verdict"] != expected:
+        fails.append(f"{tag}: verdict {r['verdict']} but recomputed {expected}")
+    if feasible:
+        return
+    d = (r.get("impossibility_certificate") or {}).get("dual_functional")
+    if not d:
+        fails.append(f"{tag}: REJECTED without dual functional")
+        return
+    if d.get("op") != "DUAL_EXCLUSION_FUNCTIONAL" or d.get("op_rev") != 2:
+        fails.append(f"{tag}: dual is not DUAL_EXCLUSION_FUNCTIONAL rev. 2")
+    y = [F(x) for x in d["y"]]
+    val = sum(a * b for a, b in zip(y, [F(x) for x in mu]))
+    if val != F(d["evaluation"]) or val >= 0:
+        fails.append(f"{tag}: dual evaluation {val} inconsistent")
+    Q0, Q1 = d["gram"]["Q0"], d["gram"]["Q1"]
+    if _poly_gram(Q0, Q1) != y:
+        fails.append(f"{tag}: Gram identity fails")
+    for nm, Q in (("Q0", Q0), ("Q1", Q1)):
+        _, ok = pivots([[F(x) for x in row] for row in Q])
+        if not ok:
+            fails.append(f"{tag}: Gram {nm} not PSD")
+
+
+def verify_pos2(cert, fails):
+    res = cert["results"]
+    reg = cert["inputs"]["registered"]
+    for name, r in res["T1_primal"]["points"].items():
+        check_point_t2(r, fails, name)
+        if r["verdict"] != "PERMITTED":
+            fails.append(f"{name}: interior point not PERMITTED")
+    for name, r in res["T2_dual"]["points"].items():
+        check_point_t2(r, fails, name)
+        if r["verdict"] != "REJECTED":
+            fails.append(f"{name}: exterior point not REJECTED")
+    check_point_t2(res["T6_negative_control"], fails, "negative_control")
+    width = F(res["T3_brackets"]["width_threshold"])
+    if width != F(reg["width"]):
+        fails.append("bracket width threshold != registered")
+    for s, br2 in res["T3_brackets"]["slices"].items():
+        rs = reg["slices"][s]
+        for k, key in (("lower_wall", "L"), ("upper_wall", "U")):
+            br = br2[k]
+            wall = F(rs[key])
+            if F(br["registered_wall"]) != wall:
+                fails.append(f"{s} {k}: stored wall != registered")
+            a, b = (F(x) for x in br["certified_inner_interval"])
+            if not (a <= wall <= b):
+                fails.append(f"{s} {k}: bracket excludes registered wall")
+            if (b - a) > width:
+                fails.append(f"{s} {k}: bracket too wide")
+            sl = rs["slice"]
+            fin = all(ok for _, ok in chains_t2(["1", *sl, br["inner_feasible"]]).values())
+            fout = all(ok for _, ok in chains_t2(["1", *sl, br["outer_infeasible"]]).values())
+            if not fin or fout:
+                fails.append(f"{s} {k}: bracket endpoints not certified")
+    # quadrature route for S1 (Simpson rational; Gauss via x^4 mod x^2 - x + 1/6)
+    simpson = F(1, 6) * 0 + F(2, 3) * F(1, 16) + F(1, 6) * 1
+    a, b = F(1), F(0)
+    for _ in range(3):
+        a, b = a + b, -a / 6
+    gauss = a / 2 + b
+    q = res["T4_quadrature"]
+    if F(q["gauss_legendre_2pt_mu4"]) != gauss or F(q["simpson_mu4"]) != simpson:
+        fails.append("quadrature values do not recompute")
+    if gauss != F(reg["slices"]["S1"]["L"]) or simpson != F(reg["slices"]["S1"]["U"]):
+        fails.append("quadrature route disagrees with registered S1 walls")
+
+
 def verify_common(cert, fails):
     if cert["verdict"] not in SPEC:
         fails.append("non-SPEC verdict")
@@ -138,8 +239,9 @@ def verify_common(cert, fails):
         fails.append("HEURISTIC without warnings")
     if not cert["certificate_id"].endswith(content_hash(cert)):
         fails.append("certificate_id != content hash")
-    if not cert["prereg_ref"].startswith("prereg-002@"):
-        fails.append("prereg_ref missing")
+    want = "prereg-004@" if cert.get("benchmark") == "B15-POS2" else "prereg-002@"
+    if not cert["prereg_ref"].startswith(want) or "UNFROZEN" in cert["prereg_ref"]:
+        fails.append(f"prereg_ref missing or not {want}<commit>")
     for a in cert["assumptions"]:
         if not a.startswith("asm:"):
             fails.append(f"bad assumption {a}")
@@ -172,6 +274,8 @@ def main(argv):
     b = cert.get("benchmark")
     if b == "B15-POS":
         verify_pos(cert, fails)
+    elif b == "B15-POS2":
+        verify_pos2(cert, fails)
     elif b in ("B15-ZERO", "B15-GID"):
         verify_zero(cert, fails)
     else:

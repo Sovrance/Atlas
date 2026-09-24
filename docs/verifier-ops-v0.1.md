@@ -10,7 +10,8 @@ A **verifier op** is a primitive that turns a domain representation into a
 operations PIR SOUND passes are allowed to invoke to assert E0/E1 facts. The
 six ops below (architecture.yaml `verifier_ops`) cover every B1–B12 benchmark;
 revision 1 (2026-09-24, B15-SURF §9-OI-8) adds a seventh,
-`DUAL_EXCLUSION_FUNCTIONAL`, documented after `SYMPLECTIC_GATE`.
+`DUAL_EXCLUSION_FUNCTIONAL`, documented after `SYMPLECTIC_GATE`; its witness
+form is revised to rev. 2 (Gram form, prereg-004 P4-OI-3).
 
 Legend — certificate format is what the op returns and what a PIR
 `fact.witness` / `fact.impossibility_certificate` stores.
@@ -109,6 +110,29 @@ Legend — certificate format is what the op returns and what a PIR
 - **Used by:** B15-POS (EFT-hedron forward-limit walls, eqs. 7.19 / 7.35 of
   arXiv:2012.15849). Always paired with a negative SCHUR_PIVOT_EXACT pivot.
 
+### Rev. 2 witness — Gram form (prereg-004 P4-OI-3; supersedes rev. 1 as the canonical form)
+- **Form:** `Σ_j y_j x^j = z_mᵀ Q0 z_m + x(1−x) z_{m−1}ᵀ Q1 z_{m−1}` with `z_m = (1, x, …, x^m)`,
+  where `Q0` ((m+1)×(m+1)) and `Q1` (m×m) are rational PSD Gram matrices. The functional
+  covers degree `2m`; at Hankel order t = 2 (m = 2), `Q0` is 3×3 and `Q1` is 2×2.
+- **Complete, not merely sufficient:** by Markov–Lukács, every polynomial of degree `2m` that
+  is nonnegative on [0, 1] equals `σ0 + x(1−x)σ1` with `deg σ0 ≤ 2m` and `deg σ1 ≤ 2m−2`,
+  which is exactly this Gram form. Rev. 1 witnesses (`s0 (v0+v1x)² + s1 x^p(1−x)`) remain valid
+  certificates and can be re-expressed in rev. 2 form (e.g. `1 − x = (1 − x)² + x(1 − x)`).
+- **Condition (i) — rationality:** `Q0` and `Q1` must be rational. This is guaranteed for
+  pivot-derived functionals. If the first negative Schur pivot of `H` (or of the localizing
+  matrix `B`) sits at index k, the rational `v` with `v_k = 1`, `v_j = 0` (j > k) and
+  `M[:k,:k] v[:k] = −M[:k,k]` satisfies `vᵀMv` = that pivot, and `Q = vvᵀ` is the rank-1 witness.
+- **Condition (ii) — two checks, both required:** `pir.symbolic.linear.verify_solution` checks
+  the coefficient identity, and `SCHUR_PIVOT_EXACT` checks `Q0, Q1 ⪰ 0`. If either fails, the
+  rejection is uncertified (prereg-004 G2).
+- **No Farkas companion for irrational boundary measures:** when the boundary measure has
+  irrational atoms (e.g. the t = 2 Hankel wall, whose atoms are the Gauss nodes), the
+  equality-form system is not over ℚ, and none is produced.
+- **Implementation:** `b15_surf/pos/certify_t2.py::dual_functional / verify_gram_witness`;
+  standalone re-check in `tools/verify_b15_certificate.py::check_point_t2`.
+- **Used by:** B15-POS2 (prereg-004; degree-4 Hausdorff walls, eqs. 7.45 / 7.46 of
+  arXiv:2012.15849).
+
 ## Benchmark → op coverage map (DoD: every B1–B12 maps to documented ops)
 
 | Benchmark | Verifier ops used |
@@ -126,6 +150,7 @@ Legend — certificate format is what the op returns and what a PIR
 | B12 RGRC / B12-b | CPTP_GATE, RANK_TEST (shared-latent discrimination) |
 | M1 canon / M2 generator | RANK_TEST, SCHUR_PIVOT_EXACT (canonical invariants) |
 | B15-POS EFT-hedron bound | SCHUR_PIVOT_EXACT, DUAL_EXCLUSION_FUNCTIONAL |
+| B15-POS2 EFT-hedron bound, t = 2 | SCHUR_PIVOT_EXACT, DUAL_EXCLUSION_FUNCTIONAL (rev. 2) |
 | B15-ZERO / B15-GID | RANK_TEST (exact split / grid ranks) + fingerprinting |
 
 Notes: statistical (E2) and simulation (E3) results still pass through a
