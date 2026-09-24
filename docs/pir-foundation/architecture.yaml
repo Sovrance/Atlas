@@ -35,7 +35,8 @@ op_families:
             PHASE_ACCUMULATE, MEASURE, RECORD, CONDITION, TRACE_OUT,
             COARSE_GRAIN, SYMMETRY_ACT, COMPOSE, PARALLEL]
   verifier_ops: [SCHUR_PIVOT_EXACT, RANK_TEST, FLAT_EXTENSION,
-                 JACOBIAN_RANK_IDENTIFIABILITY, CPTP_GATE, SYMPLECTIC_GATE]
+                 JACOBIAN_RANK_IDENTIFIABILITY, CPTP_GATE, SYMPLECTIC_GATE,
+                 DUAL_EXCLUSION_FUNCTIONAL]
 namespaces: [raw, apparatus, operational, domain, latent, gauge, invariant,
              global, effective, analyst]
 pass_tags: [SOUND, HEURISTIC]           # HEURISTIC passes must emit located warnings[]

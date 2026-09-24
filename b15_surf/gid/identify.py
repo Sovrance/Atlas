@@ -191,7 +191,7 @@ def scores(feat: Dict, db_feats: Dict[str, Dict], keys) -> Dict:
             "all": {k: fmt(v) for k, v in sims.items()}}
 
 
-def identify(feat: Dict, known: Dict, registered: Dict, threshold: Fraction = Fraction(9, 10)) -> Dict:
+def identify(feat: Dict, known: Dict, registered: Dict, threshold: Fraction = Fraction(1)) -> Dict:
     n = feat["n"]
     db, db_feats = build_db(known, n, registered)
     obs = _hashable(feat)
@@ -203,10 +203,12 @@ def identify(feat: Dict, known: Dict, registered: Dict, threshold: Fraction = Fr
     inv = scores(feat, db_feats, ("pole_set", "zero_loci", "split_structure"))
     sec = scores(feat, db_feats, ("zero_loci", "split_structure"))
 
-    # --- pre-registered adjudication (prereg-002 §GID) ----------------------
+    # --- pre-registered adjudication (prereg-002 §GID, amended by prereg-003) --
+    # A single surviving menu member is identification relative to the menu
+    # (B8 / pir.candidates semantics) -> PERMITTED, never FORCED (prereg-003 A2).
     if len(lat.compatible) == 1 and prim["similarity"] >= threshold and prim["confidence"] >= threshold \
             and lookup.get("status") == "IDENTIFIED" and lookup["grammar_id"] == lat.compatible[0]:
-        verdict, cause, cls = "FORCED", None, None
+        verdict, cause, cls = "PERMITTED", None, None
         selected = lat.compatible[0]
     elif len(lat.compatible) >= 2:
         verdict, cause, cls = "OBSERVATIONALLY_EQUIVALENT", None, sorted(lat.compatible)

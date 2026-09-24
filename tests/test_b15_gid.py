@@ -32,7 +32,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEED = D.SEED
 CLASS_MAP = {"TrPhi3": "C0", "NLSM": "C1", "TrPhi3_shifted": "C2"}       # hidden from the pass
 TRUTH = {v: k for k, v in CLASS_MAP.items()}
-THRESHOLD = F(9, 10)              # registered proposal (§9-OI-2)
+THRESHOLD = F(1)                  # exact agreement (prereg-003 A1; §9-OI-2)
 FIT_N = (5, 6)
 HELD_OUT_N = 8
 
@@ -152,7 +152,7 @@ def t4_delta(feats):
 
 def t5_held_out(res):
     def separable(n):
-        return all(r["verdict"] == "FORCED" and r["selected"] == TRUTH[cls]
+        return all(r["verdict"] == "PERMITTED" and r["selected"] == TRUTH[cls]
                    for (cls, m), r in res.items() if m == n)
     fit = {n: separable(n) for n in FIT_N}
     held = separable(HELD_OUT_N)
@@ -167,12 +167,13 @@ def t6_adjudicate(res):
     n = HELD_OUT_N
     rows = {cls: res[(cls, n)] for cls in sorted(TRUTH) if (cls, n) in res}
     # primary correlator
-    all_forced = all(r["verdict"] == "FORCED" and r["selected"] == TRUTH[cls] for cls, r in rows.items())
+    all_identified = all(r["verdict"] == "PERMITTED" and r["selected"] == TRUTH[cls] for cls, r in rows.items())
     all_thresh = all(F(r["primary"]["similarity"]) >= THRESHOLD and F(r["primary"]["confidence"]) >= THRESHOLD
                      for r in rows.values())
     deltas_ok = res[("C2", n)]["delta"]["verdict"] == "FORCED"
-    if all_forced and all_thresh and deltas_ok:
-        primary = {"outcome": "A", "verdict": "FORCED", "note": "classes distinguished and delta recovered at n=8"}
+    if all_identified and all_thresh and deltas_ok:
+        primary = {"outcome": "A", "verdict": "PERMITTED",
+                   "note": "classes distinguished (menu-relative identification) and delta recovered at n=8"}
     else:
         primary = {"outcome": "other", "verdict": "NONIDENTIFIABLE"}
     # secondary (zeros-only) correlator
@@ -183,7 +184,7 @@ def t6_adjudicate(res):
                      "note": "fingerprint-only (zeros + splits) identification is structurally limited "
                              "for deformation-related grammars: the theories share zeros by construction"}
     else:
-        secondary = {"outcome": "A", "verdict": "FORCED"}
+        secondary = {"outcome": "A", "verdict": "PERMITTED"}
     inv_ties = {cls: r["invariants_only"]["ties"] for cls, r in rows.items()}
     print(f"T6 adjudication at n={n}: primary -> Outcome {primary['outcome']} ({primary['verdict']}); "
           f"zeros-only -> Outcome {secondary['outcome']} ({secondary['verdict']} {secondary.get('class')}); "
@@ -193,7 +194,7 @@ def t6_adjudicate(res):
                         "per_class": {cls: {"selected": r["selected"], "similarity": r["primary"]["similarity"],
                                             "confidence": r["primary"]["confidence"]} for cls, r in rows.items()}},
             "invariants_only": {"correlator": "b15.gid.invariants_only_v1", "ties": inv_ties,
-                                "verdict": "AMBIGUOUS" if any(len(t) >= 2 for t in inv_ties.values()) else "FORCED",
+                                "verdict": "AMBIGUOUS" if any(len(t) >= 2 for t in inv_ties.values()) else "PERMITTED",
                                 "note": "delta-insensitive invariants cannot separate a base grammar from its "
                                         "deformation (by construction); NLSM still separated by its pole set"},
             "secondary": {**secondary, "correlator": "b15.gid.zeros_only_v1", "ties": sec_ties}}
@@ -232,7 +233,7 @@ if __name__ == "__main__":
         certificate_class="EXACT-RATIONAL fingerprints; framework-capability benchmark",
         results=results, soundness="SOUND", warnings=[],
         ground_truth_route="planar-feynman-sum (dataset data/b15/zero_dataset_v1.json, label-stripped)",
-        evidence_level="E0", pir_level="L3", assumptions=["asm:B15-OI-2-thresholds-pending"],
+        evidence_level="E0", pir_level="L3", assumptions=[],
         falsifier_direction="F4: separable at n<=6 but not at n=8 -> fingerprint_v1 REJECTED (over-fit); "
                             "a wrong selected grammar at any n -> REJECTED",
         seed=SEED, generator_sha256=ds["generator_sha256"],
@@ -240,10 +241,11 @@ if __name__ == "__main__":
             "Input is the exact label-stripped dataset; class ids are opaque; registered delta withheld",
             "Grammar menu = {TrPhi3, NLSM, TrPhi3_shifted}: AMBIGUOUS/NONIDENTIFIABLE are menu-relative",
             "Similarity and confidence are separate exact ratios; correlator named per field",
-            "Thresholds (9/10) are proposals pending §9-OI-2 — carried as asm:",
+            "Threshold = exact agreement (similarity = confidence = 1), prereg-003 A1 (§9-OI-2)",
+            "Single surviving menu member -> PERMITTED (menu-relative), not FORCED: prereg-003 A2 (§9-OI-9)",
         ],
-        calibration_route="registered thresholds 9/10 (proposal); no data-fitted parameter — the pass has no "
-                          "tunable numeric tolerance (all detection exact)",
+        calibration_route="threshold = exact agreement (prereg-003 A1); no data-fitted parameter — the pass has "
+                          "no tunable numeric tolerance (all detection exact)",
         verdict=verdict, verdict_cause=None if verdict != "NONIDENTIFIABLE" else "threshold/lattice",
         verdict_class=None, witness=witness, impossibility_certificate=None,
         similarity=min((res[(cls, n)]["primary"]["similarity"] for cls in sorted(TRUTH)), key=F),
@@ -251,6 +253,7 @@ if __name__ == "__main__":
         correlator="b15.gid.jaccard_atoms_v1",
         inputs={"dataset_path": "data/b15/zero_dataset_v1.json", "dataset_sha256": ds["dataset_sha256"],
                 "known_grammars": "data/b15/known_grammars_v1.json", "threshold": fmt(THRESHOLD),
+                "prereg_amendment": C.amendment_ref(),
                 "fit_n": list(FIT_N), "held_out_n": HELD_OUT_N, "poly_degree": G.POLY_DEGREE},
         pir_facts=forest,
     )

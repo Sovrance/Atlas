@@ -70,3 +70,10 @@ identification machinery* on cases with ground truth.
 
 **Not done (recorded):** WP2.3 Route C (ABHY canonical form, R38) — not attempted; WP2.8
 YM-scaffolded rows — skipped pending §9-OI-3 (prereg records the three-class scope).
+
+**Addendum (2026-09-24, §9 decisions — `docs/preregistrations/prereg-003-b15-open-item-amendments.md`).**
+The target bound is confirmed and `asm:B15-OI-1-pending` is removed. The B15-GID
+identification verdict is now `PERMITTED` (menu-relative identification) rather than `FORCED`,
+and its threshold is exact agreement (the result is unchanged; every score was 1). The POS dual
+is named as verifier op 7, `DUAL_EXCLUSION_FUNCTIONAL`. The body above is kept as written at
+sprint time.

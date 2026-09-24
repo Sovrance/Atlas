@@ -1,0 +1,6 @@
+# Python dependencies of the certified gate (python3 ci/run_all_certified.py).
+# Everything else is stdlib. Versions are those the gate last passed with
+# (Python 3.11); lower bounds, not pins. See prereg-003 (OI-7).
+mpmath>=1.3      # B1 moment solver
+numpy>=1.26      # B4, B8, B9, B10, B12 suites
+scipy>=1.11      # B4 area pipeline, B9 circuit

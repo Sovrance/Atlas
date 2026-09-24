@@ -99,7 +99,8 @@ def dual_functional(mu1: Fraction, mu2: Fraction) -> Optional[Dict]:
         wall = "gap chain (eq. 7.35)"
     value = sum(yi * mi for yi, mi in zip(y, mu))
     assert value < 0
-    return {"y": [fmt(t) for t in y], "evaluation": fmt(value), "wall": wall,
+    return {"op": "DUAL_EXCLUSION_FUNCTIONAL",
+            "y": [fmt(t) for t in y], "evaluation": fmt(value), "wall": wall,
             "nonnegativity_witness": witness,
             "identity_verified": verify_nonnegativity_identity(y, witness)}
 

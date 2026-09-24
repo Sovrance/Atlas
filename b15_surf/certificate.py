@@ -30,6 +30,8 @@ SCHEMA_PATH = os.path.join(ROOT, "schemas", "b15_certificate.schema.json")
 PREREG_PATH = os.path.join(ROOT, "docs", "preregistrations",
                            "prereg-002-surfaceology-benchmarks.md")
 PREREG_FREEZE = os.path.join(ROOT, "docs", "preregistrations", "prereg-002.freeze")
+AMENDMENT_PATH = os.path.join(ROOT, "docs", "preregistrations",
+                              "prereg-003-b15-open-item-amendments.md")
 
 SPEC_VERDICTS = ("FORCED", "PERMITTED", "REJECTED", "NONIDENTIFIABLE",
                  "OBSERVATIONALLY_EQUIVALENT", "APPARATUS_LIMITED",
@@ -56,6 +58,12 @@ def prereg_ref() -> Dict[str, str]:
                 if line.startswith("commit="):
                     commit = line.strip().split("=", 1)[1]
     return {"prereg_ref": f"prereg-002@{commit}", "prereg_sha256": sha}
+
+
+def amendment_ref() -> Dict[str, str]:
+    """Content binding of prereg-003 (the §9 open-item amendments to prereg-002)."""
+    with open(AMENDMENT_PATH, "rb") as f:
+        return {"ref": "prereg-003", "sha256": hashlib.sha256(f.read()).hexdigest()}
 
 
 def content_hash(cert: Dict) -> str:

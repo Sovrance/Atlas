@@ -29,3 +29,6 @@ not upgrade a category. Updated at each merge touching results.
 | Atlas H cells | known theorems | per-cell | anchored in ledger |
 | Atlas P cells / conjectures ?ₙ | speculative interpretation with falsifiers | — | promotion rules apply |
 | GWTC-next η_A registration (prereg-001) | novel prospective prediction | DRAFT-FOR-FREEZE → ACTIVE at `v0.7-frozen` | P1–P3 + α_s P4; see `docs/preregistrations/prereg-001-gwtc-next-area.md` |
+| B15-POS verifier vs EFT-hedron forward bound | recovered known result | BENCHMARK / E0 | primal + dual (DUAL_EXCLUSION_FUNCTIONAL) certificates; brackets ≤ 2⁻²⁰; target bound confirmed (§9-OI-1, prereg-003) |
+| B15-ZERO Tr φ³ zeros / splits / δ-shift → NLSM | recovered known result | BENCHMARK / E0 | two routes; Feynman cross-check at 4/6/8 points; exact dataset |
+| B15-GID blind grammar identification | framework capability | BENCHMARK / E0 | Outcome A (primary; PERMITTED, menu-relative), Outcome B (zeros-only); δ recovered; menu-limited |

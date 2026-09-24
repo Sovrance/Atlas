@@ -12,7 +12,7 @@ Source: Arkani-Hamed, Huang & Huang, "The EFT-Hedron", arXiv:2012.15849 (R26).
   eq. (7.34)-(7.35) with a mass gap M_Gap (x_a <= 1 in units M_Gap = 1):
                     a_{2,0} >= M_Gap^2 a_{3,0} >= ... >= M_Gap^{2(k-2)} a_{k,0} >= 0.
 
-Registered target (prereg-002 §POS, awaiting §9-OI-1 confirmation) — the
+Registered target (prereg-002 §POS, confirmed by §9-OI-1 / prereg-003 A3) — the
 lowest-order TWO-SIDED forward-limit statement, in units a_{2,0} = 1, M_Gap = 1:
     mu_0 = 1,  mu_1 = a_{3,0}/a_{2,0},  mu_2 = a_{4,0}/a_{2,0}
     lower wall (Hankel 2x2 minor, eq. 7.19):     mu_0 mu_2 - mu_1^2 >= 0   i.e.  mu_2 >= mu_1^2
