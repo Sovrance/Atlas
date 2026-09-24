@@ -312,6 +312,31 @@ Run: `python3 b13_cdl/tests/test_b13.py` (schemas + 8 pipelines + certificates +
 
 **DRAFT items awaiting sign-off — deliberately NOT filed to `docs/claims-table.md`, SPEC, or the atlas:** (1) a `CONDITIONAL(X)` verdict-vocabulary extension to SPEC §6, and (2) the mathematics-entry relabeling B\* → M\* (benchmark-ID collision fix). These live only inside `b13_cdl/` as drafts.
 
+## B15-SURF — Surfaceology / positivity-bootstrap integration (implemented ✅, 6/6 · 7/7 · 7/7, pre-registered)
+
+Three certified sub-benchmarks from the surfaceology / hidden-zeros deep-research report (R36–R40), pre-registered in [`docs/preregistrations/prereg-002-surfaceology-benchmarks.md`](docs/preregistrations/prereg-002-surfaceology-benchmarks.md) and filed in [`docs/atlas-edits/edit-011-b15-surf-memo.md`](docs/atlas-edits/edit-011-b15-surf-memo.md) (memo, **no cell change**). Layer DOMAIN, namespace `domain:`/`analyst:`; reproducing known QFT identities is not evidence for 𝕽.
+
+```bash
+python3 tests/test_b15_pos.py     # B15-POS  6/6  verifier vs published EFT-hedron bound (R26)
+python3 tests/test_b15_zero.py    # B15-ZERO 7/7  exact Tr(phi^3) ground truth, zeros, splits, delta-shift -> NLSM
+python3 tests/test_b15_gid.py     # B15-GID  7/7  blind identification from pole/zero/split fingerprints
+python3 tools/verify_b15_certificate.py certificates/b15_pos_certificate.json   # standalone re-verify
+```
+
+- **B15-POS** (`certificates/b15_pos_certificate.json`): the exact-PSD verifier (`SCHUR_PIVOT_EXACT`) scored for the first time against a bound the program did not build — `μ₁² ≤ μ₂ ≤ μ₁` (arXiv:2012.15849 eqs. 7.19/7.35, slice μ₁ = ½). Interior PERMITTED (pivots); exterior REJECTED with a negative pivot **and** an exact dual exclusion functional; both walls bracketed to ≤ 2⁻²⁰; negative control flips. Taint `asm:B15-OI-1-pending` (target bound awaiting sign-off).
+- **B15-ZERO** (`certificates/b15_zero_certificate.json`, `data/b15/zero_dataset_v1.json`): Route A (Catalan triangulation sum) == Route B (recursion) on 200 pts/n; all n(n−3)/2 hidden-zero loci vanish exactly; 2-splits factorize exactly; **lim δⁿ⁻² A^δ = NLSM Feynman-rule amplitude exactly at 4, 6, 8 points**. 3,664-record exact dataset, hash-stable.
+- **B15-GID** (`certificates/b15_gid_certificate.json`): from the label-stripped dataset only — exact pole sets, zero loci, split ranks (RANK_TEST), δ recovered exactly (7/3). **Outcome A** (FORCED at held-out n=8) on the primary correlator; **Outcome B** (`OBSERVATIONALLY_EQUIVALENT` mod δ-shift) on the zeros-only correlator — zeros are shared by construction; poles + δ-class separate. Both filed.
+
+```
+b15_surf/
+  pos/   dispersive.py certify.py        moments/Hankel (R26), primal + dual + bracket
+  zero/  kinematics.py triangulations.py recursion.py zeros.py splits.py delta_shift.py nlsm_feynman.py dataset.py
+  gid/   fingerprint.py identify.py      exact fingerprints, dihedral quotient, KnownGrammarDB, candidate forest
+  certificate.py pir_bridge.py           v0.3 shape + §5 fields, content-addressed id, PIR facts
+```
+
+Design note (WP4, no code): [`docs/notes/constraint-manifest-representation-v0.md`](docs/notes/constraint-manifest-representation-v0.md). Report: [`docs/sprint-B15-SURF-report.md`](docs/sprint-B15-SURF-report.md). Claims-table rows are proposed in the report and appended only after sign-off (§9-OI-5).
+
 ## Research library
 
 [`docs/references.md`](docs/references.md) — ledger through **R33**. **R16–R22** = 2025 Nobel / Berkeley (B9). **R23–R24** = BEC / interferometry. **R25–R30** = related-programs imports. **R31–R33** = α-row tension (S3-EM). **R15** + addendum: B7/B8/engine. **R14** Maudlin: M-layer + arrival-time track.
