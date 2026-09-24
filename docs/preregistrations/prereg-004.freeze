@@ -1,0 +1,3 @@
+commit=1ccea835690be17ea1a11e46b77374a097ab6503
+file=docs/preregistrations/prereg-004-pos-hankel-t2.md
+note=commit hash of the prereg-004 freeze commit (pre-freeze items answered); if history is rewritten on integration, update this line (certificates also bind the prereg by content sha256)

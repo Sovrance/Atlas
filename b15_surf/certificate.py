@@ -47,17 +47,27 @@ def load_schema() -> Dict:
         return json.load(f)
 
 
-def prereg_ref() -> Dict[str, str]:
-    """``prereg-002@<commit>`` from the freeze file + content hash of the prereg."""
-    with open(PREREG_PATH, "rb") as f:
+PREREGS = {
+    "002": (PREREG_PATH, PREREG_FREEZE),
+    "004": (os.path.join(ROOT, "docs", "preregistrations", "prereg-004-pos-hankel-t2.md"),
+            os.path.join(ROOT, "docs", "preregistrations", "prereg-004.freeze")),
+}
+# benchmark -> preregistration that governs it
+BENCHMARK_PREREG = {"B15-POS2": "004"}
+
+
+def prereg_ref(prereg: str = "002") -> Dict[str, str]:
+    """``prereg-NNN@<commit>`` from the freeze file + content hash of the prereg."""
+    path, freeze = PREREGS[prereg]
+    with open(path, "rb") as f:
         sha = hashlib.sha256(f.read()).hexdigest()
     commit = "UNFROZEN"
-    if os.path.exists(PREREG_FREEZE):
-        with open(PREREG_FREEZE) as f:
+    if os.path.exists(freeze):
+        with open(freeze) as f:
             for line in f:
                 if line.startswith("commit="):
                     commit = line.strip().split("=", 1)[1]
-    return {"prereg_ref": f"prereg-002@{commit}", "prereg_sha256": sha}
+    return {"prereg_ref": f"prereg-{prereg}@{commit}", "prereg_sha256": sha}
 
 
 def amendment_ref() -> Dict[str, str]:
@@ -93,7 +103,7 @@ def build(*, benchmark: str, problem: str, headline: str, certificate_class: str
     hard_ok = all(
         r.get("status") in ("PASS", "FORCED", "PERMITTED", "PD_CERTIFIED", "PSD_CERTIFIED")
         for r in results.values() if isinstance(r, dict) and "status" in r)
-    pr = prereg_ref()
+    pr = prereg_ref(BENCHMARK_PREREG.get(benchmark, "002"))
     cert: Dict[str, Any] = {
         "certificate_version": "0.3",
         "certificate_class": certificate_class,
@@ -150,7 +160,7 @@ def validate(cert: Dict) -> None:
         raise B15CertificateError("a HEURISTIC certificate may not assert E0 (hard constraint 4)")
     if cert["soundness"] == "HEURISTIC" and not cert["warnings"]:
         raise B15CertificateError("HEURISTIC requires located warnings[] (hard constraint 4)")
-    if cert.get("benchmark") == "B15-POS" and cert["verdict"] == "REJECTED" \
+    if cert.get("benchmark") in ("B15-POS", "B15-POS2") and cert["verdict"] == "REJECTED" \
             and not cert.get("impossibility_certificate"):
         raise B15CertificateError("POS REJECTED requires impossibility_certificate (§5)")
     if cert["verdict"] in ("PERMITTED", "REJECTED", "FORCED") and cert["witness"] is None:
@@ -162,8 +172,9 @@ def validate(cert: Dict) -> None:
     for a in cert["assumptions"]:
         if not a.startswith("asm:"):
             raise B15CertificateError(f"assumption {a!r} must be asm:-prefixed (ADR-0002)")
-    if not cert["prereg_ref"].startswith("prereg-002@"):
-        raise B15CertificateError("prereg_ref must be prereg-002@<commit>")
+    want = BENCHMARK_PREREG.get(cert.get("benchmark"), "002")
+    if not cert["prereg_ref"].startswith(f"prereg-{want}@") or "UNFROZEN" in cert["prereg_ref"]:
+        raise B15CertificateError(f"prereg_ref must be prereg-{want}@<commit> (frozen)")
     expected = content_hash(cert)
     if not cert["certificate_id"].endswith(expected):
         raise B15CertificateError("certificate_id does not match content hash")
