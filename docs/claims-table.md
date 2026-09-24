@@ -32,3 +32,4 @@ not upgrade a category. Updated at each merge touching results.
 | B15-POS verifier vs EFT-hedron forward bound | recovered known result | BENCHMARK / E0 | primal + dual (DUAL_EXCLUSION_FUNCTIONAL) certificates; brackets ≤ 2⁻²⁰; target bound confirmed (§9-OI-1, prereg-003) |
 | B15-ZERO Tr φ³ zeros / splits / δ-shift → NLSM | recovered known result | BENCHMARK / E0 | two routes; Feynman cross-check at 4/6/8 points; exact dataset |
 | B15-GID blind grammar identification | framework capability | BENCHMARK / E0 | Outcome A (primary; PERMITTED, menu-relative), Outcome B (zeros-only); δ recovered; menu-limited |
+| B15-POS2 verifier vs EFT-hedron gapped bound at t = 2 | recovered known result | BENCHMARK / E0 | prereg-004 (frozen 1ccea83; citation erratum E1); two slices; Gram-form duals (DUAL_EXCLUSION_FUNCTIONAL rev. 2); brackets ≤ 2⁻²⁰; S1 walls = Gauss–Legendre / Simpson; t = 1 blind to all four exterior points |

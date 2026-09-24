@@ -2,8 +2,8 @@
 
 Registered in docs/preregistrations/prereg-004-pos-hankel-t2.md (ACTIVE, frozen; see
 prereg-004.freeze). Target: the even truncated Hausdorff system of degree 4 on [0, 1]
-(arXiv:2012.15849 eqs. 7.45/7.46; warrant Krein-Nudel'man Thm III.2.3 as stated in
-Curto-Fialkow 1991 Remark 4.4):  H = [mu_{i+j}]_{0..2} >= 0,  B = [mu_{i+j+1} - mu_{i+j+2}]_{0..1} >= 0.
+(arXiv:2012.15849 eqs. 7.45/7.46; warrant [KrN, Theorem II.2.3] as cited in Curto-Fialkow
+1991 Remark 4.4 — see prereg-004 errata E1; certificate strings keep the frozen wording):  H = [mu_{i+j}]_{0..2} >= 0,  B = [mu_{i+j+1} - mu_{i+j+2}]_{0..1} >= 0.
 
 T1  primal: interior points S1-int, S2-int -> PERMITTED; pivot chains == registered
 T2  dual: four exterior points -> REJECTED; negative pivot == registered; Gram-form

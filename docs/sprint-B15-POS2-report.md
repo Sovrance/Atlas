@@ -7,7 +7,8 @@ bracketing) on a case with ground truth. It is not evidence about the universal 
 
 Preregistration: `docs/preregistrations/prereg-004-pos-hankel-t2.md`, frozen at `1ccea83`
 (`prereg-004.freeze`), `prereg_sha256 8d68d570fa13020a…`. The warrant for the two-matrix
-system is Kreĭn–Nudel′man Thm III.2.3, as stated in Curto–Fialkow 1991, Remark 4.4.
+system is [KrN, Theorem II.2.3] as cited in Curto–Fialkow 1991, Remark 4.4. (prereg-004 and the
+certificate say "III.2.3"; that transcription error is recorded in `prereg-004-errata.md` E1.)
 Certificate: `certificates/b15_pos_t2_certificate.json`, **`b15-pos2-6facf90a799a`**,
 verdict **PERMITTED**, SOUND/E0.
 
@@ -52,8 +53,9 @@ The registered falsifiers G1–G5 were not triggered.
 - `docs/verifier-ops-v0.1.md`: `DUAL_EXCLUSION_FUNCTIONAL` rev. 2 (complete by Markov–Lukács,
   supersedes rev. 1 as the canonical form, conditions (i) rationality and (ii) both checks).
 
-## Proposed claims-table row (append after sign-off)
+## Claims-table row (appended to `docs/claims-table.md` after sign-off, 2026-09-24)
 | B15-POS2 verifier vs EFT-hedron gapped bound at t = 2 | recovered known result | BENCHMARK / E0 | two slices; Gram-form duals (DUAL_EXCLUSION_FUNCTIONAL rev. 2); brackets ≤ 2⁻²⁰; S1 walls = Gauss–Legendre / Simpson; t = 1 blind to all four exterior points |
 
 ## Backlog
-prereg-005: a slice with singular `A` (μ2 = μ1²), which exercises the zero-pivot path (P4-OI-2).
+prereg-005: a slice with singular `A` (μ2 = μ1²), which exercises the zero-pivot path (P4-OI-2); drafted as
+`docs/preregistrations/prereg-005-pos-degenerate-slice.md` (DRAFT-FOR-FREEZE).
