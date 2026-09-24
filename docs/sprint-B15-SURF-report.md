@@ -158,7 +158,7 @@ That is a new preregistration, not an edit, because prereg-002 is frozen. Effect
 - **Verifier op 7:** `DUAL_EXCLUSION_FUNCTIONAL` (`docs/verifier-ops-v0.1.md` rev. 1,
   `pir/types.py`, `architecture.yaml`); the POS dual object carries `"op"`.
 - **Claims table:** the three §5 rows are appended to `docs/claims-table.md`.
-- **Backlog:** prereg-004 (POS at Hankel order t = 2); YM-scaffolded rows (OI-3); B16
+- **Backlog:** prereg-004 (POS at Hankel order t = 2; drafted as `docs/preregistrations/prereg-004-pos-hankel-t2.md`, DRAFT-FOR-FREEZE); YM-scaffolded rows (OI-3); B16
   constraint-manifest (OI-4); legacy `ground_truth_route: null` schema sprint (OI-6).
 
 Certificates now in the tree: `b15-pos-5f11efd0aca5`, `b15-zero-2dfc3874eb85`,
