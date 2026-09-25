@@ -26,7 +26,7 @@ from fractions import Fraction
 from typing import Dict, List, Optional
 
 from b1_moment_solver.exact import psd_certificate
-from pir.symbolic.linear import solve, verify_solution
+from pir.symbolic.linear import solve, verify_farkas, verify_solution
 
 from ..exact import fmt
 
@@ -231,4 +231,136 @@ def tower_minors(mu: Vec) -> List[Dict]:
             for s in range(0, n - 2 * size + 2):
                 M = [[seq[s + i + j] for j in range(size)] for i in range(size)]
                 out.append({"sequence": name, "start": s, "size": size, "minor": fmt(_det(M))})
+    return out
+
+
+# --------------------------------------------------------------------------- #
+# B15-POS3 (prereg-005): zero-pivot direction + single-atom Farkas              #
+# The prereg-004 path above is unchanged (B15-POS2 reproducibility); these     #
+# functions are used only by B15-POS3.                                         #
+# --------------------------------------------------------------------------- #
+def zero_pivot_direction(M: Mat) -> Optional[Dict]:
+    """Registered construction of prereg-005 (DUAL_EXCLUSION_FUNCTIONAL rev. 2
+    clarification). None if M is PSD-certified; otherwise the rational v with
+    v^T M v = w^T S w < 0 and the recorded lift that reproduces it.
+
+    Symmetric elimination stops at index k with Schur complement S (over the
+    earlier nonzero-pivot indices I; earlier zero pivots have vanishing rows):
+      negative pivot S_kk < 0                  -> w = e_k
+      S_kk = 0, first j > k with S_kj != 0     -> w = t e_k + e_j,
+                                                  t = -(S_jj + 1) / (2 S_kj), w^T S w = -1
+    Lift: v_i = 0 at earlier zero pivots; v_I solves M[I,I] v_I = -M[I,k:] w."""
+    st, piv, _ = psd_certificate(M)
+    if _ok(st):
+        return None
+    n = len(M)
+    k = len(piv) - 1
+    I = [i for i in range(k) if piv[i] != 0]
+    Z = [i for i in range(k) if piv[i] == 0]
+    # Schur complement of M[I,I] on the trailing block k..n-1 (zero-pivot rows vanish)
+    tail = list(range(k, n))
+    if I:
+        cols = []
+        for c in tail:
+            r = solve([[M[a][b] for b in I] for a in I], [M[a][c] for a in I])
+            assert r["status"] == "UNIQUE", r
+            cols.append(r["solution"])
+        S = [[M[r][c] - sum(M[r][I[m]] * cols[ci][m] for m in range(len(I)))
+              for ci, c in enumerate(tail)] for r in tail]
+    else:
+        S = [[M[r][c] for c in tail] for r in tail]
+    assert S[0][0] == piv[k], (S[0][0], piv[k])
+    w = [Fraction(0)] * len(tail)
+    if piv[k] < 0:
+        kind, j, t = "negative_pivot", None, None
+        w[0] = Fraction(1)
+    else:
+        jj = next(c for c in range(1, len(tail)) if S[0][c] != 0)
+        t = -(S[jj][jj] + 1) / (2 * S[0][jj])
+        kind, j = "zero_pivot_nonzero_row", k + jj
+        w[0], w[jj] = t, Fraction(1)
+    v = [Fraction(0)] * n
+    for ci, c in enumerate(tail):
+        v[c] = w[ci]
+    if I:
+        rhs = [-sum(M[a][c] * v[c] for c in tail) for a in I]
+        r = solve([[M[a][b] for b in I] for a in I], rhs)
+        assert r["status"] == "UNIQUE", r
+        for m, i in enumerate(I):
+            v[i] = r["solution"][m]
+    wSw = sum(w[a] * S[a][b] * w[b] for a in range(len(tail)) for b in range(len(tail)))
+    assert _quad(v, M) == wSw < 0, (_quad(v, M), wSw)
+    return {"v": v, "value": wSw,
+            "lift": {"stop_index": k, "stop_kind": kind, "j": j,
+                     "t": fmt(t) if t is not None else None,
+                     "zero_pivot_rows": Z, "solved_indices": I,
+                     "w": [fmt(x) for x in w]}}
+
+
+def dual_functional_zp(mu: Vec) -> Optional[Dict]:
+    """DUAL_EXCLUSION_FUNCTIONAL rev. 2 with the prereg-005 zero-pivot direction.
+    Certifies "no representing measure on [0, 1]"."""
+    zero3 = [[Fraction(0)] * 3 for _ in range(3)]
+    zero2 = [[Fraction(0)] * 2 for _ in range(2)]
+    d = zero_pivot_direction(hankel3(mu))
+    if d is not None:
+        Q0, Q1, matrix = _outer(d["v"]), zero2, "hankel"
+    else:
+        d = zero_pivot_direction(localizing2(mu))
+        if d is None:
+            return None
+        Q0, Q1, matrix = zero3, _outer(d["v"]), "gap"
+    A, q = gram_system(Q0, Q1)
+    y = [sum(A[r][c] * q[c] for c in range(len(q))) for r in range(5)]
+    value = sum(a * b for a, b in zip(y, mu))
+    assert value == d["value"] < 0, (value, d["value"])
+    chk = verify_gram_witness(y, Q0, Q1)
+    return {"op": OP, "op_rev": OP_REV, "construction": "prereg-005 zero-pivot clarification",
+            "certifies": "no representing measure on [0, 1]",
+            "matrix": matrix, "y": [fmt(x) for x in y], "evaluation": fmt(value),
+            "evaluation_role": "certificate value (normalised), not a margin or distance",
+            "direction": [fmt(x) for x in d["v"]], "lift": d["lift"],
+            "gram": {"Q0": [[fmt(x) for x in r] for r in Q0], "Q1": [[fmt(x) for x in r] for r in Q1]},
+            **chk}
+
+
+def farkas_single_atom(a: Fraction, mu: Vec) -> Dict:
+    """Single-atom equality system [1, a, a^2, a^3, a^4]^T w = mu over Q. On a
+    variance-zero slice (mu2 = mu1^2 = a^2) it is complete: the unique candidate
+    measure is delta_a. Certifies "not the unique candidate delta_a"."""
+    A = [[a ** i] for i in range(5)]
+    r = solve(A, mu)
+    out = {"system": "[1, a, a^2, a^3, a^4]^T w = mu", "a": fmt(a),
+           "A": [[fmt(x) for x in row] for row in A], "b": [fmt(x) for x in mu],
+           "status": r["status"],
+           "certifies": "not the unique candidate delta_a",
+           "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate "
+                      "representing measure is delta_a (registered fact of the slice, prereg-005)"}
+    if r["status"] == "INCONSISTENT":
+        y = r["farkas"]
+        out["farkas_y"] = [fmt(x) for x in y]
+        out["verified"] = verify_farkas(A, mu, y)
+    else:
+        out["w"] = [fmt(x) for x in r["solution"]]
+        out["verified"] = verify_solution(A, mu, r["solution"])
+    return out
+
+
+def certify_point_zp(mu1, mu2, mu3, mu4) -> Dict:
+    """B15-POS3 verdict: primal pivots decide; REJECTED carries the zero-pivot
+    Gram dual and, on a variance-zero slice, the single-atom Farkas vector.
+    No wall formula (L or U) is evaluated on this path."""
+    mu = moments(mu1, mu2, mu3, mu4)
+    pr = primal(mu)
+    out = {"point": {"mu1": fmt(mu[1]), "mu2": fmt(mu[2]), "mu3": fmt(mu[3]), "mu4": fmt(mu[4])},
+           "primal": pr, "witness": {"pivots": {k: c["pivots"] for k, c in pr["chains"].items()}}}
+    fk = farkas_single_atom(mu[1], mu) if mu[2] == mu[1] ** 2 else None
+    if pr["feasible"]:
+        out["verdict"] = "PERMITTED"
+        out["impossibility_certificate"] = None
+        out["single_atom_system"] = fk
+    else:
+        out["verdict"] = "REJECTED"
+        out["impossibility_certificate"] = {"dual_functional": dual_functional_zp(mu),
+                                            "farkas_atom": fk}
     return out

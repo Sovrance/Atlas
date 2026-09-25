@@ -1,0 +1,2446 @@
+{
+  "certificate_version": "0.3",
+  "certificate_class": "EXACT-RATIONAL (same class as B1/B2/B7/B15-POS/B15-POS2); framework capability",
+  "benchmark": "B15-POS3",
+  "problem": "B15-POS3: exact-PSD verifier on variance-zero slices at Hankel order t = 2 \u2014 zero pivots (vanishing and non-vanishing rows), degenerate gap wall, undefined wall formulas",
+  "timestamp_utc": "2026-09-25T22:58:59Z",
+  "headline": "D-on and E-on PERMITTED (PSD, not PD); all five exterior points REJECTED with the registered zero-pivot Gram duals (incl. zero-diagonal indefiniteness at D-off, v^T H v = -1) and verified single-atom Farkas vectors; feasible set on each slice is the point a^4 at resolution 2^-20",
+  "arithmetic": "exact rational (Fraction) on every certified path; no floats",
+  "hard_constraints_certified": true,
+  "score": "finite",
+  "m_layer_stipulations": [
+    "Bound is a theorem-level statement about EFT coefficients; no apparatus, no data",
+    "Moments truncated at a_{6,0} (HEURISTIC truncation, see warnings)",
+    "Slices D (a = 1/2) and E (a = 1) impose mu2 = mu1^2 (variance zero); registered in prereg-005",
+    "Farkas completeness premise: variance zero => unique candidate delta_a (registered fact, not asm:)",
+    "Pre-freeze out-of-band check disclosed in prereg-005 (values unchanged)"
+  ],
+  "calibration_route": "none required (exact rational arithmetic; resolution registered)",
+  "inputs": {
+    "registered": {
+      "slices": {
+        "D": {
+          "a": "1/2"
+        },
+        "E": {
+          "a": "1/1"
+        }
+      },
+      "points": {
+        "D-on": {
+          "slice": "D",
+          "a": "1/2",
+          "mu3": "1/8",
+          "mu4": "1/16",
+          "expected": "PERMITTED",
+          "hankel_pivots": [
+            "1",
+            "0",
+            "0"
+          ],
+          "gap_pivots": [
+            "1/4",
+            "0"
+          ],
+          "violated": null
+        },
+        "D-lo": {
+          "slice": "D",
+          "a": "1/2",
+          "mu3": "1/8",
+          "mu4": "3/64",
+          "expected": "REJECTED",
+          "hankel_pivots": [
+            "1",
+            "0",
+            "-1/64"
+          ],
+          "gap_pivots": [
+            "1/4",
+            "1/64"
+          ],
+          "violated": "hankel",
+          "matrix": "hankel",
+          "v": [
+            "-1/4",
+            "0",
+            "1"
+          ],
+          "value": "-1/64"
+        },
+        "D-hi": {
+          "slice": "D",
+          "a": "1/2",
+          "mu3": "1/8",
+          "mu4": "5/64",
+          "expected": "REJECTED",
+          "hankel_pivots": [
+            "1",
+            "0",
+            "1/64"
+          ],
+          "gap_pivots": [
+            "1/4",
+            "-1/64"
+          ],
+          "violated": "gap",
+          "matrix": "gap",
+          "v": [
+            "-1/2",
+            "1"
+          ],
+          "value": "-1/64"
+        },
+        "D-off": {
+          "slice": "D",
+          "a": "1/2",
+          "mu3": "9/64",
+          "mu4": "1/16",
+          "expected": "REJECTED",
+          "hankel_pivots": [
+            "1",
+            "0"
+          ],
+          "gap_pivots": [
+            "1/4",
+            "31/1024"
+          ],
+          "violated": "hankel",
+          "matrix": "hankel",
+          "v": [
+            "63/4",
+            "-32",
+            "1"
+          ],
+          "value": "-1/1"
+        },
+        "E-on": {
+          "slice": "E",
+          "a": "1/1",
+          "mu3": "1/1",
+          "mu4": "1/1",
+          "expected": "PERMITTED",
+          "hankel_pivots": [
+            "1",
+            "0",
+            "0"
+          ],
+          "gap_pivots": [
+            "0",
+            "0"
+          ],
+          "violated": null
+        },
+        "E-lo": {
+          "slice": "E",
+          "a": "1/1",
+          "mu3": "1/1",
+          "mu4": "63/64",
+          "expected": "REJECTED",
+          "hankel_pivots": [
+            "1",
+            "0",
+            "-1/64"
+          ],
+          "gap_pivots": [
+            "0",
+            "1/64"
+          ],
+          "violated": "hankel",
+          "matrix": "hankel",
+          "v": [
+            "-1",
+            "0",
+            "1"
+          ],
+          "value": "-1/64"
+        },
+        "E-hi": {
+          "slice": "E",
+          "a": "1/1",
+          "mu3": "1/1",
+          "mu4": "65/64",
+          "expected": "REJECTED",
+          "hankel_pivots": [
+            "1",
+            "0",
+            "1/64"
+          ],
+          "gap_pivots": [
+            "0",
+            "-1/64"
+          ],
+          "violated": "gap",
+          "matrix": "gap",
+          "v": [
+            "0",
+            "1"
+          ],
+          "value": "-1/64"
+        }
+      },
+      "resolution": "1/1048576"
+    },
+    "prereg": "docs/preregistrations/prereg-005-pos-degenerate-slice.md"
+  },
+  "results": {
+    "U1_primal": {
+      "status": "PASS",
+      "points": {
+        "D-on": {
+          "status": "PASS",
+          "registered_pivots_match": true,
+          "psd_not_pd": true,
+          "point": {
+            "mu1": "1/2",
+            "mu2": "1/4",
+            "mu3": "1/8",
+            "mu4": "1/16"
+          },
+          "primal": {
+            "feasible": true,
+            "chains": {
+              "hankel": {
+                "status": "PSD_CERTIFIED",
+                "pivots": [
+                  "1/1",
+                  "0/1",
+                  "0/1"
+                ],
+                "rank": 1
+              },
+              "gap": {
+                "status": "PSD_CERTIFIED",
+                "pivots": [
+                  "1/4",
+                  "0/1"
+                ],
+                "rank": 1
+              }
+            },
+            "mu": [
+              "1/1",
+              "1/2",
+              "1/4",
+              "1/8",
+              "1/16"
+            ]
+          },
+          "witness": {
+            "pivots": {
+              "hankel": [
+                "1/1",
+                "0/1",
+                "0/1"
+              ],
+              "gap": [
+                "1/4",
+                "0/1"
+              ]
+            }
+          },
+          "verdict": "PERMITTED",
+          "impossibility_certificate": null,
+          "single_atom_system": {
+            "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+            "a": "1/2",
+            "A": [
+              [
+                "1/1"
+              ],
+              [
+                "1/2"
+              ],
+              [
+                "1/4"
+              ],
+              [
+                "1/8"
+              ],
+              [
+                "1/16"
+              ]
+            ],
+            "b": [
+              "1/1",
+              "1/2",
+              "1/4",
+              "1/8",
+              "1/16"
+            ],
+            "status": "UNIQUE",
+            "certifies": "not the unique candidate delta_a",
+            "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+            "w": [
+              "1/1"
+            ],
+            "verified": true
+          }
+        },
+        "E-on": {
+          "status": "PASS",
+          "registered_pivots_match": true,
+          "psd_not_pd": true,
+          "point": {
+            "mu1": "1/1",
+            "mu2": "1/1",
+            "mu3": "1/1",
+            "mu4": "1/1"
+          },
+          "primal": {
+            "feasible": true,
+            "chains": {
+              "hankel": {
+                "status": "PSD_CERTIFIED",
+                "pivots": [
+                  "1/1",
+                  "0/1",
+                  "0/1"
+                ],
+                "rank": 1
+              },
+              "gap": {
+                "status": "PSD_CERTIFIED",
+                "pivots": [
+                  "0/1",
+                  "0/1"
+                ],
+                "rank": 0
+              }
+            },
+            "mu": [
+              "1/1",
+              "1/1",
+              "1/1",
+              "1/1",
+              "1/1"
+            ]
+          },
+          "witness": {
+            "pivots": {
+              "hankel": [
+                "1/1",
+                "0/1",
+                "0/1"
+              ],
+              "gap": [
+                "0/1",
+                "0/1"
+              ]
+            }
+          },
+          "verdict": "PERMITTED",
+          "impossibility_certificate": null,
+          "single_atom_system": {
+            "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+            "a": "1/1",
+            "A": [
+              [
+                "1/1"
+              ],
+              [
+                "1/1"
+              ],
+              [
+                "1/1"
+              ],
+              [
+                "1/1"
+              ],
+              [
+                "1/1"
+              ]
+            ],
+            "b": [
+              "1/1",
+              "1/1",
+              "1/1",
+              "1/1",
+              "1/1"
+            ],
+            "status": "UNIQUE",
+            "certifies": "not the unique candidate delta_a",
+            "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+            "w": [
+              "1/1"
+            ],
+            "verified": true
+          }
+        }
+      }
+    },
+    "U2_dual": {
+      "status": "PASS",
+      "points": {
+        "D-lo": {
+          "status": "PASS",
+          "violated_wall": "hankel",
+          "registered_v": [
+            "-1/4",
+            "0",
+            "1"
+          ],
+          "registered_value": "-1/64",
+          "point": {
+            "mu1": "1/2",
+            "mu2": "1/4",
+            "mu3": "1/8",
+            "mu4": "3/64"
+          },
+          "primal": {
+            "feasible": false,
+            "chains": {
+              "hankel": {
+                "status": "NOT_PSD_CERTIFIED",
+                "pivots": [
+                  "1/1",
+                  "0/1",
+                  "-1/64"
+                ],
+                "rank": 1
+              },
+              "gap": {
+                "status": "PD_CERTIFIED",
+                "pivots": [
+                  "1/4",
+                  "1/64"
+                ],
+                "rank": 2
+              }
+            },
+            "mu": [
+              "1/1",
+              "1/2",
+              "1/4",
+              "1/8",
+              "3/64"
+            ]
+          },
+          "witness": {
+            "pivots": {
+              "hankel": [
+                "1/1",
+                "0/1",
+                "-1/64"
+              ],
+              "gap": [
+                "1/4",
+                "1/64"
+              ]
+            }
+          },
+          "verdict": "REJECTED",
+          "impossibility_certificate": {
+            "dual_functional": {
+              "op": "DUAL_EXCLUSION_FUNCTIONAL",
+              "op_rev": 2,
+              "construction": "prereg-005 zero-pivot clarification",
+              "certifies": "no representing measure on [0, 1]",
+              "matrix": "hankel",
+              "y": [
+                "1/16",
+                "0/1",
+                "-1/2",
+                "0/1",
+                "1/1"
+              ],
+              "evaluation": "-1/64",
+              "evaluation_role": "certificate value (normalised), not a margin or distance",
+              "direction": [
+                "-1/4",
+                "0/1",
+                "1/1"
+              ],
+              "lift": {
+                "stop_index": 2,
+                "stop_kind": "negative_pivot",
+                "j": null,
+                "t": null,
+                "zero_pivot_rows": [
+                  1
+                ],
+                "solved_indices": [
+                  0
+                ],
+                "w": [
+                  "1/1"
+                ]
+              },
+              "gram": {
+                "Q0": [
+                  [
+                    "1/16",
+                    "0/1",
+                    "-1/4"
+                  ],
+                  [
+                    "0/1",
+                    "0/1",
+                    "0/1"
+                  ],
+                  [
+                    "-1/4",
+                    "0/1",
+                    "1/1"
+                  ]
+                ],
+                "Q1": [
+                  [
+                    "0/1",
+                    "0/1"
+                  ],
+                  [
+                    "0/1",
+                    "0/1"
+                  ]
+                ]
+              },
+              "identity_verified": true,
+              "Q0_status": "PSD_CERTIFIED",
+              "Q0_pivots": [
+                "1/16",
+                "0/1",
+                "0/1"
+              ],
+              "Q1_status": "PSD_CERTIFIED",
+              "Q1_pivots": [
+                "0/1",
+                "0/1"
+              ],
+              "certified": true
+            },
+            "farkas_atom": {
+              "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+              "a": "1/2",
+              "A": [
+                [
+                  "1/1"
+                ],
+                [
+                  "1/2"
+                ],
+                [
+                  "1/4"
+                ],
+                [
+                  "1/8"
+                ],
+                [
+                  "1/16"
+                ]
+              ],
+              "b": [
+                "1/1",
+                "1/2",
+                "1/4",
+                "1/8",
+                "3/64"
+              ],
+              "status": "INCONSISTENT",
+              "certifies": "not the unique candidate delta_a",
+              "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+              "farkas_y": [
+                "-1/16",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "verified": true
+            }
+          }
+        },
+        "D-hi": {
+          "status": "PASS",
+          "violated_wall": "gap",
+          "registered_v": [
+            "-1/2",
+            "1"
+          ],
+          "registered_value": "-1/64",
+          "point": {
+            "mu1": "1/2",
+            "mu2": "1/4",
+            "mu3": "1/8",
+            "mu4": "5/64"
+          },
+          "primal": {
+            "feasible": false,
+            "chains": {
+              "hankel": {
+                "status": "PSD_CERTIFIED",
+                "pivots": [
+                  "1/1",
+                  "0/1",
+                  "1/64"
+                ],
+                "rank": 2
+              },
+              "gap": {
+                "status": "NOT_PSD_CERTIFIED",
+                "pivots": [
+                  "1/4",
+                  "-1/64"
+                ],
+                "rank": 1
+              }
+            },
+            "mu": [
+              "1/1",
+              "1/2",
+              "1/4",
+              "1/8",
+              "5/64"
+            ]
+          },
+          "witness": {
+            "pivots": {
+              "hankel": [
+                "1/1",
+                "0/1",
+                "1/64"
+              ],
+              "gap": [
+                "1/4",
+                "-1/64"
+              ]
+            }
+          },
+          "verdict": "REJECTED",
+          "impossibility_certificate": {
+            "dual_functional": {
+              "op": "DUAL_EXCLUSION_FUNCTIONAL",
+              "op_rev": 2,
+              "construction": "prereg-005 zero-pivot clarification",
+              "certifies": "no representing measure on [0, 1]",
+              "matrix": "gap",
+              "y": [
+                "0/1",
+                "1/4",
+                "-5/4",
+                "2/1",
+                "-1/1"
+              ],
+              "evaluation": "-1/64",
+              "evaluation_role": "certificate value (normalised), not a margin or distance",
+              "direction": [
+                "-1/2",
+                "1/1"
+              ],
+              "lift": {
+                "stop_index": 1,
+                "stop_kind": "negative_pivot",
+                "j": null,
+                "t": null,
+                "zero_pivot_rows": [],
+                "solved_indices": [
+                  0
+                ],
+                "w": [
+                  "1/1"
+                ]
+              },
+              "gram": {
+                "Q0": [
+                  [
+                    "0/1",
+                    "0/1",
+                    "0/1"
+                  ],
+                  [
+                    "0/1",
+                    "0/1",
+                    "0/1"
+                  ],
+                  [
+                    "0/1",
+                    "0/1",
+                    "0/1"
+                  ]
+                ],
+                "Q1": [
+                  [
+                    "1/4",
+                    "-1/2"
+                  ],
+                  [
+                    "-1/2",
+                    "1/1"
+                  ]
+                ]
+              },
+              "identity_verified": true,
+              "Q0_status": "PSD_CERTIFIED",
+              "Q0_pivots": [
+                "0/1",
+                "0/1",
+                "0/1"
+              ],
+              "Q1_status": "PSD_CERTIFIED",
+              "Q1_pivots": [
+                "1/4",
+                "0/1"
+              ],
+              "certified": true
+            },
+            "farkas_atom": {
+              "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+              "a": "1/2",
+              "A": [
+                [
+                  "1/1"
+                ],
+                [
+                  "1/2"
+                ],
+                [
+                  "1/4"
+                ],
+                [
+                  "1/8"
+                ],
+                [
+                  "1/16"
+                ]
+              ],
+              "b": [
+                "1/1",
+                "1/2",
+                "1/4",
+                "1/8",
+                "5/64"
+              ],
+              "status": "INCONSISTENT",
+              "certifies": "not the unique candidate delta_a",
+              "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+              "farkas_y": [
+                "-1/16",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "verified": true
+            }
+          }
+        },
+        "D-off": {
+          "status": "PASS",
+          "violated_wall": "hankel",
+          "registered_v": [
+            "63/4",
+            "-32",
+            "1"
+          ],
+          "registered_value": "-1/1",
+          "point": {
+            "mu1": "1/2",
+            "mu2": "1/4",
+            "mu3": "9/64",
+            "mu4": "1/16"
+          },
+          "primal": {
+            "feasible": false,
+            "chains": {
+              "hankel": {
+                "status": "NOT_PSD_CERTIFIED",
+                "pivots": [
+                  "1/1",
+                  "0/1"
+                ],
+                "rank": 1
+              },
+              "gap": {
+                "status": "PD_CERTIFIED",
+                "pivots": [
+                  "1/4",
+                  "31/1024"
+                ],
+                "rank": 2
+              }
+            },
+            "mu": [
+              "1/1",
+              "1/2",
+              "1/4",
+              "9/64",
+              "1/16"
+            ]
+          },
+          "witness": {
+            "pivots": {
+              "hankel": [
+                "1/1",
+                "0/1"
+              ],
+              "gap": [
+                "1/4",
+                "31/1024"
+              ]
+            }
+          },
+          "verdict": "REJECTED",
+          "impossibility_certificate": {
+            "dual_functional": {
+              "op": "DUAL_EXCLUSION_FUNCTIONAL",
+              "op_rev": 2,
+              "construction": "prereg-005 zero-pivot clarification",
+              "certifies": "no representing measure on [0, 1]",
+              "matrix": "hankel",
+              "y": [
+                "3969/16",
+                "-1008/1",
+                "2111/2",
+                "-64/1",
+                "1/1"
+              ],
+              "evaluation": "-1/1",
+              "evaluation_role": "certificate value (normalised), not a margin or distance",
+              "direction": [
+                "63/4",
+                "-32/1",
+                "1/1"
+              ],
+              "lift": {
+                "stop_index": 1,
+                "stop_kind": "zero_pivot_nonzero_row",
+                "j": 2,
+                "t": "-32/1",
+                "zero_pivot_rows": [],
+                "solved_indices": [
+                  0
+                ],
+                "w": [
+                  "-32/1",
+                  "1/1"
+                ]
+              },
+              "gram": {
+                "Q0": [
+                  [
+                    "3969/16",
+                    "-504/1",
+                    "63/4"
+                  ],
+                  [
+                    "-504/1",
+                    "1024/1",
+                    "-32/1"
+                  ],
+                  [
+                    "63/4",
+                    "-32/1",
+                    "1/1"
+                  ]
+                ],
+                "Q1": [
+                  [
+                    "0/1",
+                    "0/1"
+                  ],
+                  [
+                    "0/1",
+                    "0/1"
+                  ]
+                ]
+              },
+              "identity_verified": true,
+              "Q0_status": "PSD_CERTIFIED",
+              "Q0_pivots": [
+                "3969/16",
+                "0/1",
+                "0/1"
+              ],
+              "Q1_status": "PSD_CERTIFIED",
+              "Q1_pivots": [
+                "0/1",
+                "0/1"
+              ],
+              "certified": true
+            },
+            "farkas_atom": {
+              "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+              "a": "1/2",
+              "A": [
+                [
+                  "1/1"
+                ],
+                [
+                  "1/2"
+                ],
+                [
+                  "1/4"
+                ],
+                [
+                  "1/8"
+                ],
+                [
+                  "1/16"
+                ]
+              ],
+              "b": [
+                "1/1",
+                "1/2",
+                "1/4",
+                "9/64",
+                "1/16"
+              ],
+              "status": "INCONSISTENT",
+              "certifies": "not the unique candidate delta_a",
+              "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+              "farkas_y": [
+                "-1/8",
+                "0/1",
+                "0/1",
+                "1/1",
+                "0/1"
+              ],
+              "verified": true
+            }
+          }
+        },
+        "E-lo": {
+          "status": "PASS",
+          "violated_wall": "hankel",
+          "registered_v": [
+            "-1",
+            "0",
+            "1"
+          ],
+          "registered_value": "-1/64",
+          "point": {
+            "mu1": "1/1",
+            "mu2": "1/1",
+            "mu3": "1/1",
+            "mu4": "63/64"
+          },
+          "primal": {
+            "feasible": false,
+            "chains": {
+              "hankel": {
+                "status": "NOT_PSD_CERTIFIED",
+                "pivots": [
+                  "1/1",
+                  "0/1",
+                  "-1/64"
+                ],
+                "rank": 1
+              },
+              "gap": {
+                "status": "PSD_CERTIFIED",
+                "pivots": [
+                  "0/1",
+                  "1/64"
+                ],
+                "rank": 1
+              }
+            },
+            "mu": [
+              "1/1",
+              "1/1",
+              "1/1",
+              "1/1",
+              "63/64"
+            ]
+          },
+          "witness": {
+            "pivots": {
+              "hankel": [
+                "1/1",
+                "0/1",
+                "-1/64"
+              ],
+              "gap": [
+                "0/1",
+                "1/64"
+              ]
+            }
+          },
+          "verdict": "REJECTED",
+          "impossibility_certificate": {
+            "dual_functional": {
+              "op": "DUAL_EXCLUSION_FUNCTIONAL",
+              "op_rev": 2,
+              "construction": "prereg-005 zero-pivot clarification",
+              "certifies": "no representing measure on [0, 1]",
+              "matrix": "hankel",
+              "y": [
+                "1/1",
+                "0/1",
+                "-2/1",
+                "0/1",
+                "1/1"
+              ],
+              "evaluation": "-1/64",
+              "evaluation_role": "certificate value (normalised), not a margin or distance",
+              "direction": [
+                "-1/1",
+                "0/1",
+                "1/1"
+              ],
+              "lift": {
+                "stop_index": 2,
+                "stop_kind": "negative_pivot",
+                "j": null,
+                "t": null,
+                "zero_pivot_rows": [
+                  1
+                ],
+                "solved_indices": [
+                  0
+                ],
+                "w": [
+                  "1/1"
+                ]
+              },
+              "gram": {
+                "Q0": [
+                  [
+                    "1/1",
+                    "0/1",
+                    "-1/1"
+                  ],
+                  [
+                    "0/1",
+                    "0/1",
+                    "0/1"
+                  ],
+                  [
+                    "-1/1",
+                    "0/1",
+                    "1/1"
+                  ]
+                ],
+                "Q1": [
+                  [
+                    "0/1",
+                    "0/1"
+                  ],
+                  [
+                    "0/1",
+                    "0/1"
+                  ]
+                ]
+              },
+              "identity_verified": true,
+              "Q0_status": "PSD_CERTIFIED",
+              "Q0_pivots": [
+                "1/1",
+                "0/1",
+                "0/1"
+              ],
+              "Q1_status": "PSD_CERTIFIED",
+              "Q1_pivots": [
+                "0/1",
+                "0/1"
+              ],
+              "certified": true
+            },
+            "farkas_atom": {
+              "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+              "a": "1/1",
+              "A": [
+                [
+                  "1/1"
+                ],
+                [
+                  "1/1"
+                ],
+                [
+                  "1/1"
+                ],
+                [
+                  "1/1"
+                ],
+                [
+                  "1/1"
+                ]
+              ],
+              "b": [
+                "1/1",
+                "1/1",
+                "1/1",
+                "1/1",
+                "63/64"
+              ],
+              "status": "INCONSISTENT",
+              "certifies": "not the unique candidate delta_a",
+              "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+              "farkas_y": [
+                "-1/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "verified": true
+            }
+          }
+        },
+        "E-hi": {
+          "status": "PASS",
+          "violated_wall": "gap",
+          "registered_v": [
+            "0",
+            "1"
+          ],
+          "registered_value": "-1/64",
+          "point": {
+            "mu1": "1/1",
+            "mu2": "1/1",
+            "mu3": "1/1",
+            "mu4": "65/64"
+          },
+          "primal": {
+            "feasible": false,
+            "chains": {
+              "hankel": {
+                "status": "PSD_CERTIFIED",
+                "pivots": [
+                  "1/1",
+                  "0/1",
+                  "1/64"
+                ],
+                "rank": 2
+              },
+              "gap": {
+                "status": "NOT_PSD_CERTIFIED",
+                "pivots": [
+                  "0/1",
+                  "-1/64"
+                ],
+                "rank": 0
+              }
+            },
+            "mu": [
+              "1/1",
+              "1/1",
+              "1/1",
+              "1/1",
+              "65/64"
+            ]
+          },
+          "witness": {
+            "pivots": {
+              "hankel": [
+                "1/1",
+                "0/1",
+                "1/64"
+              ],
+              "gap": [
+                "0/1",
+                "-1/64"
+              ]
+            }
+          },
+          "verdict": "REJECTED",
+          "impossibility_certificate": {
+            "dual_functional": {
+              "op": "DUAL_EXCLUSION_FUNCTIONAL",
+              "op_rev": 2,
+              "construction": "prereg-005 zero-pivot clarification",
+              "certifies": "no representing measure on [0, 1]",
+              "matrix": "gap",
+              "y": [
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1",
+                "-1/1"
+              ],
+              "evaluation": "-1/64",
+              "evaluation_role": "certificate value (normalised), not a margin or distance",
+              "direction": [
+                "0/1",
+                "1/1"
+              ],
+              "lift": {
+                "stop_index": 1,
+                "stop_kind": "negative_pivot",
+                "j": null,
+                "t": null,
+                "zero_pivot_rows": [
+                  0
+                ],
+                "solved_indices": [],
+                "w": [
+                  "1/1"
+                ]
+              },
+              "gram": {
+                "Q0": [
+                  [
+                    "0/1",
+                    "0/1",
+                    "0/1"
+                  ],
+                  [
+                    "0/1",
+                    "0/1",
+                    "0/1"
+                  ],
+                  [
+                    "0/1",
+                    "0/1",
+                    "0/1"
+                  ]
+                ],
+                "Q1": [
+                  [
+                    "0/1",
+                    "0/1"
+                  ],
+                  [
+                    "0/1",
+                    "1/1"
+                  ]
+                ]
+              },
+              "identity_verified": true,
+              "Q0_status": "PSD_CERTIFIED",
+              "Q0_pivots": [
+                "0/1",
+                "0/1",
+                "0/1"
+              ],
+              "Q1_status": "PSD_CERTIFIED",
+              "Q1_pivots": [
+                "0/1",
+                "1/1"
+              ],
+              "certified": true
+            },
+            "farkas_atom": {
+              "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+              "a": "1/1",
+              "A": [
+                [
+                  "1/1"
+                ],
+                [
+                  "1/1"
+                ],
+                [
+                  "1/1"
+                ],
+                [
+                  "1/1"
+                ],
+                [
+                  "1/1"
+                ]
+              ],
+              "b": [
+                "1/1",
+                "1/1",
+                "1/1",
+                "1/1",
+                "65/64"
+              ],
+              "status": "INCONSISTENT",
+              "certifies": "not the unique candidate delta_a",
+              "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+              "farkas_y": [
+                "-1/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "verified": true
+            }
+          }
+        }
+      }
+    },
+    "U3_certified_point": {
+      "status": "PASS",
+      "resolution": "1/1048576",
+      "note": "feasible set on each slice is the point {a^4}; not a bracket (prereg-005 U3)",
+      "slices": {
+        "D": {
+          "permitted": "1/16",
+          "rejected_neighbours": [
+            {
+              "mu4": "65535/1048576",
+              "violated_wall": "hankel",
+              "certificate": {
+                "point": {
+                  "mu1": "1/2",
+                  "mu2": "1/4",
+                  "mu3": "1/8",
+                  "mu4": "65535/1048576"
+                },
+                "primal": {
+                  "feasible": false,
+                  "chains": {
+                    "hankel": {
+                      "status": "NOT_PSD_CERTIFIED",
+                      "pivots": [
+                        "1/1",
+                        "0/1",
+                        "-1/1048576"
+                      ],
+                      "rank": 1
+                    },
+                    "gap": {
+                      "status": "PD_CERTIFIED",
+                      "pivots": [
+                        "1/4",
+                        "1/1048576"
+                      ],
+                      "rank": 2
+                    }
+                  },
+                  "mu": [
+                    "1/1",
+                    "1/2",
+                    "1/4",
+                    "1/8",
+                    "65535/1048576"
+                  ]
+                },
+                "witness": {
+                  "pivots": {
+                    "hankel": [
+                      "1/1",
+                      "0/1",
+                      "-1/1048576"
+                    ],
+                    "gap": [
+                      "1/4",
+                      "1/1048576"
+                    ]
+                  }
+                },
+                "verdict": "REJECTED",
+                "impossibility_certificate": {
+                  "dual_functional": {
+                    "op": "DUAL_EXCLUSION_FUNCTIONAL",
+                    "op_rev": 2,
+                    "construction": "prereg-005 zero-pivot clarification",
+                    "certifies": "no representing measure on [0, 1]",
+                    "matrix": "hankel",
+                    "y": [
+                      "1/16",
+                      "0/1",
+                      "-1/2",
+                      "0/1",
+                      "1/1"
+                    ],
+                    "evaluation": "-1/1048576",
+                    "evaluation_role": "certificate value (normalised), not a margin or distance",
+                    "direction": [
+                      "-1/4",
+                      "0/1",
+                      "1/1"
+                    ],
+                    "lift": {
+                      "stop_index": 2,
+                      "stop_kind": "negative_pivot",
+                      "j": null,
+                      "t": null,
+                      "zero_pivot_rows": [
+                        1
+                      ],
+                      "solved_indices": [
+                        0
+                      ],
+                      "w": [
+                        "1/1"
+                      ]
+                    },
+                    "gram": {
+                      "Q0": [
+                        [
+                          "1/16",
+                          "0/1",
+                          "-1/4"
+                        ],
+                        [
+                          "0/1",
+                          "0/1",
+                          "0/1"
+                        ],
+                        [
+                          "-1/4",
+                          "0/1",
+                          "1/1"
+                        ]
+                      ],
+                      "Q1": [
+                        [
+                          "0/1",
+                          "0/1"
+                        ],
+                        [
+                          "0/1",
+                          "0/1"
+                        ]
+                      ]
+                    },
+                    "identity_verified": true,
+                    "Q0_status": "PSD_CERTIFIED",
+                    "Q0_pivots": [
+                      "1/16",
+                      "0/1",
+                      "0/1"
+                    ],
+                    "Q1_status": "PSD_CERTIFIED",
+                    "Q1_pivots": [
+                      "0/1",
+                      "0/1"
+                    ],
+                    "certified": true
+                  },
+                  "farkas_atom": {
+                    "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+                    "a": "1/2",
+                    "A": [
+                      [
+                        "1/1"
+                      ],
+                      [
+                        "1/2"
+                      ],
+                      [
+                        "1/4"
+                      ],
+                      [
+                        "1/8"
+                      ],
+                      [
+                        "1/16"
+                      ]
+                    ],
+                    "b": [
+                      "1/1",
+                      "1/2",
+                      "1/4",
+                      "1/8",
+                      "65535/1048576"
+                    ],
+                    "status": "INCONSISTENT",
+                    "certifies": "not the unique candidate delta_a",
+                    "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+                    "farkas_y": [
+                      "-1/16",
+                      "0/1",
+                      "0/1",
+                      "0/1",
+                      "1/1"
+                    ],
+                    "verified": true
+                  }
+                }
+              }
+            },
+            {
+              "mu4": "65537/1048576",
+              "violated_wall": "gap",
+              "certificate": {
+                "point": {
+                  "mu1": "1/2",
+                  "mu2": "1/4",
+                  "mu3": "1/8",
+                  "mu4": "65537/1048576"
+                },
+                "primal": {
+                  "feasible": false,
+                  "chains": {
+                    "hankel": {
+                      "status": "PSD_CERTIFIED",
+                      "pivots": [
+                        "1/1",
+                        "0/1",
+                        "1/1048576"
+                      ],
+                      "rank": 2
+                    },
+                    "gap": {
+                      "status": "NOT_PSD_CERTIFIED",
+                      "pivots": [
+                        "1/4",
+                        "-1/1048576"
+                      ],
+                      "rank": 1
+                    }
+                  },
+                  "mu": [
+                    "1/1",
+                    "1/2",
+                    "1/4",
+                    "1/8",
+                    "65537/1048576"
+                  ]
+                },
+                "witness": {
+                  "pivots": {
+                    "hankel": [
+                      "1/1",
+                      "0/1",
+                      "1/1048576"
+                    ],
+                    "gap": [
+                      "1/4",
+                      "-1/1048576"
+                    ]
+                  }
+                },
+                "verdict": "REJECTED",
+                "impossibility_certificate": {
+                  "dual_functional": {
+                    "op": "DUAL_EXCLUSION_FUNCTIONAL",
+                    "op_rev": 2,
+                    "construction": "prereg-005 zero-pivot clarification",
+                    "certifies": "no representing measure on [0, 1]",
+                    "matrix": "gap",
+                    "y": [
+                      "0/1",
+                      "1/4",
+                      "-5/4",
+                      "2/1",
+                      "-1/1"
+                    ],
+                    "evaluation": "-1/1048576",
+                    "evaluation_role": "certificate value (normalised), not a margin or distance",
+                    "direction": [
+                      "-1/2",
+                      "1/1"
+                    ],
+                    "lift": {
+                      "stop_index": 1,
+                      "stop_kind": "negative_pivot",
+                      "j": null,
+                      "t": null,
+                      "zero_pivot_rows": [],
+                      "solved_indices": [
+                        0
+                      ],
+                      "w": [
+                        "1/1"
+                      ]
+                    },
+                    "gram": {
+                      "Q0": [
+                        [
+                          "0/1",
+                          "0/1",
+                          "0/1"
+                        ],
+                        [
+                          "0/1",
+                          "0/1",
+                          "0/1"
+                        ],
+                        [
+                          "0/1",
+                          "0/1",
+                          "0/1"
+                        ]
+                      ],
+                      "Q1": [
+                        [
+                          "1/4",
+                          "-1/2"
+                        ],
+                        [
+                          "-1/2",
+                          "1/1"
+                        ]
+                      ]
+                    },
+                    "identity_verified": true,
+                    "Q0_status": "PSD_CERTIFIED",
+                    "Q0_pivots": [
+                      "0/1",
+                      "0/1",
+                      "0/1"
+                    ],
+                    "Q1_status": "PSD_CERTIFIED",
+                    "Q1_pivots": [
+                      "1/4",
+                      "0/1"
+                    ],
+                    "certified": true
+                  },
+                  "farkas_atom": {
+                    "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+                    "a": "1/2",
+                    "A": [
+                      [
+                        "1/1"
+                      ],
+                      [
+                        "1/2"
+                      ],
+                      [
+                        "1/4"
+                      ],
+                      [
+                        "1/8"
+                      ],
+                      [
+                        "1/16"
+                      ]
+                    ],
+                    "b": [
+                      "1/1",
+                      "1/2",
+                      "1/4",
+                      "1/8",
+                      "65537/1048576"
+                    ],
+                    "status": "INCONSISTENT",
+                    "certifies": "not the unique candidate delta_a",
+                    "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+                    "farkas_y": [
+                      "-1/16",
+                      "0/1",
+                      "0/1",
+                      "0/1",
+                      "1/1"
+                    ],
+                    "verified": true
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "E": {
+          "permitted": "1/1",
+          "rejected_neighbours": [
+            {
+              "mu4": "1048575/1048576",
+              "violated_wall": "hankel",
+              "certificate": {
+                "point": {
+                  "mu1": "1/1",
+                  "mu2": "1/1",
+                  "mu3": "1/1",
+                  "mu4": "1048575/1048576"
+                },
+                "primal": {
+                  "feasible": false,
+                  "chains": {
+                    "hankel": {
+                      "status": "NOT_PSD_CERTIFIED",
+                      "pivots": [
+                        "1/1",
+                        "0/1",
+                        "-1/1048576"
+                      ],
+                      "rank": 1
+                    },
+                    "gap": {
+                      "status": "PSD_CERTIFIED",
+                      "pivots": [
+                        "0/1",
+                        "1/1048576"
+                      ],
+                      "rank": 1
+                    }
+                  },
+                  "mu": [
+                    "1/1",
+                    "1/1",
+                    "1/1",
+                    "1/1",
+                    "1048575/1048576"
+                  ]
+                },
+                "witness": {
+                  "pivots": {
+                    "hankel": [
+                      "1/1",
+                      "0/1",
+                      "-1/1048576"
+                    ],
+                    "gap": [
+                      "0/1",
+                      "1/1048576"
+                    ]
+                  }
+                },
+                "verdict": "REJECTED",
+                "impossibility_certificate": {
+                  "dual_functional": {
+                    "op": "DUAL_EXCLUSION_FUNCTIONAL",
+                    "op_rev": 2,
+                    "construction": "prereg-005 zero-pivot clarification",
+                    "certifies": "no representing measure on [0, 1]",
+                    "matrix": "hankel",
+                    "y": [
+                      "1/1",
+                      "0/1",
+                      "-2/1",
+                      "0/1",
+                      "1/1"
+                    ],
+                    "evaluation": "-1/1048576",
+                    "evaluation_role": "certificate value (normalised), not a margin or distance",
+                    "direction": [
+                      "-1/1",
+                      "0/1",
+                      "1/1"
+                    ],
+                    "lift": {
+                      "stop_index": 2,
+                      "stop_kind": "negative_pivot",
+                      "j": null,
+                      "t": null,
+                      "zero_pivot_rows": [
+                        1
+                      ],
+                      "solved_indices": [
+                        0
+                      ],
+                      "w": [
+                        "1/1"
+                      ]
+                    },
+                    "gram": {
+                      "Q0": [
+                        [
+                          "1/1",
+                          "0/1",
+                          "-1/1"
+                        ],
+                        [
+                          "0/1",
+                          "0/1",
+                          "0/1"
+                        ],
+                        [
+                          "-1/1",
+                          "0/1",
+                          "1/1"
+                        ]
+                      ],
+                      "Q1": [
+                        [
+                          "0/1",
+                          "0/1"
+                        ],
+                        [
+                          "0/1",
+                          "0/1"
+                        ]
+                      ]
+                    },
+                    "identity_verified": true,
+                    "Q0_status": "PSD_CERTIFIED",
+                    "Q0_pivots": [
+                      "1/1",
+                      "0/1",
+                      "0/1"
+                    ],
+                    "Q1_status": "PSD_CERTIFIED",
+                    "Q1_pivots": [
+                      "0/1",
+                      "0/1"
+                    ],
+                    "certified": true
+                  },
+                  "farkas_atom": {
+                    "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+                    "a": "1/1",
+                    "A": [
+                      [
+                        "1/1"
+                      ],
+                      [
+                        "1/1"
+                      ],
+                      [
+                        "1/1"
+                      ],
+                      [
+                        "1/1"
+                      ],
+                      [
+                        "1/1"
+                      ]
+                    ],
+                    "b": [
+                      "1/1",
+                      "1/1",
+                      "1/1",
+                      "1/1",
+                      "1048575/1048576"
+                    ],
+                    "status": "INCONSISTENT",
+                    "certifies": "not the unique candidate delta_a",
+                    "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+                    "farkas_y": [
+                      "-1/1",
+                      "0/1",
+                      "0/1",
+                      "0/1",
+                      "1/1"
+                    ],
+                    "verified": true
+                  }
+                }
+              }
+            },
+            {
+              "mu4": "1048577/1048576",
+              "violated_wall": "gap",
+              "certificate": {
+                "point": {
+                  "mu1": "1/1",
+                  "mu2": "1/1",
+                  "mu3": "1/1",
+                  "mu4": "1048577/1048576"
+                },
+                "primal": {
+                  "feasible": false,
+                  "chains": {
+                    "hankel": {
+                      "status": "PSD_CERTIFIED",
+                      "pivots": [
+                        "1/1",
+                        "0/1",
+                        "1/1048576"
+                      ],
+                      "rank": 2
+                    },
+                    "gap": {
+                      "status": "NOT_PSD_CERTIFIED",
+                      "pivots": [
+                        "0/1",
+                        "-1/1048576"
+                      ],
+                      "rank": 0
+                    }
+                  },
+                  "mu": [
+                    "1/1",
+                    "1/1",
+                    "1/1",
+                    "1/1",
+                    "1048577/1048576"
+                  ]
+                },
+                "witness": {
+                  "pivots": {
+                    "hankel": [
+                      "1/1",
+                      "0/1",
+                      "1/1048576"
+                    ],
+                    "gap": [
+                      "0/1",
+                      "-1/1048576"
+                    ]
+                  }
+                },
+                "verdict": "REJECTED",
+                "impossibility_certificate": {
+                  "dual_functional": {
+                    "op": "DUAL_EXCLUSION_FUNCTIONAL",
+                    "op_rev": 2,
+                    "construction": "prereg-005 zero-pivot clarification",
+                    "certifies": "no representing measure on [0, 1]",
+                    "matrix": "gap",
+                    "y": [
+                      "0/1",
+                      "0/1",
+                      "0/1",
+                      "1/1",
+                      "-1/1"
+                    ],
+                    "evaluation": "-1/1048576",
+                    "evaluation_role": "certificate value (normalised), not a margin or distance",
+                    "direction": [
+                      "0/1",
+                      "1/1"
+                    ],
+                    "lift": {
+                      "stop_index": 1,
+                      "stop_kind": "negative_pivot",
+                      "j": null,
+                      "t": null,
+                      "zero_pivot_rows": [
+                        0
+                      ],
+                      "solved_indices": [],
+                      "w": [
+                        "1/1"
+                      ]
+                    },
+                    "gram": {
+                      "Q0": [
+                        [
+                          "0/1",
+                          "0/1",
+                          "0/1"
+                        ],
+                        [
+                          "0/1",
+                          "0/1",
+                          "0/1"
+                        ],
+                        [
+                          "0/1",
+                          "0/1",
+                          "0/1"
+                        ]
+                      ],
+                      "Q1": [
+                        [
+                          "0/1",
+                          "0/1"
+                        ],
+                        [
+                          "0/1",
+                          "1/1"
+                        ]
+                      ]
+                    },
+                    "identity_verified": true,
+                    "Q0_status": "PSD_CERTIFIED",
+                    "Q0_pivots": [
+                      "0/1",
+                      "0/1",
+                      "0/1"
+                    ],
+                    "Q1_status": "PSD_CERTIFIED",
+                    "Q1_pivots": [
+                      "0/1",
+                      "1/1"
+                    ],
+                    "certified": true
+                  },
+                  "farkas_atom": {
+                    "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+                    "a": "1/1",
+                    "A": [
+                      [
+                        "1/1"
+                      ],
+                      [
+                        "1/1"
+                      ],
+                      [
+                        "1/1"
+                      ],
+                      [
+                        "1/1"
+                      ],
+                      [
+                        "1/1"
+                      ]
+                    ],
+                    "b": [
+                      "1/1",
+                      "1/1",
+                      "1/1",
+                      "1/1",
+                      "1048577/1048576"
+                    ],
+                    "status": "INCONSISTENT",
+                    "certifies": "not the unique candidate delta_a",
+                    "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+                    "farkas_y": [
+                      "-1/1",
+                      "0/1",
+                      "0/1",
+                      "0/1",
+                      "1/1"
+                    ],
+                    "verified": true
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "U4_farkas": {
+      "status": "PASS",
+      "role": "complete on the registered slices (premise: mu2 = mu1^2); Gram dual still mandatory (prereg-005 P5-OI-3)",
+      "points": {
+        "D-on": {
+          "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+          "a": "1/2",
+          "A": [
+            [
+              "1/1"
+            ],
+            [
+              "1/2"
+            ],
+            [
+              "1/4"
+            ],
+            [
+              "1/8"
+            ],
+            [
+              "1/16"
+            ]
+          ],
+          "b": [
+            "1/1",
+            "1/2",
+            "1/4",
+            "1/8",
+            "1/16"
+          ],
+          "status": "UNIQUE",
+          "certifies": "not the unique candidate delta_a",
+          "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+          "w": [
+            "1/1"
+          ],
+          "verified": true
+        },
+        "D-lo": {
+          "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+          "a": "1/2",
+          "A": [
+            [
+              "1/1"
+            ],
+            [
+              "1/2"
+            ],
+            [
+              "1/4"
+            ],
+            [
+              "1/8"
+            ],
+            [
+              "1/16"
+            ]
+          ],
+          "b": [
+            "1/1",
+            "1/2",
+            "1/4",
+            "1/8",
+            "3/64"
+          ],
+          "status": "INCONSISTENT",
+          "certifies": "not the unique candidate delta_a",
+          "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+          "farkas_y": [
+            "-1/16",
+            "0/1",
+            "0/1",
+            "0/1",
+            "1/1"
+          ],
+          "verified": true
+        },
+        "D-hi": {
+          "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+          "a": "1/2",
+          "A": [
+            [
+              "1/1"
+            ],
+            [
+              "1/2"
+            ],
+            [
+              "1/4"
+            ],
+            [
+              "1/8"
+            ],
+            [
+              "1/16"
+            ]
+          ],
+          "b": [
+            "1/1",
+            "1/2",
+            "1/4",
+            "1/8",
+            "5/64"
+          ],
+          "status": "INCONSISTENT",
+          "certifies": "not the unique candidate delta_a",
+          "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+          "farkas_y": [
+            "-1/16",
+            "0/1",
+            "0/1",
+            "0/1",
+            "1/1"
+          ],
+          "verified": true
+        },
+        "D-off": {
+          "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+          "a": "1/2",
+          "A": [
+            [
+              "1/1"
+            ],
+            [
+              "1/2"
+            ],
+            [
+              "1/4"
+            ],
+            [
+              "1/8"
+            ],
+            [
+              "1/16"
+            ]
+          ],
+          "b": [
+            "1/1",
+            "1/2",
+            "1/4",
+            "9/64",
+            "1/16"
+          ],
+          "status": "INCONSISTENT",
+          "certifies": "not the unique candidate delta_a",
+          "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+          "farkas_y": [
+            "-1/8",
+            "0/1",
+            "0/1",
+            "1/1",
+            "0/1"
+          ],
+          "verified": true
+        },
+        "E-on": {
+          "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+          "a": "1/1",
+          "A": [
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ]
+          ],
+          "b": [
+            "1/1",
+            "1/1",
+            "1/1",
+            "1/1",
+            "1/1"
+          ],
+          "status": "UNIQUE",
+          "certifies": "not the unique candidate delta_a",
+          "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+          "w": [
+            "1/1"
+          ],
+          "verified": true
+        },
+        "E-lo": {
+          "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+          "a": "1/1",
+          "A": [
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ]
+          ],
+          "b": [
+            "1/1",
+            "1/1",
+            "1/1",
+            "1/1",
+            "63/64"
+          ],
+          "status": "INCONSISTENT",
+          "certifies": "not the unique candidate delta_a",
+          "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+          "farkas_y": [
+            "-1/1",
+            "0/1",
+            "0/1",
+            "0/1",
+            "1/1"
+          ],
+          "verified": true
+        },
+        "E-hi": {
+          "system": "[1, a, a^2, a^3, a^4]^T w = mu",
+          "a": "1/1",
+          "A": [
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ],
+            [
+              "1/1"
+            ]
+          ],
+          "b": [
+            "1/1",
+            "1/1",
+            "1/1",
+            "1/1",
+            "65/64"
+          ],
+          "status": "INCONSISTENT",
+          "certifies": "not the unique candidate delta_a",
+          "premise": "slice imposes mu2 = mu1^2 (variance zero), so the unique candidate representing measure is delta_a (registered fact of the slice, prereg-005)",
+          "farkas_y": [
+            "-1/1",
+            "0/1",
+            "0/1",
+            "0/1",
+            "1/1"
+          ],
+          "verified": true
+        }
+      }
+    },
+    "U5_formula_controls": {
+      "status": "PASS",
+      "slices": {
+        "D": {
+          "det_A": "0/1",
+          "L": "undefined (det A = 0)",
+          "mu1_minus_mu2": "1/4",
+          "U": "1/16"
+        },
+        "E": {
+          "det_A": "0/1",
+          "L": "undefined (det A = 0)",
+          "mu1_minus_mu2": "0/1",
+          "U": "undefined (mu1 - mu2 = 0)"
+        }
+      },
+      "verdict_route": "certify_point_zp: SCHUR_PIVOT_EXACT pivots + zero-pivot Gram dual; no L/U wall formula on the verdict path (K5); formulas computed here only as controls"
+    },
+    "U6_no_silent_path": {
+      "status": "PASS",
+      "points": {
+        "D-lo": {
+          "prereg004_routine": "refuses (AssertionError)"
+        },
+        "E-lo": {
+          "prereg004_routine": "refuses (AssertionError)"
+        },
+        "E-hi": {
+          "prereg004_routine": "refuses (AssertionError)"
+        },
+        "D-off": {
+          "prereg004_routine": "refuses (ValueError)"
+        }
+      }
+    },
+    "U7_standalone_reverify": {
+      "status": "PASS",
+      "tool": "tools/verify_b15_certificate.py",
+      "verified": true,
+      "verdict_line": "B15-POS3, verdict PERMITTED"
+    },
+    "U7_schema_negatives": {
+      "status": "PASS",
+      "cases": [
+        {
+          "case": "non-SPEC verdict",
+          "rejected_with": "schema: verdict: 'CONDITIONAL(X)' not in enum ['FORCED', 'PERMITTED', 'REJECTED'"
+        },
+        {
+          "case": "HEURISTIC asserting E0",
+          "rejected_with": "a HEURISTIC certificate may not assert E0 (hard constraint 4)"
+        },
+        {
+          "case": "POS3 REJECTED without impossibility certificate",
+          "rejected_with": "POS REJECTED requires impossibility_certificate (\u00a75)"
+        },
+        {
+          "case": "wrong preregistration binding",
+          "rejected_with": "prereg_ref must be prereg-005@<commit> (frozen)"
+        },
+        {
+          "case": "certified_inner_interval on a point-valued slice",
+          "rejected_with": "B15-POS3 feasible sets are points: use certified_point, not certified_inner_inte"
+        },
+        {
+          "case": "tampered pivot -> standalone tool FAIL (re-hashed)",
+          "rejected_with": "D-on: pivot mismatch hankel: [Fraction(1, 1), Fraction(0, 1), Fraction(-1, 64)] vs [Fraction(1, 1), Fraction(0, 1), Fraction(0, 1)]"
+        },
+        {
+          "case": "tampered lift (zero-pivot rows) -> standalone tool FAIL (re-hashed)",
+          "rejected_with": "D-lo: recorded zero-pivot rows / solved indices do not recompute"
+        },
+        {
+          "case": "tampered direction v -> standalone tool FAIL (re-hashed)",
+          "rejected_with": "D-off: direction v not reproduced from the recorded lift; D-off: dual direction / value / matrix != registered"
+        },
+        {
+          "case": "tampered Farkas vector -> standalone tool FAIL (re-hashed)",
+          "rejected_with": "E-hi: Farkas vector fails (y^T A = 0, y^T b != 0)"
+        },
+        {
+          "case": "certified_inner_interval on a point-valued slice -> standalone tool FAIL (re-hashed)",
+          "rejected_with": "certified_inner_interval present (feasible set is a point; prereg-005 U3)"
+        }
+      ]
+    }
+  },
+  "soundness": "SOUND",
+  "warnings": [
+    {
+      "location": "b15_surf/pos/certify_t2.py::moments",
+      "text": "moment sequence truncated at a_{6,0} (Hankel order t=2); higher-order EFT-hedron walls are not tested (HEURISTIC choice)"
+    }
+  ],
+  "ground_truth_route": "closed form: variance zero => unique measure delta_a, feasible set {a^4}; system warrant [KrN, Theorem II.2.3] as cited in Curto-Fialkow 1991 Rem. 4.4 (prereg-004 errata E1; KrN number VERIFY-BEFORE-USE)",
+  "verdict": "PERMITTED",
+  "verdict_cause": null,
+  "verdict_class": null,
+  "verdict_display": "PERMITTED",
+  "witness": {
+    "D-on": {
+      "pivots": {
+        "hankel": [
+          "1/1",
+          "0/1",
+          "0/1"
+        ],
+        "gap": [
+          "1/4",
+          "0/1"
+        ]
+      }
+    },
+    "E-on": {
+      "pivots": {
+        "hankel": [
+          "1/1",
+          "0/1",
+          "0/1"
+        ],
+        "gap": [
+          "0/1",
+          "0/1"
+        ]
+      }
+    }
+  },
+  "impossibility_certificate": null,
+  "similarity": null,
+  "confidence": null,
+  "correlator": null,
+  "evidence_level": "E0",
+  "pir_level": "L2",
+  "layer": "DOMAIN",
+  "assumptions": [],
+  "prereg_ref": "prereg-005@017cf65969fc54b69bd8ca45229e217557fa06ba",
+  "prereg_sha256": "b133b1d894e6a2117c91c032fc91c70186bb1a193318c8c015e3dfa0dd0d9d1f",
+  "falsifier_direction": "K1/K2: a wrong on-slice verdict or an exterior point without the registered certified Gram dual files zero-pivot handling REJECTED (asm:B15-POS3-unverified); K3/K4 stop certification; K5 rejects any verdict reached via the L/U formulas",
+  "seed": 0,
+  "ci_seed_env": "0",
+  "python_version": "3.11.15",
+  "generator_sha256": "0bb68cc814a3",
+  "pir_facts": [
+    {
+      "fact_id": "fct_sha256_a0af8d223e08053b",
+      "pir_level": "L2",
+      "evidence_level": "E0",
+      "layer": "DOMAIN",
+      "namespace": "domain",
+      "status": "SUPPORTED",
+      "verdict": "PERMITTED",
+      "analyzer": {
+        "id": "b15_surf.pos3",
+        "version": "0.1.0",
+        "tag": "SOUND"
+      },
+      "warnings": [],
+      "depends_on_facts": [],
+      "assumptions": [],
+      "source_spans": [
+        {
+          "artifact_id": "certificates/b15-pos3_certificate.json",
+          "span": "results"
+        }
+      ],
+      "measurement_interface": [
+        "published bound arXiv:2012.15849 eqs. 7.45/7.46 (no apparatus)"
+      ],
+      "content": {
+        "subject": "zero-pivot / degenerate-slice verification at Hankel order t=2 (variance-zero slices of the degree-4 Hausdorff problem)",
+        "certified_points": {
+          "D": "1/16",
+          "E": "1/1"
+        },
+        "resolution": "1/1048576"
+      },
+      "witness": {
+        "D-on": {
+          "pivots": {
+            "hankel": [
+              "1/1",
+              "0/1",
+              "0/1"
+            ],
+            "gap": [
+              "1/4",
+              "0/1"
+            ]
+          }
+        },
+        "E-on": {
+          "pivots": {
+            "hankel": [
+              "1/1",
+              "0/1",
+              "0/1"
+            ],
+            "gap": [
+              "0/1",
+              "0/1"
+            ]
+          }
+        }
+      },
+      "impossibility_certificate": null,
+      "similarity": null,
+      "confidence": null,
+      "correlator": null,
+      "created_at": "1970-01-01T00:00:00Z"
+    }
+  ],
+  "certificate_id": "b15-pos3-57497b7ab161"
+}

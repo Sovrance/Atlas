@@ -133,6 +133,34 @@ Legend — certificate format is what the op returns and what a PIR
 - **Used by:** B15-POS2 (prereg-004; degree-4 Hausdorff walls, eqs. 7.45 / 7.46 of
   arXiv:2012.15849).
 
+### Rev. 2 clarification — zero-pivot direction (prereg-005 P5-OI-2; not a rev. 3)
+The witness form above is unchanged (rank-1 Gram `Q = vvᵀ`, identity by `verify_solution`,
+`Q ⪰ 0` by `SCHUR_PIVOT_EXACT`). Only the derivation of `v` is extended to every way
+`SCHUR_PIVOT_EXACT` can stop:
+- Elimination stops at index k with Schur complement `S` over the earlier nonzero-pivot indices
+  `I` (earlier zero pivots have vanishing rows). **Negative pivot** (`S_kk < 0`): `w = e_k`.
+  **Zero pivot with a non-vanishing row** (`S_kk = 0`, first j > k with `S_kj ≠ 0`):
+  `w = t e_k + e_j`, `t = −(S_jj + 1)/(2 S_kj)`. Since `wᵀSw = 2t S_kj + S_jj`, this gives `−1`
+  for every `S_jj`, including 0; no further special case exists.
+- **Lift:** `v_i = 0` at earlier zero pivots; `v_I` solves `M[I,I] v_I = −M[I,k:] w`. Then
+  `vᵀMv = wᵀSw`. When there are no zero pivots and the stop is negative this is exactly the
+  pivot-derived `v` of condition (i).
+- **Recorded lift (required):** the certificate records the stop index, the stop kind
+  (`negative_pivot` / `zero_pivot_nonzero_row`, with `j` and `t`), the zero-pivot rows set to 0,
+  the solved indices and `w`. A re-verifier reproduces `v` from these; checking `vᵀMv` alone is
+  not sufficient.
+- **Certificate, not margin:** under the zero-pivot normalisation `y·μ = −1` by construction; no
+  report may read `y·μ` as a distance to the feasible set.
+- **Farkas on variance-zero slices:** when the slice imposes `μ2 = μ1²` with rational `μ1 = a`, the
+  unique candidate measure is `δ_a` and the single-atom system `[1, a, …, a⁴]ᵀ w = μ` is over ℚ.
+  Its Farkas vector is then a *complete* certificate, with that premise recorded. It certifies
+  "not the unique candidate `δ_a`", while the Gram dual certifies "no representing measure on
+  [0, 1]"; both are required. Off such slices the Farkas system is a companion at most.
+- **Implementation:** `b15_surf/pos/certify_t2.py::zero_pivot_direction / dual_functional_zp /
+  farkas_single_atom`; standalone re-check in `tools/verify_b15_certificate.py::check_zero_pivot_dual
+  / check_single_atom`. The prereg-004 path (`negative_direction`) is unchanged.
+- **Used by:** B15-POS3 (prereg-005; variance-zero slices of the degree-4 Hausdorff problem).
+
 ## Benchmark → op coverage map (DoD: every B1–B12 maps to documented ops)
 
 | Benchmark | Verifier ops used |
@@ -151,6 +179,7 @@ Legend — certificate format is what the op returns and what a PIR
 | M1 canon / M2 generator | RANK_TEST, SCHUR_PIVOT_EXACT (canonical invariants) |
 | B15-POS EFT-hedron bound | SCHUR_PIVOT_EXACT, DUAL_EXCLUSION_FUNCTIONAL |
 | B15-POS2 EFT-hedron bound, t = 2 | SCHUR_PIVOT_EXACT, DUAL_EXCLUSION_FUNCTIONAL (rev. 2) |
+| B15-POS3 degenerate slices, t = 2 | SCHUR_PIVOT_EXACT (zero pivots), DUAL_EXCLUSION_FUNCTIONAL (rev. 2, zero-pivot clarification), Farkas (single-atom) |
 | B15-ZERO / B15-GID | RANK_TEST (exact split / grid ranks) + fingerprinting |
 
 Notes: statistical (E2) and simulation (E3) results still pass through a

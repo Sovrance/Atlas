@@ -10,6 +10,10 @@ For B15-POS2 (prereg-004, Hankel order t = 2) it recomputes the 3x3 Hankel and
 2x2 localizing pivot chains, the Gram-form dual (DUAL_EXCLUSION_FUNCTIONAL rev. 2:
 coefficient identity and Q0, Q1 >= 0), the brackets against the registered walls,
 and the quadrature values of the S1 walls.
+For B15-POS3 (prereg-005, variance-zero slices) it additionally reproduces each
+zero-pivot dual direction v from its recorded lift (stop index/kind, t, zero-pivot
+rows, solved indices), re-checks the single-atom Farkas / consistency system, and
+the degenerate certified_point (a^4 permitted, a^4 +- resolution rejected).
 For B15-ZERO / B15-GID certificates it checks the schema-level invariants
 (SPEC verdict, soundness/E-level honesty, content hash, dataset hash binding).
 
@@ -230,6 +234,159 @@ def verify_pos2(cert, fails):
         fails.append("quadrature route disagrees with registered S1 walls")
 
 
+def _solve_small(A, b):
+    """Gauss-Jordan over Q for a nonsingular square system; None if singular."""
+    n = len(A)
+    M = [[F(x) for x in row] + [F(b[i])] for i, row in enumerate(A)]
+    for c in range(n):
+        p = next((r for r in range(c, n) if M[r][c] != 0), None)
+        if p is None:
+            return None
+        M[c], M[p] = M[p], M[c]
+        for r in range(n):
+            if r != c and M[r][c] != 0:
+                f = M[r][c] / M[c][c]
+                M[r] = [x - f * y for x, y in zip(M[r], M[c])]
+    return [M[i][n] / M[i][i] for i in range(n)]
+
+
+def _reduced_at_stop(M):
+    """Symmetric elimination; returns (pivots, stop index or None, reduced trailing block)."""
+    n = len(M)
+    A = [[F(x) for x in row] for row in M]
+    piv = []
+    for k in range(n):
+        d = A[k][k]
+        piv.append(d)
+        if d < 0 or (d == 0 and any(A[k][j] != 0 for j in range(k + 1, n))):
+            return piv, k, [row[k:] for row in A[k:]]
+        if d == 0:
+            continue
+        for i in range(k + 1, n):
+            f = A[i][k] / d
+            for j in range(k, n):
+                A[i][j] -= f * A[k][j]
+    return piv, None, None
+
+
+def check_zero_pivot_dual(mu, d, fails, tag):
+    """Reproduce v from the recorded lift (prereg-005, P5-OI-2 (i))."""
+    mu = [F(x) for x in mu]
+    M = ([[mu[i + j] for j in range(3)] for i in range(3)] if d["matrix"] == "hankel"
+         else [[mu[i + j + 1] - mu[i + j + 2] for j in range(2)] for i in range(2)])
+    piv, k, S = _reduced_at_stop(M)
+    lift = d["lift"]
+    if k is None or lift["stop_index"] != k:
+        fails.append(f"{tag}: recorded stop index does not recompute")
+        return
+    Z = [i for i in range(k) if piv[i] == 0]
+    I = [i for i in range(k) if piv[i] != 0]
+    if lift["zero_pivot_rows"] != Z or lift["solved_indices"] != I:
+        fails.append(f"{tag}: recorded zero-pivot rows / solved indices do not recompute")
+    w = [F(0)] * len(S)
+    if piv[k] < 0:
+        kind = "negative_pivot"
+        w[0] = F(1)
+    else:
+        kind = "zero_pivot_nonzero_row"
+        jj = next(c for c in range(1, len(S)) if S[0][c] != 0)
+        t = -(S[jj][jj] + 1) / (2 * S[0][jj])
+        if lift["j"] != k + jj or F(lift["t"]) != t:
+            fails.append(f"{tag}: recorded j / t do not recompute")
+        w[0], w[jj] = t, F(1)
+    if lift["stop_kind"] != kind or [F(x) for x in lift["w"]] != w:
+        fails.append(f"{tag}: recorded stop kind / w do not recompute")
+    n = len(M)
+    v = [F(0)] * n
+    for ci in range(len(S)):
+        v[k + ci] = w[ci]
+    if I:
+        sol = _solve_small([[M[a][b] for b in I] for a in I],
+                           [-sum(M[a][c] * v[c] for c in range(k, n)) for a in I])
+        if sol is None:
+            fails.append(f"{tag}: lift system singular")
+            return
+        for m, i in enumerate(I):
+            v[i] = sol[m]
+    if [F(x) for x in d["direction"]] != v:
+        fails.append(f"{tag}: direction v not reproduced from the recorded lift")
+    val = sum(v[i] * M[i][j] * v[j] for i in range(n) for j in range(n))
+    if val != F(d["evaluation"]) or val >= 0:
+        fails.append(f"{tag}: v^T M v != recorded evaluation")
+    if kind == "zero_pivot_nonzero_row" and val != -1:
+        fails.append(f"{tag}: zero-pivot normalisation w^T S w = -1 violated")
+
+
+def check_single_atom(sys_, mu, fails, tag, expect_consistent):
+    a = F(sys_["a"])
+    A = [[a ** i] for i in range(5)]
+    b = [F(x) for x in mu]
+    if [[F(x) for x in r] for r in sys_["A"]] != A or [F(x) for x in sys_["b"]] != b:
+        fails.append(f"{tag}: single-atom system does not match the point")
+        return
+    if F(mu[2]) != F(mu[1]) ** 2 or not sys_.get("premise"):
+        fails.append(f"{tag}: variance-zero premise missing or false")
+    if expect_consistent:
+        wv = [F(x) for x in sys_.get("w", [])]
+        if sys_["status"] != "UNIQUE" or wv != [F(1)] or any(A[i][0] * wv[0] != b[i] for i in range(5)):
+            fails.append(f"{tag}: single-atom system not UNIQUE with w = 1")
+    else:
+        y = [F(x) for x in sys_.get("farkas_y", [])]
+        if sys_["status"] != "INCONSISTENT" or len(y) != 5 \
+                or sum(y[i] * A[i][0] for i in range(5)) != 0 or sum(y[i] * b[i] for i in range(5)) == 0:
+            fails.append(f"{tag}: Farkas vector fails (y^T A = 0, y^T b != 0)")
+
+
+def _has_key(obj, key):
+    if isinstance(obj, dict):
+        return key in obj or any(_has_key(v, key) for v in obj.values())
+    if isinstance(obj, list):
+        return any(_has_key(v, key) for v in obj)
+    return False
+
+
+def verify_pos3(cert, fails):
+    res = cert["results"]
+    reg = cert["inputs"]["registered"]
+    if _has_key(res, "certified_inner_interval"):
+        fails.append("certified_inner_interval present (feasible set is a point; prereg-005 U3)")
+    for name, r in {**res["U1_primal"]["points"], **res["U2_dual"]["points"]}.items():
+        spec = reg["points"][name]
+        mu = r["primal"]["mu"]
+        if [F(x) for x in mu] != [F(1), F(spec["a"]), F(spec["a"]) ** 2, F(spec["mu3"]), F(spec["mu4"])]:
+            fails.append(f"{name}: stored moments != registered point")
+        check_point_t2(r, fails, name)
+        if r["verdict"] != spec["expected"]:
+            fails.append(f"{name}: verdict {r['verdict']} != registered {spec['expected']}")
+        if r["verdict"] == "PERMITTED":
+            check_single_atom(r["single_atom_system"], mu, fails, name, True)
+        else:
+            ic = r["impossibility_certificate"]
+            d = ic["dual_functional"]
+            check_zero_pivot_dual(mu, d, fails, name)
+            if [F(x) for x in d["direction"]] != [F(x) for x in spec["v"]] \
+                    or F(d["evaluation"]) != F(spec["value"]) or d["matrix"] != spec["matrix"]:
+                fails.append(f"{name}: dual direction / value / matrix != registered")
+            check_single_atom(ic["farkas_atom"], mu, fails, name, False)
+    cp = res["U3_certified_point"]
+    if F(cp["resolution"]) != F(reg["resolution"]):
+        fails.append("certified_point resolution != registered")
+    for s, e in cp["slices"].items():
+        a4 = F(reg["slices"][s]["a"]) ** 4
+        sl = ["1", reg["slices"][s]["a"], str(F(reg["slices"][s]["a"]) ** 2), str(F(reg["slices"][s]["a"]) ** 3)]
+        if F(e["permitted"]) != a4 or not all(ok for _, ok in chains_t2([*sl, e["permitted"]]).values()):
+            fails.append(f"{s}: certified point a^4 not recomputed as PERMITTED")
+        for nb in e["rejected_neighbours"]:
+            ch = chains_t2([*sl, nb["mu4"]])
+            if abs(F(nb["mu4"]) - a4) != F(cp["resolution"]) or ch[nb["violated_wall"]][1] \
+                    or ch["gap" if nb["violated_wall"] == "hankel" else "hankel"][1] is False:
+                fails.append(f"{s}: neighbour {nb['mu4']} not rejected by exactly {nb['violated_wall']}")
+            check_point_t2(nb["certificate"], fails, f"{s} neighbour {nb['mu4']}")
+            check_zero_pivot_dual(nb["certificate"]["primal"]["mu"],
+                                  nb["certificate"]["impossibility_certificate"]["dual_functional"],
+                                  fails, f"{s} neighbour {nb['mu4']}")
+
+
 def verify_common(cert, fails):
     if cert["verdict"] not in SPEC:
         fails.append("non-SPEC verdict")
@@ -239,7 +396,7 @@ def verify_common(cert, fails):
         fails.append("HEURISTIC without warnings")
     if not cert["certificate_id"].endswith(content_hash(cert)):
         fails.append("certificate_id != content hash")
-    want = "prereg-004@" if cert.get("benchmark") == "B15-POS2" else "prereg-002@"
+    want = {"B15-POS2": "prereg-004@", "B15-POS3": "prereg-005@"}.get(cert.get("benchmark"), "prereg-002@")
     if not cert["prereg_ref"].startswith(want) or "UNFROZEN" in cert["prereg_ref"]:
         fails.append(f"prereg_ref missing or not {want}<commit>")
     for a in cert["assumptions"]:
@@ -276,6 +433,8 @@ def main(argv):
         verify_pos(cert, fails)
     elif b == "B15-POS2":
         verify_pos2(cert, fails)
+    elif b == "B15-POS3":
+        verify_pos3(cert, fails)
     elif b in ("B15-ZERO", "B15-GID"):
         verify_zero(cert, fails)
     else:
