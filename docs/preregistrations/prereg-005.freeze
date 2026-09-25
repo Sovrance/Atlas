@@ -1,0 +1,3 @@
+commit=017cf65969fc54b69bd8ca45229e217557fa06ba
+file=docs/preregistrations/prereg-005-pos-degenerate-slice.md
+note=commit hash of the prereg-005 freeze commit (pre-freeze items answered); if history is rewritten on integration, update this line (certificates also bind the prereg by content sha256)
