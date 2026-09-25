@@ -3,7 +3,7 @@
 Registered system (even truncated Hausdorff problem, degree 4, on [0, 1]):
     H = [mu_{i+j}]_{i,j=0..2}              >= 0   (Hankel wall)
     B = [mu_{i+j+1} - mu_{i+j+2}]_{i,j=0,1} >= 0  (gap wall; localizing weight x(1-x))
-Warrant: Krein-Nudel'man Thm III.2.3 as stated in Curto-Fialkow 1991, Remark 4.4.
+Warrant: [KrN, Theorem II.2.3] as cited in Curto-Fialkow 1991, Remark 4.4 (prereg-004 errata E1).
 
 Primal (SCHUR_PIVOT_EXACT): ``psd_certificate`` on H and on B; PERMITTED iff both
 are PSD/PD-certified; witness = both pivot chains.
