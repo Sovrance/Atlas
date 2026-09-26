@@ -55,7 +55,7 @@
     "score": {"type": "string"},
     "inputs": {"type": "object"},
     "ci_seed_env": {"type": "string"},
-    "benchmark": {"type": "string", "enum": ["B15-POS", "B15-POS2", "B15-ZERO", "B15-GID"]},
+    "benchmark": {"type": "string", "enum": ["B15-POS", "B15-POS2", "B15-POS3", "B15-ZERO", "B15-GID"]},
     "pir_facts": {"type": "array"}
   },
   "additionalProperties": false

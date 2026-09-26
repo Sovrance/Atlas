@@ -51,9 +51,19 @@ PREREGS = {
     "002": (PREREG_PATH, PREREG_FREEZE),
     "004": (os.path.join(ROOT, "docs", "preregistrations", "prereg-004-pos-hankel-t2.md"),
             os.path.join(ROOT, "docs", "preregistrations", "prereg-004.freeze")),
+    "005": (os.path.join(ROOT, "docs", "preregistrations", "prereg-005-pos-degenerate-slice.md"),
+            os.path.join(ROOT, "docs", "preregistrations", "prereg-005.freeze")),
 }
 # benchmark -> preregistration that governs it
-BENCHMARK_PREREG = {"B15-POS2": "004"}
+BENCHMARK_PREREG = {"B15-POS2": "004", "B15-POS3": "005"}
+
+
+def _has_key(obj: Any, key: str) -> bool:
+    if isinstance(obj, dict):
+        return key in obj or any(_has_key(v, key) for v in obj.values())
+    if isinstance(obj, list):
+        return any(_has_key(v, key) for v in obj)
+    return False
 
 
 def prereg_ref(prereg: str = "002") -> Dict[str, str]:
@@ -160,9 +170,12 @@ def validate(cert: Dict) -> None:
         raise B15CertificateError("a HEURISTIC certificate may not assert E0 (hard constraint 4)")
     if cert["soundness"] == "HEURISTIC" and not cert["warnings"]:
         raise B15CertificateError("HEURISTIC requires located warnings[] (hard constraint 4)")
-    if cert.get("benchmark") in ("B15-POS", "B15-POS2") and cert["verdict"] == "REJECTED" \
+    if cert.get("benchmark") in ("B15-POS", "B15-POS2", "B15-POS3") and cert["verdict"] == "REJECTED" \
             and not cert.get("impossibility_certificate"):
         raise B15CertificateError("POS REJECTED requires impossibility_certificate (§5)")
+    if cert.get("benchmark") == "B15-POS3" and _has_key(cert["results"], "certified_inner_interval"):
+        raise B15CertificateError("B15-POS3 feasible sets are points: use certified_point, "
+                                  "not certified_inner_interval (prereg-005 U3)")
     if cert["verdict"] in ("PERMITTED", "REJECTED", "FORCED") and cert["witness"] is None:
         raise B15CertificateError(f"{cert['verdict']} requires a witness (§5)")
     if cert["verdict"] == "NONIDENTIFIABLE" and not cert.get("verdict_cause"):
