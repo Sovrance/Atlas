@@ -9,8 +9,9 @@ Preregistration: `docs/preregistrations/prereg-004-pos-hankel-t2.md`, frozen at 
 (`prereg-004.freeze`), `prereg_sha256 8d68d570fa13020a…`. The warrant for the two-matrix
 system is [KrN, Theorem II.2.3] as cited in Curto–Fialkow 1991, Remark 4.4. (prereg-004 and the
 certificate say "III.2.3"; that transcription error is recorded in `prereg-004-errata.md` E1.)
-Certificate: `certificates/b15_pos_t2_certificate.json`, **`b15-pos2-6facf90a799a`**,
-verdict **PERMITTED**, SOUND/E0.
+Certificate: `certificates/b15_pos_t2_certificate.json`, **`b15-pos2-84ed22ba3d95`**,
+verdict **PERMITTED**, SOUND/E0 (regenerated 2026-09-27 from `b15-pos2-6facf90a799a`; see
+"Regeneration" below — every verdict, witness and T1–T7 result is unchanged).
 
 ## Disclosure — checked once out-of-band before freeze
 After prereg-004 was merged (PR #19) and before it was frozen, Erick re-derived every wall, pivot
@@ -36,9 +37,20 @@ certificate byte-for-byte (excluding the timestamp).
 | T5 t = 1 blindness | the prereg-002 verifier PERMITS all six (μ1, μ2) projections, while t = 2 rejects the four exterior points: **t = 2 adds content** |
 | T6 negative control | μ4 1/5 → 31/180 at S1-int flips to REJECTED with a certified Gram dual |
 | T7 consistency with eq. (7.46) | 19 contiguous tower minors at each interior point, all > 0 (min 1/2160, 1/3072). G5 not triggered |
-| T8 | standalone tool VERIFIED. Schema/tool negatives 7/7: non-SPEC verdict, HEURISTIC+E0, REJECTED without an impossibility certificate, wrong prereg binding, tampered pivot, tampered Gram `Q1`, bracket not containing the wall |
+| T8 | standalone tool VERIFIED. Schema/tool negatives 7/7: non-SPEC verdict, HEURISTIC+E0, REJECTED without an impossibility certificate, wrong prereg binding, tampered pivot, tampered Gram `Q1`, bracket not containing the wall. The three tool negatives are **re-hashed** after tampering (since 2026-09-27), so each is rejected by its substantive check: pivot mismatch; Gram identity fails + `Q1` not PSD; stored wall ≠ registered |
 
 The registered falsifiers G1–G5 were not triggered.
+
+## Regeneration (2026-09-27) — T8 evidence fix
+The original certificate's three standalone-tool negatives tampered the certificate without
+recomputing its id, so the tool's first failure line was `certificate_id != content hash`, and that
+line is what T8 recorded (found during B15-POS3, see `docs/sprint-B15-POS3-report.md`). The test now
+re-hashes after tampering and asserts that no content-hash failure appears, so the recorded rejection
+is the substantive one. Regenerating the certificate changed **only** `results.T8_schema_negatives`,
+`certificate_id` (`6facf90a799a` → `84ed22ba3d95`) and the timestamp; T1–T7, the witness, the
+verdict, `prereg_ref`/`prereg_sha256` and every other field are identical (checked field by field
+against the previous certificate). No registered value or rule was touched; the prereg-004 freeze
+and errata E1 are unaffected.
 
 ## Changes
 - `b15_surf/pos/certify_t2.py`: primal on the 3×3 Hankel and 2×2 localizing matrices; pivot-derived

@@ -1,7 +1,8 @@
 # prereg-004 — errata (recorded, not silently repaired)
 
 prereg-004 is frozen at `1ccea83`, and its content hash (`prereg_sha256 8d68d570fa13020a…`) is
-bound into certificate `b15-pos2-6facf90a799a`. Errata are therefore filed here. The frozen file
+bound into certificate `b15-pos2-6facf90a799a` (regenerated 2026-09-27 as `b15-pos2-84ed22ba3d95`
+with only the T8 evidence changed; the bound prereg hash is the same). Errata are therefore filed here. The frozen file
 and the certificate are left exactly as they were generated. No registered rule, value, point,
 threshold or verdict is affected by anything below.
 
@@ -25,7 +26,7 @@ threshold or verdict is affected by anything below.
   sufficient for the even truncated Hausdorff problem) is unaffected, because it is stated
   verbatim in Remark 4.4.
 - **Where the frozen/certified wording appears** (left as generated): prereg-004 (§"Registered
-  target" and P4-OI-1); certificate `b15-pos2-6facf90a799a` fields `ground_truth_route` and
+  target" and P4-OI-1); certificate `b15-pos2-84ed22ba3d95` (formerly `6facf90a799a`) fields `ground_truth_route` and
   `results.T7_tower_consistency.role`; the string literals in `tests/test_b15_pos_t2.py` that
   generate those two fields (changing them would change the certified artifact).
 - **Corrected in place** (unfrozen, not certified): the `certify_t2.py` and

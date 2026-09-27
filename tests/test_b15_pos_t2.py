@@ -194,6 +194,8 @@ def t8_schema_negatives(cert):
     ):
         c3 = copy.deepcopy(cert)
         mutate(c3)
+        # re-hash so the content-hash check passes and the substantive check must fire
+        c3["certificate_id"] = f"b15-pos2-{C.content_hash(c3)}"
         with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
             json.dump(c3, f)
             tmp = f.name
@@ -201,7 +203,9 @@ def t8_schema_negatives(cert):
                               capture_output=True, text=True, cwd=ROOT)
         os.unlink(tmp)
         assert proc.returncode == 1, (name, proc.stdout)
-        bad.append({"case": f"{name} -> standalone tool FAIL", "rejected_with": proc.stdout.strip().splitlines()[1][:80]})
+        lines = [x.strip()[2:] for x in proc.stdout.strip().splitlines()[1:]]
+        assert not any("content hash" in x for x in lines), (name, lines)
+        bad.append({"case": f"{name} -> standalone tool FAIL (re-hashed)", "rejected_with": "; ".join(lines)[:160]})
     print(f"T8 schema negatives: {len(bad)}/7 rejected as required")
     return {"status": "PASS", "cases": bad}
 
