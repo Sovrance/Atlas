@@ -66,5 +66,5 @@ B15-POS3 uses the re-hashed form. Suggested follow-up: apply the same change to
   general normalisation, the recorded lift, certificate-not-margin, Farkas role on variance-zero
   slices), plus a coverage-map row.
 
-## Claims-table row (to be appended to `docs/claims-table.md` after sign-off)
+## Claims-table row (appended to `docs/claims-table.md` after sign-off, 2026-09-27)
 | B15-POS3 zero-pivot / degenerate-slice verification | framework capability | BENCHMARK / E0 | prereg-005 (frozen 017cf65); variance-zero slices D (a = 1/2), E (a = 1); zero-pivot Gram duals (DUAL_EXCLUSION_FUNCTIONAL rev. 2 clarification), incl. zero-diagonal indefiniteness at D-off; single-atom Farkas complete on these slices; feasible set = point a⁴ at 2⁻²⁰ |
