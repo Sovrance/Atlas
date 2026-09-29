@@ -48,8 +48,9 @@ a scratch run, all three are rejected by their substantive checks: pivot mismatc
 fails and Q1 not PSD; stored wall ≠ registered. **The B15-POS2 verdict and certificate are
 unaffected.** Only the recorded evidence of T8 is weaker than it reads. It is left as generated,
 because regenerating the certificate with changed T8 evidence changes a certified artifact.
-B15-POS3 uses the re-hashed form. Suggested follow-up: apply the same change to
-`test_b15_pos_t2.py` in a separately reviewed commit, with the certificate regenerated.
+B15-POS3 uses the re-hashed form. **Follow-up done (2026-09-27, separate PR):** the same change is
+applied to `test_b15_pos_t2.py` and the B15-POS2 certificate regenerated as `b15-pos2-84ed22ba3d95`;
+only T8 evidence changed (see `docs/sprint-B15-POS2-report.md` §Regeneration).
 
 ## Changes
 - `b15_surf/pos/certify_t2.py`: `zero_pivot_direction` (the registered construction with the

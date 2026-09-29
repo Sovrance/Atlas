@@ -3,7 +3,7 @@
   "certificate_class": "EXACT-RATIONAL (same class as B1/B2/B7/B15-POS); published-bound reproduction",
   "benchmark": "B15-POS2",
   "problem": "B15-POS2: exact-PSD verifier (SCHUR_PIVOT_EXACT + DUAL_EXCLUSION_FUNCTIONAL rev. 2) scored against the EFT-hedron gapped forward-limit bound at Hankel order t = 2",
-  "timestamp_utc": "2026-09-24T16:35:52Z",
+  "timestamp_utc": "2026-09-27T02:01:12Z",
   "headline": "degree-4 Hausdorff walls reproduced on two slices: interior PERMITTED, all four exterior points REJECTED with registered negative pivots and certified Gram duals; walls bracketed to <= 2^-20; S1 walls equal Gauss-Legendre / Simpson; t=1 is blind to all four",
   "arithmetic": "exact rational (Fraction) on every certified path; no floats",
   "hard_constraints_certified": true,
@@ -1163,16 +1163,16 @@
           "rejected_with": "prereg_ref must be prereg-004@<commit> (frozen)"
         },
         {
-          "case": "tampered pivot -> standalone tool FAIL",
-          "rejected_with": "  - certificate_id != content hash"
+          "case": "tampered pivot -> standalone tool FAIL (re-hashed)",
+          "rejected_with": "S1-int: pivot mismatch hankel: [Fraction(1, 1), Fraction(1, 12), Fraction(-1, 180)] vs [Fraction(1, 1), Fraction(1, 12), Fraction(1, 180)]"
         },
         {
-          "case": "tampered Gram Q1 -> standalone tool FAIL",
-          "rejected_with": "  - certificate_id != content hash"
+          "case": "tampered Gram Q1 -> standalone tool FAIL (re-hashed)",
+          "rejected_with": "S1-hi: Gram identity fails; S1-hi: Gram Q1 not PSD"
         },
         {
-          "case": "bracket excluding wall -> standalone tool FAIL",
-          "rejected_with": "  - certificate_id != content hash"
+          "case": "bracket excluding wall -> standalone tool FAIL (re-hashed)",
+          "rejected_with": "S2 upper_wall: stored wall != registered"
         }
       ]
     }
@@ -1328,5 +1328,5 @@
       "created_at": "1970-01-01T00:00:00Z"
     }
   ],
-  "certificate_id": "b15-pos2-6facf90a799a"
+  "certificate_id": "b15-pos2-84ed22ba3d95"
 }
